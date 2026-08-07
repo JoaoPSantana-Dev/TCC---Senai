@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #eaeaea;
   --foreground: #171717;
 }
 
@@ -26,11 +26,4 @@ body {
 }
 
 @layer components {
-  .button {
-    @apply px-4 py-2 rounded-lg cursor-pointer transition-colors ml-2;
-  }
-
-  .button-primary {
-    @apply bg-blue-500  hover:bg-blue-600;
-  }
 }
