@@ -6,7 +6,7 @@ interface ImagemProps {
   alt?: string;
 }
 
-export default function BotaoLogin({
+export default function BotaoLoginComponent({
   texto = "Entrar",
   nomeImagem,
   alt = "Imagem",

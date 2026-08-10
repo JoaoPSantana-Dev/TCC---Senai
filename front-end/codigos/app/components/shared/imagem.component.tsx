@@ -5,7 +5,10 @@ interface ImagemProps {
   alt?: string;
 }
 
-export default function Imagem({ nomeImagem, alt = "Imagem" }: ImagemProps) {
+export default function ImagemComponent({
+  nomeImagem,
+  alt = "Imagem",
+}: ImagemProps) {
   return (
     <Image
       src={`/${nomeImagem}`}

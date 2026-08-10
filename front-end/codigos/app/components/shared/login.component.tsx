@@ -1,14 +1,14 @@
 "use client";
 
-import Imagem from "./imagem.componente";
-import BotaoLogin from "./imagem-botao.componente";
+import Imagem from "./imagem.component";
+import BotaoLogin from "./imagem-botao.component";
 
-export function Login() {
+export function LoginComponent() {
   return (
     <main className="h-screen w-full overflow-hidden flex flex-col md:flex-row">
       <aside className="hidden md:flex md:w-2/3 bg-white items-center justify-center border-r-2 border-gray-300">
         <Imagem
-          nomeImagem="senai-mariano-ferraz.png"
+          nomeImagem="tubarao.png"
           alt="Foto da entrada da escola SENAI Mariano Ferraz"
         />
       </aside>
