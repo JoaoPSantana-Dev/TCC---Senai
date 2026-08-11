@@ -1,0 +1,101 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+datasource db {
+  provider = "postgresql"
+ // url = env("DATABASE_URL")
+ // directUr = env("DIRECT_URL") 
+}
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+
+model Usuario {
+  idUsuario  Int  @id  @default(autoincrement())  @map("id_usuario")
+  nome  String?
+  funcao  String?
+  email  String?
+  senha  String?
+
+  @@map("usuarios")
+}
+
+model Pagina {
+  idPaginas  Int  @id  @default(autoincrement())  @map("id_paginas")
+  nome  String?
+  imagem  String?
+  descricao  String?
+  idUsuario  Int?  @map("id_usuario")
+
+  @@map("paginas")
+}
+
+model OSenai {
+  idOSenai  Int  @id  @default(autoincrement())  @map("id_oSenai")
+  nomePagina  String?  @map("nome_pagina")
+  texto  String?
+  idPaginas  Int?  @map("id_paginas")
+
+  @@map("o_senai")
+}
+
+model HorariosAula {
+  idHorariosAula  Int  @id  @default(autoincrement())  @map("id_horarios_aula")
+  nomePagina  String?  @map("nome_pagina")
+  nomeCurso  String?  @map("nome_curso")
+  turno  DateTime?
+  imagem  String?
+  sala  String?
+  texto  String?
+  idPaginas  Int?  @map("id_paginas")
+
+  @@map("horarios_aula")
+}
+
+model VagasEmprego {
+  idEmprego  Int  @id  @default(autoincrement())  @map("id_emprego")
+  nomePagina  String?  @map("nome_pagina")
+  nomeEmprego  String?  @map("nome_emprego")
+  imagens  String?
+  descricao  String?
+  idPaginas  Int?  @map("id_paginas")
+
+  @@map("vagas_empregos")
+}
+
+model MapaEscola {
+  idMapa  Int  @id  @default(autoincrement())  @map("id_mapa")
+  nomePagina  String?  @map("nome_pagina")
+  descricao  String?
+  imagens  String?
+  idPaginas  Int?  @map("id_paginas")
+
+  @@map("mapa_escola")
+}
+
+model VagasEstagio {
+  idEstagio  Int  @id  @default(autoincrement())  @map("id_estagio")
+  nomePagina  String?  @map("nome_pagina")
+  nomeEstagio  String?  @map("nome_estagio")
+  imagens  String?
+  descricao  String?
+  idPaginas  Int?  @map("id_paginas")
+
+  @@map("vagas_estagios")
+}
+
+model Noticia {
+  idNoticia  Int  @id  @default(autoincrement())  @map("id_noticia")
+  nomePagina  String?  @map("nome_pagina")
+  texto  String?
+  descricao  String?
+  imagens  String?
+  idPaginas  Int?  @map("id_paginas")
+
+  @@map("noticias")
+}
