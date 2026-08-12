@@ -1,7 +1,7 @@
 "use client";
 
 import Imagem from "./imagem.component";
-import BotaoLogin from "./imagem-botao.component";
+import BotaoLogin from "./botoes/imagem-botao.component";
 
 export function LoginComponent() {
   return (
@@ -50,7 +50,7 @@ export function LoginComponent() {
             />
           </div>
 
-          <BotaoLogin nomeImagem="botao_login.svg" />
+          <BotaoLogin href="#" nomeImagem="botao_login.svg" />
         </form>
       </section>
     </main>
