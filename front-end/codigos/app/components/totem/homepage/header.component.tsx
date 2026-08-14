@@ -12,7 +12,7 @@ export function HeaderComponent() {
     return (
       <>
         <header className="w-full text-white flex flex-col">
-          <div className="flex flex-row w-screen bg-red-600 pl-2 gap-2 justify-between pr-4">
+          <div className="flex flex-row w-screen bg-red-600 pl-2 gap-2 justify-between pr-2">
             <span className="flex">
               <h1>FIESP CIESP SESI SENAI IRS | F | TW | YT | iN | iNt | wz</h1>
             </span>
@@ -27,6 +27,8 @@ export function HeaderComponent() {
               <ImagemComponent
                 nomeImagem="senai-logo.png"
                 alt="Imagem do logo SENAI"
+                width={200}
+                height={200}
               />
             </figure>
           </div>
