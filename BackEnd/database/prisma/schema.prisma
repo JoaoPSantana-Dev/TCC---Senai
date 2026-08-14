@@ -5,8 +5,7 @@
 
 datasource db {
   provider = "postgresql"
- // url = env("DATABASE_URL")
- // directUr = env("DIRECT_URL") 
+  
 }
 
 generator client {
@@ -17,85 +16,87 @@ generator client {
 
 model Usuario {
   idUsuario  Int  @id  @default(autoincrement())  @map("id_usuario")
-  nome  String?
-  funcao  String?
-  email  String?
-  senha  String?
+  Nome  String?
+  Email String?
+  Senha String?
+  Funcao String?
+  Unidade String?
 
   @@map("usuarios")
 }
 
 model Pagina {
   idPaginas  Int  @id  @default(autoincrement())  @map("id_paginas")
-  nome  String?
-  imagem  String?
-  descricao  String?
-  idUsuario  Int?  @map("id_usuario")
+  Nome_pagina  String?
+  Tipo_pagina String?
+
+  textos Texto[]
 
   @@map("paginas")
 }
 
-model OSenai {
-  idOSenai  Int  @id  @default(autoincrement())  @map("id_oSenai")
-  nomePagina  String?  @map("nome_pagina")
-  texto  String?
-  idPaginas  Int?  @map("id_paginas")
+model Texto {
+  idTextos Int @id  @default(autoincrement())  @map("id_texto")
+  Texto String?
+  Tipo_texto String?
 
-  @@map("o_senai")
+  Id_pagina Int @map("id_paginas")
+  pagina Pagina? @relation(fields: [Id_pagina], references: [idPaginas])
+
+  @@map("textos")
 }
 
-model HorariosAula {
+model VagaEmprego {
+  idEmprego  Int  @id  @default(autoincrement())  @map("id_emprego")
+  Nome_empresa String?  
+  Cargo String?
+  Requisitos String?
+  Salario String?
+  Beneficios String?
+  Descricao String?
+  Localizacao String?
+  Contato String?
+  Area_emprego String?
+  
+  @@map("vagas_empregos")
+}
+
+model VagaEstagio{
+  idEstagio  Int  @id  @default(autoincrement())  @map("id_estagio")
+  Nome_empresa String?  
+  Cargo String?
+  Requisitos String?
+  Salario String?
+  Beneficios String?
+  Descricao String?
+  Localizacao String?
+  Contato String?
+  Area_estagio String?
+  
+  @@map("vagas_estagio")
+}
+
+model Sala{
+  idSala Int @id @default(autoincrement()) @map("id_sala")
+  Nome_sala String?
+  Andar String?
+  Bloco String?
+  Imagem String?
+
+  horarios HorarioAula[]
+
+  @@map("salas")
+}
+
+
+model HorarioAula {
   idHorariosAula  Int  @id  @default(autoincrement())  @map("id_horarios_aula")
-  nomePagina  String?  @map("nome_pagina")
-  nomeCurso  String?  @map("nome_curso")
-  turno  DateTime?
-  imagem  String?
-  sala  String?
-  texto  String?
-  idPaginas  Int?  @map("id_paginas")
+  Nome_curso String?
+  Turno String?
+
+  idSala  Int @map("id_sala")
+  sala Sala? @relation(fields: [idSala], references: [idSala])
 
   @@map("horarios_aula")
 }
 
-model VagasEmprego {
-  idEmprego  Int  @id  @default(autoincrement())  @map("id_emprego")
-  nomePagina  String?  @map("nome_pagina")
-  nomeEmprego  String?  @map("nome_emprego")
-  imagens  String?
-  descricao  String?
-  idPaginas  Int?  @map("id_paginas")
-
-  @@map("vagas_empregos")
-}
-
-model MapaEscola {
-  idMapa  Int  @id  @default(autoincrement())  @map("id_mapa")
-  nomePagina  String?  @map("nome_pagina")
-  descricao  String?
-  imagens  String?
-  idPaginas  Int?  @map("id_paginas")
-
-  @@map("mapa_escola")
-}
-
-model VagasEstagio {
-  idEstagio  Int  @id  @default(autoincrement())  @map("id_estagio")
-  nomePagina  String?  @map("nome_pagina")
-  nomeEstagio  String?  @map("nome_estagio")
-  imagens  String?
-  descricao  String?
-  idPaginas  Int?  @map("id_paginas")
-
-  @@map("vagas_estagios")
-}
-
-model Noticia {
-  idNoticia  Int  @id  @default(autoincrement())  @map("id_noticia")
-  nomePagina  String?  @map("nome_pagina")
-  texto  String?
-  descricao  String?
-  imagens  String?
-  idPaginas  Int?  @map("id_paginas")
-
-  @@map("noticias")
-}

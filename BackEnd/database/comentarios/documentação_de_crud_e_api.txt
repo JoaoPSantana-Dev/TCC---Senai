@@ -1,0 +1,6 @@
+documentação de crud e api
+
+https://www.prisma.io/docs/orm/prisma-client/queries/crud
+https://www.prisma.io/docs/orm/v6/overview/prisma-in-your-stack/rest
+
+exemplo de api https://github.com/prisma/prisma-examples/tree/latest/orm/express
