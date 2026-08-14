@@ -1,6 +1,6 @@
 "use client";
 
-import BotaoLoginComponent2 from "./botoes/imagem-botao.component2";
+import BotaoLoginComponent from "./imagem-botao.component";
 import ImagemLogoComponent from "./imagem.logo.component";
 
 export default function TelaDescanso() {
@@ -10,7 +10,7 @@ export default function TelaDescanso() {
         <figure className="mb-12">
           <ImagemLogoComponent nomeImagem="senai-logo.png" alt="Imagem do logo SENAI" />
         </figure>
-        <BotaoLoginComponent2 href="/login" nomeImagem="botao_login.svg" />
+        <BotaoLoginComponent href="/login" nomeImagem="botao_login.svg" texto="Click para começar"/>
       </div>
     </main>
   );
