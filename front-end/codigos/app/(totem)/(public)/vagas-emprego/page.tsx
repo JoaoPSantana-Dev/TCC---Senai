@@ -1,4 +1,4 @@
-import { HeaderComponent } from "@/app/components/totem/homepage/header.component";
+import { HeaderComponent } from "@/app/components/totem/shared/header.component";
 
 export default function VagasEmprego() {
   return (

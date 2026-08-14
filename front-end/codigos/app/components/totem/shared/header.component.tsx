@@ -51,12 +51,12 @@ export function HeaderComponent() {
           </span>
         </div>
 
-        <div className="flex flex-col items-center bg-white p-4">
-          <nav>
+        <div className="text-black flex flex-row justify-center items-center bg-white p-4">
+          <nav className="flex justify-start">
             <Link href="/homepage">MENU</Link>
           </nav>
 
-          <figure className="flex justify-center">
+          <figure className="flex justify-center self-center">
             <ImagemComponent
               nomeImagem="senai-logo.png"
               alt="Imagem do logo SENAI"
