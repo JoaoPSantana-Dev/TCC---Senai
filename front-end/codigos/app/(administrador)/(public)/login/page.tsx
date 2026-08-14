@@ -1,4 +1,4 @@
-import { LoginComponent } from "../../components/shared/login.component";
+import { LoginComponent } from "@/app/components/administrador/login.component";
 
 export default function Login() {
   return (

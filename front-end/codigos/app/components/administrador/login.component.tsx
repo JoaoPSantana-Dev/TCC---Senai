@@ -1,18 +1,21 @@
 "use client";
 
-import Imagem from "./imagem.component";
-import BotaoLogin from "./imagem-botao.component";
-import { ImagemLogin } from "./imagem-login.component";
+import BotaoLogin from "./botao-login.component";
+import ImagemComponent from "./imagem.component";
+import { ImagemLoginComponent } from "./imagem-login.component";
 
 export function LoginComponent() {
   return (
     <main className="h-screen w-full overflow-hidden flex flex-col md:flex-row">
-      <ImagemLogin />
+      <ImagemLoginComponent />
 
       <section className="w-full h-full md:w-1/3 bg-white flex flex-col justify-between p-8 md:p-16">
         <header className="flex flex-col gap-2">
           <figure className="mb-32">
-            <Imagem nomeImagem="senai-logo.png" alt="Imagem do logo SENAI" />
+            <ImagemComponent
+              nomeImagem="senai-logo.png"
+              alt="Imagem do logo SENAI"
+            />
           </figure>
 
           <h1 className="text-lg font-bold">Login</h1>
