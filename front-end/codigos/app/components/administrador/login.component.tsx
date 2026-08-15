@@ -1,6 +1,6 @@
 "use client";
 
-import BotaoLogin from "./botao-login.component";
+import ImagemBotaoComponent from "./imagem-botao.component";
 import ImagemComponent from "./imagem.component";
 import { ImagemLoginComponent } from "./imagem-login.component";
 import FooterComponent from "../totem/shared/footer.component";
@@ -54,7 +54,7 @@ export function LoginComponent() {
               />
             </div>
 
-            <BotaoLogin nomeImagem="botao_login.svg" />
+            <ImagemBotaoComponent nomeImagem="botao_login.svg" />
           </form>
         </section>
       </main>

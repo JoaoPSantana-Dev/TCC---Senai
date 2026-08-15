@@ -6,24 +6,32 @@ import ImagemComponent from "../../administrador/imagem.component";
 
 export function HeaderComponent() {
   const pathname = usePathname();
+  const currentDateTime = new Date();
+  const hora = currentDateTime.getHours();
+  const minutos = currentDateTime.getMinutes();
+  const segundos = currentDateTime.getSeconds();
 
   // esse código é para caso o endpoint seja "/homepage"
   if (pathname === "/homepage") {
     return (
       <>
-        <header className="w-full text-white flex flex-col">
-          <div className="flex flex-row w-screen bg-red-600 pl-2 gap-2 justify-between pr-2">
-            <span className="flex">
+        <header className="w-full text-white">
+          <div className="flex w-full bg-red-600 gap-2 items-center justify-between pl-2 pr-2">
+            <p className="font-semibold text-sm uppercase truncate">
               <h1>FIESP CIESP SESI SENAI IRS | F | TW | YT | iN | iNt | wz</h1>
-            </span>
+            </p>
 
-            <span className="flex items-end justify-end">
-              <h1>16:00 21°</h1>
-            </span>
+            <time className="font-semibold text-sm uppercase truncate shrink-0 flex items-center justify-center gap-2">
+              <p>
+                {hora}:{minutos}:{segundos}
+              </p>
+
+              <p>21°</p>
+            </time>
           </div>
 
-          <div className="flex flex-col items-center bg-white p-4">
-            <figure className="flex justify-center">
+          <div className="flex text-black justify-center items-center bg-white p-4">
+            <figure className="justify-self-center">
               <ImagemComponent
                 nomeImagem="senai-logo.png"
                 alt="Imagem do logo SENAI"
@@ -40,23 +48,33 @@ export function HeaderComponent() {
   // esse código é para todas as outras páginas que usarem o header e que não sejam o "/homepage"
   return (
     <>
-      <header className="w-full text-white flex flex-col">
-        <div className="flex flex-row w-screen bg-red-600 pl-2 gap-2 justify-between pr-2">
-          <span className="flex">
+      <header className="w-full text-white">
+        <div className="flex w-full bg-red-600 gap-2 items-center justify-between pl-2 pr-2">
+          <p className="font-semibold text-sm uppercase truncate">
             <h1>FIESP CIESP SESI SENAI IRS | F | TW | YT | iN | iNt | wz</h1>
-          </span>
+          </p>
 
-          <span className="flex items-end justify-end">
-            <h1>16:00 21°</h1>
-          </span>
+          <time className="font-semibold text-sm uppercase truncate shrink-0 flex items-center justify-center gap-2">
+            <p>
+              {hora}:{minutos}:{segundos}
+            </p>
+
+            <p>21°</p>
+          </time>
         </div>
 
-        <div className="text-black flex flex-row justify-center items-center bg-white p-4">
-          <nav className="flex justify-start">
-            <Link href="/homepage">MENU</Link>
+        <div className="grid grid-cols-3 text-black justify-center items-center bg-white p-4">
+          <nav className="flex justify-start text-black ml-4">
+            <Link href="/homepage">
+              <ImagemComponent
+                nomeImagem="login_icon.png"
+                width={25}
+                height={25}
+              />
+            </Link>
           </nav>
 
-          <figure className="flex justify-center self-center">
+          <figure className="justify-self-center">
             <ImagemComponent
               nomeImagem="senai-logo.png"
               alt="Imagem do logo SENAI"
