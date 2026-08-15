@@ -9,7 +9,10 @@ export function LoginComponent() {
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex flex-1 flex-col md:flex-row">
-        <ImagemLoginComponent />
+        <ImagemLoginComponent
+          nomeImagem="tubarao.png"
+          alt="Foto da entrada da escola SENAI Mariano Ferraz"
+        />
 
         <section className="w-full h-full md:w-1/3 bg-white flex flex-col justify-between p-8 md:p-16">
           <header className="flex flex-col gap-2">
