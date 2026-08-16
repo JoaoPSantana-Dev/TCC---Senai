@@ -14,7 +14,7 @@ export function LoginComponent() {
           alt="Foto da entrada da escola SENAI Mariano Ferraz"
         />
 
-        <section className="w-full h-full md:w-1/3 bg-white flex flex-col justify-between p-8 md:p-16">
+        <section className="w-full h-full lg:w-1/3 bg-white flex flex-col justify-center p-8 md:p-16">
           <header className="flex flex-col gap-2">
             <figure className="mb-32">
               <ImagemComponent
@@ -24,13 +24,13 @@ export function LoginComponent() {
             </figure>
 
             <h1 className="text-lg font-bold">Login</h1>
-            <p className="text-gray-600">
+            <p className="text-gray-600 text-sm">
               Entre usando seu CPF e senha cadastrados no sistema
             </p>
           </header>
 
-          <form className="flex flex-col gap-4 mb-auto pt-6">
-            <div className="flex flex-col gap-1">
+          <form className="flex flex-col gap-4 pt-6">
+            <div className="flex flex-col gap-1 ">
               <label htmlFor="cpf">CPF</label>
               <input
                 type="text"
@@ -54,7 +54,9 @@ export function LoginComponent() {
               />
             </div>
 
-            <ImagemBotaoComponent nomeImagem="botao_login.svg" />
+            <div className="flex justify-center">
+              <ImagemBotaoComponent nomeImagem="login_icon.svg" />
+            </div>
           </form>
         </section>
       </main>
