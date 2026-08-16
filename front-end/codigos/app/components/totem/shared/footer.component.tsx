@@ -1,5 +1,6 @@
 export default function FooterComponent() {
   return (
+    // rodapé que cobre a parte inferior das telas
     <footer className="flex bg-white text-black py-2 text-center border-t-2 border-gray-300 pb-4">
       <div className="container mx-auto px-4 flex flex-col items-center gap-4">
         <p className="text-sm font-medium">© 2026 Sector</p>

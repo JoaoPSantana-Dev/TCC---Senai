@@ -1,4 +1,6 @@
-import ImagemComponent from "./imagem.component";
+import ImagemComponent from "../shared/imagem.component";
+// componente que representa a imagem do login, que fica na parte esquerda da tela de login
+// você pode passar o nome da imagem e o texto alternativo (opcional) como propriedades e mudar quando quiser
 
 interface ImagemLoginProps {
   nomeImagem: string;
