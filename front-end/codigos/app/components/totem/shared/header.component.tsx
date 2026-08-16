@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ImagemComponent from "../../administrador/imagem.component";
+import { NavbarComponent } from "./navbar.component";
 
 export function HeaderComponent() {
   const pathname = usePathname();
@@ -64,15 +64,7 @@ export function HeaderComponent() {
         </div>
 
         <div className="grid grid-cols-3 text-black justify-center items-center bg-white p-4">
-          <nav className="flex justify-start text-black ml-4">
-            <Link href="/homepage">
-              <ImagemComponent
-                nomeImagem="login_icon.png"
-                width={25}
-                height={25}
-              />
-            </Link>
-          </nav>
+          <NavbarComponent />
 
           <figure className="justify-self-center">
             <ImagemComponent
