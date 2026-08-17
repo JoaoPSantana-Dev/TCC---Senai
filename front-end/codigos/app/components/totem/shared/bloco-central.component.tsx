@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { NoticiasComponent } from "./noticias.component";
+import ImagemComponent from "../../administrador/shared/imagem.component";
 
 const pages = [
   {
@@ -58,6 +60,21 @@ const noticias = [
   },
 ];
 
+const cards = [
+  <div key="1" className="h-32 flex items-center justify-center font-bold">
+    <ImagemComponent nomeImagem="tubarao.png" />
+  </div>,
+  <div key="2" className="h-32 flex items-center justify-center font-bold">
+    <ImagemComponent nomeImagem="tubarao.png" />
+  </div>,
+  <div key="3" className="h-32 flex items-center justify-center font-bold">
+    <ImagemComponent nomeImagem="tubarao.png" />
+  </div>,
+  <div key="4" className="h-32 flex items-center justify-center font-bold">
+    <ImagemComponent nomeImagem="tubarao.png" />
+  </div>,
+];
+
 export function BlocoCentralComponent() {
   return (
     <main className="min-h-auto flex flex-col items-center justify-center p-4">
@@ -94,7 +111,7 @@ export function BlocoCentralComponent() {
           ))}
         </div>
 
-        {/* <NoticiasComponent /> */}
+        <NoticiasComponent items={cards} />
       </section>
     </main>
   );
