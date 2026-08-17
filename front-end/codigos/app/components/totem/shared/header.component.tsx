@@ -15,7 +15,7 @@ export function HeaderComponent() {
   if (pathname === "/homepage") {
     return (
       <>
-        <header className="w-full text-white">
+        <header className="w-full text-white border-b-2 border-gray-300">
           <div className="flex w-full bg-red-600 gap-2 items-center justify-between pl-2 pr-2">
             {/* parceiros e redes do senai na esquerda*/}
             <p className="font-semibold text-sm uppercase truncate">
@@ -51,7 +51,7 @@ export function HeaderComponent() {
   // esse código é para todas as outras páginas que usarem o header e que não sejam o "/homepage"
   return (
     <>
-      <header className="w-full text-white">
+      <header className="w-full text-white border-b-2 border-gray-300">
         <div className="flex w-full bg-red-600 gap-2 items-center justify-between pl-2 pr-2">
           {/* parceiros e redes do senai na esquerda*/}
           <p className="font-semibold text-sm uppercase truncate">
