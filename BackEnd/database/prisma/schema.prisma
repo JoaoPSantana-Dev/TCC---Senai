@@ -1,0 +1,102 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+datasource db {
+  provider = "postgresql"
+  
+}
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+
+model Usuario {
+  idUsuario  Int  @id  @default(autoincrement())  @map("id_usuario")
+  Nome  String?
+  Email String?
+  Senha String?
+  Funcao String?
+  Unidade String?
+
+  @@map("usuarios")
+}
+
+model Pagina {
+  idPaginas  Int  @id  @default(autoincrement())  @map("id_paginas")
+  Nome_pagina  String?
+  Tipo_pagina String?
+
+  textos Texto[]
+
+  @@map("paginas")
+}
+
+model Texto {
+  idTextos Int @id  @default(autoincrement())  @map("id_texto")
+  Texto String?
+  Tipo_texto String?
+
+  Id_pagina Int @map("id_paginas")
+  pagina Pagina? @relation(fields: [Id_pagina], references: [idPaginas])
+
+  @@map("textos")
+}
+
+model VagaEmprego {
+  idEmprego  Int  @id  @default(autoincrement())  @map("id_emprego")
+  Nome_empresa String?  
+  Cargo String?
+  Requisitos String?
+  Salario String?
+  Beneficios String?
+  Descricao String?
+  Localizacao String?
+  Contato String?
+  Area_emprego String?
+  
+  @@map("vagas_empregos")
+}
+
+model VagaEstagio{
+  idEstagio  Int  @id  @default(autoincrement())  @map("id_estagio")
+  Nome_empresa String?  
+  Cargo String?
+  Requisitos String?
+  Salario String?
+  Beneficios String?
+  Descricao String?
+  Localizacao String?
+  Contato String?
+  Area_estagio String?
+  
+  @@map("vagas_estagio")
+}
+
+model Sala{
+  idSala Int @id @default(autoincrement()) @map("id_sala")
+  Nome_sala String?
+  Andar String?
+  Bloco String?
+  Imagem String?
+
+  horarios HorarioAula[]
+
+  @@map("salas")
+}
+
+
+model HorarioAula {
+  idHorariosAula  Int  @id  @default(autoincrement())  @map("id_horarios_aula")
+  Nome_curso String?
+  Turno String?
+
+  idSala  Int @map("id_sala")
+  sala Sala? @relation(fields: [idSala], references: [idSala])
+
+  @@map("horarios_aula")
+}
+
