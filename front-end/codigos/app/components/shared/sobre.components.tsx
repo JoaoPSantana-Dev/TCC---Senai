@@ -1,9 +1,13 @@
 import ImagemComponent from "./imagem.component";
+import FooterComponent from "./footer.components";
+import { HeaderComponent } from "./header.component";
 
 export default function SobreComponent(props: any) {
   return (
-    <main className="min-h-screen w-full bg-[#EAEAEA] p-6 md:p-12 flex flex-col justify-between">
-      <div className="mx-auto max-w-6xl w-full flex flex-col h-full justify-center">
+    <>
+    <HeaderComponent />
+    <main className="min-h-screen w-full bg-[#EAEAEA] flex flex-col justify-between">
+      <div className="mx-auto max-w-6xl w-full flex-1 flex flex-col justify-center p-6 md:p-12">
 
         {/* Título */}
         <div className="mb-8 inline-block self-start rounded-3xl bg-white px-8 py-3 text-lg font-semibold text-zinc-800 shadow-sm">
@@ -15,29 +19,29 @@ export default function SobreComponent(props: any) {
 
           {/* Linha 1 */}
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 items-stretch">
-            <div className="flex items-center justify-center rounded-3xl bg-white p-8 text-zinc-700 shadow-sm min-h-[320px]">
+            <div className="flex items-center justify-center rounded-3xl bg-white p-8 text-zinc-700 shadow-sm min-h-[320px] transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
               <p className="text-center text-base md:text-lg font-medium leading-relaxed">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam nemo ratione dignissimos explicabo hic facilis nisi consectetur minus, 
-                recusandae corrupti fugiat illum praesentium qui consequatur deleniti itaque quis laborum nesciunt veniam ipsam, possimus culpa ut! 
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam nemo ratione dignissimos explicabo hic facilis nisi consectetur minus,
+                recusandae corrupti fugiat illum praesentium qui consequatur deleniti itaque quis laborum nesciunt veniam ipsam, possimus culpa ut!
                 Officia rerum amet dolorum laborum.
               </p>
             </div>
 
-            <div className="relative min-h-[320px] overflow-hidden rounded-3xl bg-white shadow-sm">
+            <div className="relative min-h-[320px] overflow-hidden rounded-3xl bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
               <ImagemComponent nomeImagem="senai-mariano-ferraz.png" alt="Senai Mariano-Ferraz"/>
             </div>
           </div>
 
           {/* Linha 2 */}
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 items-stretch">
-            <div className="relative min-h-[320px] overflow-hidden rounded-3xl bg-white shadow-sm">
-              <ImagemComponent nomeImagem="senai-mariano-ferraz.png" alt="Senai Mariano-Ferraz"/>
+            <div className="relative min-h-[320px] overflow-hidden rounded-3xl bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+              <ImagemComponent nomeImagem="senai-mariano-ferraz.png" alt="Senai Mariano-Ferraz" />
             </div>
 
-            <div className="flex items-center justify-center rounded-3xl bg-white p-8 text-zinc-700 shadow-sm min-h-[320px]">
+            <div className="flex items-center justify-center rounded-3xl bg-white p-8 text-zinc-700 shadow-sm min-h-[320px] transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
               <p className="text-center text-base md:text-lg font-medium leading-relaxed">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam nemo ratione dignissimos explicabo hic facilis nisi consectetur minus, 
-                recusandae corrupti fugiat illum praesentium qui consequatur deleniti itaque quis laborum nesciunt veniam ipsam, possimus culpa ut! 
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam nemo ratione dignissimos explicabo hic facilis nisi consectetur minus,
+                recusandae corrupti fugiat illum praesentium qui consequatur deleniti itaque quis laborum nesciunt veniam ipsam, possimus culpa ut!
                 Officia rerum amet dolorum laborum.
               </p>
             </div>
@@ -45,21 +49,24 @@ export default function SobreComponent(props: any) {
 
           {/* Linha 3 */}
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 items-stretch">
-            <div className="flex items-center justify-center rounded-3xl bg-white p-8 text-zinc-700 shadow-sm min-h-[320px]">
+            <div className="flex items-center justify-center rounded-3xl bg-white p-8 text-zinc-700 shadow-sm min-h-[320px] transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
               <p className="text-center text-base md:text-lg font-medium leading-relaxed">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam nemo ratione dignissimos explicabo hic facilis nisi consectetur minus, 
-                recusandae corrupti fugiat illum praesentium qui consequatur deleniti itaque quis laborum nesciunt veniam ipsam, possimus culpa ut! 
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam nemo ratione dignissimos explicabo hic facilis nisi consectetur minus,
+                recusandae corrupti fugiat illum praesentium qui consequatur deleniti itaque quis laborum nesciunt veniam ipsam, possimus culpa ut!
                 Officia rerum amet dolorum laborum.
               </p>
             </div>
 
-            <div className="relative min-h-[320px] overflow-hidden rounded-3xl bg-white shadow-sm">
-              <ImagemComponent nomeImagem="senai-mariano-ferraz.png" alt="Senai Mariano-Ferraz"/>
+            <div className="relative min-h-[320px] overflow-hidden rounded-3xl bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+              <ImagemComponent nomeImagem="senai-mariano-ferraz.png" alt="Senai Mariano-Ferraz" />
             </div>
           </div>
 
         </section>
       </div>
+
+      <FooterComponent />
     </main>
+    </>
   );
 }

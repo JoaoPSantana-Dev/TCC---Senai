@@ -5,11 +5,11 @@ export default function FooterComponent(props: any) {
         <p className="text-sm font-medium">© 2026 Sector</p>
         <div>
           <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs opacity-90">
-            <li className="hover:no-underline cursor-pointer">João Paulo</li>
-            <li className="hover:no-underline cursor-pointer">Thalles Vinicius</li>
-            <li className="hover:no-underline cursor-pointer">Eduardo</li>
-            <li className="hover:no-underline cursor-pointer">Tomas</li>
-            <li className="hover:no-underline cursor-pointer">João Pedro</li>
+            <li className="hover:font-bold no-underline cursor-pointer">João Paulo</li>
+            <li className="hover:font-bold no-underline cursor-pointer">Thalles Vinicius</li>
+            <li className="hover:font-bold no-underline cursor-pointer">Eduardo</li>
+            <li className="hover:font-bold no-underline cursor-pointer">Tomas</li>
+            <li className="hover:font-bold no-underline cursor-pointer">João Pedro</li>
           </ul>
         </div>
       </div>
