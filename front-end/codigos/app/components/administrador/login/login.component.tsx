@@ -1,6 +1,6 @@
 "use client";
 
-import FooterComponent from "../../totem/shared/footer.component";
+import FooterComponent from "../../shared/footer.component";
 import { ImagemLoginComponent } from "./imagem-login.component";
 import { LoginFormComponent } from "./login-form.component";
 import { LoginHeaderComponent } from "./login-header.component";

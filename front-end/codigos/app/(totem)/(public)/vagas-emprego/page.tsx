@@ -1,4 +1,4 @@
-import FooterComponent from "@/app/components/totem/shared/footer.component";
+import FooterComponent from "@/app/components/shared/footer.component";
 import { HeaderComponent } from "@/app/components/totem/shared/header.component";
 
 export default function VagasEmprego() {
