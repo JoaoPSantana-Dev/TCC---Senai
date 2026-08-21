@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { HeaderLogo } from "./header-logo.component";
 import { HeaderBarraUtilitarios } from "./header-barra-utilitarios.component";
 import { NavbarComponent } from "./navbar.component";
+import Link from "next/link";
 
 // HeaderComponent
 // componente principal do cabeçalho do totem
@@ -22,7 +23,11 @@ export function HeaderComponent() {
             : "grid grid-cols-3 text-black justify-center items-center bg-white p-4"
         }
       >
-        {pathname !== "/homepage" && <NavbarComponent />}
+        {pathname !== "/homepage" && (
+          <Link href={"/homepage"} className="max-w-20">
+            <NavbarComponent />
+          </Link>
+        )}
         <HeaderLogo />
       </div>
     </header>

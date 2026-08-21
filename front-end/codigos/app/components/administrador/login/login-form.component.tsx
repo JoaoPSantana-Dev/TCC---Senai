@@ -1,4 +1,4 @@
-import ImagemBotaoComponent from "../shared/imagem-botao.component";
+import ImagemBotaoComponent from "../../shared/imagem-botao.component";
 
 // LoginFormComponent
 // formulário de autenticação para o sistema administrativo

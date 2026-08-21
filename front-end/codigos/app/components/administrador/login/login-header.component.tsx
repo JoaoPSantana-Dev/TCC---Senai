@@ -11,6 +11,8 @@ export function LoginHeaderComponent() {
         <ImagemComponent
           nomeImagem="senai-logo.png"
           alt="Imagem do logo SENAI"
+          width={1920}
+          height={1080}
         />
       </figure>
 

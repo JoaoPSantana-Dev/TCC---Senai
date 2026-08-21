@@ -3,7 +3,7 @@ import Link from "next/link";
 // HomepageMenu
 // monta o menu principal da homepage do totem com links para as páginas do projeto
 
-const pages = [
+const paginas = [
   {
     titulo: "Sobre o SENAI",
     href: "/sobre-senai",
@@ -50,15 +50,15 @@ export function HomepageMenu() {
   return (
     <nav className="w-full max-w-6xl p-4 rounded-xl">
       <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {pages.map((page) => (
-          <li key={page.href}>
+        {paginas.map((pagina) => (
+          <li key={pagina.href}>
             <Link
-              href={page.href}
+              href={pagina.href}
               className="h-full items-center flex flex-row p-8 bg-white rounded-2xl shadow-xl hover:shadow-md"
             >
-              <span className="text-4xl mr-4">{page.icone}</span>
+              <span className="text-4xl mr-4">{pagina.icone}</span>
               <h2 className="text-2xl font-semibold justify-self-end">
-                {page.titulo}
+                {pagina.titulo}
               </h2>
             </Link>
           </li>

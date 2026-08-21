@@ -1,15 +1,15 @@
 import FooterComponent from "@/app/components/shared/footer.component";
 import { HeaderComponent } from "@/app/components/totem/shared/header.component";
+import { VagasEmpregoComponent } from "@/app/components/totem/vagas-emprego/vagas-emprego.component";
 
 export default function VagasEmprego() {
   return (
-    <>
-      <div className="w-screen h-screen flex flex-col">
-        <HeaderComponent />
-        <h1>teste</h1>
+    <div className="w-screen h-screen flex flex-col">
+      <HeaderComponent />
 
-        <FooterComponent />
-      </div>
-    </>
+      <VagasEmpregoComponent />
+
+      <FooterComponent />
+    </div>
   );
 }

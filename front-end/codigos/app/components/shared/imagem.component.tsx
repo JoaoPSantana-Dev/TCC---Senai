@@ -15,8 +15,8 @@ interface ImagemProps {
 export default function ImagemComponent({
   nomeImagem,
   alt = "Imagem",
-  width = 1920,
-  height = 1080,
+  width,
+  height,
   className = "",
 }: ImagemProps) {
   return (
@@ -25,7 +25,7 @@ export default function ImagemComponent({
       alt={alt}
       width={width}
       height={height}
-      className={`w-auto h-auto max-w-full object-contain ${className}`}
+      className={`max-w-full object-contain ${className}`}
       loading="eager"
     />
   );
