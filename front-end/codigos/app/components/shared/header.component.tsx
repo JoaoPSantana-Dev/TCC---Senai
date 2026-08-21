@@ -32,7 +32,7 @@ export function HeaderComponent() {
             </time>
           </div>
 
-          <div className="flex text-black justify-center items-center bg-white p-4">
+          <div className="w-full bg-white text-black p-4">
             {/* logo do senai no centro */}
             <figure className="justify-self-center">
               <ImagemComponent
@@ -68,7 +68,7 @@ export function HeaderComponent() {
           </time>
         </div>
 
-        <div className="grid grid-cols-3 text-black justify-center items-center bg-white p-4">
+        <div className="w-full grid grid-cols-3 text-black justify-center items-center bg-white p-4">
           <NavbarComponent /> {/* menu hambúrguer na esquerda */}
           <figure className="justify-self-center">
             {/* logo do senai no centro */}

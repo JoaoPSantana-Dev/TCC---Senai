@@ -1,6 +1,6 @@
 export default function FooterComponent(props: any) {
   return (
-    <footer className="flex items-end justify-end bg-red-600 text-white py-6 text-center gap-4">
+    <footer className="w-full bg-red-600 text-white py-6 text-center">
       <div className="container mx-auto px-4 flex flex-col items-center gap-4">
         <p className="text-sm font-medium">© 2026 Sector</p>
         <div>
