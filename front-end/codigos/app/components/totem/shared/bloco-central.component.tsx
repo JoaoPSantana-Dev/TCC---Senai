@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { NoticiasComponent } from "./noticias.component";
-import ImagemComponent from "../../administrador/shared/imagem.component";
+import { CarrosselComponent } from "./carrossel.component";
 
 const pages = [
   {
@@ -47,34 +46,6 @@ const pages = [
   },
 ];
 
-const noticias = [
-  {
-    id: 1,
-    titulo: "Notícia 1",
-    imagem: "tubarao.png",
-  },
-  {
-    id: 2,
-    titulo: "Notícia 2",
-    imagem: "tubarao.png",
-  },
-];
-
-const cards = [
-  <div key="1" className="h-32 flex items-center justify-center font-bold">
-    <ImagemComponent nomeImagem="tubarao.png" />
-  </div>,
-  <div key="2" className="h-32 flex items-center justify-center font-bold">
-    <ImagemComponent nomeImagem="tubarao.png" />
-  </div>,
-  <div key="3" className="h-32 flex items-center justify-center font-bold">
-    <ImagemComponent nomeImagem="tubarao.png" />
-  </div>,
-  <div key="4" className="h-32 flex items-center justify-center font-bold">
-    <ImagemComponent nomeImagem="tubarao.png" />
-  </div>,
-];
-
 export function BlocoCentralComponent() {
   return (
     <main className="min-h-auto flex flex-col items-center justify-center p-4">
@@ -102,16 +73,8 @@ export function BlocoCentralComponent() {
 
       <section className="w-full max-w-4xl bg-neutral-200 mt-50 p-4 rounded-xl dat">
         <h1 className="text-center text-4xl font-bold my-2 pb-8">DESTAQUES</h1>
-        {/* Carrossel container */}
-        <div className="data-">
-          {noticias.map((noticia) => (
-            <article key={noticia.id} className="...">
-              <img src={noticia.imagem} alt={noticia.titulo} />
-            </article>
-          ))}
-        </div>
 
-        <NoticiasComponent items={cards} />
+        <CarrosselComponent />
       </section>
     </main>
   );
