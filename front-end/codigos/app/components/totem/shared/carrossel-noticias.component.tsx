@@ -15,6 +15,9 @@ import { noticias } from "./noticias.data";
 
 const AUTOPLAY_DELAY = 10000;
 
+// CarrosselNoticiasComponent
+// exibe as notícias em um carrossel automático, com navegação por botão ou deslizando com uma barra de progresso na parte de baixo
+
 export function CarrosselNoticiasComponent() {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
@@ -71,7 +74,7 @@ export function CarrosselNoticiasComponent() {
         <CarouselNext className="h-12 w-12 -right-14" />
       </Carousel>
 
-      {/* barra de progresso */}
+      {/* indicador de progresso do carrossel */}
       <div className="flex justify-center w-full">
         <div className="w-1/3 bg-muted rounded-full h-2 overflow-hidden">
           <div

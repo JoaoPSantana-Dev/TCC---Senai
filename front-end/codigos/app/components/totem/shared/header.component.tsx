@@ -5,6 +5,10 @@ import { HeaderLogo } from "./header-logo.component";
 import { HeaderBarraUtilitarios } from "./header-barra-utilitarios.component";
 import { NavbarComponent } from "./navbar.component";
 
+// HeaderComponent
+// componente principal do cabeçalho do totem
+// exibe a barra superior com utilitários e, dependendo da rota, ajusta o layout para a homepage ou para as páginas internas
+
 export function HeaderComponent() {
   const pathname = usePathname();
 

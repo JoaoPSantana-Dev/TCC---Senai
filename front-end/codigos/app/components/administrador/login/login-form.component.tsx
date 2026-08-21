@@ -1,10 +1,13 @@
 import ImagemBotaoComponent from "../shared/imagem-botao.component";
-//formulário de login que fica na parte direita da tela de login (ainda não funcional)
+
+// LoginFormComponent
+// formulário de autenticação para o sistema administrativo
+// recebe CPF e senha do usuário e disponibiliza o botão para envio
 
 export function LoginFormComponent() {
   return (
     <form className="flex flex-col gap-4 pt-6">
-      {/* cpf */}
+      {/* campo para inserir o CPF do usuário. */}
       <div className="flex flex-col gap-1 ">
         <label htmlFor="cpf">CPF</label>
         <input
@@ -18,7 +21,7 @@ export function LoginFormComponent() {
         />
       </div>
 
-      {/* senha */}
+      {/* campo para inserir a senha do usuário. */}
       <div className="flex flex-col gap-1">
         <label htmlFor="senha">Senha</label>
         <input
@@ -30,7 +33,7 @@ export function LoginFormComponent() {
         />
       </div>
 
-      {/* botão de login */}
+      {/* botão de envio do formulário de autenticação. */}
       <div className="flex justify-center">
         <ImagemBotaoComponent nomeImagem="login_icon.svg" />
       </div>

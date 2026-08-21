@@ -1,3 +1,6 @@
+// FooterComponent
+// rodapé compartilhado do sistema
+
 export default function FooterComponent() {
   return (
     <footer className="flex bg-white text-black py-2 text-center border-t-2 border-gray-300 pb-4">

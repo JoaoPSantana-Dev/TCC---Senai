@@ -1,8 +1,11 @@
 import ImagemComponent from "../shared/imagem.component";
 
+// LoginHeaderComponent
+// cabeçalho da área de autenticação do sistema
+// apresenta o logo do SENAI, o título da tela e a orientação do usuário
+
 export function LoginHeaderComponent() {
   return (
-    // header do login que tem o logo do senai, o título e a descrição
     <header className="flex flex-col gap-2">
       <figure className="mb-32">
         <ImagemComponent

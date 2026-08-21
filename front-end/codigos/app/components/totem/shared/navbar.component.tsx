@@ -1,5 +1,8 @@
 import ImagemComponent from "../../administrador/shared/imagem.component";
-// componente que representa a barra de navegação do totem e fica em todas as páginas menos a homepage, é as três barras que ao clicar abre o menu hambúrguer (ainda não funcional)
+
+// NavbarComponent
+// botão de navegação do totem que representa o menu hambúrguer
+// presente nas páginas internas para abrir o menu lateral e manter a navegação acessível em todas as páginas
 
 export function NavbarComponent() {
   return (

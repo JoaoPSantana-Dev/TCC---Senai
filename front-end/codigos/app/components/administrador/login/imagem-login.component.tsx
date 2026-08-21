@@ -1,6 +1,8 @@
 import ImagemComponent from "../shared/imagem.component";
-// componente que representa a imagem do login, que fica na parte esquerda da tela de login
-// você pode passar o nome da imagem e o texto alternativo (opcional) como propriedades e mudar quando quiser
+
+// ImagemLoginComponent
+// bloco visual da lateral esquerda da tela de login
+// recebe o nome da imagem e o texto alternativo para exibir a identidade visual do ambiente escolar e reforçar a marca do projeto
 
 interface ImagemLoginProps {
   nomeImagem: string;

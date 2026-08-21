@@ -1,3 +1,6 @@
+// HeaderBarraUtilitarios
+// barra superior fixa com informações institucionais, hora atual e clima
+
 export function HeaderBarraUtilitarios() {
   return (
     <div className="flex w-full bg-red-600 gap-2 items-center justify-between pl-2 pr-2">

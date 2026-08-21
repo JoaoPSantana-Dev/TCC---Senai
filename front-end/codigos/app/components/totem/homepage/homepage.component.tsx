@@ -1,6 +1,9 @@
 import { HomepageNoticias } from "../shared/homepage-noticias.component";
 import { HomepageMenu } from "../shared/homepage-menu.component";
 
+// HomepageComponent
+// página inicial do totem, responsável por reunir as principais ações de navegação e os destaques informativos em uma única tela centralizada
+
 export function HomepageComponent() {
   return (
     <main className="min-h-auto flex flex-col items-center justify-center p-4">

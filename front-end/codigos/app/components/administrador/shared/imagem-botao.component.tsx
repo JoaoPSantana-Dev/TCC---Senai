@@ -1,5 +1,8 @@
 import Image from "next/image";
 
+// ImagemBotaoComponent
+// botão reutilizável que pode ser adicionado junto com um texto
+
 interface ImagemProps {
   texto?: string;
   nomeImagem: string;

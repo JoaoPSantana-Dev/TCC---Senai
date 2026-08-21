@@ -6,6 +6,9 @@ interface NoticiaSlideProps {
   noticia: Noticia;
 }
 
+// NoticiaSlide
+// renderiza um único item do carrossel de notícias com imagem de fundo e título
+
 export function NoticiaSlide({ noticia }: NoticiaSlideProps) {
   return (
     <Card className="overflow-hidden">

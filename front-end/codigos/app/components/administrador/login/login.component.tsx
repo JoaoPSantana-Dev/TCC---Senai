@@ -5,6 +5,12 @@ import { ImagemLoginComponent } from "./imagem-login.component";
 import { LoginFormComponent } from "./login-form.component";
 import { LoginHeaderComponent } from "./login-header.component";
 
+// LoginComponent
+// estrutura principal da tela de login do painel administrativo
+// na esquerda fica a imagem de identificação
+// na direita fica o bloco de autenticação, com cabeçalho e formulário organizados em um layout responsivo
+// embaixo, o rodapé
+
 export function LoginComponent() {
   return (
     <>

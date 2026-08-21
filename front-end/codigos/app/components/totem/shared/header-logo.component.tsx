@@ -1,5 +1,9 @@
 import ImagemComponent from "../../administrador/shared/imagem.component";
 
+// HeaderLogo
+// exibe o logo institucional do SENAI no centro do cabeçalho
+// esse componente é reutilizado em todas as páginas do totem
+
 export function HeaderLogo() {
   return (
     <figure className="justify-self-center">
