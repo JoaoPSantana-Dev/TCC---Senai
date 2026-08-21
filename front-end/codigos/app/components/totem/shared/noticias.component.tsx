@@ -1,4 +1,4 @@
-import { CarrosselNoticiasComponent } from "../shared/carrossel-noticias.component";
+import { CarrosselNoticiasComponent } from "./carrossel-noticias.component";
 
 // NoticiasComponent
 // seção de notícias da homepage, responsável por organizar e destacar as principais notícias e eventos da unidade

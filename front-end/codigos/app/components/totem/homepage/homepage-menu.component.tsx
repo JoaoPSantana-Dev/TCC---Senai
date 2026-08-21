@@ -3,7 +3,7 @@ import Link from "next/link";
 // HomepageMenuComponent
 // monta o menu principal da homepage do totem com links para as páginas do projeto
 
-export const paginas = [
+const paginas = [
   {
     titulo: "Sobre o SENAI",
     href: "/sobre-senai",

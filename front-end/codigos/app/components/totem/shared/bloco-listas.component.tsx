@@ -1,5 +1,47 @@
 import Link from "next/link";
-import { paginas } from "../homepage/homepage-menu.component";
+
+const paginas = [
+  {
+    titulo: "Sobre o SENAI",
+    href: "/sobre-senai",
+    icone: "💼",
+  },
+  {
+    titulo: "Sobre o SENAI Mariano Ferraz",
+    href: "/sobre-senai-mariano-ferraz",
+    icone: "🏢",
+  },
+  {
+    titulo: "Horário das aulas",
+    href: "/horario-aulas",
+    icone: "⏰",
+  },
+  {
+    titulo: "Mapa da escola",
+    href: "/mapa-escola",
+    icone: "🗺️",
+  },
+  {
+    titulo: "Vagas de emprego",
+    href: "/vagas-emprego",
+    icone: "💼",
+  },
+  {
+    titulo: "Vagas de estágio",
+    href: "/vagas-estagio",
+    icone: "💼",
+  },
+  {
+    titulo: "Cursos",
+    href: "/cursos",
+    icone: "📚",
+  },
+  {
+    titulo: "Biblioteca",
+    href: "/biblioteca",
+    icone: "📖",
+  },
+];
 
 export function BlocoListasComponent() {
   <nav className="w-full max-w-6xl p-4 rounded-xl">
