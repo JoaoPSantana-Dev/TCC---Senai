@@ -1,4 +1,4 @@
-import ImagemComponent from "../shared/imagem.component";
+import ImagemComponent from "../../shared/imagem.component";
 
 // LoginHeaderComponent
 // cabeçalho da área de autenticação do sistema

@@ -1,4 +1,4 @@
-import ImagemComponent from "../../administrador/shared/imagem.component";
+import ImagemComponent from "../../shared/imagem.component";
 
 // HeaderLogo
 // exibe o logo institucional do SENAI no centro do cabeçalho

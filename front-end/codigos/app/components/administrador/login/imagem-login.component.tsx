@@ -1,4 +1,4 @@
-import ImagemComponent from "../shared/imagem.component";
+import ImagemComponent from "../../shared/imagem.component";
 
 // ImagemLoginComponent
 // bloco visual da lateral esquerda da tela de login

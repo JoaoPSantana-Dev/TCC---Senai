@@ -79,7 +79,7 @@ export function CarrosselNoticiasComponent() {
         <div className="w-1/3 bg-muted rounded-full h-2 overflow-hidden">
           <div
             key={current}
-            className={`bg-primary h-full rounded-full animate-carousel-progress origin-left ${
+            className={`bg-red-500 h-full rounded-full animate-carousel-progress origin-left ${
               !isPlaying ? "paused" : ""
             }`}
             style={{ animationDuration: `${AUTOPLAY_DELAY}ms` }}

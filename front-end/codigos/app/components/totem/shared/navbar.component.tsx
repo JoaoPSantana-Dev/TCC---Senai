@@ -1,4 +1,4 @@
-import ImagemComponent from "../../administrador/shared/imagem.component";
+import ImagemComponent from "../../shared/imagem.component";
 
 // NavbarComponent
 // botão de navegação do totem que representa o menu hambúrguer
