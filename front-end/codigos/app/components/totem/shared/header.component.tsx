@@ -1,8 +1,8 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { HeaderLogo } from "./header-logo.component";
-import { HeaderBarraUtilitarios } from "./header-barra-utilitarios.component";
+import { HeaderLogoComponent } from "./header-logo.component";
+import { HeaderBarraUtilitariosComponent } from "./header-barra-utilitarios.component";
 import { NavbarComponent } from "./navbar.component";
 import Link from "next/link";
 
@@ -15,7 +15,7 @@ export function HeaderComponent() {
 
   return (
     <header className="w-full text-white border-b-2 border-gray-300">
-      <HeaderBarraUtilitarios />
+      <HeaderBarraUtilitariosComponent />
       <div
         className={
           pathname === "/homepage"
@@ -28,7 +28,7 @@ export function HeaderComponent() {
             <NavbarComponent />
           </Link>
         )}
-        <HeaderLogo />
+        <HeaderLogoComponent />
       </div>
     </header>
   );

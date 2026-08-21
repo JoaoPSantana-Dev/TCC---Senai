@@ -1,9 +1,9 @@
 import Link from "next/link";
 
-// HomepageMenu
+// HomepageMenuComponent
 // monta o menu principal da homepage do totem com links para as páginas do projeto
 
-const paginas = [
+export const paginas = [
   {
     titulo: "Sobre o SENAI",
     href: "/sobre-senai",
@@ -46,7 +46,7 @@ const paginas = [
   },
 ];
 
-export function HomepageMenu() {
+export function HomepageMenuComponent() {
   return (
     <nav className="w-full max-w-6xl p-4 rounded-xl">
       <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">

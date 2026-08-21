@@ -1,5 +1,5 @@
-import { HomepageNoticias } from "../homepage/homepage-noticias.component";
-import { HomepageMenu } from "./homepage-menu.component";
+import { HomepageMenuComponent } from "./homepage-menu.component";
+import { NoticiasComponent } from "./noticias.component";
 
 // HomepageComponent
 // página inicial do totem, responsável por reunir as principais ações de navegação e os destaques informativos em uma única tela centralizada
@@ -10,8 +10,8 @@ export function HomepageComponent() {
       <h1 className="text-center text-2xl font-semibold my-2 pb-8">
         Bem-vindo ao totem do SENAI Mariano Ferraz!
       </h1>
-      <HomepageMenu />
-      <HomepageNoticias />
+      <HomepageMenuComponent />
+      <NoticiasComponent />
     </main>
   );
 }

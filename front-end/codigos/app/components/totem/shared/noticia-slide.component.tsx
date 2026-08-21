@@ -6,10 +6,10 @@ interface NoticiaSlideProps {
   noticia: Noticia;
 }
 
-// NoticiaSlide
+// NoticiaSlideComponent
 // renderiza um único item do carrossel de notícias com imagem de fundo e título
 
-export function NoticiaSlide({ noticia }: NoticiaSlideProps) {
+export function NoticiaSlideComponent({ noticia }: NoticiaSlideProps) {
   return (
     <Card className="overflow-hidden">
       <CardContent className="p-0 relative aspect-video flex flex-col justify-end">

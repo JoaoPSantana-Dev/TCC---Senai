@@ -10,7 +10,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { NoticiaSlide } from "./noticia-slide.component";
+import { NoticiaSlideComponent } from "./noticia-slide.component";
 import { noticias } from "./noticias.data";
 
 const AUTOPLAY_DELAY = 10000;
@@ -66,7 +66,7 @@ export function CarrosselNoticiasComponent() {
         <CarouselContent>
           {noticias.map((noticia) => (
             <CarouselItem key={noticia.id}>
-              <NoticiaSlide noticia={noticia} />
+              <NoticiaSlideComponent noticia={noticia} />
             </CarouselItem>
           ))}
         </CarouselContent>
