@@ -1,9 +1,9 @@
-import { CreateUsuarioDto } from './dto/create-usuario.dto';
+import { CreateUsuarioDto } from '../dto/create-usuario.dto';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
-export class DadosService {
+export class UsuariosService {
   constructor(private prisma: PrismaService) {}
 
   criar(createUsuarioDto: CreateUsuarioDto) {
