@@ -5,11 +5,15 @@ export default function FooterComponent(props: any) {
         <p className="text-sm font-medium">© 2026 Sector</p>
         <div>
           <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs opacity-90">
-            <li className="hover:font-bold no-underline cursor-pointer">João Paulo</li>
-            <li className="hover:font-bold no-underline cursor-pointer">Thalles Vinicius</li>
-            <li className="hover:font-bold no-underline cursor-pointer">Eduardo</li>
-            <li className="hover:font-bold no-underline cursor-pointer">Tomas</li>
-            <li className="hover:font-bold no-underline cursor-pointer">João Pedro</li>
+            {["João Paulo", "Thalles Vinicius", "Eduardo", "Tomas", "João Pedro"].map((nome) => (
+              <li 
+                key={nome}
+                className="cursor-pointer transition-transform duration-100 
+                  ease-in-out active:scale-110 active:font-bold active:opacity-100 
+                  touch-manipulation py-1 px-2 rounded-md">
+                {nome}
+              </li>
+            ))}
           </ul>
         </div>
       </div>

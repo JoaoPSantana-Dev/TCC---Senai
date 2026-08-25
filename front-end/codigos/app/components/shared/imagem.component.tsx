@@ -5,6 +5,7 @@ interface ImagemProps {
   alt?: string;
   width?: number;
   height?: number;
+  fill?: boolean;
   className?: string;
 }
 
@@ -13,15 +14,28 @@ export default function ImagemComponent({
   alt = "Imagem",
   width = 1920,
   height = 1080,
+  fill = false,
   className = ""
 }: ImagemProps) {
+  if (fill) {
+    return (
+      <Image
+        src={`/${nomeImagem}`}
+        alt={alt}
+        fill
+        sizes="(max-width: 768) 100vw, 50vw"
+        className={`object-cover ${className}`}
+        loading="eager"
+      />
+    );
+  }
   return (
     <Image
       src={`/${nomeImagem}`}
       alt={alt}
-      width={width}
-      height={height}
-      className={`max-w-full h-full object-cover ${className}`}
+      width={width || 200}
+      height={height || 200}
+      className={`h-auto w-auto object-cover ${className}`}
       loading="eager"
     />
   );
