@@ -1,15 +1,24 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import ImagemComponent from "./imagem.component";
 import { NavbarComponent } from "./navbar.component";
 
 export function HeaderComponent() {
   const pathname = usePathname();
-  const currentDateTime = new Date();
-  const hora = currentDateTime.getHours();
-  const minutos = currentDateTime.getMinutes();
-  const segundos = currentDateTime.getSeconds();
+  const [time, setTime] = useState<string>("");
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      setTime(now.toLocaleTimeString("pt-BR"));
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   // esse código é para caso o endpoint seja "/homepage"
   if (pathname === "/homepage") {
@@ -24,11 +33,8 @@ export function HeaderComponent() {
 
             {/* hora e temperatura na direita */}
             <time className="font-semibold text-sm uppercase truncate shrink-0 flex items-center justify-center gap-2">
-              <p>
-                {hora}:{minutos}:{segundos}
-              </p>
-
-              <p>21°</p>
+              <span>{time || "00:00:00"}</span>
+              <span>21°</span>
             </time>
           </div>
 
@@ -60,11 +66,8 @@ export function HeaderComponent() {
 
           {/* hora e temperatura na direita */}
           <time className="font-semibold text-sm uppercase truncate shrink-0 flex items-center justify-center gap-2">
-            <p>
-              {hora}:{minutos}:{segundos}
-            </p>
-
-            <p>21°</p>
+            <span>{time || "00:00:00"}</span>
+            <span>21°</span>
           </time>
         </div>
 
