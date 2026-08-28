@@ -1,12 +1,33 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 import ImagemBotaoComponent from "../../shared/imagem-botao.component";
+import { event } from "next/dist/build/output/log";
 
 // LoginFormComponent
 // formulário de autenticação para o sistema administrativo
 // recebe CPF e senha do usuário e disponibiliza o botão para envio
 
 export function LoginFormComponent() {
+  const router = useRouter();
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const cpf = form.cpf.value;
+    const senha = form.senha.value;
+
+    if (cpf === "5" && senha === "5") {
+      router.push("/homepage");
+      return;
+    }
+
+    router.push("/login");
+  }
+
   return (
-    <form className="flex flex-col gap-4 pt-6">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4 pt-6">
       {/* campo para inserir o CPF do usuário. */}
       <div className="flex flex-col gap-1 ">
         <label htmlFor="cpf">CPF</label>
