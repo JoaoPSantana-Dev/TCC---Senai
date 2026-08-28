@@ -21,3 +21,7 @@ import { UsuariosModule} from './dados/usuarios/usuarios.module';
   ],
 })
 
+<<<<<<< HEAD
+=======
+export class AppModule {}
+>>>>>>> 7a6c7928f51c1cd4cbafcc6507eb3107e0d84ead
