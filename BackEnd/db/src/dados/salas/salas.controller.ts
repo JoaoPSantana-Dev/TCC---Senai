@@ -17,7 +17,7 @@ export class SalasController{
     }
 
     @Get(":id")
-    listarUmTexto(@Param("id") id:number){
+    listarUmaSala(@Param("id") id:number){
         return this.salasService.listarUmaSala(id);
     }
     @Delete(":id")

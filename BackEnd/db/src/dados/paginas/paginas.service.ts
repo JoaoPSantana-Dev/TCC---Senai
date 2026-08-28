@@ -17,4 +17,24 @@ export class PaginasService{
             include: {textos:true,}
         });
     }
+
+    listarUmaPagina(id:number){
+        return this.prisma.pagina.findUnique({
+            where:{idPaginas:id},
+            include: {textos:true,}
+        });
+    }
+        
+    apagarPagina(id:number){
+        return this.prisma.pagina.delete({
+            where:{idPaginas:id}
+        });
+    }
+                
+    updatePagina(id:number,updatePaginaDto:CreatePaginaDto){
+        return this.prisma.pagina.update({
+            where:{idPaginas:id},
+            data:updatePaginaDto
+        });
+    }
 }
