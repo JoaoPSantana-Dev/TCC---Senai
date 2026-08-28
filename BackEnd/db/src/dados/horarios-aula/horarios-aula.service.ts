@@ -1,5 +1,6 @@
 import { CreateHorarioAulaDto } from "../dto/create-horario-aula.dto";
 import { Injectable } from "@nestjs/common";
+import { HorarioAula } from "generated/prisma/browser";
 import { PrismaService } from "src/prisma/prisma.service";
 
 @Injectable()
@@ -15,6 +16,19 @@ export class HorariosAulaService{
     listarTodosHorarios(){
         return this.prisma.horarioAula.findMany({
             include: {sala:true,},
+        });
+    }
+
+    apagarAula(id:number){
+        return this.prisma.horarioAula.delete({
+            where:{idHorariosAula:id}
+        });
+    }
+    
+    updateAula(id:number,updateAulaDto:CreateHorarioAulaDto){
+        return this.prisma.horarioAula.update({
+            where:{idHorariosAula:id},
+            data:updateAulaDto
         });
     }
 }
