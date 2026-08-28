@@ -26,8 +26,8 @@ const dadosCarrossel = [
     id: 3,
     unidade: "Bloco B",
     andar: "Terreo",
-    superiores: [{ id: 9, nome: "Sala17" }, { id: 10, nome: "sala18" }, { id: 11, nome: "sala19" }, { id: 12, nome: "sala20" }],
-    inferiores: [{ id: 13, nome: "sala21" }, { id: 14, nome: "sala22" }, { id: 15, nome: "sala23" }, { id: 16, nome: "sala24" }],
+    superiores: [{ id: 17, nome: "Sala17" }, { id: 18, nome: "sala18" }, { id: 19, nome: "sala19" }, { id: 20, nome: "sala20" }],
+    inferiores: [{ id: 21, nome: "sala21" }, { id: 22, nome: "sala22" }, { id: 23, nome: "sala23" }, { id: 24, nome: "sala24" }],
   },
 ];
 
