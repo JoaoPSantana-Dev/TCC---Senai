@@ -17,4 +17,23 @@ export class TextosService{
             include: {pagina:true,}
         });
     }
+    listarUmTexto(id:number){
+        return this.prisma.texto.findUnique({
+            where:{idTextos:id},
+            include: {pagina:true,}
+        });
+    }
+
+    apagarTexto(id:number){
+        return this.prisma.texto.delete({
+            where:{idTextos:id}
+        });
+    }
+        
+    updateTexto(id:number,updateTextoDto:CreateTextoDto){
+        return this.prisma.texto.update({
+            where:{idTextos:id},
+            data:updateTextoDto
+        });
+    }
 }

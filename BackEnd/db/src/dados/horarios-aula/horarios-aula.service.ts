@@ -18,13 +18,19 @@ export class HorariosAulaService{
             include: {sala:true,},
         });
     }
+    listarUmHorario(id:number){
+        return this.prisma.horarioAula.findUnique({
+            where:{idHorariosAula:id},
+            include: {sala:true,},
+        });
+    }
 
     apagarAula(id:number){
         return this.prisma.horarioAula.delete({
             where:{idHorariosAula:id}
         });
     }
-    
+
     updateAula(id:number,updateAulaDto:CreateHorarioAulaDto){
         return this.prisma.horarioAula.update({
             where:{idHorariosAula:id},
