@@ -1,12 +1,45 @@
+"use client"
+
+import { useRouter } from "next/navigation";
 import ImagemBotaoComponent from "../../shared/imagem-botao.component";
+import { useEffect, useState } from "react";
 
 // LoginFormComponent
 // formulário de autenticação para o sistema administrativo
 // recebe CPF e senha do usuário e disponibiliza o botão para envio
+export default function dadosUsuario(){
+  const[usuario,getUsuario]= useState <any>([])
 
+    useEffect(()=>{
+      buscarUsuario()
+    })
+
+  async function buscarUsuario() {
+    const dadosUsuario = await fetch ("http://localhost:3001/ugitsuario")
+    const usuario= await dadosUsuario.json()
+    getUsuario(usuario)
+  }
+}
 export function LoginFormComponent() {
+  const router = useRouter();
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const cpf = form.cpf.value;
+    const senha = form.senha.value;
+
+    if (cpf === "5" && senha === "5") {
+      router.push("/homepage");
+      return;
+    }
+
+    router.push("/login");
+  }
+
   return (
-    <form className="flex flex-col gap-4 pt-6">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4 pt-6">
       {/* campo para inserir o CPF do usuário. */}
       <div className="flex flex-col gap-1 ">
         <label htmlFor="cpf">CPF</label>
