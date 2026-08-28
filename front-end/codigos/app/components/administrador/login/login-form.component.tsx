@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import ImagemBotaoComponent from "../../shared/imagem-botao.component";
-import { event } from "next/dist/build/output/log";
 
 // LoginFormComponent
 // formulário de autenticação para o sistema administrativo
