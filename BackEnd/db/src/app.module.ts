@@ -21,4 +21,3 @@ import { UsuariosModule} from './dados/usuarios/usuarios.module';
   ],
 })
 
-export class AppModule {}
