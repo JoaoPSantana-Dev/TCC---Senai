@@ -5,11 +5,11 @@ import { HomepageMenuComponent } from "./homepage-menu.component";
 
 export function HomepageComponent() {
   return (
-    <>
+    <section className="min-h-auto flex flex-col items-center justify-center">
       <h1 className="text-center text-2xl font-semibold my-2 pb-8">
         Bem-vindo ao totem do SENAI Mariano Ferraz!
       </h1>
       <HomepageMenuComponent />
-    </>
+    </section>
   );
 }

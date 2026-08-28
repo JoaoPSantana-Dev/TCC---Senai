@@ -5,16 +5,14 @@ import { NoticiasComponent } from "@/app/components/totem/shared/noticias.compon
 
 export default function Homepage() {
   return (
-    <div className="w-screen h-screen flex flex-col gap-12">
-      <main className="min-h-auto flex flex-col items-center justify-center">
-        <HeaderComponent />
+    <main className="w-screen h-screen flex flex-col">
+      <HeaderComponent />
 
-        <HomepageComponent />
+      <HomepageComponent />
 
-        <NoticiasComponent />
+      <NoticiasComponent />
 
-        <FooterComponent />
-      </main>
-    </div>
+      <FooterComponent />
+    </main>
   );
 }
