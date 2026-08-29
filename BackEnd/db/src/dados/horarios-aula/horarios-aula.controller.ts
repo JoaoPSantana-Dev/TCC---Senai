@@ -15,4 +15,17 @@ export class HorariosAulaController{
     listarTodosHorarios(){
         return this.horariosAulaService.listarTodosHorarios();
     }
+    @Get(":id")
+    listarUmHorario(@Param("id") id:number){
+        return this.horariosAulaService.listarUmHorario(id);
+    }
+
+    @Delete(":id")
+    apagarAula(@Param("id") id:number){
+        return this.horariosAulaService.apagarAula(+id);
+    }
+    @Patch(":id")
+    updateAula(@Param("id") id:number, @Body() updateAulaDto:CreateHorarioAulaDto){
+        return this.horariosAulaService.updateAula(id,updateAulaDto);
+    }
 }

@@ -16,4 +16,17 @@ export class PaginasController {
     listarTodasPaginas(){
         return this.paginaService.listarTodasPaginas();
     }
+
+    @Get(":id")
+    listarUmaPagina(@Param("id") id:number){
+        return this.paginaService.listarUmaPagina(id);
+    }
+    @Delete(":id")
+    apagarPagina(@Param("id") id:number){
+        return this.paginaService.apagarPagina(+id);
+    }
+    @Patch(":id")
+    updatePagina(@Param("id") id:number, @Body() updatePaginaDto:CreatePaginaDto){
+        return this.paginaService.updatePagina(id,updatePaginaDto);
+    }
 }

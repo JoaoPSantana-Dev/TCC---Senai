@@ -13,6 +13,19 @@ export class SalasController{
 
     @Get()
     listarTodasSalas(){
-        return this.salasService.listarTodasSalas;
+        return this.salasService.listarTodasSalas();
+    }
+
+    @Get(":id")
+    listarUmaSala(@Param("id") id:number){
+        return this.salasService.listarUmaSala(id);
+    }
+    @Delete(":id")
+    apagarSala(@Param("id") id:number){
+        return this.salasService.apagarSala(+id);
+    }
+    @Patch(":id")
+    updateSala(@Param("id") id:number, @Body() updateSalaDto:CreateSalaDto){
+        return this.salasService.updateSala(id,updateSalaDto);
     }
 }

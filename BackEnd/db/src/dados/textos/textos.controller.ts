@@ -15,4 +15,16 @@ export class TextosController{
     listarTodosTextos(){
         return this.textosService.listarTodosTextos();
     }
+    @Get(":id")
+    listarUmTexto(@Param("id") id:number){
+        return this.textosService.listarUmTexto(id);
+    }
+    @Delete(":id")
+    apagarTexto(@Param("id") id:number){
+        return this.textosService.apagarTexto(+id);
+    }
+    @Patch(":id")
+    updateAula(@Param("id") id:number, @Body() updateTextoDto:CreateTextoDto){
+        return this.textosService.updateTexto(id,updateTextoDto);
+    }
 }
