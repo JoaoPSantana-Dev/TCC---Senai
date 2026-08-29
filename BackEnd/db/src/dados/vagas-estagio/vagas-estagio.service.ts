@@ -15,4 +15,23 @@ export class VagasEstagioService{
     listarTodasVagasEstagio(){
         return this.prisma.vagaEstagio.findMany();
     }
+
+     listarUmaVagaEstagio(id:number){
+            return this.prisma.vagaEstagio.findUnique({
+                where:{idEstagio:id}
+            });
+        }
+    
+        apagarVagaEstagio(id:number){
+            return this.prisma.vagaEstagio.delete({
+                where:{idEstagio:id}
+            });
+        }
+    
+        updateVagaEstagio(id:number, updateVagaEstagioDTO:CreateVagaEstagioDto){
+            return this.prisma.vagaEstagio.update({
+                where:{idEstagio:id},
+                data:updateVagaEstagioDTO
+            });
+        }
 }

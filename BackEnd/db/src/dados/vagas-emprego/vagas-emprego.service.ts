@@ -16,4 +16,23 @@ export class VagasEmpregoService{
     listarTodasVagasEmprego(){
         return this.prisma.vagaEmprego.findMany();
     }
+
+    listarUmaVagaEmprego(id:number){
+        return this.prisma.vagaEmprego.findUnique({
+            where:{idEmprego:id}
+        });
+    }
+
+    apagarVagaEmprego(id:number){
+        return this.prisma.vagaEmprego.delete({
+            where:{idEmprego:id}
+        });
+    }
+
+    updateVagaEmprego(id:number, updateVagaEmpregoDTO:CreateVagaEmpregoDto){
+        return this.prisma.vagaEmprego.update({
+            where:{idEmprego:id},
+            data:updateVagaEmpregoDTO
+        });
+    }
 }

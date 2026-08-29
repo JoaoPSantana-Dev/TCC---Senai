@@ -7,13 +7,28 @@ export class VagasEstagioController {
     constructor(private readonly vagasEstagioService: VagasEstagioService){}
 
     @Post()
-    criarVagaEmprego(@Body() createVagaEstagioDto: CreateVagaEstagioDto){
+    criarVagaEstagio(@Body() createVagaEstagioDto: CreateVagaEstagioDto){
         return this.vagasEstagioService.criarVagaEstagio(createVagaEstagioDto);
     }
 
     @Get()
     listarTodasVagasEstagio() {
         return this.vagasEstagioService.listarTodasVagasEstagio();
+    }
+
+    @Get(":id")
+    listarUmaVagaEstagio(@Param("id") id:number){
+        return this.vagasEstagioService.listarUmaVagaEstagio(+id);
+    }
+
+    @Delete(":id")
+    apagarVagaEstagio(@Param("id") id:number){
+        return this.vagasEstagioService.apagarVagaEstagio(+id);
+    }
+
+    @Patch(":id")
+    updateVagaEstagio(@Param("id") id:number, @Body() updateVagaEstagioDTO: CreateVagaEstagioDto){
+        return this.vagasEstagioService.updateVagaEstagio(+id, updateVagaEstagioDTO);
     }
 
 }

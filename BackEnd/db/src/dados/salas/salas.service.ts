@@ -18,4 +18,24 @@ export class SalasService{
         }
         );
     }
+
+    listarUmaSala(id:number){
+        return this.prisma.sala.findUnique({
+            where:{idSala:id},
+            include: {horarios:true,}
+        });
+    }
+    
+    apagarSala(id:number){
+        return this.prisma.sala.delete({
+            where:{idSala:id}
+        });
+    }
+            
+    updateSala(id:number,updateSalaDto:CreateSalaDto){
+        return this.prisma.sala.update({
+            where:{idSala:id},
+            data:updateSalaDto
+        });
+    }
 }
