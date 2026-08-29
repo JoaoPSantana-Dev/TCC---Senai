@@ -6,30 +6,33 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class UsuariosService {
   constructor(private prisma: PrismaService) {}
 
-  criar(createUsuarioDto: CreateUsuarioDto) {
+  criarUsuario(createUsuarioDto: CreateUsuarioDto) {
     return this.prisma.usuario.create({
       data: createUsuarioDto,
     });
   }
 
-  listarTodos() {
+  listarTodosUsuarios() {
     return this.prisma.usuario.findMany();
   }
+
+  listarUmUsuario(id:number){
+    return this.prisma.usuario.findUnique({
+      where:{idUsuario:id}
+    });
+  }
+
+  apagarUsuario(id:number){
+    return this.prisma.usuario.delete({
+      where:{idUsuario:id}
+    });
+  }
+
+  updateUsuario(id:number, updateUsuarioDTO: CreateUsuarioDto){
+    return this.prisma.usuario.update({
+      where:{idUsuario:id},
+      data: updateUsuarioDTO
+    });
+  }
 }
 
-/*
-  findOne(id: number) {
-    return `This action returns a #${id} dado`;
-  }
-
-  /*
-  update(id: number, updateDadoDto: UpdateDadoDto) {
-    return `This action updates a #${id} dado`;
-  }
-
-
-  remove(id: number) {
-    return `This action removes a #${id} dado`;
-  }
-}
-*/
