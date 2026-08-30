@@ -1,18 +1,10 @@
 import { HomepageComponent } from "@/app/components/totem/homepage/homepage.component";
-import FooterComponent from "@/app/components/shared/footer.component";
-import { HeaderComponent } from "@/app/components/totem/shared/header.component";
-import { NoticiasComponent } from "@/app/components/totem/shared/noticias.component";
+import { EstruturaTotemComponent } from "@/app/components/totem/shared/estrutura-totem.component";
 
 export default function Homepage() {
   return (
-    <main className="w-screen h-screen flex flex-col">
-      <HeaderComponent />
-
+    <EstruturaTotemComponent>
       <HomepageComponent />
-
-      <NoticiasComponent />
-
-      <FooterComponent />
-    </main>
+    </EstruturaTotemComponent>
   );
 }

@@ -2,8 +2,8 @@ import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { vagas } from "./vagas-emprego-menu.data";
 
-// HomepageMenuComponent
-// monta o menu principal da homepage do totem com links para as páginas do projeto
+// VagasEmpregoMenuComponent
+// monta o menu de oportunidades de emprego do totem com links para as vagas disponíveis.
 
 export function VagasEmpregoMenuComponent() {
   return (
