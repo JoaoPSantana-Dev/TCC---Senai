@@ -13,12 +13,10 @@ export function EstruturaTotemComponent({
   mostrarNoticias = true,
 }: EstruturaTotemComponentProps) {
   return (
-    // w-screen h-screen flex flex-col
-    <main className="flex min-h-screen w-full flex-col bg-slate-100">
+    <main className="w-screen h-screen flex flex-col">
       <HeaderComponent />
 
-      {/* colocar so o children */}
-      <div className="flex-1">{children}</div>
+      {children}
 
       {mostrarNoticias && <NoticiasComponent />}
 
