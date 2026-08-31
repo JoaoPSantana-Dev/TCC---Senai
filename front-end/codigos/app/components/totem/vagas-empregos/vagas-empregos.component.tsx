@@ -1,11 +1,11 @@
 import { EstruturaVagasMenuComponent } from "../shared/estrutura-vagas-menu.component";
 import { TituloComponent } from "../shared/titulo.component";
-import { vagasEmprego } from "./vagas-emprego.data";
+import { vagasEmpregos } from "./vagas-empregos.data";
 
-export function VagasEmpregoComponent() {
+export function VagasEmpregosComponent() {
   return (
     <TituloComponent texto="Oportunidades de emprego">
-      <EstruturaVagasMenuComponent itens={vagasEmprego} />
+      <EstruturaVagasMenuComponent itens={vagasEmpregos} />
     </TituloComponent>
   );
 }

@@ -5,7 +5,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { Vaga } from "../shared/estrutura-vagas-menu.data";
 
-export const vagasEmprego: Vaga[] = [
+export const vagasEmpregos: Vaga[] = [
   {
     titulo: "Assistente de Vendas",
     href: "/vagas/assistente-vendas",
