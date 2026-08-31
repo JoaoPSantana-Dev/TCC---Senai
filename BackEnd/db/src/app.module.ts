@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
 import { PrismaModule } from './prisma/prisma.module';
-import { HorariosAulaModule } from './dados/horarios-aula/horarios-aula.module';
-import { PaginasModule } from './dados/paginas/paginas.module';
-import { SalasModule } from './dados/salas/salas.module';
-import { TextosModule } from './dados/textos/textos.module';
-import { VagasEmpregoModule } from './dados/vagas-emprego/vagas-emprego.module';
-import { VagasEstagioModule } from './dados/vagas-estagio/vagas-estagio.module';
-import { UsuariosModule} from './dados/usuarios/usuarios.module';
+import { HorariosAulaModule } from './tables/horarios-aula/horarios-aula.module';
+import { PaginasModule } from './tables/paginas/paginas.module';
+import { SalasModule } from './tables/salas/salas.module';
+import { TextosModule } from './tables/textos/textos.module';
+import { VagasEmpregoModule } from './tables/vagas-emprego/vagas-emprego.module';
+import { VagasEstagioModule } from './tables/vagas-estagio/vagas-estagio.module';
+import { UsuariosModule} from './tables/usuarios/usuarios.module';
+import { LoginModule } from './modulos/login/login.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { UsuariosModule} from './dados/usuarios/usuarios.module';
     VagasEmpregoModule,
     VagasEstagioModule,
     UsuariosModule,
+    LoginModule
   ],
 })
 
