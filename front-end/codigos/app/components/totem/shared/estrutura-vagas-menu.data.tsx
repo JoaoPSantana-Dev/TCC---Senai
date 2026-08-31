@@ -1,4 +1,4 @@
-import { HugeiconsIconProps } from "@hugeicons/react";
+import { type HugeiconsIconProps } from "@hugeicons/react";
 
 // estrutura dos dados da vaga
 export interface Vaga {
