@@ -1,5 +1,3 @@
-"use client"
-
 import Image from "next/image";
 
 // ImagemBotaoComponent
@@ -10,7 +8,6 @@ interface ImagemProps {
   nomeImagem: string;
   alt?: string;
 }
-
 
 export default function ImagemBotaoComponent({
   texto = "Entrar",

@@ -25,7 +25,7 @@ export default function ImagemComponent({
       alt={alt}
       width={width}
       height={height}
-      className={`max-w-full object-contain ${className}`}
+      className={`w-auto h-auto max-w-full object-contain ${className}`}
       loading="eager"
     />
   );

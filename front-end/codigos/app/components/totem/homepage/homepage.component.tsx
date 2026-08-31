@@ -1,3 +1,4 @@
+import { TituloComponent } from "../shared/titulo.component";
 import { HomepageMenuComponent } from "./homepage-menu.component";
 
 // HomepageComponent
@@ -5,11 +6,8 @@ import { HomepageMenuComponent } from "./homepage-menu.component";
 
 export function HomepageComponent() {
   return (
-    <>
-      <h1 className="text-center text-2xl font-semibold my-2 pb-8">
-        Bem-vindo ao totem do SENAI Mariano Ferraz!
-      </h1>
+    <TituloComponent texto="Bem-vindo ao totem do SENAI Mariano Ferraz!">
       <HomepageMenuComponent />
-    </>
+    </TituloComponent>
   );
 }

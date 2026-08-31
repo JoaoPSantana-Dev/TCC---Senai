@@ -1,54 +1,55 @@
-"use client"
+"use client";
 
 import { useRouter } from "next/navigation";
 import ImagemBotaoComponent from "../../shared/imagem-botao.component";
-import { useEffect, useState } from "react";
 
-// LoginFormComponent
-// formulário de autenticação para o sistema administrativo
-// recebe CPF e senha do usuário e disponibiliza o botão para envio
-export default function dadosUsuario(){
-  const[usuario,getUsuario]= useState <any>([])
-
-    useEffect(()=>{
-      buscarUsuario()
-    })
-
-  async function buscarUsuario() {
-    const dadosUsuario = await fetch ("http://localhost:3001/ugitsuario")
-    const usuario= await dadosUsuario.json()
-    getUsuario(usuario)
-  }
-}
 export function LoginFormComponent() {
   const router = useRouter();
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const form = event.currentTarget;
-    const cpf = form.cpf.value;
+
+
+    const email = form.email.value;
     const senha = form.senha.value;
 
-    if (cpf === "5" && senha === "5") {
-      router.push("/homepage");
-      return;
-    }
+    const resposta = await fetch("http://localhost:3001/login",{
+      method: "POST",
+      headers:{
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        senha,
+      }),
+    });
 
-    router.push("/login");
+    const dados = await resposta.json();
+
+    if(resposta.ok){
+      router.push("/homepage");
+      return
+    };
+
+    form.email.value = "";
+    form.senha.value="";
+    alert(dados.message);
+
   }
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4 pt-6">
-      {/* campo para inserir o CPF do usuário. */}
+      {/* campo para inserir o Email do usuário. */}
       <div className="flex flex-col gap-1 ">
-        <label htmlFor="cpf">CPF</label>
+        <label htmlFor="email">Email</label>
         <input
-          type="text"
-          name="cpf"
-          placeholder="___.___.___-__"
-          maxLength={14}
-          inputMode="numeric"
+          type="email"
+          name="email"
+          placeholder="Digite seu email"
+          //maxLength={14}
+          //inputMode="numeric"
           required
           className="border border-zinc-400 hover:border-zinc-800 p-4 rounded-2xl"
         />
