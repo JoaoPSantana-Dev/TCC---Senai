@@ -8,7 +8,7 @@ import {
   PermanentJobIcon,
   Clock01Icon,
 } from "@hugeicons/core-free-icons";
-import { HugeiconsIconProps } from "@hugeicons/react";
+import { type HugeiconsIconProps } from "@hugeicons/react";
 
 // estrutura dos dados da página
 export interface Pagina {
@@ -41,17 +41,17 @@ export const paginas: Pagina[] = [
   },
   {
     titulo: "Vagas de emprego",
-    href: "/vagas-emprego",
+    href: "/vagas-empregos",
     icone: Briefcase01Icon,
   },
   {
     titulo: "Vagas de estágio",
-    href: "/vagas-estagio",
+    href: "/vagas-estagios",
     icone: PermanentJobIcon,
   },
   {
     titulo: "Cursos",
-    href: "/cursos",
+    href: "/vagas-cursos",
     icone: Mortarboard02Icon,
   },
   {
