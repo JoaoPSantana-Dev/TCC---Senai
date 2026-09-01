@@ -1,10 +1,12 @@
 "use client";
 
+import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { router } from "next/client";
 import { ImagemBotaoComponent } from "../../shared/imagem-botao.component";
+import { useRouter } from "next/navigation"; 
+
+
 
 const schemaCadastro = z.object({
   nome: z.string().min(1, "Nome é obrigatório"),
@@ -17,6 +19,8 @@ const schemaCadastro = z.object({
 type CadastroFormData = z.infer<typeof schemaCadastro>;
 
 export function CadastroFormComponent() {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -36,7 +40,7 @@ export function CadastroFormComponent() {
     try {
       const resposta = await fetch("http://localhost:3001/usuarios", {
         method: "POST",
-        headers: { "Content-Type": "applications/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
@@ -118,7 +122,7 @@ export function CadastroFormComponent() {
         <label htmlFor="senha">Senha</label>
         <input
           id="senha"
-          type="senha"
+          type="password"
           {...register("senha")}
           className="border border-zinc-400 hover:border-zinc-800 p-4 rounded-2xl"
           placeholder="Digite sua senha"
