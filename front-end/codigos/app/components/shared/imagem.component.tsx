@@ -1,5 +1,9 @@
 import Image from "next/image";
 
+// ImagemComponent
+// componente reutilizável para renderizar imagens do projeto
+// centraliza o uso do componente Next Image e permite personalizar largura, altura, texto alternativo e classes extras via props
+
 interface ImagemProps {
   nomeImagem: string;
   alt?: string;
@@ -56,6 +60,8 @@ export default function ImagemComponent({
   alt = "Imagem",
   width = 1920,
   height = 1080,
+  width,
+  height,
   className = "",
 }: ImagemProps) {
   return (
@@ -65,6 +71,7 @@ export default function ImagemComponent({
       width={width}
       height={height}
       className={`w-auto h-auto max-w-full object-contain ${className}`} //configuração padrão da imagem + adicionais que podem ser passados
+      className={`w-auto h-auto max-w-full object-contain ${className}`}
       loading="eager"
     />
   );

@@ -1,6 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
+// ImagemBotaoComponent
+// botão reutilizável que pode ser adicionado junto com um texto
+
 interface ImagemProps {
   texto?: string;
   nomeImagem: string;
@@ -8,7 +11,7 @@ interface ImagemProps {
   href: string
 }
 
-export default function BotaoLoginComponent({
+export default function ImagemBotaoComponent({
   texto = "Entrar",
   nomeImagem,
   alt = "Imagem",
@@ -20,10 +23,16 @@ export default function BotaoLoginComponent({
       className="w-full flex items-center justify-center gap-2 bg-red-600 text-white 
         px-6 py-3 rounded-3xl mt-2 transition-all duration-100 ease-in-out active:scale-95
         active:brightness-90 touch-manipulation select-none cursor-pointer"
-    >
+  /*alt,
+}: ImagemProps) {
+  return (
+    <button
+      type="submit"
+      className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white py-2 rounded-3xl mt-2 duration-150 cursor-pointer"
+    */>
       <Image
         src={`/${nomeImagem}`}
-        alt={alt}
+        alt={`${alt}`}
         width={20}
         height={20}
         className="w-5 h-5 object-contain pointer-events-none"
