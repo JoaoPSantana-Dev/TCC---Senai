@@ -9,6 +9,7 @@ import { VagasEstagioModule } from './tables/vagas-estagio/vagas-estagio.module'
 import { UsuariosModule} from './tables/usuarios/usuarios.module';
 import { LoginModule } from './modulos/login/login.module';
 
+
 @Module({
   imports: [
     PrismaModule,
