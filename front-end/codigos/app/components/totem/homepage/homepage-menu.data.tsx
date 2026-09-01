@@ -14,11 +14,21 @@ import { HugeiconsIconProps } from "@hugeicons/react";
 export interface Pagina {
   titulo: string;
   href: string;
-  icone: HugeiconsIconProps["icon"];
+//  icone: HugeiconsIconProps["icon"];
 }
-
+const resposta = await fetch("http://localhost:3001/pegarPagina",{
+      method: "GET",
+      headers:{
+        "Content-Type": "application/json",
+      },
+    });
+const paginaLista=resposta;
+export const paginas:Pagina[]=[];
+paginaLista.forEach(element => {
+  paginas.push({titulo:element.nomePagina,href:`pagina${element.idPagina}`});//melhorar href. usar o id é provisório
+});
 // estrutura das páginas que vão pro menu
-export const paginas: Pagina[] = [
+/*export const paginas: Pagina[] = [
   {
     titulo: "Sobre o SENAI",
     href: "/sobre-senai",
@@ -60,3 +70,4 @@ export const paginas: Pagina[] = [
     icone: LibraryBigIcon,
   },
 ];
+*/
