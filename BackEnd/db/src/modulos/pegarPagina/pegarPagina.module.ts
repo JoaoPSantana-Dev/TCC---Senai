@@ -7,5 +7,5 @@ import { PrismaService } from 'src/prisma/prisma.service';
   controllers: [PegarPaginaController],
   providers: [PegarPaginaService],
 })
-export class LoginModule {}
+export class PegarPaginaModule {}
 

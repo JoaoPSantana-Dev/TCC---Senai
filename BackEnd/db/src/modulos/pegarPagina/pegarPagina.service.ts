@@ -7,8 +7,8 @@ export class PegarPaginaService{
     constructor(private readonly prisma:PrismaService){}
 
     async pegarPagina(){
-//        const resultados=await PaginasService.listarTodasPaginas()
-        const resultados=await this.prisma.paginas.listarTodasPaginas();
+ //       const resultados=await PaginasService.listarTodasPaginas()
+        const resultados=await this.prisma.pagina.listarTodasPaginas();
         let paginas: object[] = [];
         resultados.forEach(resultado => {
             paginas.push({idPagina:resultado.idPagina,nomePagina:resultado.nomePagina})

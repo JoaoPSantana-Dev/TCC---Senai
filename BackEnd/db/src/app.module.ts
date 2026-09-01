@@ -8,7 +8,7 @@ import { VagasEmpregoModule } from './tables/vagas-emprego/vagas-emprego.module'
 import { VagasEstagioModule } from './tables/vagas-estagio/vagas-estagio.module';
 import { UsuariosModule} from './tables/usuarios/usuarios.module';
 import { LoginModule } from './modulos/login/login.module';
-import {PegarPaginaModule} from '.modulos/pegarPagina/pegarPagina.module'
+import { PegarPaginaModule } from './modulos/pegarPagina/pegarPagina.module';
 
 @Module({
   imports: [
