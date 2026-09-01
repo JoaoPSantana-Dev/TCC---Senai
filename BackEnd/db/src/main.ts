@@ -12,7 +12,13 @@ async function bootstrap() {
     }),
   );
 
+<<<<<<< HEAD
   app.enableCors();
   await app.listen(process.env.PORT ?? 3001);
+=======
+   app.enableCors();
+   await app.listen(process.env.PORT ?? 3001);
+   
+>>>>>>> e5514b67202a9b50258c8311be7da4caff6a798a
 }
 bootstrap();
