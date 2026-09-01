@@ -139,7 +139,7 @@ export default function MapaComponent() {
           </section>
 
           <section className="w-full px-7 py-7 bg-white rounded-3xl shadow-sm mt-5">
-            <div className="relative min-h-[480px] overflow-hidden rounded-3xl bg-white shadow-sm transition-all duration-150 ease-in-out active:scale-[0.98] active:shadow-lg active:brightness-95 touch-manipulation select-none">
+            <div className="relative min-h-120 overflow-hidden rounded-3xl bg-white shadow-sm transition-all duration-150 ease-in-out active:scale-[0.98] active:shadow-lg active:brightness-95 touch-manipulation select-none">
               <ImagemComponent
                 nomeImagem="senai-mariano-ferraz.png"
                 alt="Senai Mariano-Ferraz"

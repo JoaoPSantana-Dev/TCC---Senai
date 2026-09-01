@@ -27,7 +27,7 @@ export function FloorMapGrid({
             key={sala.id}
             onClick={() => onSalaClick && onSalaClick(sala)}
             type="button"
-            className="bg-[#E2C7C7] p-4 text-zinc-900 flex items-center justify-center font-semibold text-sm md:text-base min-h-[60px] 
+            className="bg-[#E2C7C7] p-4 text-zinc-900 flex items-center justify-center font-semibold text-sm md:text-base min-h-15 
               transition-all duration-150 select-none active:bg-zinc-800 active:text-white active:scale-95"
           >
             {sala.nome}
@@ -45,7 +45,7 @@ export function FloorMapGrid({
             key={sala.id}
             onClick={() => onSalaClick && onSalaClick(sala)}
             type="button"
-            className="bg-[#E2C7C7] p-4 text-zinc-900 flex items-center justify-center font-semibold text-sm md:text-base min-h-[60px] 
+            className="bg-[#E2C7C7] p-4 text-zinc-900 flex items-center justify-center font-semibold text-sm md:text-base min-h-15 
               transition-all duration-150 select-none active:bg-zinc-800 active:text-white active:scale-95"
           >
             {sala.nome}
