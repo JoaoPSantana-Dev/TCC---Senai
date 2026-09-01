@@ -22,9 +22,9 @@ const resposta = await fetch("http://localhost:3001/pegarPagina",{
         "Content-Type": "application/json",
       },
     });
-const paginaLista=JSON.parse(JSON.stringify(resposta.json));
+const paginaLista=JSON.parse(JSON.stringify(resposta.json)); 
 export const paginas:Pagina[]=[];
-paginaLista.forEach(element => {
+paginaLista.forEach((element: { nomePagina: any; idPagina: any; }) => {
   paginas.push({titulo:element.nomePagina,href:`pagina${element.idPagina}`});//melhorar href. usar o id é provisório
 });
 // estrutura das páginas que vão pro menu
