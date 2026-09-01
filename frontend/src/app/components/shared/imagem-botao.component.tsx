@@ -7,24 +7,29 @@ interface ImagemProps {
   texto?: string;
   nomeImagem: string;
   alt?: string;
+  disabled?: boolean;
+  className?: string;
 }
 
 export function ImagemBotaoComponent({
-  texto = "Entrar",
+  texto,
   nomeImagem,
   alt,
+  disabled,
+  className,
 }: ImagemProps) {
   return (
     <button
       type="submit"
-      className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white py-2 rounded-3xl mt-2 duration-150 cursor-pointer"
+      disabled={disabled}
+      className={`w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white py-2 rounded-3xl mt-2 duration-150 cursor-pointer ${className}`}
     >
       <Image
         src={`/${nomeImagem}`}
         alt={`${alt}`}
         width={20}
         height={20}
-        className="w-5 h-5 object-contain"
+        className={`w-5 h-5 object-contain ${className}`}
         loading="eager"
       />
       <span>{texto}</span>
