@@ -32,6 +32,7 @@
     "mariadb": "^3.5.3",
     "nest": "^0.1.6",
     "prisma": "^7.9.1",
+    "process": "^0.11.10",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
