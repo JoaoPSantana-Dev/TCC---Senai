@@ -8,10 +8,10 @@ export class PegarPaginaService{
 
     async pegarPagina(){
  //       const resultados=await PaginasService.listarTodasPaginas()
-        const resultados=await this.prisma.pagina.listarTodasPaginas();
+        const resultados=await this.prisma.pagina.findMany();
         let paginas: object[] = [];
         resultados.forEach(resultado => {
-            paginas.push({idPagina:resultado.idPagina,nomePagina:resultado.nomePagina})
+            paginas.push({idPagina:resultado.idPaginas,nomePagina:resultado.nomePagina})
         });
         return paginas;
     }
