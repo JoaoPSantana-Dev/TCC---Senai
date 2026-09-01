@@ -22,8 +22,8 @@ const resposta = await fetch("http://localhost:3001/pegarPagina",{
         "Content-Type": "application/json",
       },
     });
-const paginaLista=resposta;
-export const paginas:Pagina[]=[];
+const paginaLista=JSON.parse(JSON.stringify(resposta.json));
+export let paginas:Pagina[]=[];
 paginaLista.forEach(element => {
   paginas.push({titulo:element.nomePagina,href:`pagina${element.idPagina}`});//melhorar href. usar o id é provisório
 });
