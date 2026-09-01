@@ -12,7 +12,7 @@ interface ImagemProps {
   className?: string;
 }
 
-export default function ImagemComponent({
+export function ImagemComponent({
   nomeImagem,
   alt = "Imagem",
   width,

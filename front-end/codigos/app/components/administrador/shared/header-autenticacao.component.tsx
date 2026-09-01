@@ -1,10 +1,18 @@
-import ImagemComponent from "../../shared/imagem.component";
+import { ImagemComponent } from "../../shared/imagem.component";
 
-// LoginHeaderComponent
+// HeaderAutenticacaoComponent
 // cabeçalho da área de autenticação do sistema
 // apresenta o logo do SENAI, o título da tela e a orientação do usuário
 
-export function LoginHeaderComponent() {
+interface HeaderAutenticacaoComponentProps {
+  h1: string; // título
+  p: string; // texto
+}
+
+export function HeaderAutenticacaoComponent({
+  h1,
+  p,
+}: HeaderAutenticacaoComponentProps) {
   return (
     <header className="flex flex-col gap-2">
       <figure className="mb-32">
@@ -16,10 +24,8 @@ export function LoginHeaderComponent() {
         />
       </figure>
 
-      <h1 className="text-lg font-bold">Login</h1>
-      <p className="text-gray-600 text-sm">
-        Entre usando seu CPF e senha cadastrados no sistema
-      </p>
+      <h1 className="text-lg font-bold">{h1}</h1>
+      <p className="text-gray-600 text-sm">{p}</p>
     </header>
   );
 }

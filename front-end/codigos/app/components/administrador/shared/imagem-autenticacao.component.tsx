@@ -1,10 +1,10 @@
-import ImagemComponent from "../../shared/imagem.component";
+import { ImagemComponent } from "../../shared/imagem.component";
 
-// ImagemLoginComponent
+// ImagemAutenticacaoComponent
 // bloco visual da lateral esquerda da tela de login
 // recebe o nome da imagem e o texto alternativo para exibir a identidade visual do ambiente escolar e reforçar a marca do projeto
 
-interface ImagemLoginProps {
+interface ImagemAutenticacaoProps {
   nomeImagem: string;
   alt?: string;
   width?: number;
@@ -12,13 +12,13 @@ interface ImagemLoginProps {
   className?: string;
 }
 
-export function ImagemLoginComponent({
+export function ImagemAutenticacaoComponent({
   nomeImagem,
   alt = "Imagem de login",
   width = 1920,
   height = 1080,
   className = "",
-}: ImagemLoginProps) {
+}: ImagemAutenticacaoProps) {
   return (
     <aside className="hidden lg:flex lg:w-2/3 bg-white items-center justify-center border-r-2 border-gray-300">
       <ImagemComponent

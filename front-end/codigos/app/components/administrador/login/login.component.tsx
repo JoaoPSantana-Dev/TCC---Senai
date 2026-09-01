@@ -1,9 +1,9 @@
 "use client";
 
-import FooterComponent from "../../shared/footer.component";
-import { ImagemLoginComponent } from "./imagem-login.component";
+import { ImagemAutenticacaoComponent } from "../shared/imagem-autenticacao.component";
 import { LoginFormComponent } from "./login-form.component";
-import { LoginHeaderComponent } from "./login-header.component";
+import { HeaderAutenticacaoComponent } from "../shared/header-autenticacao.component";
+import { FooterComponent } from "../../shared/footer.component";
 
 // LoginComponent
 // estrutura principal da tela de login do painel administrativo
@@ -17,14 +17,18 @@ export function LoginComponent() {
       {/* parte principal onde fica o bloco de imagem na esquerda e de login na direita */}
       <main className="flex flex-1 flex-col md:flex-row">
         {/* parte onde fica o bloco de imagem do login */}
-        <ImagemLoginComponent
+        <ImagemAutenticacaoComponent
           nomeImagem="tubarao.png"
           alt="Foto da entrada da escola SENAI Mariano Ferraz"
         />
 
         {/* parte onde fica o bloco de login */}
         <section className="w-full h-full lg:w-1/3 bg-white flex flex-col justify-center p-8 md:p-16">
-          <LoginHeaderComponent /> {/* componente do header */}
+          <HeaderAutenticacaoComponent
+            h1="Login"
+            p="Entre usando seu CPF e senha cadastrados no sistema"
+          />{" "}
+          {/* componente do header */}
           <LoginFormComponent /> {/* componente do formulário de login */}
         </section>
       </main>

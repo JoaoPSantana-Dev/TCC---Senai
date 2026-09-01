@@ -9,7 +9,7 @@ interface ImagemProps {
   alt?: string;
 }
 
-export default function ImagemBotaoComponent({
+export function ImagemBotaoComponent({
   texto = "Entrar",
   nomeImagem,
   alt,
