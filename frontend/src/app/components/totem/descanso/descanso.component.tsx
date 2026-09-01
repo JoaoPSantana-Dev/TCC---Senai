@@ -19,6 +19,7 @@ export default function TelaDescanso() {
         <ImagemBotaoComponent
           nomeImagem="botao_login.svg"
           texto="Click para começar"
+          
         />
       </div>
     </main>
