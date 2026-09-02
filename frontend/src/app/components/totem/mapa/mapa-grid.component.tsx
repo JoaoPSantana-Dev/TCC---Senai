@@ -1,23 +1,21 @@
-import React from "react";
-
 interface Sala {
   id: string | number;
   nome: string;
 }
 
-interface FloorMapGridProps {
+interface MapaGridComponentProps {
   salasSuperiores: Sala[];
   salasInferiores: Sala[];
   tituloCentral?: string;
   onSalaClick?: (sala: Sala) => void;
 }
 
-export function FloorMapGrid({
+export function MapaGridComponent({
   salasSuperiores,
   salasInferiores,
   tituloCentral = "Vista de Cima da unidade",
   onSalaClick,
-}: FloorMapGridProps) {
+}: MapaGridComponentProps) {
   return (
     <div className="w-full max-w-full mx-auto border-4 border-black bg-black p-1 rounded-sm shadow-md">
       <div className="grid grid-cols-4 gap-1 text-center font-medium">
