@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { ImagemBotaoComponent } from "../../shared/imagem-botao.component";
 import { useState } from "react";
+import Link from "next/link";
 
 export function LoginFormComponent() {
   const router = useRouter();
@@ -79,6 +80,9 @@ export function LoginFormComponent() {
       <div className="flex justify-center">
         <ImagemBotaoComponent nomeImagem="login_icon.svg" texto="Entrar" />
       </div>
+       <div className="flex justify-center">
+        <Link href="/cadastro">clique aqui para cria uma conta</Link>
+       </div>
     </form>
   );
 }

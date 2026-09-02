@@ -11,7 +11,7 @@ export class UsuariosService {
       where:{email: createUsuarioDto.email}
     })
     if (emailexistente)
-        throw new ConflictException("este email ja esta cadastrado")
+        throw new ConflictException("Este email ja esta cadastrado")
     
     return this.prisma.usuario.create({
       data: createUsuarioDto,
@@ -43,7 +43,16 @@ export class UsuariosService {
 
   async updateUsuario(id:number, updateUsuarioDTO: CreateUsuarioDto){
     await this.listarUmUsuario(id)
-
+    
+    if (updateUsuarioDTO.email){
+      const emailEncontrado = await this.prisma.usuario.findFirst({
+        where: {
+          email: updateUsuarioDTO.email
+        }
+      });
+      if (emailEncontrado!)
+        throw new ConflictException ("O email não pode ser alterado")
+    }
     return this.prisma.usuario.update({
       where:{idUsuario:id},
       data: updateUsuarioDTO
