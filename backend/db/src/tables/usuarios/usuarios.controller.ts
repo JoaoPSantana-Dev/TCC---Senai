@@ -31,3 +31,5 @@ export class UsuariosController {
     return this.usuariosService.updateUsuario(+id, updateUsuarioDTO);
   }
 }
+
+

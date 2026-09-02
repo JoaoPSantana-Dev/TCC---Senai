@@ -24,7 +24,7 @@ export function TelaDescanso() {
         <ImagemBotaoComponent
           nomeImagem="login_icon.svg"
           texto="Clique para começar"
-          onClick={() => router.push("/login")}
+          onClick={() => router.push("/homepage")}
           className="md:max-w-1/3 max-w-1/2"
         />
       </div>
