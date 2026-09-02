@@ -9,6 +9,7 @@ interface ImagemProps {
   alt?: string;
   disabled?: boolean;
   className?: string;
+  onClick?: () => void;
 }
 
 export function ImagemBotaoComponent({
@@ -17,11 +18,13 @@ export function ImagemBotaoComponent({
   alt,
   disabled,
   className,
+  onClick,
 }: ImagemProps) {
   return (
     <button
       type="submit"
       disabled={disabled}
+      onClick={onClick}
       className={`w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white py-2 rounded-3xl mt-2 duration-150 cursor-pointer ${className}`}
     >
       <Image

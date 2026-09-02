@@ -7,11 +7,22 @@ export function FooterComponent() {
       <div className="container mx-auto px-4 flex flex-col items-center gap-4">
         <p className="text-sm font-medium">© 2026 Sector</p>
         <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs opacity-90">
-          <li className="hover:no-underline cursor-pointer">Eduardo</li>
-          <li className="hover:no-underline cursor-pointer">João Paulo</li>
-          <li className="hover:no-underline cursor-pointer">João Pedro</li>
-          <li className="hover:no-underline cursor-pointer">Thalles</li>
-          <li className="hover:no-underline cursor-pointer">Tomás</li>
+          {[
+            "João Paulo",
+            "Thalles Vinicius",
+            "Eduardo",
+            "Tomás Eugenio",
+            "João Pedro",
+          ].map((nome) => (
+            <li
+              key={nome}
+              className="cursor-pointer transition-transform duration-100 ease-in-out
+                active:scale-110 active:font-bold active:opacity-100 touch-manipulation
+                py-1 px-2 rounded-md"
+            >
+              {nome}
+            </li>
+          ))}
         </ul>
       </div>
     </footer>

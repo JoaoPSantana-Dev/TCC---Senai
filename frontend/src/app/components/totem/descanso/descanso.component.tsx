@@ -2,8 +2,11 @@
 
 import { ImagemBotaoComponent } from "../../shared/imagem-botao.component";
 import { ImagemComponent } from "../../shared/imagem.component";
+import { useRouter } from "next/navigation";
 
 export function TelaDescanso() {
+  const router = useRouter();
+
   return (
     <main className="flex min-h-screen w-full flex-col items-center justify-center">
       <h1 className="mb-8 text-2xl md:text-3xl font-bold text-zinc-800 text-center">
@@ -21,6 +24,7 @@ export function TelaDescanso() {
         <ImagemBotaoComponent
           nomeImagem="login_icon.svg"
           texto="Clique para começar"
+          onClick={() => router.push("/homepage")}
           className="md:max-w-1/3 max-w-1/2"
         />
       </div>
