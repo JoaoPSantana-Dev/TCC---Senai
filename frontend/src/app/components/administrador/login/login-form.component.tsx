@@ -51,7 +51,7 @@ export function LoginFormComponent() {
         reset();
       } 
   }
-  catch(erro){
+  catch(error){
     alert("Falha ao conectar com o servidor");
   }
 }
