@@ -50,7 +50,7 @@ export function LoginFormComponent() {
         reset();
       }
       toast.error(dados.message || "Credenciais inválidas");
-    } catch (error) {
+    } catch {
       toast.error("Falha ao conectar com o servidor");
     }
   };
