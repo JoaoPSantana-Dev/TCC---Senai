@@ -11,6 +11,7 @@ import { LoginModule } from './modulos/login/login.module';
 import { PegarPaginaModule } from './modulos/pegarPagina/pegarPagina.module';
 import { PrismaService } from './prisma/prisma.service';
 
+
 @Module({
   imports: [
     PrismaModule,
