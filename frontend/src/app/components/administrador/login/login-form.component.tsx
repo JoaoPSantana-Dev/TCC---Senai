@@ -94,12 +94,25 @@ export function LoginFormComponent() {
       </div>
 
       {/* botão de envio do formulário de autenticação. */}
-      <div className="flex justify-center">
+      <div className="flex items-start justify-center space-y-6">
         <ImagemBotaoComponent nomeImagem="login_icon.svg" texto="Entrar" />
       </div>
-      <div className="flex justify-center">
-        <Link href="/cadastro">clique aqui para cria uma conta</Link>
-      </div>
+
+      <ul className="flex items-start justify-center space-x-20 space-y-6">
+        <li>
+          <Link href="/cadastro" className="hover:text-red-600">
+            Criar uma conta
+          </Link>
+        </li>
+
+        <li>|</li>
+
+        <li>
+          <Link href="/recuperar-senha" className="hover:text-red-600">
+            Recuperar senha
+          </Link>
+        </li>
+      </ul>
     </form>
   );
 }
