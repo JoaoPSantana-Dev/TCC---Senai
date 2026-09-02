@@ -27,7 +27,7 @@ export class UsuariosService {
       where:{idUsuario:id}
     })
     if(!buscar)
-      throw new NotFoundException(`Produto '${id}' não foi encontrado`)
+      throw new NotFoundException(`O usuario '${id}' não foi encontrado`)
 
     return buscar
   }
