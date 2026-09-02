@@ -26,7 +26,8 @@ export function LoginComponent() {
         <section className="w-full h-full lg:w-1/3 bg-white flex flex-col justify-center p-8 md:p-16">
           <HeaderAutenticacaoComponent
             h1="Login"
-            p="Entre usando seu CPF e senha cadastrados no sistema"
+            p="Entre usando seu email e senha cadastrados no sistema"
+            className="mb-32"
           />{" "}
           {/* componente do header */}
           <LoginFormComponent /> {/* componente do formulário de login */}

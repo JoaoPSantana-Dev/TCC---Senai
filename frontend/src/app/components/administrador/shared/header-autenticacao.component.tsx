@@ -7,15 +7,17 @@ import { ImagemComponent } from "../../shared/imagem.component";
 interface HeaderAutenticacaoComponentProps {
   h1: string; // título
   p: string; // texto
+  className?: string;
 }
 
 export function HeaderAutenticacaoComponent({
   h1,
   p,
+  className,
 }: HeaderAutenticacaoComponentProps) {
   return (
     <header className="flex flex-col gap-2">
-      <figure className="mb-32">
+      <figure className={className}>
         <ImagemComponent
           nomeImagem="senai-logo.png"
           alt="Imagem do logo SENAI"
