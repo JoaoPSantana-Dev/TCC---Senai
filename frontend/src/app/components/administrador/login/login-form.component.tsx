@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { ImagemBotaoComponent } from "../../shared/imagem-botao.component";
+import { toast } from "sonner";
 
 export function LoginFormComponent() {
   const router = useRouter();
@@ -35,10 +36,12 @@ export function LoginFormComponent() {
         return;
       }
 
+      form.email.value = "";
       form.senha.value = "";
-      alert(dados.message || "Credenciais inválidas");
+
+      toast.error(dados.message || "Credenciais inválidas");
     } catch {
-      alert("Erro ao tentar realizar login");
+      toast.error("Erro ao tentar realizar login");
     }
   }
 
@@ -51,8 +54,6 @@ export function LoginFormComponent() {
           type="email"
           name="email"
           placeholder="Digite seu email"
-          //maxLength={14}
-          //inputMode="numeric"
           required
           className="border border-zinc-400 hover:border-zinc-800 p-4 rounded-2xl"
         />
