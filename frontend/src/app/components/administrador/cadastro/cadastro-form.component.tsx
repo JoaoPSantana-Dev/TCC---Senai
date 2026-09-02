@@ -59,7 +59,7 @@ export function CadastroFormComponent() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="grid grid-cols-2 gap-4 pt-6"
+      className="flex flex-col gap-2.5 pt-6"
     >
       <div className="flex flex-col gap-1">
         <label htmlFor="nome">Nome</label>
@@ -68,38 +68,10 @@ export function CadastroFormComponent() {
           type="text"
           placeholder="Digite seu nome"
           {...register("nome")}
-          className="border border-zinc-400 hover:border-zinc-800 p-4 rounded-2xl"
+          className="border border-zinc-400 hover:border-zinc-800 px-4 py-3 rounded-2xl"
         />
         {errors.nome && (
           <p className="text-red-500 text-sm">{errors.nome.message}</p>
-        )}
-      </div>
-
-      <div className="flex flex-col gap-1">
-        <label htmlFor="funcao">Função</label>
-        <input
-          id="funcao"
-          type="text"
-          placeholder="Digite seu cargo"
-          {...register("funcao")}
-          className="border border-zinc-400 hover:border-zinc-800 p-4 rounded-2xl"
-        />
-        {errors.funcao && (
-          <p className="text-red-500 text-sm">{errors.funcao.message}</p>
-        )}
-      </div>
-
-      <div className="flex flex-col gap-1">
-        <label htmlFor="unidade">Unidade</label>
-        <input
-          id="unidade"
-          type="text"
-          placeholder="Digite a unidade SENAI"
-          {...register("unidade")}
-          className="border border-zinc-400 hover:border-zinc-800 p-4 rounded-2xl"
-        />
-        {errors.unidade && (
-          <p className="text-red-500 text-sm">{errors.unidade.message}</p>
         )}
       </div>
 
@@ -109,7 +81,7 @@ export function CadastroFormComponent() {
           id="email"
           type="email"
           {...register("email")}
-          className="border border-zinc-400 hover:border-zinc-800 p-4 rounded-2xl"
+          className="border border-zinc-400 hover:border-zinc-800 px-4 py-3 rounded-2xl"
           placeholder="Digite seu email"
         />
         {errors.email && (
@@ -123,11 +95,46 @@ export function CadastroFormComponent() {
           id="senha"
           type="password"
           {...register("senha")}
-          className="border border-zinc-400 hover:border-zinc-800 p-4 rounded-2xl"
+          className="border border-zinc-400 hover:border-zinc-800 px-4 py-3 rounded-2xl"
           placeholder="Digite sua senha"
         />
         {errors.senha && (
           <p className="text-red-500 text-sm">{errors.senha.message}</p>
+        )}
+      </div>
+
+      <div className="flex flex-col gap-1">
+        <label htmlFor="unidade">Unidade</label>
+        <select
+          id="unidade"
+          {...register("unidade")}
+          className="border border-zinc-400 hover:border-zinc-800 px-4 py-3 rounded-2xl bg-transparent"
+        >
+          <option value="" disabled>
+            Selecione a unidade SENAI
+          </option>
+          <option value="SENAI Mariano Ferraz">SENAI Mariano Ferraz</option>
+        </select>
+        {errors.unidade && (
+          <p className="text-red-500 text-sm">{errors.unidade.message}</p>
+        )}
+      </div>
+
+      <div className="flex flex-col gap-1">
+        <label htmlFor="funcao">Função</label>
+        <select
+          id="funcao"
+          {...register("funcao")}
+          className="border border-zinc-400 hover:border-zinc-800 px-4 py-3 rounded-2xl bg-transparent"
+        >
+          <option value="" disabled>
+            Selecione seu cargo
+          </option>
+          <option value="Administrador">Administrador</option>
+          <option value="Visitante">Visitante</option>
+        </select>
+        {errors.funcao && (
+          <p className="text-red-500 text-sm">{errors.funcao.message}</p>
         )}
       </div>
 

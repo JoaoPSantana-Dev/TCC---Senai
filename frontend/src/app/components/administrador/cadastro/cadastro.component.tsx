@@ -16,7 +16,7 @@ export function CadastroComponent() {
           <HeaderAutenticacaoComponent
             h1="Cadastro"
             p="Cadastre seu usuário usando o email e senha do SENAI"
-            className="mb-32"
+            className="mb-8"
           />
 
           <CadastroFormComponent />
