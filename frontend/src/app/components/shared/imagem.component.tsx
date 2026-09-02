@@ -11,6 +11,7 @@ interface ImagemProps {
   height?: number;
   className?: string;
   fill?: boolean;
+  sizes?: string;
 }
 
 export function ImagemComponent({
@@ -19,6 +20,7 @@ export function ImagemComponent({
   width,
   height,
   fill = false,
+  sizes,
   className = "",
 }: ImagemProps) {
   return (
@@ -30,6 +32,7 @@ export function ImagemComponent({
       className={`w-auto h-auto max-w-full object-contain ${className}`}
       loading="eager"
       fill={fill}
+      sizes={sizes}
     />
   );
 }

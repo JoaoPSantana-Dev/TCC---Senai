@@ -4,9 +4,8 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ImagemBotaoComponent } from "../../shared/imagem-botao.component";
-import { useRouter } from "next/navigation"; 
-
-
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const schemaCadastro = z.object({
   nome: z.string().min(1, "Nome é obrigatório"),
@@ -47,13 +46,13 @@ export function CadastroFormComponent() {
       const dados = await resposta.json();
 
       if (resposta.ok) {
-        alert("Cadastro realizado com sucesso");
+        toast.success("Cadastro realizado com sucesso!");
         router.push("/login");
       } else {
-        alert(dados.message || "Erro ao realizar cadastro");
+        toast.error(dados.message || "Erro ao realizar cadastro");
       }
-    } catch (error) {
-      alert("Falha ao conectar com o servidor");
+    } catch {
+      toast.error("Falha ao conectar com o servidor");
     }
   };
 
