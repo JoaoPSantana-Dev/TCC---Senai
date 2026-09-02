@@ -1,14 +1,12 @@
-import { FooterComponent } from "../../shared/footer.component";
 import { ImagemComponent } from "../../shared/imagem.component";
-import { HeaderComponent } from "../shared/header.component";
 import { TituloComponent } from "../shared/titulo.component";
 
-export function SobreComponent(props: any) {
+export function SobreComponent() {
   return (
-    <main className="w-full flex-1 flex flex-col items-center justify-center">
-      <div className="mx-auto max-w-6xl w-full p-6 md:p-12 flex-1 flex flex-col justify-center">
+    <main className="w-full flex-1">
+      <div className="mx-auto max-w-6xl w-full p-6 md:p-12 flex flex-col justify-center">
         {/* Título */}
-        <TituloComponent texto="Título" />
+        <TituloComponent texto="Sobre o SENAI Mariano Ferraz" />
 
         {/* Grid */}
         <section className="flex flex-col gap-6 w-full">
