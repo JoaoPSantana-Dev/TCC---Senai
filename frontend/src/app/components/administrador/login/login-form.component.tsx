@@ -2,15 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import { ImagemBotaoComponent } from "../../shared/imagem-botao.component";
-import { useState } from "react";
 
 export function LoginFormComponent() {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setLoading(true);
 
     const form = event.currentTarget;
     const email = form.email.value;
@@ -40,10 +37,8 @@ export function LoginFormComponent() {
 
       form.senha.value = "";
       alert(dados.message || "Credenciais inválidas");
-    } catch (error) {
+    } catch {
       alert("Erro ao tentar realizar login");
-    } finally {
-      setLoading(false);
     }
   }
 
