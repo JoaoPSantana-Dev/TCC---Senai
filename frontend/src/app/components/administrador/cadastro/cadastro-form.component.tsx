@@ -59,7 +59,7 @@ export function CadastroFormComponent() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 pt-6"
+      className="grid grid-cols-2 gap-4 pt-6"
     >
       <div className="flex flex-col gap-1">
         <label htmlFor="nome">Nome</label>
