@@ -23,6 +23,20 @@ export function ImagemComponent({
   sizes,
   className = "",
 }: ImagemProps) {
+
+  if (fill) {
+    return (
+      <Image 
+        src={`/${nomeImagem}`}
+        alt={alt}
+        fill
+        sizes="(max-width: 760px) 100vw, 50vw"
+        className={` object-cover ${className}`}
+        loading="eager"
+      />
+    );
+  }
+
   return (
     <Image
       src={`/${nomeImagem}`}
@@ -31,7 +45,6 @@ export function ImagemComponent({
       height={height}
       className={`w-auto h-auto max-w-full object-contain ${className}`}
       loading="eager"
-      fill={fill}
       sizes={sizes}
     />
   );
