@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { ImagemBotaoComponent } from "../../shared/imagem-botao.component";
+import { toast } from "sonner";
 
 const schemaLogin = z.object({
   email: z.email("Endereço de email invalido"),
@@ -13,25 +14,24 @@ const schemaLogin = z.object({
 
 type LoginFormData = z.infer<typeof schemaLogin>;
 
-
 export function LoginFormComponent() {
   const router = useRouter();
-  
+
   const {
     register,
     handleSubmit,
     reset,
-    formState: {errors, isSubmitting},
+    formState: { errors },
   } = useForm<LoginFormData>({
     resolver: zodResolver(schemaLogin),
-    defaultValues:{
+    defaultValues: {
       email: "",
       senha: "",
     },
   });
 
-  const onSubmit = async(data: LoginFormData)=>{
-     try {
+  const onSubmit = async (data: LoginFormData) => {
+    try {
       const resposta = await fetch("http://localhost:3001/login", {
         method: "POST",
         headers: {
@@ -42,22 +42,24 @@ export function LoginFormComponent() {
 
       const dados = await resposta.json();
 
-      if(resposta.ok){
+      if (resposta.ok) {
         router.push("/homepage");
         return;
-      }
-      else{
-        alert(dados.message || "Erro ao realizar login");
+      } else {
+        toast.error(dados.message || "Erro ao realizar login");
         reset();
-      } 
-  }
-  catch(erro){
-    alert("Falha ao conectar com o servidor");
-  }
-}
+      }
+      toast.error(dados.message || "Credenciais inválidas");
+    } catch {
+      toast.error("Falha ao conectar com o servidor");
+    }
+  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 pt-6">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col gap-4 pt-6"
+    >
       {/* campo para inserir o Email do usuário. */}
       <div className="flex flex-col gap-1 ">
         <label htmlFor="email">Email</label>
@@ -65,8 +67,6 @@ export function LoginFormComponent() {
           id="email"
           type="email"
           {...register("email")}
-          //maxLength={14}
-          //inputMode="numeric"
           required
           className="border border-zinc-400 hover:border-zinc-800 p-4 rounded-2xl"
           placeholder="Digite seu email"
@@ -98,5 +98,4 @@ export function LoginFormComponent() {
       </div>
     </form>
   );
-
 }
