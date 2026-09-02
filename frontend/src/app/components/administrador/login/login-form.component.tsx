@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { ImagemBotaoComponent } from "../../shared/imagem-botao.component";
 import { toast } from "sonner";
+import Link from "next/link";
 
 const schemaLogin = z.object({
   email: z.email("Endereço de email invalido"),
@@ -95,6 +96,9 @@ export function LoginFormComponent() {
       {/* botão de envio do formulário de autenticação. */}
       <div className="flex justify-center">
         <ImagemBotaoComponent nomeImagem="login_icon.svg" texto="Entrar" />
+      </div>
+      <div className="flex justify-center">
+        <Link href="/cadastro">clique aqui para cria uma conta</Link>
       </div>
     </form>
   );
