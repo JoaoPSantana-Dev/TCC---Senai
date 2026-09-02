@@ -1,9 +1,10 @@
-import MapaComponent from "@/app/components/totem/mapa/mapa.component";
+import { MapaComponent } from "@/app/components/totem/mapa/mapa.component";
+import { EstruturaTotemComponent } from "@/app/components/totem/shared/estrutura-totem.component";
 
 export default function Mapa() {
   return (
-    <div>
+    <EstruturaTotemComponent mostrarNoticias={false}>
       <MapaComponent />
-    </div>
+    </EstruturaTotemComponent>
   );
 }

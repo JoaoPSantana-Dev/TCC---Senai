@@ -40,10 +40,8 @@ export function LoginFormComponent() {
 
       form.senha.value = "";
       alert(dados.message || "Credenciais inválidas");
-    } catch (error) {
+    } catch {
       alert("Erro ao tentar realizar login");
-    } finally {
-      setLoading(false);
     }
   }
 
