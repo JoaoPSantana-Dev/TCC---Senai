@@ -12,7 +12,7 @@ export class SalasService{
         });
     }
 
-    criarSalas(createSalaDto: CreateSalaDto[]) {
+    criarVariasSalas(createSalaDto: CreateSalaDto[]) {
         return this.prisma.sala.createMany({
             data: createSalaDto
         });

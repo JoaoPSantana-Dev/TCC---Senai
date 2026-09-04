@@ -13,7 +13,7 @@ export class HorariosAulaService{
         });
     }
 
-    criarHorariosAula(createHorarioAulaDto:CreateHorarioAulaDto[]){
+    criarVariosHorariosAula(createHorarioAulaDto:CreateHorarioAulaDto[]){
         return this.prisma.horarioAula.createMany({
             data: createHorarioAulaDto
         });
