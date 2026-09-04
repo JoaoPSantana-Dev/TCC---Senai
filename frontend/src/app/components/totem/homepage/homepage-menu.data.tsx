@@ -14,7 +14,7 @@ import { type HugeiconsIconProps } from "@hugeicons/react";
 export interface Pagina {
   titulo: string;
   href: string;
-//  icone: HugeiconsIconProps["icon"];
+  icone: HugeiconsIconProps["icon"];
 }
 const resposta = await fetch("http://localhost:3001/pegarPagina",{
       method: "GET",
@@ -22,17 +22,22 @@ const resposta = await fetch("http://localhost:3001/pegarPagina",{
         "Content-Type": "application/json",
       },
     });
-const paginaLista=JSON.parse(JSON.stringify(resposta.json)); 
+/*const paginaLista=resposta.json(); 
 export const paginas:Pagina[]=[];
 paginaLista.forEach((element: { nomePagina: any; idPagina: any; }) => {
   paginas.push({titulo:element.nomePagina,href:`pagina${element.idPagina}`});//melhorar href. usar o id é provisório
+});*/
+const paginaLista= await resposta.json(); 
+export const paginas:Pagina[]=[];
+paginaLista.forEach((element: { nomePagina: any; idPagina: any; }) => {
+  paginas.push({titulo:element.nomePagina,href:`pagina${element.idPagina}`,icone:InfoIcon});//melhorar href. usar o id é provisório
 });
 // estrutura das páginas que vão pro menu
 /*export const paginas: Pagina[] = [
   {
     titulo: "Sobre o SENAI",
     href: "/sobre-senai",
-    icone: InfoIcon,
+    icone: InfoIcon, 
   },
   {
     titulo: "Sobre o SENAI Mariano Ferraz",
