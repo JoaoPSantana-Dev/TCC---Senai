@@ -14,7 +14,7 @@ const resposta= await fetch("http://localhost:3001/vaga-emprego",{
 const inter=await resposta.json();
 const vagaLista= Array.from(inter); 
 export const vagasEmpregos:Vaga[]=[];
-vagaLista.forEach((element: {idEmprego:any,nomeEmpresa: any,cargo:any}) => {
+vagaLista.forEach(( element: {idEmprego:any;nomeEmpresa: any;cargo:any;}) => {
   vagasEmpregos.push({titulo:`${element.nomeEmpresa}-${element.cargo}`,href:`emprego${element.idEmprego}`,icone:Briefcase01Icon});
 });
 
