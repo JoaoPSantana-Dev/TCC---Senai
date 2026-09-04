@@ -7,8 +7,13 @@ import { CreateVagaEmpregoDto } from "../dto/create-vaga-emprego.dto";
         constructor(private readonly vagasEmpregoService: VagasEmpregoService){}
 
         @Post()
-        criarVagasEmprego(@Body() createVagaEmpregoDto:CreateVagaEmpregoDto){
+        criarVagaEmprego(@Body() createVagaEmpregoDto:CreateVagaEmpregoDto){
             return this.vagasEmpregoService.criarVagaEmprego(createVagaEmpregoDto);
+        }
+
+        @Post('lote')
+        criarVagasEmprego(@Body() createVagaEmpregoDto:CreateVagaEmpregoDto[]){
+            return this.vagasEmpregoService.criarVagasEmprego(createVagaEmpregoDto);
         }
 
         @Get()

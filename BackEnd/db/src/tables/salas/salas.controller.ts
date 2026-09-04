@@ -11,6 +11,11 @@ export class SalasController{
         return this.salasService.criarSala(createSalaDto);
     }
 
+    @Post('lote')
+    criarSalas(@Body() createSalaDto:CreateSalaDto[]){
+        return this.salasService.criarSalas(createSalaDto);
+    }
+
     @Get()
     listarTodasSalas(){
         return this.salasService.listarTodasSalas();

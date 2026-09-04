@@ -1,0 +1,187 @@
+[
+  {
+    "nomeCurso": "TMA-2T",
+    "turno": "Manhã",
+    "dia": "Segunda",
+    "idSala": 5
+  },
+  {
+    "nomeCurso": "TMA-2T",
+    "turno": "Manhã",
+    "dia": "Terça",
+    "idSala": 5
+  },
+  {
+    "nomeCurso": "TMA-2T",
+    "turno": "Manhã",
+    "dia": "Quarta",
+    "idSala": 5
+  },
+  {
+    "nomeCurso": "TMA-2T",
+    "turno": "Manhã",
+    "dia": "Quinta",
+    "idSala": 4
+  },
+  {
+    "nomeCurso": "TMA-2T",
+    "turno": "Manhã",
+    "dia": "Sexta",
+    "idSala": 4
+  },
+
+  {
+    "nomeCurso": "TDS-1S",
+    "turno": "Manhã",
+    "dia": "Segunda",
+    "idSala": 23
+  },
+  {
+    "nomeCurso": "TDS-1S",
+    "turno": "Manhã",
+    "dia": "Terça",
+    "idSala": 23
+  },
+  {
+    "nomeCurso": "TDS-1S",
+    "turno": "Manhã",
+    "dia": "Quarta",
+    "idSala": 23
+  },
+  {
+    "nomeCurso": "TDS-1S",
+    "turno": "Manhã",
+    "dia": "Quinta",
+    "idSala": 23
+  },
+  {
+    "nomeCurso": "TDS-1S",
+    "turno": "Manhã",
+    "dia": "Sexta",
+    "idSala": 23
+  },
+
+  {
+    "nomeCurso": "TELE-3S",
+    "turno": "Manhã",
+    "dia": "Segunda",
+    "idSala": 39
+  },
+  {
+    "nomeCurso": "TELE-3S",
+    "turno": "Manhã",
+    "dia": "Terça",
+    "idSala": 39
+  },
+  {
+    "nomeCurso": "TELE-3S",
+    "turno": "Manhã",
+    "dia": "Quarta",
+    "idSala": 39
+  },
+  {
+    "nomeCurso": "TELE-3S",
+    "turno": "Manhã",
+    "dia": "Quinta",
+    "idSala": 39
+  },
+  {
+    "nomeCurso": "TELE-3S",
+    "turno": "Manhã",
+    "dia": "Sexta",
+    "idSala": 39
+  },
+
+  {
+    "nomeCurso": "TMSM-2M",
+    "turno": "Manhã",
+    "dia": "Segunda",
+    "idSala": 34
+  },
+  {
+    "nomeCurso": "TMSM-2M",
+    "turno": "Manhã",
+    "dia": "Terça",
+    "idSala": 34
+  },
+  {
+    "nomeCurso": "TMSM-2M",
+    "turno": "Manhã",
+    "dia": "Quarta",
+    "idSala": 33
+  },
+  {
+    "nomeCurso": "TMSM-2M",
+    "turno": "Manhã",
+    "dia": "Quinta",
+    "idSala": 33
+  },
+  {
+    "nomeCurso": "TMSM-2M",
+    "turno": "Manhã",
+    "dia": "Sexta",
+    "idSala": 33
+  },
+
+  {
+    "nomeCurso": "TMEC-3S",
+    "turno": "Manhã",
+    "dia": "Segunda",
+    "idSala": 34
+  },
+  {
+    "nomeCurso": "TMEC-3S",
+    "turno": "Manhã",
+    "dia": "Terça",
+    "idSala": 34
+  },
+  {
+    "nomeCurso": "TMEC-3S",
+    "turno": "Manhã",
+    "dia": "Quarta",
+    "idSala": 32
+  },
+  {
+    "nomeCurso": "TMEC-3S",
+    "turno": "Manhã",
+    "dia": "Quinta",
+    "idSala": 32
+  },
+  {
+    "nomeCurso": "TMEC-3S",
+    "turno": "Manhã",
+    "dia": "Sexta",
+    "idSala": 32
+  },
+
+  {
+    "nomeCurso": "TMCA-4S",
+    "turno": "Manhã",
+    "dia": "Segunda",
+    "idSala": 13
+  },
+  {
+    "nomeCurso": "TMCA-4S",
+    "turno": "Manhã",
+    "dia": "Terça",
+    "idSala": 13
+  },
+  {
+    "nomeCurso": "TMCA-4S",
+    "turno": "Manhã",
+    "dia": "Quarta",
+    "idSala": 13
+  },
+  {
+    "nomeCurso": "TMCA-4S",
+    "turno": "Manhã",
+    "dia": "Quinta",
+    "idSala": 13
+  },
+  {
+    "nomeCurso": "TMCA-4S",
+    "turno": "Manhã",
+    "dia": "Sexta",
+    "idSala": 13
+  }
+]

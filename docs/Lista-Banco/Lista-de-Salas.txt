@@ -1,0 +1,260 @@
+[
+  {
+    "nomeSala": "A02",
+    "andar": "1º",
+    "bloco": "A",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "A03",
+    "andar": "1º",
+    "bloco": "A",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "A04",
+    "andar": "1º",
+    "bloco": "A",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "A05",
+    "andar": "1º",
+    "bloco": "A",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "A06",
+    "andar": "1º",
+    "bloco": "A",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "A07",
+    "andar": "1º",
+    "bloco": "A",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "A11",
+    "andar": "1º",
+    "bloco": "A",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "A12",
+    "andar": "1º",
+    "bloco": "A",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "A13",
+    "andar": "1º",
+    "bloco": "A",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "A15",
+    "andar": "1º",
+    "bloco": "A",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "A17",
+    "andar": "1º",
+    "bloco": "A",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "A21",
+    "andar": "1º",
+    "bloco": "A",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "01B",
+    "andar": "Terreo",
+    "bloco": "B",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "B04",
+    "andar": "1º",
+    "bloco": "B",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "B09",
+    "andar": "1º",
+    "bloco": "B",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "B11",
+    "andar": "1º",
+    "bloco": "B",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "B12",
+    "andar": "1º",
+    "bloco": "B",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "B13",
+    "andar": "1º",
+    "bloco": "B",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "B15",
+    "andar": "1º",
+    "bloco": "B",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "B16",
+    "andar": "1º",
+    "bloco": "B",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "B18",
+    "andar": "1º",
+    "bloco": "B",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "BS04",
+    "andar": "1º",
+    "bloco": "B",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "BS09",
+    "andar": "1º",
+    "bloco": "B",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "BS11",
+    "andar": "1º",
+    "bloco": "B",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "BS12",
+    "andar": "1º",
+    "bloco": "B",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "BS15",
+    "andar": "1º",
+    "bloco": "B",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "BS16",
+    "andar": "1º",
+    "bloco": "B",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "C01",
+    "andar": "1º",
+    "bloco": "C",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "C05",
+    "andar": "1º",
+    "bloco": "C",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "C08",
+    "andar": "1º",
+    "bloco": "C",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "C14",
+    "andar": "1º",
+    "bloco": "C",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "C18",
+    "andar": "1º",
+    "bloco": "C",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "C19",
+    "andar": "1º",
+    "bloco": "C",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "C20",
+    "andar": "1º",
+    "bloco": "C",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "C22",
+    "andar": "1º",
+    "bloco": "C",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "C24",
+    "andar": "1º",
+    "bloco": "C",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "C25",
+    "andar": "1º",
+    "bloco": "C",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "C26",
+    "andar": "1º",
+    "bloco": "C",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "C28A",
+    "andar": "Terreo",
+    "bloco": "C",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "C28B",
+    "andar": "Terreo",
+    "bloco": "C",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "C35",
+    "andar": "Terreo",
+    "bloco": "C",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "C37",
+    "andar": "Terreo",
+    "bloco": "C",
+    "imagem": ""
+  },
+  {
+    "nomeSala": "C39",
+    "andar": "Terreo",
+    "bloco": "C",
+    "imagem": ""
+  }
+]
