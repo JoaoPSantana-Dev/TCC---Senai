@@ -6,7 +6,7 @@ import { ImagemComponent } from "../../shared/imagem.component";
 
 export function HeaderLogoComponent() {
   return (
-    <figure className="justify-self-center">
+    <figure className="justify-self-center p-4">
       <ImagemComponent
         nomeImagem="senai-logo.png"
         alt="Imagem do logo SENAI"

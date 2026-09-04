@@ -112,3 +112,69 @@ body {
 
   --animate-carousel-progress: carousel-progress linear forwards;
 }
+
+/* css do react burger menu */
+@layer components {
+  /* posicionamento e tamanho do botão hambúrguer */
+  .bm-burger-button {
+    @apply absolute w-18 h-10 left-9 top-17 -translate-y-1/2;
+  }
+
+  /* cor das barras do ícone hambúrguer */
+  .bm-burger-bars {
+    @apply bg-black;
+  }
+
+  /* cor das barras no hover */
+  .bm-burger-bars-hover {
+    @apply bg-[#a90000];
+  }
+
+  /* posicionamento e tamanho do botão de fechar */
+  .bm-cross-button {
+    @apply w-2 h-50;
+  }
+
+  /* cor do ícone de fechar (X) */
+  .bm-cross {
+    @apply text-white;
+  }
+
+  /* wrapper principal do menu */
+  .bm-menu-wrap {
+    @apply fixed h-full;
+  }
+
+  /* estilos gerais da barra lateral */
+  .bm-menu {
+    @apply bg-red-600 pt-6 px-2 pb-0 text-[1.15em] border-t-2 border-r-2 border-white;
+  }
+
+  /* forma de morph (usado nos efeitos bubble ou elastic) */
+  .bm-morph-shape {
+    fill: #373a47;
+  }
+
+  /* wrapper da lista de itens */
+  .bm-item-list {
+    @apply text-zinc-500;
+  }
+
+  /* item individual */
+  .bm-item {
+    @apply inline-block;
+  }
+
+  /* estilização do overlay (fundo escurecido) */
+  .bm-overlay {
+    @apply bg-white/0;
+  }
+
+  .bm-item {
+    @apply inline-block p-4 text-white text-left no-underline transition-colors duration-200 border-b border-white;
+  }
+
+  .bm-item:hover {
+    @apply bg-black/15;
+  }
+}

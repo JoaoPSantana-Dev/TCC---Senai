@@ -21,7 +21,7 @@ export interface Pagina {
 export const paginas: Pagina[] = [
   {
     titulo: "Sobre o SENAI",
-    href: "/sobre-senai",
+    href: "/sobre",
     icone: InfoIcon,
   },
   {
@@ -36,7 +36,7 @@ export const paginas: Pagina[] = [
   },
   {
     titulo: "Mapa da escola",
-    href: "/mapa-escola",
+    href: "/mapa",
     icone: MapsSearchIcon,
   },
   {

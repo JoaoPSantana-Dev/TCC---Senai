@@ -8,17 +8,17 @@ import { type Vaga } from "../shared/estrutura-vagas-menu.data";
 export const vagasEmpregos: Vaga[] = [
   {
     titulo: "Assistente de Vendas",
-    href: "/vagas/assistente-vendas",
+    href: "/vagas-empregos/assistente-vendas",
     icone: Briefcase01Icon,
   },
   {
     titulo: "Supervisor de Produção",
-    href: "/vagas/supervisor-producao",
+    href: "/vagas-empregos/supervisor-producao",
     icone: Building03Icon,
   },
   {
     titulo: "Recepcionista",
-    href: "/vagas/recepcionista",
+    href: "/vagas-empregos/recepcionista",
     icone: ClipboardCheckIcon,
   },
 ];
