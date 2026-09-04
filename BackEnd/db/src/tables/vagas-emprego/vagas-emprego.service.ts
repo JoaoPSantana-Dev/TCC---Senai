@@ -7,12 +7,6 @@ import { PrismaService } from "src/prisma/prisma.service";
 export class VagasEmpregoService{
     constructor(private prisma: PrismaService){}
 
-    criarVariasVagas(createVagaEmpregoDto: CreateVagaEmpregoDto){
-        return this.prisma.vagaEmprego.createMany({
-            data: createVagaEmpregoDto
-        })
-    }
-
     criarVagaEmprego(createVagaEmpregoDto: CreateVagaEmpregoDto){
         return this.prisma.vagaEmprego.create({
             data: createVagaEmpregoDto
