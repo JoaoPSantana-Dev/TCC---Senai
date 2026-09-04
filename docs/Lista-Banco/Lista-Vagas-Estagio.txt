@@ -1,0 +1,112 @@
+[
+  {
+    "nomeEmpresa": "Tech Solutions Brasil",
+    "cargo": "Estagiário de Desenvolvimento de Sistemas",
+    "requisitos": "Estar cursando Técnico ou graduação em Desenvolvimento de Sistemas, conhecimento básico em programação.",
+    "salario": "R$ 1.200,00",
+    "beneficios": "Vale-transporte, vale-refeição e seguro de vida.",
+    "descricao": "Auxiliar no desenvolvimento e manutenção de sistemas web e APIs.",
+    "localizacao": "São Paulo - SP",
+    "contato": "estagios@techsolutions.com.br",
+    "areaEstagio": "Desenvolvimento de Sistemas"
+  },
+  {
+    "nomeEmpresa": "Auto Center Paulista",
+    "cargo": "Estagiário de Mecânica Automotiva",
+    "requisitos": "Estar cursando Técnico em Mecânica Automotiva ou área relacionada.",
+    "salario": "R$ 1.100,00",
+    "beneficios": "Vale-transporte, seguro de vida e refeição no local.",
+    "descricao": "Auxiliar os profissionais em diagnósticos e serviços de manutenção automotiva.",
+    "localizacao": "São Paulo - SP",
+    "contato": "(11) 3456-7890",
+    "areaEstagio": "Mecânica Automotiva"
+  },
+  {
+    "nomeEmpresa": "Indústria Metal Forte",
+    "cargo": "Estagiário de Mecatrônica",
+    "requisitos": "Estar cursando Técnico em Mecatrônica, conhecimentos básicos em elétrica e automação.",
+    "salario": "R$ 1.300,00",
+    "beneficios": "Vale-alimentação, vale-transporte e seguro de vida.",
+    "descricao": "Auxiliar na manutenção de máquinas, equipamentos automatizados e sistemas industriais.",
+    "localizacao": "Guarulhos - SP",
+    "contato": "estagio@metalforte.com.br",
+    "areaEstagio": "Mecatrônica"
+  },
+  {
+    "nomeEmpresa": "Construtora Nova Era",
+    "cargo": "Estagiário Administrativo",
+    "requisitos": "Estar cursando Técnico em Administração ou graduação em Administração.",
+    "salario": "R$ 1.000,00",
+    "beneficios": "Vale-transporte, vale-refeição e seguro de vida.",
+    "descricao": "Auxiliar na organização de documentos, atendimento e elaboração de planilhas.",
+    "localizacao": "Santo André - SP",
+    "contato": "estagio@novaera.com.br",
+    "areaEstagio": "Administração"
+  },
+  {
+    "nomeEmpresa": "DataWeb Tecnologia",
+    "cargo": "Estagiário de Front-end",
+    "requisitos": "Conhecimento básico em HTML, CSS e JavaScript e interesse em desenvolvimento web.",
+    "salario": "R$ 1.300,00",
+    "beneficios": "Vale-refeição, auxílio home office e seguro de vida.",
+    "descricao": "Auxiliar no desenvolvimento de interfaces web e testes de aplicações.",
+    "localizacao": "São Paulo - SP",
+    "contato": "estagio@dataweb.com.br",
+    "areaEstagio": "Desenvolvimento Web"
+  },
+  {
+    "nomeEmpresa": "EletroMax Serviços",
+    "cargo": "Estagiário de Eletroeletrônica",
+    "requisitos": "Estar cursando Técnico em Eletroeletrônica ou área relacionada.",
+    "salario": "R$ 1.150,00",
+    "beneficios": "Vale-transporte, vale-refeição e seguro de vida.",
+    "descricao": "Auxiliar na instalação, manutenção e testes de equipamentos elétricos e eletrônicos.",
+    "localizacao": "Osasco - SP",
+    "contato": "estagio@eletromax.com.br",
+    "areaEstagio": "Eletroeletrônica"
+  },
+  {
+    "nomeEmpresa": "Logística Express",
+    "cargo": "Estagiário de Logística",
+    "requisitos": "Estar cursando Técnico em Logística ou graduação na área.",
+    "salario": "R$ 1.100,00",
+    "beneficios": "Vale-transporte, vale-refeição e seguro de vida.",
+    "descricao": "Auxiliar no controle de estoque, organização de mercadorias e acompanhamento de entregas.",
+    "localizacao": "São Bernardo do Campo - SP",
+    "contato": "estagio@logisticaexpress.com.br",
+    "areaEstagio": "Logística"
+  },
+  {
+    "nomeEmpresa": "Metalúrgica São Paulo",
+    "cargo": "Estagiário de Manutenção Industrial",
+    "requisitos": "Estar cursando Técnico em Mecânica ou Mecatrônica, interesse em manutenção industrial.",
+    "salario": "R$ 1.250,00",
+    "beneficios": "Vale-alimentação, vale-transporte e seguro de vida.",
+    "descricao": "Acompanhar atividades de manutenção preventiva e corretiva em máquinas industriais.",
+    "localizacao": "Diadema - SP",
+    "contato": "estagio@metalurgicasp.com.br",
+    "areaEstagio": "Manutenção Industrial"
+  },
+  {
+    "nomeEmpresa": "Comercial Center",
+    "cargo": "Estagiário de Administração",
+    "requisitos": "Estar cursando Técnico ou graduação em Administração, conhecimento básico em Excel.",
+    "salario": "R$ 1.200,00",
+    "beneficios": "Vale-refeição, vale-transporte e seguro de vida.",
+    "descricao": "Auxiliar nas rotinas administrativas, organização de documentos e elaboração de relatórios.",
+    "localizacao": "São Paulo - SP",
+    "contato": "estagio@comercialcenter.com.br",
+    "areaEstagio": "Administração"
+  },
+  {
+    "nomeEmpresa": "Sistemas Integrados SP",
+    "cargo": "Estagiário de Suporte Técnico",
+    "requisitos": "Estar cursando Técnico em Desenvolvimento de Sistemas, Redes ou área de Tecnologia.",
+    "salario": "R$ 1.250,00",
+    "beneficios": "Vale-transporte, vale-refeição, seguro de vida e auxílio educação.",
+    "descricao": "Auxiliar no atendimento aos usuários, configuração de computadores e resolução de problemas técnicos.",
+    "localizacao": "São Paulo - SP",
+    "contato": "estagio@sistemasintegrados.com.br",
+    "areaEstagio": "Tecnologia da Informação"
+  }
+]

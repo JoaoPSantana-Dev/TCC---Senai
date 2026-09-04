@@ -11,6 +11,11 @@ export class HorariosAulaController{
         return this.horariosAulaService.criarHorarioAula(createHorarioAulaDto);
     }
 
+    @Post('lote')
+    criarHorariosAula(@Body() createHorarioAulaDto:CreateHorarioAulaDto[]){
+        return this.horariosAulaService.criarHorariosAula(createHorarioAulaDto);
+    }
+
     @Get()
     listarTodosHorarios(){
         return this.horariosAulaService.listarTodosHorarios();
