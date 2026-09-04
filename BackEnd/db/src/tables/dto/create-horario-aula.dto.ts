@@ -9,7 +9,13 @@ export class CreateHorarioAulaDto {
   @IsNotEmpty()
   turno!: string;
 
+  @IsString()
+  @IsNotEmpty()
+  dia!: string;
+
   @IsInt()
   @IsPositive()
   idSala!: number;
+
+
 }
