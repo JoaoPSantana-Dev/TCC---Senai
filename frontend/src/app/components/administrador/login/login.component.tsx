@@ -1,0 +1,43 @@
+"use client";
+
+import { ImagemAutenticacaoComponent } from "../shared/imagem-autenticacao.component";
+import { LoginFormComponent } from "./login-form.component";
+import { HeaderAutenticacaoComponent } from "../shared/header-autenticacao.component";
+import { FooterComponent } from "../../shared/footer.component";
+
+// LoginComponent
+// estrutura principal da tela de login do painel administrativo
+// na esquerda fica a imagem de identificação
+// na direita fica o bloco de autenticação, com cabeçalho e formulário organizados em um layout responsivo
+// embaixo, o rodapé
+
+export function LoginComponent() {
+  return (
+    <>
+      {/* parte principal onde fica o bloco de imagem na esquerda e de login na direita */}
+      <main className="flex flex-1 flex-col md:flex-row">
+        {/* parte onde fica o bloco de imagem do login */}
+        <ImagemAutenticacaoComponent
+          nomeImagem="tubarao.png"
+          alt="Foto da entrada da escola SENAI Mariano Ferraz"
+        />
+
+        {/* parte onde fica o bloco de login */}
+        <section className="w-full h-full lg:w-1/3 bg-white flex flex-col justify-center p-8 md:p-16">
+          <HeaderAutenticacaoComponent
+            h1="Login"
+            p="Entre usando seu email e senha cadastrados no sistema"
+            className="mb-32"
+          />{" "}
+          {/* componente do header */}
+          <LoginFormComponent /> {/* componente do formulário de login */}
+        </section>
+      </main>
+
+      <div className="mt-auto">
+        {/* parte onde fica o rodapé */}
+        <FooterComponent />
+      </div>
+    </>
+  );
+}
