@@ -1,15 +1,14 @@
 import Link from "next/link";
 import { slide as Menu } from "react-burger-menu";
-import { Menu01Icon, ScrollHorizontalIcon } from "@hugeicons/core-free-icons";
+import { Menu01Icon, ArrowLeft01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
 export function NavbarHamburguerComponent() {
   return (
     <Menu
       customBurgerIcon={<HugeiconsIcon icon={Menu01Icon} />}
-      customCrossIcon={<HugeiconsIcon icon={ScrollHorizontalIcon} />}
+      customCrossIcon={<HugeiconsIcon icon={ArrowLeft01Icon} />}
       width={280}
-      noOverlay
     >
       <Link className="menu-item" href={"/homepage"}>
         Homepage

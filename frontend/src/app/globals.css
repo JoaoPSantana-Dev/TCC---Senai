@@ -132,7 +132,7 @@ body {
 
   /* posicionamento e tamanho do botão de fechar */
   .bm-cross-button {
-    @apply w-2 h-50;
+    @apply absolute! top-1/2! -right-2! w-14! h-14! -translate-y-1/2;
   }
 
   /* cor do ícone de fechar (X) */
@@ -167,7 +167,7 @@ body {
 
   /* estilização do overlay (fundo escurecido) */
   .bm-overlay {
-    @apply bg-white/0;
+    background-color: transparent !important;
   }
 
   .bm-item {
