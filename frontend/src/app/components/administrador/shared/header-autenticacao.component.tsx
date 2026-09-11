@@ -5,8 +5,8 @@ import { ImagemComponent } from "../../shared/imagem.component";
 // apresenta o logo do SENAI, o título da tela e a orientação do usuário
 
 interface HeaderAutenticacaoComponentProps {
-  h1: string; // título
-  p: string; // texto
+  h1?: string; // título
+  p?: string; // texto
   className?: string;
 }
 

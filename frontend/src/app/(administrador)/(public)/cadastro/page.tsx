@@ -1,9 +1,10 @@
 import { CadastroComponent } from "@/app/components/administrador/cadastro/cadastro.component";
+import { EstruturaAdministradorPublicComponent } from "@/app/components/administrador/shared/estrutura-administrador-public.component";
 
 export default function Cadastro() {
   return (
-    <div className="flex h-screen w-full overflow-hidden min-h-screen flex-col">
+    <EstruturaAdministradorPublicComponent>
       <CadastroComponent />
-    </div>
+    </EstruturaAdministradorPublicComponent>
   );
 }

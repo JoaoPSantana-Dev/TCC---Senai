@@ -1,9 +1,10 @@
 import { LoginComponent } from "@/app/components/administrador/login/login.component";
+import { EstruturaAdministradorPublicComponent } from "@/app/components/administrador/shared/estrutura-administrador-public.component";
 
 export default function Login() {
   return (
-    <div className="flex h-screen w-full overflow-hidden min-h-screen flex-col">
+    <EstruturaAdministradorPublicComponent>
       <LoginComponent />
-    </div>
+    </EstruturaAdministradorPublicComponent>
   );
 }
