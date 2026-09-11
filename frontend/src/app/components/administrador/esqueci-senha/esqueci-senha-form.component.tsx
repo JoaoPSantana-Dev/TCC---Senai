@@ -9,6 +9,7 @@ import { ImagemBotaoComponent } from "../../shared/imagem-botao.component";
 
 const schemaEsqueciSenha = z.object({
   senha: z.string().min(8, "Sua nova senha precisa ter no mínimo 8 caracteres"),
+  novaSenha: z.string().min(8, "Digite novamente a mesma senha"),
 });
 
 type EsqueciSenhaFormData = z.infer<typeof schemaEsqueciSenha>;
@@ -39,7 +40,7 @@ export function EsqueciSenhaFormComponent() {
 
       if (resposta.ok) {
         toast.success("Senha alterada com sucesso!");
-        router.push("/cadastro");
+        router.push("/login");
       } else {
         toast.error(dados.message || "Erro ao atualizar a senha");
       }
@@ -54,13 +55,13 @@ export function EsqueciSenhaFormComponent() {
       className="flex flex-col gap-2.5 pt-6"
     >
       <div className="flex flex-col gap-1">
-        <label htmlFor="senha">Digite a nova senha</label>
+        <label htmlFor="senha">Senha:</label>
         <input
           id="senha"
           type="password"
           {...register("senha")}
           className="border border-zinc-400 hover:border-zinc-800 px-4 py-3 rounded-2xl"
-          placeholder="Digite a nova senha"
+          placeholder="Digite a sua nova senha"
         />
         {errors.senha && (
           <p className="text-red-500 text-sm">{errors.senha.message}</p>
@@ -68,7 +69,19 @@ export function EsqueciSenhaFormComponent() {
       </div>
 
       {/* aqui falta a div da segunda label para repetir a senha */}
-
+      <div className="flex flex-col gap-1">
+        <label htmlFor="novaSenha">Confirmar senha:</label>
+        <input
+          id="novaSenha"
+          type="password"
+          {...register("novaSenha")}
+          className="border border-zinc-400 hover:border-zinc-800 px-4 py-3 rounded-2xl"
+          placeholder="Repita a sua senha"
+        />
+        {errors.novaSenha && (
+          <p className="text-red-500 text-sm">{errors.novaSenha.message}</p>
+        )}
+      </div>
       {/* precisa rever a funcionalidade pra organizar os ids dos inputs */}
 
       <div className="flex justify-center">
