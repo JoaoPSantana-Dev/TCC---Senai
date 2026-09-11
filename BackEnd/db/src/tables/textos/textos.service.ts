@@ -1,6 +1,7 @@
 import { CreateTextoDto } from "../dto/create-texto.dto";
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
+import { UpdateTextoDto } from "../dto/update-texto.dto";
 
 @Injectable()
 export class TextosService{
@@ -30,7 +31,7 @@ export class TextosService{
         });
     }
         
-    updateTexto(id:number,updateTextoDto:CreateTextoDto){
+    updateTexto(id:number,updateTextoDto:UpdateTextoDto){
         return this.prisma.texto.update({
             where:{idTextos:id},
             data:updateTextoDto

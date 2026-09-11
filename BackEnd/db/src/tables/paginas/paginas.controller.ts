@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from "@nestjs/common";
 import { PaginasService } from "./paginas.service";
 import { CreatePaginaDto } from "../dto/create-pagina.dto";
+import { UpdatePaginaDto } from "../dto/update-pagina.dto";
 
 @Controller('paginas')
 export class PaginasController {
@@ -26,7 +27,7 @@ export class PaginasController {
         return this.paginaService.apagarPagina(+id);
     }
     @Patch(":id")
-    updatePagina(@Param("id") id:number, @Body() updatePaginaDto:CreatePaginaDto){
+    updatePagina(@Param("id") id:number, @Body() updatePaginaDto:UpdatePaginaDto){
         return this.paginaService.updatePagina(id,updatePaginaDto);
     }
 }

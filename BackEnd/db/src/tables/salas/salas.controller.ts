@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from "@nestjs/common";
 import { SalasService } from "./salas.service";
 import { CreateSalaDto } from "../dto/create-sala.dto";
+import { UpdateSalaDto } from "../dto/update-sala.dto";
 
 @Controller('salas')
 export class SalasController{
@@ -30,7 +31,7 @@ export class SalasController{
         return this.salasService.apagarSala(+id);
     }
     @Patch(":id")
-    updateSala(@Param("id") id:number, @Body() updateSalaDto:CreateSalaDto){
+    updateSala(@Param("id") id:number, @Body() updateSalaDto:UpdateSalaDto){
         return this.salasService.updateSala(id,updateSalaDto);
     }
 }

@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from "@nestjs/common";
 import { TextosService } from "./textos.service";
 import { CreateTextoDto } from "../dto/create-texto.dto";
+import { UpdateTextoDto } from "../dto/update-texto.dto";
 
 @Controller('textos')
 export class TextosController{
@@ -24,7 +25,7 @@ export class TextosController{
         return this.textosService.apagarTexto(+id);
     }
     @Patch(":id")
-    updateAula(@Param("id") id:number, @Body() updateTextoDto:CreateTextoDto){
+    updateAula(@Param("id") id:number, @Body() updateTextoDto:UpdateTextoDto){
         return this.textosService.updateTexto(id,updateTextoDto);
     }
 }
