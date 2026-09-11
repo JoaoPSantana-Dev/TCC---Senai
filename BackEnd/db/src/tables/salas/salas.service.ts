@@ -12,6 +12,13 @@ export class SalasService{
         });
     }
 
+    criarVariasSalas(createSalaDto: CreateSalaDto[]) {
+        return this.prisma.sala.createMany({
+            data: createSalaDto
+        });
+    }
+
+
     listarTodasSalas(){
         return this.prisma.sala.findMany({
             include: {horarios:true,},

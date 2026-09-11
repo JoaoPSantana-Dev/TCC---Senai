@@ -12,6 +12,12 @@ export class VagasEstagioService{
         });
     }
 
+     criarVariasVagasEstagios(createVagaEstagioDto: CreateVagaEstagioDto[]){
+            return this.prisma.vagaEstagio.createMany({
+                data:createVagaEstagioDto
+            });
+        }
+
     listarTodasVagasEstagio(){
         return this.prisma.vagaEstagio.findMany();
     }
