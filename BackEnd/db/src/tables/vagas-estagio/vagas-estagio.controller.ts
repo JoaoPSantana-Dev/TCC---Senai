@@ -12,8 +12,8 @@ export class VagasEstagioController {
     }
 
     @Post('lote')
-    criarVagasEstagio(@Body() createVagaEstagioDto:CreateVagaEstagioDto[]){
-        return this.vagasEstagioService.criarVagasEstagios(createVagaEstagioDto);
+    criarVariasVagasEstagio(@Body() createVagaEstagioDto:CreateVagaEstagioDto[]){
+        return this.vagasEstagioService.criarVariasVagasEstagios(createVagaEstagioDto);
     }
 
     @Get()

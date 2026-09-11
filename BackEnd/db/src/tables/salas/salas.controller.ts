@@ -12,8 +12,8 @@ export class SalasController{
     }
 
     @Post('lote')
-    criarSalas(@Body() createSalaDto:CreateSalaDto[]){
-        return this.salasService.criarSalas(createSalaDto);
+    criarVariasSalas(@Body() createSalaDto:CreateSalaDto[]){
+        return this.salasService.criarVariasSalas(createSalaDto);
     }
 
     @Get()

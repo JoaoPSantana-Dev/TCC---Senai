@@ -13,7 +13,7 @@ export class VagasEmpregoService{
         });
     }
 
-    criarVagasEmprego(createVagaEmpregoDto: CreateVagaEmpregoDto[]){
+    criarVariasVagasEmprego(createVagaEmpregoDto: CreateVagaEmpregoDto[]){
         return this.prisma.vagaEmprego.createMany({
             data:createVagaEmpregoDto
         });

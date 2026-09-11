@@ -12,8 +12,8 @@ import { CreateVagaEmpregoDto } from "../dto/create-vaga-emprego.dto";
         }
 
         @Post('lote')
-        criarVagasEmprego(@Body() createVagaEmpregoDto:CreateVagaEmpregoDto[]){
-            return this.vagasEmpregoService.criarVagasEmprego(createVagaEmpregoDto);
+        criarVariasVagasEmprego(@Body() createVagaEmpregoDto:CreateVagaEmpregoDto[]){
+            return this.vagasEmpregoService.criarVariasVagasEmprego(createVagaEmpregoDto);
         }
 
         @Get()
