@@ -13,6 +13,12 @@ export class VagasEmpregoService{
         });
     }
 
+    criarVariasVagasEmprego(createVagaEmpregoDto: CreateVagaEmpregoDto[]){
+        return this.prisma.vagaEmprego.createMany({
+            data:createVagaEmpregoDto
+        });
+    }
+
     listarTodasVagasEmprego(){
         return this.prisma.vagaEmprego.findMany();
     }
