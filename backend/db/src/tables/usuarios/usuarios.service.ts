@@ -17,23 +17,22 @@ export class UsuariosService {
     return this.prisma.usuario.findMany();
   }
 
-  listarUmUsuario(id:number){
+  listarUmUsuario(id: number) {
     return this.prisma.usuario.findUnique({
-      where:{idUsuario:id}
+      where: { idUsuario: id },
     });
   }
 
-  apagarUsuario(id:number){
+  apagarUsuario(id: number) {
     return this.prisma.usuario.delete({
-      where:{idUsuario:id}
+      where: { idUsuario: id },
     });
   }
 
-  updateUsuario(id:number, updateUsuarioDTO: UpdateUsuarioDto){
+  updateUsuario(id: number, updateUsuarioDTO: UpdateUsuarioDto) {
     return this.prisma.usuario.update({
-      where:{idUsuario:id},
-      data: updateUsuarioDTO
+      where: { idUsuario: id },
+      data: updateUsuarioDTO,
     });
   }
 }
-
