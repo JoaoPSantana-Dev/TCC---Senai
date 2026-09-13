@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from "@nestjs/common";
 import { VagasEstagioService } from "./vagas-estagio.service";
 import { CreateVagaEstagioDto } from "../dto/create.vaga-estagio.dto";
+import { UpdateVagaEstagioDto } from "../dto/update-vaga-estagio.dto";
 
 @Controller('vagas-estagio')
 export class VagasEstagioController {
@@ -32,7 +33,7 @@ export class VagasEstagioController {
     }
 
     @Patch(":id")
-    updateVagaEstagio(@Param("id") id:number, @Body() updateVagaEstagioDTO: CreateVagaEstagioDto){
+    updateVagaEstagio(@Param("id") id:number, @Body() updateVagaEstagioDTO: UpdateVagaEstagioDto){
         return this.vagasEstagioService.updateVagaEstagio(+id, updateVagaEstagioDTO);
     }
 

@@ -1,6 +1,7 @@
 import { CreateSalaDto } from "../dto/create-sala.dto";
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
+import { UpdateSalaDto } from "../dto/update-sala.dto";
 
 @Injectable()
 export class SalasService{
@@ -39,7 +40,7 @@ export class SalasService{
         });
     }
             
-    updateSala(id:number,updateSalaDto:CreateSalaDto){
+    updateSala(id:number,updateSalaDto:UpdateSalaDto){
         return this.prisma.sala.update({
             where:{idSala:id},
             data:updateSalaDto
