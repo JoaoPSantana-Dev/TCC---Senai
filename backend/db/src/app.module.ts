@@ -6,9 +6,10 @@ import { SalasModule } from './tables/salas/salas.module';
 import { TextosModule } from './tables/textos/textos.module';
 import { VagasEmpregoModule } from './tables/vagas-emprego/vagas-emprego.module';
 import { VagasEstagioModule } from './tables/vagas-estagio/vagas-estagio.module';
-import { UsuariosModule} from './tables/usuarios/usuarios.module';
-import { LoginModule } from './metodos/login/login.module';
-
+import { UsuariosModule } from './tables/usuarios/usuarios.module';
+import { LoginModule } from './modulos/login/login.module';
+import { PegarPaginaModule } from './modulos/pegarPagina/pegarPagina.module';
+import { PrismaService } from './prisma/prisma.service';
 
 @Module({
   imports: [
@@ -20,8 +21,8 @@ import { LoginModule } from './metodos/login/login.module';
     VagasEmpregoModule,
     VagasEstagioModule,
     UsuariosModule,
-    LoginModule
+    LoginModule,
+    PegarPaginaModule,
   ],
 })
-
 export class AppModule {}

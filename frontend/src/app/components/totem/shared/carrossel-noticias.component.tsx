@@ -22,6 +22,7 @@ export function CarrosselNoticiasComponent() {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [isPlaying, setIsPlaying] = React.useState(true);
+  const [isMounted, setIsMounted] = React.useState(false);
 
   const autoplayRef = React.useRef(
     Autoplay({
@@ -30,6 +31,10 @@ export function CarrosselNoticiasComponent() {
       stopOnMouseEnter: false,
     }),
   );
+
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   React.useEffect(() => {
     if (!api) return;
@@ -70,8 +75,12 @@ export function CarrosselNoticiasComponent() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="h-12 w-12 -left-14" />
-        <CarouselNext className="h-12 w-12 -right-14" />
+        {isMounted && (
+          <>
+            <CarouselPrevious className="h-12 w-12 -left-14" />
+            <CarouselNext className="h-12 w-12 -right-14" />
+          </>
+        )}
       </Carousel>
 
       {/* indicador de progresso do carrossel */}

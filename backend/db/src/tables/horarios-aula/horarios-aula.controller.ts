@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from "@nestjs/common";
 import { HorariosAulaService } from "./horarios-aula.service";
 import { CreateHorarioAulaDto } from "../dto/create-horario-aula.dto";
+import { UpdateHorarioAulaDto } from "../dto/update-horario-aula.dto";
 
 @Controller('horarios-aula')
 export class HorariosAulaController{
@@ -9,6 +10,11 @@ export class HorariosAulaController{
     @Post()
     criarHorarioAula(@Body() createHorarioAulaDto:CreateHorarioAulaDto){
         return this.horariosAulaService.criarHorarioAula(createHorarioAulaDto);
+    }
+
+    @Post('lote')
+    criarVariosHorariosAula(@Body() createHorarioAulaDto:CreateHorarioAulaDto[]){
+        return this.horariosAulaService.criarVariosHorariosAula(createHorarioAulaDto);
     }
 
     @Get()
@@ -25,7 +31,7 @@ export class HorariosAulaController{
         return this.horariosAulaService.apagarAula(+id);
     }
     @Patch(":id")
-    updateAula(@Param("id") id:number, @Body() updateAulaDto:CreateHorarioAulaDto){
+    updateAula(@Param("id") id:number, @Body() updateAulaDto:UpdateHorarioAulaDto){
         return this.horariosAulaService.updateAula(id,updateAulaDto);
     }
 }

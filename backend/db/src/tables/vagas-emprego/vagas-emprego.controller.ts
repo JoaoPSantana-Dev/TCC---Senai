@@ -1,14 +1,20 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from "@nestjs/common";
 import { VagasEmpregoService } from "./vagas-emprego.service";
 import { CreateVagaEmpregoDto } from "../dto/create-vaga-emprego.dto";
+import { UpdateVagaEmpregoDto } from "../dto/update-vaga-emprego.dto";
 
 @Controller('vagas-emprego')
     export class VagasEmpregoController {
         constructor(private readonly vagasEmpregoService: VagasEmpregoService){}
 
         @Post()
-        criarVagasEmprego(@Body() createVagaEmpregoDto:CreateVagaEmpregoDto){
+        criarVagaEmprego(@Body() createVagaEmpregoDto:CreateVagaEmpregoDto){
             return this.vagasEmpregoService.criarVagaEmprego(createVagaEmpregoDto);
+        }
+
+        @Post('lote')
+        criarVariasVagasEmprego(@Body() createVagaEmpregoDto:CreateVagaEmpregoDto[]){
+            return this.vagasEmpregoService.criarVariasVagasEmprego(createVagaEmpregoDto);
         }
 
         @Get()
@@ -27,7 +33,7 @@ import { CreateVagaEmpregoDto } from "../dto/create-vaga-emprego.dto";
         }
 
         @Patch(":id")
-        updateVagaEmprego(@Param("id") id:number, @Body() updateVagaEmpregoDTO:CreateVagaEmpregoDto){
+        updateVagaEmprego(@Param("id") id:number, @Body() updateVagaEmpregoDTO:UpdateVagaEmpregoDto){
             return this.vagasEmpregoService.updateVagaEmprego(+id,updateVagaEmpregoDTO);
         }
     }

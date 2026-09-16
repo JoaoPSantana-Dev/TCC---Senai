@@ -18,7 +18,7 @@ export function HeaderBarraUtilitariosComponent() {
   }, []);
 
   return (
-    <div className="flex w-full bg-red-600 gap-2 items-center justify-between pl-2 pr-2">
+    <div className="flex w-full bg-red-600 gap-2 items-center justify-between px-2">
       <p className="font-semibold text-sm uppercase truncate">
         FIESP CIESP SESI SENAI IRS | F | TW | YT | iN | iNt | wz
       </p>

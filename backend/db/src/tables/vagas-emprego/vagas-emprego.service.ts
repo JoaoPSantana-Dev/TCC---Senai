@@ -1,6 +1,7 @@
 import { CreateVagaEmpregoDto } from "../dto/create-vaga-emprego.dto";
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
+import { UpdateVagaEmpregoDto } from "../dto/update-vaga-emprego.dto";
 
 
 @Injectable()
@@ -10,6 +11,12 @@ export class VagasEmpregoService{
     criarVagaEmprego(createVagaEmpregoDto: CreateVagaEmpregoDto){
         return this.prisma.vagaEmprego.create({
             data: createVagaEmpregoDto
+        });
+    }
+
+    criarVariasVagasEmprego(createVagaEmpregoDto: CreateVagaEmpregoDto[]){
+        return this.prisma.vagaEmprego.createMany({
+            data:createVagaEmpregoDto
         });
     }
 
@@ -29,7 +36,7 @@ export class VagasEmpregoService{
         });
     }
 
-    updateVagaEmprego(id:number, updateVagaEmpregoDTO:CreateVagaEmpregoDto){
+    updateVagaEmprego(id:number, updateVagaEmpregoDTO:UpdateVagaEmpregoDto){
         return this.prisma.vagaEmprego.update({
             where:{idEmprego:id},
             data:updateVagaEmpregoDTO
