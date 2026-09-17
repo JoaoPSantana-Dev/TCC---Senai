@@ -1,77 +1,34 @@
 import { EstruturaTotem } from "@/app/components/totem/shared/EstruturaTotem";
-import { Imagem } from "@/app/components/shared/Imagem";
 import { Titulo } from "@/app/components/totem/shared/Titulo";
+import { LinhaSobre } from "@/app/components/totem/sobre/LinhaSobre";
 
 export default function Sobre() {
   return (
     <EstruturaTotem mostrarNoticias={false}>
       <main className="w-full flex-1">
+        <Titulo texto="Sobre o SENAI Mariano Ferraz" />
         <div className="mx-auto max-w-6xl w-full p-6 md:p-12 flex flex-col justify-center">
-          <Titulo texto="Sobre o SENAI Mariano Ferraz" />
-
           <section className="flex flex-col gap-6 w-full">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 items-stretch">
-              <div className="flex items-center justify-center rounded-3xl bg-white p-8 text-zinc-700 shadow-sm min-h-80 transition-all duration-150 ease-in-out active:scale-[0.98] active:shadow-lg active:brightness-95 touch-manipulation select-none">
-                <p className="text-center text-base md:text-lg font-medium leading-relaxed">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam
-                  nemo ratione dignissimos explicabo hic facilis nisi
-                  consectetur minus, recusandae corrupti fugiat illum
-                  praesentium qui consequatur deleniti itaque quis laborum
-                  nesciunt veniam ipsam, possimus culpa ut! Officia rerum amet
-                  dolorum laborum.
-                </p>
-              </div>
+            <LinhaSobre
+              texto="Bom dia"
+              nomeImagem="senai-mariano-ferraz.png"
+              alt="Imagem SENAI"
+              primeiroEstilo={true}
+            />
 
-              <div className="relative min-h-80 overflow-hidden rounded-3xl bg-white shadow-sm transition-all duration-150 ease-in-out active:scale-[0.98] active:shadow-lg active:brightness-95 touch-manipulation select-none">
-                <Imagem
-                  nomeImagem="senai-mariano-ferraz.png"
-                  alt="Senai Mariano-Ferraz"
-                  fill
-                />
-              </div>
-            </div>
+            <LinhaSobre
+              texto="Boa tarde"
+              nomeImagem="senai-mariano-ferraz.png"
+              alt="Imagem SENAI"
+              primeiroEstilo={false}
+            />
 
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 items-stretch">
-              <div className="relative min-h-80 overflow-hidden rounded-3xl bg-white shadow-sm transition-all duration-150 ease-in-out active:scale-[0.98] active:shadow-lg active:brightness-95 touch-manipulation select-none">
-                <Imagem
-                  nomeImagem="senai-mariano-ferraz.png"
-                  alt="Senai Mariano-Ferraz"
-                  fill
-                />
-              </div>
-
-              <div className="flex items-center justify-center rounded-3xl bg-white p-8 text-zinc-700 shadow-sm min-h-80 transition-all duration-150 ease-in-out active:scale-[0.98] active:shadow-lg active:brightness-95 touch-manipulation select-none">
-                <p className="text-center text-base md:text-lg font-medium leading-relaxed">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam
-                  nemo ratione dignissimos explicabo hic facilis nisi
-                  consectetur minus, recusandae corrupti fugiat illum
-                  praesentium qui consequatur deleniti itaque quis laborum
-                  nesciunt veniam ipsam, possimus culpa ut! Officia rerum amet
-                  dolorum laborum.
-                </p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 items-stretch">
-              <div className="flex items-center justify-center rounded-3xl bg-white p-8 text-zinc-700 shadow-sm min-h-80 transition-all duration-150 ease-in-out active:scale-[0.98] active:shadow-lg active:brightness-95 touch-manipulation select-none">
-                <p className="text-center text-base md:text-lg font-medium leading-relaxed">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam
-                  nemo ratione dignissimos explicabo hic facilis nisi
-                  consectetur minus, recusandae corrupti fugiat illum
-                  praesentium qui consequatur deleniti itaque quis laborum
-                  nesciunt veniam ipsam, possimus culpa ut! Officia rerum amet
-                  dolorum laborum.
-                </p>
-              </div>
-
-              <div className="relative min-h-80 overflow-hidden rounded-3xl bg-white shadow-sm transition-all duration-150 ease-in-out active:scale-[0.98] active:shadow-lg active:brightness-95 touch-manipulation select-none">
-                <Imagem
-                  nomeImagem="senai-mariano-ferraz.png"
-                  alt="Senai Mariano-Ferraz"
-                  fill
-                />
-              </div>
-            </div>
+            <LinhaSobre
+              texto="Boa noite"
+              nomeImagem="senai-mariano-ferraz.png"
+              alt="Imagem SENAI"
+              primeiroEstilo={true}
+            />
           </section>
         </div>
       </main>
