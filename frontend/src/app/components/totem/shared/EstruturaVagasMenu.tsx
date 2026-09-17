@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { type Vaga, vagas } from "./estrutura-vagas-menu.data";
+import { type Vaga, vagas } from "./EstruturaVagasMenu.data";
 
 interface EstruturaVagasMenuProps {
   itens?: Vaga[];
@@ -8,7 +8,7 @@ interface EstruturaVagasMenuProps {
   itemClassName?: string;
 }
 
-export function EstruturaVagasMenuComponent({
+export function EstruturaVagasMenu({
   itens = vagas,
   className = "w-full max-w-6xl p-4 rounded-xl",
   itemClassName = "h-full items-center flex flex-row p-8 bg-white rounded-2xl shadow-xl hover:shadow-md",

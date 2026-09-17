@@ -3,19 +3,19 @@ interface Sala {
   nome: string;
 }
 
-interface MapaGridComponentProps {
+interface MapaGridProps {
   salasSuperiores: Sala[];
   salasInferiores: Sala[];
   tituloCentral?: string;
   onSalaClick?: (sala: Sala) => void;
 }
 
-export function MapaGridComponent({
+export function MapaGrid({
   salasSuperiores,
   salasInferiores,
   tituloCentral = "Vista de Cima da unidade",
   onSalaClick,
-}: MapaGridComponentProps) {
+}: MapaGridProps) {
   return (
     <div className="w-full max-w-full mx-auto border-4 border-black bg-black p-1 rounded-sm shadow-md">
       <div className="grid grid-cols-4 gap-1 text-center font-medium">

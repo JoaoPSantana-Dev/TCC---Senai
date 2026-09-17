@@ -3,7 +3,7 @@ import { slide as Menu } from "react-burger-menu";
 import { Menu01Icon, ArrowLeft01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
-export function NavbarHamburguerComponent() {
+export function NavbarHamburguer() {
   return (
     <Menu
       customBurgerIcon={<HugeiconsIcon icon={Menu01Icon} />}

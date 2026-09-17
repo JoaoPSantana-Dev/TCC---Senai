@@ -1,13 +1,13 @@
-import { EstruturaTotemComponent } from "@/app/components/totem/shared/estrutura-totem.component";
-import { ImagemComponent } from "@/app/components/shared/imagem.component";
-import { TituloComponent } from "@/app/components/totem/shared/titulo.component";
+import { EstruturaTotem } from "@/app/components/totem/shared/EstruturaTotem";
+import { Imagem } from "@/app/components/shared/Imagem";
+import { Titulo } from "@/app/components/totem/shared/Titulo";
 
 export default function Sobre() {
   return (
-    <EstruturaTotemComponent mostrarNoticias={false}>
+    <EstruturaTotem mostrarNoticias={false}>
       <main className="w-full flex-1">
         <div className="mx-auto max-w-6xl w-full p-6 md:p-12 flex flex-col justify-center">
-          <TituloComponent texto="Sobre o SENAI Mariano Ferraz" />
+          <Titulo texto="Sobre o SENAI Mariano Ferraz" />
 
           <section className="flex flex-col gap-6 w-full">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 items-stretch">
@@ -23,7 +23,7 @@ export default function Sobre() {
               </div>
 
               <div className="relative min-h-80 overflow-hidden rounded-3xl bg-white shadow-sm transition-all duration-150 ease-in-out active:scale-[0.98] active:shadow-lg active:brightness-95 touch-manipulation select-none">
-                <ImagemComponent
+                <Imagem
                   nomeImagem="senai-mariano-ferraz.png"
                   alt="Senai Mariano-Ferraz"
                   fill
@@ -33,7 +33,7 @@ export default function Sobre() {
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 items-stretch">
               <div className="relative min-h-80 overflow-hidden rounded-3xl bg-white shadow-sm transition-all duration-150 ease-in-out active:scale-[0.98] active:shadow-lg active:brightness-95 touch-manipulation select-none">
-                <ImagemComponent
+                <Imagem
                   nomeImagem="senai-mariano-ferraz.png"
                   alt="Senai Mariano-Ferraz"
                   fill
@@ -65,7 +65,7 @@ export default function Sobre() {
               </div>
 
               <div className="relative min-h-80 overflow-hidden rounded-3xl bg-white shadow-sm transition-all duration-150 ease-in-out active:scale-[0.98] active:shadow-lg active:brightness-95 touch-manipulation select-none">
-                <ImagemComponent
+                <Imagem
                   nomeImagem="senai-mariano-ferraz.png"
                   alt="Senai Mariano-Ferraz"
                   fill
@@ -75,6 +75,6 @@ export default function Sobre() {
           </section>
         </div>
       </main>
-    </EstruturaTotemComponent>
+    </EstruturaTotem>
   );
 }

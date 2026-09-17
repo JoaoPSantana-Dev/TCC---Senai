@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { ImagemComponent } from "../../shared/imagem.component";
-import { MapaGridComponent } from "./mapa-grid.component";
-import { dadosCarrossel } from "./mapa.data";
+import { Imagem } from "../../shared/Imagem";
+import { MapaGrid } from "./MapaGrid";
+import { dadosCarrossel } from "./Mapa.data";
 
-export function MapaComponent() {
+export function Mapa() {
   const [paginaAtual, setPaginaAtual] = useState(0);
 
   const proximo = () => {
@@ -45,7 +45,7 @@ export function MapaComponent() {
           </button>
 
           {/* Mapa Modular */}
-          <MapaGridComponent
+          <MapaGrid
             salasSuperiores={itemAtivo.superiores}
             salasInferiores={itemAtivo.inferiores}
             tituloCentral={itemAtivo.unidade}
@@ -79,7 +79,7 @@ export function MapaComponent() {
 
       <section className="w-full px-7 py-7 bg-white rounded-3xl shadow-sm mt-5">
         <figure className="relative min-h-120 overflow-hidden rounded-3xl bg-white shadow-sm transition-all duration-150 ease-in-out active:scale-[0.98] active:shadow-lg active:brightness-95 touch-manipulation select-none">
-          <ImagemComponent
+          <Imagem
             nomeImagem="senai-mariano-ferraz.png"
             alt="Senai Mariano-Ferraz"
             fill

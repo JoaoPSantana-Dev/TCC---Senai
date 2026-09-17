@@ -2,23 +2,22 @@
 
 import * as React from "react";
 import Autoplay from "embla-carousel-autoplay";
-import { type CarouselApi } from "@/components/ui/carousel";
+import { type CarouselApi } from "@/components/ui/Carousel";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
-import { NoticiaSlideComponent } from "./noticia-slide.component";
-import { noticias } from "./noticias.data";
+} from "@/components/ui/Carousel";
+import { NoticiaSlide } from "./NoticiaSlide";
+import { noticias } from "./Noticias.data";
 
 const AUTOPLAY_DELAY = 10000;
 
-// CarrosselNoticiasComponent
 // exibe as notícias em um carrossel automático, com navegação por botão ou deslizando com uma barra de progresso na parte de baixo
 
-export function CarrosselNoticiasComponent() {
+export function CarrosselNoticias() {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [isPlaying, setIsPlaying] = React.useState(true);
@@ -71,7 +70,7 @@ export function CarrosselNoticiasComponent() {
         <CarouselContent>
           {noticias.map((noticia) => (
             <CarouselItem key={noticia.id}>
-              <NoticiaSlideComponent noticia={noticia} />
+              <NoticiaSlide noticia={noticia} />
             </CarouselItem>
           ))}
         </CarouselContent>

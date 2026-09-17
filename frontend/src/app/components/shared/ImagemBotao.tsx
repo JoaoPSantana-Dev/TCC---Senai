@@ -1,6 +1,5 @@
 import Image from "next/image";
 
-// ImagemBotaoComponent
 // botão reutilizável que pode ser adicionado junto com um texto
 
 interface ImagemProps {
@@ -12,7 +11,7 @@ interface ImagemProps {
   onClick?: () => void;
 }
 
-export function ImagemBotaoComponent({
+export function ImagemBotao({
   texto,
   nomeImagem,
   alt,

@@ -6,11 +6,7 @@ interface TituloProps {
   className?: string;
 }
 
-export function TituloComponent({
-  texto,
-  children,
-  className = "",
-}: TituloProps) {
+export function Titulo({ texto, children, className = "" }: TituloProps) {
   return (
     <section className="min-h-auto flex flex-col items-center justify-center">
       <h1

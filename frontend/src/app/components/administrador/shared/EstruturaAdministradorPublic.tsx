@@ -1,18 +1,18 @@
 import type { ReactNode } from "react";
-import { FooterComponent } from "../../shared/footer.component";
-import { ImagemAutenticacaoComponent } from "./imagem-autenticacao.component";
+import { Footer } from "../../shared/Footer";
+import { ImagemAutenticacao } from "./ImagemAutenticacao";
 
-interface EstruturaAdministradorPublicComponentProps {
+interface EstruturaAdministradorPublicProps {
   children: ReactNode;
 }
 
-export function EstruturaAdministradorPublicComponent({
+export function EstruturaAdministradorPublic({
   children,
-}: EstruturaAdministradorPublicComponentProps) {
+}: EstruturaAdministradorPublicProps) {
   return (
     <div className="flex h-screen w-full overflow-hidden min-h-screen flex-col">
       <main className="flex flex-1 flex-col md:flex-row">
-        <ImagemAutenticacaoComponent
+        <ImagemAutenticacao
           nomeImagem="tubarao.png"
           alt="Foto da entrada da escola SENAI Mariano Ferraz"
         />
@@ -20,7 +20,7 @@ export function EstruturaAdministradorPublicComponent({
         {children}
       </main>
 
-      <FooterComponent />
+      <Footer />
     </div>
   );
 }

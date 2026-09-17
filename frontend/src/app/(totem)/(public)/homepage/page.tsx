@@ -1,13 +1,13 @@
-import { paginas } from "@/app/components/totem/homepage/homepage-menu.data";
-import { EstruturaTotemComponent } from "@/app/components/totem/shared/estrutura-totem.component";
-import { TituloComponent } from "@/app/components/totem/shared/titulo.component";
+import { paginas } from "@/app/components/totem/homepage/HomepageMenu.data";
+import { EstruturaTotem } from "@/app/components/totem/shared/EstruturaTotem";
+import { Titulo } from "@/app/components/totem/shared/Titulo";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 
 export default function Homepage() {
   return (
-    <EstruturaTotemComponent>
-      <TituloComponent texto="Bem-vindo ao totem do SENAI Mariano Ferraz!">
+    <EstruturaTotem>
+      <Titulo texto="Bem-vindo ao totem do SENAI Mariano Ferraz!">
         <nav className="w-full max-w-6xl p-4 rounded-xl">
           <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {paginas.map((pagina) => (
@@ -27,7 +27,7 @@ export default function Homepage() {
             ))}
           </ul>
         </nav>
-      </TituloComponent>
-    </EstruturaTotemComponent>
+      </Titulo>
+    </EstruturaTotem>
   );
 }

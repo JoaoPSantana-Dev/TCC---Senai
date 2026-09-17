@@ -1,7 +1,7 @@
 "use client";
 
-import { ImagemBotaoComponent } from "../../shared/imagem-botao.component";
-import { ImagemComponent } from "../../shared/imagem.component";
+import { ImagemBotao } from "../../shared/ImagemBotao";
+import { Imagem } from "../../shared/Imagem";
 import { useRouter } from "next/navigation";
 
 export function TelaDescanso() {
@@ -14,14 +14,14 @@ export function TelaDescanso() {
       </h1>
       <div className="flex min-h-400px w-400px flex-col items-center justify-center rounded-2xl bg-white p-8 shadow-lg">
         <figure className="mb-12">
-          <ImagemComponent
+          <Imagem
             nomeImagem="senai-logo.png"
             alt="Imagem do logo SENAI"
             width={1080}
             height={1920}
           />
         </figure>
-        <ImagemBotaoComponent
+        <ImagemBotao
           nomeImagem="login_icon.svg"
           texto="Clique para começar"
           onClick={() => router.push("/homepage")}

@@ -3,7 +3,7 @@ import {
   Building03Icon,
   ClipboardCheckIcon,
 } from "@hugeicons/core-free-icons";
-import { type Vaga } from "../shared/estrutura-vagas-menu.data";
+import { type Vaga } from "../shared/EstruturaVagasMenu.data";
 
 export const vagasCursos: Vaga[] = [
   {

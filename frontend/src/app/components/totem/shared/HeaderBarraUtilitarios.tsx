@@ -1,9 +1,8 @@
-// HeaderBarraUtilitariosComponent
 // barra superior fixa com informações institucionais, hora atual e clima
 
 import { useEffect, useState } from "react";
 
-export function HeaderBarraUtilitariosComponent() {
+export function HeaderBarraUtilitarios() {
   const [time, setTime] = useState<string>("");
 
   useEffect(() => {

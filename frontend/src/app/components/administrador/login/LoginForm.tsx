@@ -4,7 +4,7 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { ImagemBotaoComponent } from "../../shared/imagem-botao.component";
+import { ImagemBotao } from "../../shared/ImagemBotao";
 import { toast } from "sonner";
 import Link from "next/link";
 
@@ -15,7 +15,7 @@ const schemaLogin = z.object({
 
 type LoginFormData = z.infer<typeof schemaLogin>;
 
-export function LoginFormComponent() {
+export function LoginForm() {
   const router = useRouter();
 
   const {
@@ -95,7 +95,7 @@ export function LoginFormComponent() {
 
       {/* botão de envio do formulário de autenticação. */}
       <div className="flex items-start justify-center space-y-6">
-        <ImagemBotaoComponent nomeImagem="login_icon.svg" texto="Entrar" />
+        <ImagemBotao nomeImagem="login_icon.svg" texto="Entrar" />
       </div>
 
       <ul className="flex items-start justify-center space-x-20 space-y-6">

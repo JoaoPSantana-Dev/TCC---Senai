@@ -3,22 +3,22 @@ import {
   Building03Icon,
   ClipboardCheckIcon,
 } from "@hugeicons/core-free-icons";
-import { type Vaga } from "../shared/estrutura-vagas-menu.data";
+import { type Vaga } from "../shared/EstruturaVagasMenu.data";
 
-export const vagasEmpregos: Vaga[] = [
+export const vagasEstagios: Vaga[] = [
   {
     titulo: "Assistente de Vendas",
-    href: "/vagas-empregos/assistente-vendas",
+    href: "/vagas-estagios/assistente-vendas",
     icone: Briefcase01Icon,
   },
   {
     titulo: "Supervisor de Produção",
-    href: "/vagas-empregos/supervisor-producao",
+    href: "/vagas-estagios/supervisor-producao",
     icone: Building03Icon,
   },
   {
     titulo: "Recepcionista",
-    href: "/vagas-empregos/recepcionista",
+    href: "/vagas-estagios/recepcionista",
     icone: ClipboardCheckIcon,
   },
 ];

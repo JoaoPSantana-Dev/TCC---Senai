@@ -1,7 +1,6 @@
-// FooterComponent
 // rodapé compartilhado do sistema
 
-export function FooterComponent() {
+export function Footer() {
   return (
     <footer className="w-full flex bg-white text-black py-2 text-center border-t-2 border-gray-300 pb-4">
       <div className="container mx-auto px-4 flex flex-col items-center gap-4">

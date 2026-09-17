@@ -1,13 +1,12 @@
-import { ImagemComponent } from "../../shared/imagem.component";
+import { Imagem } from "../../shared/Imagem";
 
-// HeaderLogoComponent
 // exibe o logo institucional do SENAI no centro do cabeçalho
 // esse componente é reutilizado em todas as páginas do totem
 
-export function HeaderLogoComponent() {
+export function HeaderLogo() {
   return (
     <figure className="flex justify-center p-4">
-      <ImagemComponent
+      <Imagem
         nomeImagem="senai-logo.png"
         alt="Imagem do logo SENAI"
         width={200}

@@ -1,24 +1,23 @@
-import { ImagemComponent } from "../../shared/imagem.component";
+import { Imagem } from "../../shared/Imagem";
 
-// HeaderAutenticacaoComponent
 // cabeçalho da área de autenticação do sistema
 // apresenta o logo do SENAI, o título da tela e a orientação do usuário
 
-interface HeaderAutenticacaoComponentProps {
+interface HeaderAutenticacaoProps {
   h1?: string; // título
   p?: string; // texto
   className?: string;
 }
 
-export function HeaderAutenticacaoComponent({
+export function HeaderAutenticacao({
   h1,
   p,
   className,
-}: HeaderAutenticacaoComponentProps) {
+}: HeaderAutenticacaoProps) {
   return (
     <header className="flex flex-col gap-2">
       <figure className={className}>
-        <ImagemComponent
+        <Imagem
           nomeImagem="senai-logo.png"
           alt="Imagem do logo SENAI"
           width={1920}

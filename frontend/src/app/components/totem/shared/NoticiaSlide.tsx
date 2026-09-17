@@ -1,15 +1,14 @@
 import Image from "next/image";
-import { Card, CardContent } from "@/components/ui/card";
-import type { Noticia } from "./noticias.data";
+import { Card, CardContent } from "@/components/ui/Card";
+import type { Noticia } from "./Noticias.data";
 
 interface NoticiaSlideProps {
   noticia: Noticia;
 }
 
-// NoticiaSlideComponent
 // renderiza um único item do carrossel de notícias com imagem de fundo e título
 
-export function NoticiaSlideComponent({ noticia }: NoticiaSlideProps) {
+export function NoticiaSlide({ noticia }: NoticiaSlideProps) {
   return (
     <Card className="overflow-hidden">
       <CardContent className="p-0 relative aspect-video flex flex-col justify-end">

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
-import { ImagemBotaoComponent } from "../../shared/imagem-botao.component";
+import { ImagemBotao } from "../../shared/ImagemBotao";
 
 const schemaEsqueciSenha = z.object({
   senha: z.string().min(8, "Sua nova senha precisa ter no mínimo 8 caracteres"),
@@ -14,7 +14,7 @@ const schemaEsqueciSenha = z.object({
 
 type EsqueciSenhaFormData = z.infer<typeof schemaEsqueciSenha>;
 
-export function EsqueciSenhaFormComponent() {
+export function EsqueciSenhaForm() {
   const router = useRouter();
 
   const {
@@ -85,7 +85,7 @@ export function EsqueciSenhaFormComponent() {
       {/* precisa rever a funcionalidade pra organizar os ids dos inputs */}
 
       <div className="flex justify-center">
-        <ImagemBotaoComponent
+        <ImagemBotao
           nomeImagem="login_icon.svg"
           texto={isSubmitting ? "Alterando..." : "Alterar senha"}
           disabled={isSubmitting}

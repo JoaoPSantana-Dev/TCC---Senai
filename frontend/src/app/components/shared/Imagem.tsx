@@ -1,6 +1,5 @@
 import Image from "next/image";
 
-// ImagemComponent
 // componente reutilizável para renderizar imagens do projeto
 // centraliza o uso do componente Next Image e permite personalizar largura, altura, texto alternativo e classes extras via props
 
@@ -14,7 +13,7 @@ interface ImagemProps {
   sizes?: string;
 }
 
-export function ImagemComponent({
+export function Imagem({
   nomeImagem,
   alt = "Imagem",
   width,
@@ -23,10 +22,9 @@ export function ImagemComponent({
   sizes,
   className = "",
 }: ImagemProps) {
-
   if (fill) {
     return (
-      <Image 
+      <Image
         src={`/${nomeImagem}`}
         alt={alt}
         fill

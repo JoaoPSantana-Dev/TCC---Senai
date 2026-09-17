@@ -3,7 +3,7 @@
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ImagemBotaoComponent } from "../../shared/imagem-botao.component";
+import { ImagemBotao } from "../../shared/ImagemBotao";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -17,7 +17,7 @@ const schemaCadastro = z.object({
 
 type CadastroFormData = z.infer<typeof schemaCadastro>;
 
-export function CadastroFormComponent() {
+export function CadastroForm() {
   const router = useRouter();
 
   const {
@@ -139,7 +139,7 @@ export function CadastroFormComponent() {
       </div>
 
       <div className="flex justify-center">
-        <ImagemBotaoComponent
+        <ImagemBotao
           nomeImagem="login_icon.svg"
           texto={isSubmitting ? "Cadastrando..." : "Cadastrar"}
           disabled={isSubmitting}
