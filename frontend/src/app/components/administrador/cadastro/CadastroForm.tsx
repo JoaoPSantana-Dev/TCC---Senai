@@ -47,7 +47,7 @@ export function CadastroForm() {
 
       if (resposta.ok) {
         toast.success("Cadastro realizado com sucesso!");
-        router.push("/login");
+        router.push("/");
       } else {
         toast.error(dados.message || "Erro ao realizar cadastro");
       }
