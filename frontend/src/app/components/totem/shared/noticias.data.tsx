@@ -12,4 +12,8 @@ export const noticias: Noticia[] = [
     id: 2,
     imagem: "/tubarao.png",
   },
+  {
+    id: 3,
+    imagem: "/tubarao.png",
+  },
 ];

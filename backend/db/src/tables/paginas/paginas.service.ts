@@ -1,6 +1,7 @@
 import { CreatePaginaDto } from "../dto/create-pagina.dto";
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
+import { UpdatePaginaDto } from "../dto/update-pagina.dto";
 
 @Injectable()
 export class PaginasService{
@@ -31,7 +32,7 @@ export class PaginasService{
         });
     }
                 
-    updatePagina(id:number,updatePaginaDto:CreatePaginaDto){
+    updatePagina(id:number,updatePaginaDto:UpdatePaginaDto){
         return this.prisma.pagina.update({
             where:{idPaginas:id},
             data:updatePaginaDto
