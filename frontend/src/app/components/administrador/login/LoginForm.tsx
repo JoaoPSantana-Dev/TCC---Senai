@@ -108,7 +108,7 @@ export function LoginForm() {
         <li>|</li>
 
         <li>
-          <Link href="/recuperar-senha" className="hover:text-red-600">
+          <Link href="/esqueci-senha" className="hover:text-red-600">
             Recuperar senha
           </Link>
         </li>
