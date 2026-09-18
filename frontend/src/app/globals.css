@@ -118,11 +118,6 @@ body {
 
 /* css do react burger menu */
 @layer components {
-  /* posicionamento e tamanho do botão hambúrguer */
-  .bm-burger-button {
-    @apply absolute w-18 h-10 left-9 top-17 -translate-y-1/2;
-  }
-
   /* cor das barras do ícone hambúrguer */
   .bm-burger-bars {
     @apply bg-black;
