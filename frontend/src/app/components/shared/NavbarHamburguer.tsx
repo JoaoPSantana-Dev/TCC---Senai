@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { slide as Menu } from "react-burger-menu";
 
