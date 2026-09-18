@@ -2,6 +2,7 @@ import { NavbarHamburguer } from "@/app/components/shared/NavbarHamburguer";
 import { Imagem } from "@/app/components/shared/Imagem";
 import { User02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { paginas } from "@/app/components/totem/homepage/HomepageMenu.data";
 
 export default function Paginas() {
   return (
@@ -24,19 +25,14 @@ export default function Paginas() {
       </header>
 
       <main className="flex justify-center items-center w-full">
-        <section className="grid grid-cols-3 bg-white w-1/3 md:w-2/3">
-          <div className="flex flex-col justify-center">
-            <h1>Nome</h1>
-            <p>asdalwh</p>
-          </div>
-          <div className="flex flex-col justify-center">
-            <h1>Tipo</h1>
-            <p>asdalwh</p>
-          </div>
-          <div className="flex flex-col justify-center">
-            <h1>Opções</h1>
-            <p>asdalwh</p>
-          </div>
+        <section className=" bg-white w-1/3 md:w-2/3">
+          <ul className="flex flex-col gap-8">
+            {paginas.map((pagina) => (
+              <li key={pagina.href}>
+                <h2 className="text-xl">{pagina.titulo}</h2>
+              </li>
+            ))}
+          </ul>{" "}
         </section>
       </main>
     </div>
