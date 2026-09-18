@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Imagem } from "../../shared/Imagem";
 import { MapaGrid } from "./MapaGrid";
-import { dadosCarrossel } from "./Mapa.data";
+import { dadosCarrossel } from "./mapa.data";
 
 export function Mapa() {
   const [paginaAtual, setPaginaAtual] = useState(0);
