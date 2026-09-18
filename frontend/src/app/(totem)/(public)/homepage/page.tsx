@@ -1,6 +1,6 @@
 import { paginas } from "@/app/components/totem/homepage/HomepageMenu.data";
 import { EstruturaTotem } from "@/app/components/totem/shared/EstruturaTotem";
-import { Titulo } from "@/app/components/totem/shared/Titulo";
+import { Titulo } from "@/app/components/totem/shared/TituloTotem";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 

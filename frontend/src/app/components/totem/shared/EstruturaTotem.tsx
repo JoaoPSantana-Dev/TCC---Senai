@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Header } from "@/app/components/totem/shared/Header";
+import { HeaderTotem } from "@/app/components/totem/shared/HeaderTotem";
 import { Noticias } from "@/app/components/totem/shared/Noticias";
 import { Footer } from "../../shared/Footer";
 
@@ -14,7 +14,7 @@ export function EstruturaTotem({
 }: EstruturaTotemProps) {
   return (
     <main className="w-screen h-screen flex flex-col">
-      <Header />
+      <HeaderTotem />
 
       {children}
 

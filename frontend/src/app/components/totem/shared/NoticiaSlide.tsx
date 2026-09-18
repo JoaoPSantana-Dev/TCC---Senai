@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/Card";
-import type { Noticia } from "./Noticias.data";
+import type { Noticia } from "./noticias.data";
 
 interface NoticiaSlideProps {
   noticia: Noticia;

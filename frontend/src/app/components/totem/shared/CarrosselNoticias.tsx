@@ -11,7 +11,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/Carousel";
 import { NoticiaSlide } from "./NoticiaSlide";
-import { noticias } from "./Noticias.data";
+import { noticias } from "./noticias.data";
 
 const AUTOPLAY_DELAY = 10000;
 

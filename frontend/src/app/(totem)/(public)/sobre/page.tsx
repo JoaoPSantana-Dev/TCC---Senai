@@ -1,5 +1,5 @@
 import { EstruturaTotem } from "@/app/components/totem/shared/EstruturaTotem";
-import { Titulo } from "@/app/components/totem/shared/Titulo";
+import { Titulo } from "@/app/components/totem/shared/TituloTotem";
 import { LinhaSobre } from "@/app/components/totem/sobre/LinhaSobre";
 
 export default function Sobre() {
