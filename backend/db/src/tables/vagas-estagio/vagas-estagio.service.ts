@@ -1,0 +1,44 @@
+import { CreateVagaEstagioDto } from "../dto/create.vaga-estagio.dto";
+import { Injectable } from "@nestjs/common";
+import { PrismaService } from "src/prisma/prisma.service";
+import { UpdateVagaEstagioDto } from "../dto/update-vaga-estagio.dto";
+
+@Injectable()
+export class VagasEstagioService{
+    constructor(private prisma: PrismaService){}
+
+    criarVagaEstagio(createVagaEstagioDto: CreateVagaEstagioDto){
+        return this.prisma.vagaEstagio.create({
+            data: createVagaEstagioDto
+        });
+    }
+
+     criarVariasVagasEstagios(createVagaEstagioDto: CreateVagaEstagioDto[]){
+            return this.prisma.vagaEstagio.createMany({
+                data:createVagaEstagioDto
+            });
+        }
+
+    listarTodasVagasEstagio(){
+        return this.prisma.vagaEstagio.findMany();
+    }
+
+    listarUmaVagaEstagio(id:number){
+            return this.prisma.vagaEstagio.findUnique({
+                where:{idEstagio:id}
+            });
+        }
+    
+    apagarVagaEstagio(id:number){
+            return this.prisma.vagaEstagio.delete({
+                where:{idEstagio:id}
+            });
+        }
+    
+        updateVagaEstagio(id:number, updateVagaEstagioDTO:UpdateVagaEstagioDto){
+            return this.prisma.vagaEstagio.update({
+                where:{idEstagio:id},
+                data:updateVagaEstagioDTO
+            });
+        }
+}
