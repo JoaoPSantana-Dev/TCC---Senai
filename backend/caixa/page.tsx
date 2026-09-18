@@ -1,4 +1,4 @@
-import { LoginForm } from "@/app/components/administrador/login/LoginForm";
+/*import { LoginForm } from "@/app/components/administrador/login/LoginForm";
 import { EstruturaAdministradorPublic } from "@/app/components/administrador/shared/EstruturaAdministradorPublic";
 import { HeaderAutenticacao } from "@/app/components/administrador/shared/HeaderAutenticacao";
 
@@ -15,4 +15,4 @@ export default function Login() {
       </section>
     </EstruturaAdministradorPublic>
   );
-}
+}*/
