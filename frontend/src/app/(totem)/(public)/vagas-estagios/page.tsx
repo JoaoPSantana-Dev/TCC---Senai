@@ -1,10 +1,14 @@
-import { EstruturaTotemComponent } from "@/app/components/totem/shared/estrutura-totem.component";
-import { VagasEstagiosComponent } from "@/app/components/totem/vagas-estagios/vagas-estagios.component";
+import { EstruturaTotem } from "@/app/components/totem/shared/EstruturaTotem";
+import { EstruturaVagasMenu } from "@/app/components/totem/shared/EstruturaVagasMenu";
+import { Titulo } from "@/app/components/totem/shared/Titulo";
+import { vagasEstagios } from "@/app/components/totem/vagas-estagios/VagasEstagios.data";
 
 export default function VagasEmpregos() {
   return (
-    <EstruturaTotemComponent>
-      <VagasEstagiosComponent />
-    </EstruturaTotemComponent>
+    <EstruturaTotem>
+      <Titulo texto="Oportunidades de emprego">
+        <EstruturaVagasMenu itens={vagasEstagios} />
+      </Titulo>
+    </EstruturaTotem>
   );
 }
