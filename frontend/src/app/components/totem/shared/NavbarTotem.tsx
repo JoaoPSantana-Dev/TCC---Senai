@@ -4,7 +4,7 @@ import { NavbarHamburguer } from "./NavbarHamburguer";
 // botão de navegação do totem que representa o menu hambúrguer
 // presente nas páginas internas para abrir o menu lateral e manter a navegação acessível em todas as páginas
 
-export function Navbar() {
+export function NavbarTotem() {
   const pathname = usePathname();
 
   return (

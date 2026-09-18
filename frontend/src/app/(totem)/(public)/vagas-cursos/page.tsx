@@ -1,6 +1,6 @@
 import { EstruturaTotem } from "@/app/components/totem/shared/EstruturaTotem";
 import { EstruturaVagasMenu } from "@/app/components/totem/shared/EstruturaVagasMenu";
-import { Titulo } from "@/app/components/totem/shared/Titulo";
+import { Titulo } from "@/app/components/totem/shared/TituloTotem";
 import { vagasCursos } from "@/app/components/totem/vagas-cursos/VagasCursos.data";
 
 export default function VagasCursos() {
