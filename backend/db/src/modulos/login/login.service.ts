@@ -28,6 +28,7 @@ export class LoginService{
                 id: usuario.idUsuario,
                 nome: usuario.nome,
                 email:usuario.email,
+                funcao:usuario.funcao,
             },
         };
     }

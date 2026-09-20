@@ -1,5 +1,5 @@
 import { CreateUsuarioDto } from '../dto/create-usuario.dto';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UpdateUsuarioDto } from '../dto/update-usuario.dto';
 
@@ -17,15 +17,22 @@ export class UsuariosService {
     return this.prisma.usuario.findMany();
   }
 
-  listarUmUsuario(id: number) {
-    return this.prisma.usuario.findUnique({
-      where: { idUsuario: id },
-    });
+  async listarUmUsuario(id:number){
+    const buscar = await this.prisma.usuario.findUnique({
+      where:{idUsuario:id}
+    })
+    if(!buscar)
+      throw new NotFoundException(`O usuario '${id}' não foi encontrado`)
+
+    return buscar
   }
 
-  apagarUsuario(id: number) {
+  async apagarUsuario(id:number){
+
+    await this.listarUmUsuario(id)
+
     return this.prisma.usuario.delete({
-      where: { idUsuario: id },
+      where:{idUsuario:id}
     });
   }
 
