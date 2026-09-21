@@ -74,7 +74,7 @@ export default function Paginas() {
             {/* esse botão de adicionar página tá meio feio */}
             <Link
               href="/paginas/nova-pagina"
-              className="flex items-center gap-2 cursor-pointer hover:bg-green-600 rounded-lg text-zinc-700 hover:text-white duration-300 px-2 py-1 text-sm"
+              className="flex items-center gap-2 cursor-pointer bg-green-600 hover:bg-green-700 rounded-lg text-white duration-300 px-2 py-1 text-sm"
             >
               <HugeiconsIcon icon={Plus} size={30} />
               <p>Adicionar nova página</p>
