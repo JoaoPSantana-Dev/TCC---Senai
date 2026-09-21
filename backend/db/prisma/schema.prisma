@@ -23,6 +23,8 @@ model Pagina {
   idPaginas  Int     @id @default(autoincrement()) @map("id_paginas")
   nomePagina String
   tipoPagina String
+  componentes Json?
+  href String
   textos     Texto[]
 
   @@map("paginas")
