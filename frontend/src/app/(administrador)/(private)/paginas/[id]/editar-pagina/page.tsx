@@ -103,7 +103,7 @@ export default function EditarPagina({ params }: EditarPaginaProps) {
                 value={nomePagina}
                 onChange={(e) => setNomePagina(e.target.value)}
                 placeholder="Exemplo: Homepage, Vagas de Emprego"
-                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -116,13 +116,13 @@ export default function EditarPagina({ params }: EditarPaginaProps) {
                 value={tipoPagina}
                 onChange={(e) => setTipoPagina(e.target.value)}
                 placeholder="Administrador ou Totem"
-                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
             <button
               type="submit"
-              className="mt-4 bg-green-600 hover:bg-green-700 text-white font-medium py-2 rounded-md"
+              className="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-md"
             >
               Salvar alterações
             </button>
