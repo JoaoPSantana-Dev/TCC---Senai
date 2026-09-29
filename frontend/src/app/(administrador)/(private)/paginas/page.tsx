@@ -12,7 +12,6 @@ type Pagina = {
   nomePagina: string;
   tipoPagina: string;
   componentes?: JSON;
-  href: string;
 };
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
@@ -101,7 +100,7 @@ export default function Paginas() {
 
                   <div className="flex items-center gap-2">
                     <Link
-                      href={`/paginas/${pagina.idPaginas}/editar-pagina`}
+                      href={`/paginas/${pagina.nomePagina}/editar-pagina`}
                       // pretendo editar esse title pra ficar personalizado e bonitinho
                       title="Editar"
                       className="p-2 text-zinc-600 cursor-pointer hover:text-blue-600 duration-200"

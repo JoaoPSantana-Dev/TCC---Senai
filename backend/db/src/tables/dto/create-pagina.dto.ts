@@ -12,8 +12,4 @@ export class CreatePaginaDto {
 
   @IsOptional()
   componentes?: Prisma.InputJsonValue;
-
-  @IsString()
-  @IsNotEmpty()
-  href!: string;
 }

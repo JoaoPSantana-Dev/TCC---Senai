@@ -1,41 +1,52 @@
-import { CreatePaginaDto } from "../dto/create-pagina.dto";
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "src/prisma/prisma.service";
-import { UpdatePaginaDto } from "../dto/update-pagina.dto";
+import { CreatePaginaDto } from '../dto/create-pagina.dto';
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { UpdatePaginaDto } from '../dto/update-pagina.dto';
 
 @Injectable()
-export class PaginasService{
-    constructor(private prisma: PrismaService){}
+export class PaginasService {
+  constructor(private prisma: PrismaService) {}
 
-    criarPagina(createPaginaDto:CreatePaginaDto){
-        return this.prisma.pagina.create({
-            data: createPaginaDto
-        });
-    }
+  criarPagina(createPaginaDto: CreatePaginaDto) {
+    return this.prisma.pagina.create({
+      data: createPaginaDto,
+    });
+  }
 
-    listarTodasPaginas(){
-        return this.prisma.pagina.findMany({
-            include: {textos:true,}
-        });
-    }
+  listarTodasPaginas() {
+    return this.prisma.pagina.findMany({
+      include: { textos: true },
+    });
+  }
 
-    listarUmaPagina(id:number){
-        return this.prisma.pagina.findUnique({
-            where:{idPaginas:id},
-            include: {textos:true,}
-        });
-    }
-        
-    apagarPagina(id:number){
-        return this.prisma.pagina.delete({
-            where:{idPaginas:id}
-        });
-    }
-                
-    updatePagina(id:number,updatePaginaDto:UpdatePaginaDto){
-        return this.prisma.pagina.update({
-            where:{idPaginas:id},
-            data:updatePaginaDto
-        });
-    }
+  listarUmaPaginaPorId(id: number) {
+    return this.prisma.pagina.findUnique({
+      where: { idPaginas: id },
+      include: { textos: true },
+    });
+  }
+
+  async listarUmaPaginaPorNome(nomePagina: string) {
+    const pagina = await this.prisma.pagina.findFirst({
+      where: { nomePagina },
+      select: {
+        idPaginas: true,
+      },
+    });
+
+    return pagina?.idPaginas;
+  }
+
+  apagarPagina(id: number) {
+    return this.prisma.pagina.delete({
+      where: { idPaginas: id },
+    });
+  }
+
+  updatePagina(id: number, updatePaginaDto: UpdatePaginaDto) {
+    return this.prisma.pagina.update({
+      where: { idPaginas: id },
+      data: updatePaginaDto,
+    });
+  }
 }

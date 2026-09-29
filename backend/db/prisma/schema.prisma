@@ -24,7 +24,6 @@ model Pagina {
   nomePagina String
   tipoPagina String
   componentes Json?
-  href String
   textos     Texto[]
 
   @@map("paginas")
