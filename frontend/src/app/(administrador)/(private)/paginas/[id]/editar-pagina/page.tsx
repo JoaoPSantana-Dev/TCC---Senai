@@ -1,7 +1,8 @@
 "use client";
 
 import { HeaderPrivate } from "@/app/components/administrador/shared/HeaderPrivate";
-import React, { use, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { use, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 type Pagina = {
@@ -19,8 +20,10 @@ interface EditarPaginaProps {
 
 export default function EditarPagina({ params }: EditarPaginaProps) {
   const { id } = use(params);
+  const router = useRouter();
   const [nomePagina, setNomePagina] = useState("");
   const [tipoPagina, setTipoPagina] = useState("");
+  const [editando, setEditando] = useState(false);
   const [carregando, setCarregando] = useState(true);
 
   useEffect(() => {
@@ -53,12 +56,12 @@ export default function EditarPagina({ params }: EditarPaginaProps) {
       return;
     }
 
+    setEditando(true);
+
     try {
       const resposta = await fetch(`${apiUrl}/paginas/${id}`, {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           nomePagina,
           tipoPagina,
@@ -70,8 +73,11 @@ export default function EditarPagina({ params }: EditarPaginaProps) {
       }
 
       toast.success("Página editada com sucesso!");
+      router.push("/paginas");
     } catch {
       toast.error("Falha ao editar a página");
+    } finally {
+      setEditando(false);
     }
   };
 
@@ -90,15 +96,19 @@ export default function EditarPagina({ params }: EditarPaginaProps) {
       <main className="flex justify-center w-full">
         <section className="bg-white w-full max-w-3xl p-6 rounded-xl shadow-sm">
           <h2 className="text-xl font-semibold mb-6 text-zinc-800">
-            Editando página "{id}"
+            Editando a página "{id}"
           </h2>
 
           <form onSubmit={editarPagina} className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">
-              <label className="text-sm font-medium text-zinc-700">
+              <label
+                htmlFor="nomePagina"
+                className="text-sm font-medium text-zinc-700"
+              >
                 Nome da página
               </label>
               <input
+                required
                 type="text"
                 value={nomePagina}
                 onChange={(e) => setNomePagina(e.target.value)}
@@ -108,23 +118,34 @@ export default function EditarPagina({ params }: EditarPaginaProps) {
             </div>
 
             <div className="flex flex-col gap-1">
-              <label className="text-sm font-medium text-zinc-700">
+              <label
+                htmlFor="tipoPagina"
+                className="text-sm font-medium text-zinc-700"
+              >
                 Tipo da página
               </label>
-              <input
-                type="text"
+              <select
+                required
+                id="tipoPagina"
+                name="tipoPagina"
                 value={tipoPagina}
                 onChange={(e) => setTipoPagina(e.target.value)}
-                placeholder="Administrador ou Totem"
                 className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+              >
+                <option value="" disabled>
+                  Selecione o tipo da página
+                </option>
+                <option value="Administrador">Administrador</option>
+                <option value="Totem">Totem</option>
+              </select>
             </div>
 
             <button
               type="submit"
-              className="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-md"
+              disabled={editando}
+              className="cursor-pointer mt-4 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-md"
             >
-              Salvar alterações
+              {editando ? "Salvando..." : "Salvar alterações"}
             </button>
           </form>
         </section>

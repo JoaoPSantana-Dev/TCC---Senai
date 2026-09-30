@@ -31,7 +31,7 @@ export class PaginasController {
     return this.paginaService.listarUmaPaginaPorId(id);
   }
 
-  @Get(':nomePagina')
+  @Get('nome/:nomePagina')
   listarUmaPaginaPorNome(@Param('nomePagina') nomePagina: string) {
     return this.paginaService.listarUmaPaginaPorNome(nomePagina);
   }
@@ -40,11 +40,12 @@ export class PaginasController {
   apagarPagina(@Param('id') id: number) {
     return this.paginaService.apagarPagina(+id);
   }
+
   @Patch(':id')
   updatePagina(
-    @Param('id') id: number,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updatePaginaDto: UpdatePaginaDto,
   ) {
-    return this.paginaService.updatePagina(+id, updatePaginaDto);
+    return this.paginaService.updatePagina(id, updatePaginaDto);
   }
 }
