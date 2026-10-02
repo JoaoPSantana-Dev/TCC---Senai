@@ -1,53 +1,60 @@
-"use client";
-
 import { HeaderPrivate } from "@/app/components/administrador/shared/HeaderPrivate";
 import { useRouter } from "next/navigation";
-import { use, useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import Link from "next/link";
-
-type Pagina = {
-  idPaginas: number;
-  nomePagina: string;
-  tipoPagina: string;
-  componentes?: JSON;
-};
+import { RenderizadorDinamico } from "../../shared/RenderizadorDinamico";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
 
-interface EditarPaginaProps {
-  params: Promise<{ id: string }>;
+// interface EditarPaginaProps {
+//   params: Promise<{ slug: string }>;
+// }
+
+interface PaginaData {
+  nomePagina: string;
+  conteudo: {
+    type: string;
+    props: Record<string, any>;
+  }[];
 }
 
-export default function EditarPagina({ params }: EditarPaginaProps) {
-  const { id } = use(params);
+interface EditarPaginaFormProps {
+  slug: string;
+  dadosIniciais: PaginaData;
+}
+
+// async function buscarDadosDaPagina(slug: string): Promise<PaginaData | null> {
+//   try {
+//     const resposta = await fetch(`${apiUrl}/paginas/${slug}`, {
+//       next: { revalidate: 60 },
+//     });
+
+//     if (!resposta.ok) return null;
+//     return await resposta.json();
+//   } catch {
+//     toast.error("Erro ao carregar os dados da página");
+//   } finally {
+//     setCarregando(false);
+//   }
+// }
+
+export function EditarPaginaForm({
+  slug,
+  dadosIniciais,
+}: EditarPaginaFormProps) {
+  //   const { slug } = await params;
+  //   const paginaData = await buscarDadosDaPagina(slug);
   const router = useRouter();
-  const [nomePagina, setNomePagina] = useState("");
+
+  const [nomePagina, setNomePagina] = useState(dadosIniciais.nomePagina);
   const [tipoPagina, setTipoPagina] = useState("");
   const [editando, setEditando] = useState(false);
-  const [carregando, setCarregando] = useState(true);
+  //   const [carregando, setCarregando] = useState(true);
 
-  useEffect(() => {
-    const buscarDadosDaPagina = async () => {
-      try {
-        const resposta = await fetch(`${apiUrl}/paginas/${id}`);
-        if (!resposta.ok) throw new Error();
-
-        const dados: Pagina = await resposta.json();
-
-        setNomePagina(dados.nomePagina);
-        setTipoPagina(dados.tipoPagina);
-      } catch {
-        toast.error("Erro ao carregar os dados da página");
-      } finally {
-        setCarregando(false);
-      }
-    };
-
-    if (id) {
-      buscarDadosDaPagina();
-    }
-  }, [id]);
+  //   if (!paginaData) {
+  //     notFound();
+  //   }
 
   const editarPagina = async (e: React.SubmitEvent) => {
     e.preventDefault();
@@ -60,7 +67,7 @@ export default function EditarPagina({ params }: EditarPaginaProps) {
     setEditando(true);
 
     try {
-      const resposta = await fetch(`${apiUrl}/paginas/${id}`, {
+      const resposta = await fetch(`${apiUrl}/paginas/${slug}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -69,9 +76,7 @@ export default function EditarPagina({ params }: EditarPaginaProps) {
         }),
       });
 
-      if (!resposta.ok) {
-        throw new Error("Erro ao editar página");
-      }
+      if (!resposta.ok) throw new Error("Erro ao editar página");
 
       toast.success("Página editada com sucesso!");
       router.push("/paginas");
@@ -82,13 +87,13 @@ export default function EditarPagina({ params }: EditarPaginaProps) {
     }
   };
 
-  if (carregando) {
-    return (
-      <div className="w-screen h-screen flex items-center justify-center text-zinc-600">
-        <p>Carregando dados da página...</p>
-      </div>
-    );
-  }
+  //   if (carregando) {
+  //     return (
+  //       <div className="w-screen h-screen flex items-center justify-center text-zinc-600">
+  //         <p>Carregando dados da página...</p>
+  //       </div>
+  //     );
+  //   }
 
   return (
     <div className="w-screen h-screen flex flex-col">
@@ -97,7 +102,7 @@ export default function EditarPagina({ params }: EditarPaginaProps) {
       <main className="flex justify-center w-full">
         <section className="bg-white w-full max-w-3xl p-6 rounded-xl shadow-sm">
           <h2 className="text-xl font-semibold mb-6 text-zinc-800">
-            Editando a página "{id}"
+            Editando a página "{slug}"
           </h2>
 
           <form onSubmit={editarPagina} className="flex flex-col gap-4">
@@ -153,6 +158,15 @@ export default function EditarPagina({ params }: EditarPaginaProps) {
               <Link href={`/paginas`}>Voltar</Link>
             </button>
           </form>
+        </section>
+
+        <section>
+          <p>Pré-visualização dos componentes</p>
+          <div>
+            {dadosIniciais.conteudo?.map((componente, index) => (
+              <RenderizadorDinamico key={index} component={componente} />
+            ))}
+          </div>
         </section>
       </main>
     </div>

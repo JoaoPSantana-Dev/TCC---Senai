@@ -1,11 +1,11 @@
 import { Imagem } from "../../shared/Imagem";
 
-type LinhaSobreProps = {
+interface LinhaSobreProps {
   texto: string;
   nomeImagem: string;
   alt?: string;
   primeiroEstilo: boolean;
-};
+}
 
 export function LinhaSobre({
   texto,

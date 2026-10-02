@@ -1,7 +1,11 @@
 import { Prisma } from '../../../generated/prisma/client';
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, IsJSON } from 'class-validator';
 
 export class CreatePaginaDto {
+  @IsString()
+  @IsNotEmpty()
+  slug!: string;
+
   @IsString()
   @IsNotEmpty()
   nomePagina!: string;
@@ -10,6 +14,7 @@ export class CreatePaginaDto {
   @IsNotEmpty()
   tipoPagina!: string;
 
-  @IsOptional()
-  componentes?: Prisma.InputJsonValue;
+  @IsJSON()
+  @IsNotEmpty()
+  conteudo: Prisma.InputJsonValue;
 }
