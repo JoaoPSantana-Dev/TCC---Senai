@@ -4,6 +4,7 @@ import { HeaderPrivate } from "@/app/components/administrador/shared/HeaderPriva
 import { useRouter } from "next/navigation";
 import { use, useEffect, useState } from "react";
 import { toast } from "sonner";
+import Link from "next/link";
 
 type Pagina = {
   idPaginas: number;
@@ -146,6 +147,10 @@ export default function EditarPagina({ params }: EditarPaginaProps) {
               className="cursor-pointer mt-4 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-md"
             >
               {editando ? "Salvando..." : "Salvar alterações"}
+            </button>
+
+            <button>
+              <Link href={`/paginas`}>Voltar</Link>
             </button>
           </form>
         </section>

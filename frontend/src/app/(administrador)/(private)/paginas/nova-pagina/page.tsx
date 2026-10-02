@@ -4,6 +4,7 @@ import { HeaderPrivate } from "@/app/components/administrador/shared/HeaderPriva
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import Link from "next/link";
 
 // type Pagina = {
 //   idPaginas: number;
@@ -110,6 +111,10 @@ export default function NovaPagina() {
               className="cursor-pointer mt-4 bg-green-600 hover:bg-green-700 text-white font-medium py-2 rounded-md"
             >
               {criando ? "Criando..." : "Criar página"}
+            </button>
+
+            <button>
+              <Link href={`/paginas`}>Voltar</Link>
             </button>
           </form>
         </section>
