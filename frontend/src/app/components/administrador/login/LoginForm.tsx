@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { ImagemBotao } from "../../shared/ImagemBotao";
 import { toast } from "sonner";
 import Link from "next/link";
+import { createSession } from "@/app/lib/session";
 
 const schemaLogin = z.object({
   email: z.email("Endereço de email invalido"),
@@ -44,6 +45,7 @@ export function LoginForm() {
       const dados = await resposta.json();
       DadosUsuario.id=dados.id;
       if (resposta.ok) {
+        await createSession(DadosUsuario.email);
         router.push("/homepage");
         return;
       } else {
