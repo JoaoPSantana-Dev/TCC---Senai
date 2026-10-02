@@ -2,6 +2,7 @@ import {
   Briefcase01Icon,
   Building03Icon,
   ClipboardCheckIcon,
+  ComputerIcon,
 } from "@hugeicons/core-free-icons";
 import { type Vaga } from "../shared/EstruturaVagasMenu.data";
 
@@ -20,5 +21,30 @@ export const vagasEmpregos: Vaga[] = [
     titulo: "Recepcionista",
     href: "/vagas-empregos/recepcionista",
     icone: ClipboardCheckIcon,
+  },
+  {
+    titulo: "Desenvolvedor WEB Junior",
+    href: "/vagas-empregos/desenvolvedor-web-junior",
+    icone: ComputerIcon,
+  },
+  {
+    titulo: "Desenvolvedor WEB Junior",
+    href: "/vagas-empregos/desenvolvedor-web-junior",
+    icone: ComputerIcon,
+  },
+  {
+    titulo: "Desenvolvedor WEB Junior",
+    href: "/vagas-empregos/desenvolvedor-web-junior",
+    icone: ComputerIcon,
+  },
+  {
+    titulo: "Desenvolvedor WEB Junior",
+    href: "/vagas-empregos/desenvolvedor-web-junior",
+    icone: ComputerIcon,
+  },
+  {
+    titulo: "Desenvolvedor WEB Junior",
+    href: "/vagas-empregos/desenvolvedor-web-junior",
+    icone: ComputerIcon,
   },
 ];

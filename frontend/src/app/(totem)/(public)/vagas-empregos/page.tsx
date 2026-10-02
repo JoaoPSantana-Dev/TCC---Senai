@@ -5,7 +5,7 @@ import { vagasEmpregos } from "@/app/components/totem/vagas-empregos/VagasEmpreg
 
 export default function VagasEmpregos() {
   return (
-    <EstruturaTotem>
+    <EstruturaTotem mostrarNoticias={false}>
       <Titulo texto="Oportunidades de emprego">
         <EstruturaVagasMenu itens={vagasEmpregos} />
       </Titulo>
