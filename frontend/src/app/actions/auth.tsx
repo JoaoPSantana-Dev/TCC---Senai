@@ -1,6 +1,7 @@
 import { SignupFormSchema, type FormState } from '@/app/lib/definitions'
 import { createSession } from '@/app/lib/session'
 import { redirect } from 'next/navigation';
+import z from 'zod';
 const bcrypt = require('bcrypt');
  
 export async function signup(state: FormState, formData: FormData) {
@@ -17,7 +18,7 @@ export async function signup(state: FormState, formData: FormData) {
   // If any form fields are invalid, return early
   if (!validatedFields.success) {
     return {
-      errors: validatedFields.error.flatten().fieldErrors,
+      errors: z.treeifyError(validatedFields.error),
     }
   }
   const { name, email, password } = validatedFields.data
