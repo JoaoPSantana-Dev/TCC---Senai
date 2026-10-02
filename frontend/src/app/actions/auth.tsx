@@ -27,7 +27,7 @@ export async function signup(state: FormState, formData: FormData) {
  
   // 3. Insert the user into the database or call an Auth Library's API
   const data = await db
-    .insert(users)
+  .insert(users)
     .values({
       name,
       email,

@@ -11,7 +11,7 @@ datasource db {
 model Usuario {
   idUsuario Int     @id @default(autoincrement()) @map("id_usuario")
   nome      String
-  email     String
+  email     String @unique
   senha     String
   funcao    String
   unidade   String
