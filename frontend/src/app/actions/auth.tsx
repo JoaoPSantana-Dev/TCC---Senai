@@ -1,4 +1,6 @@
 import { SignupFormSchema, type FormState } from '@/app/lib/definitions'
+import { createSession } from '@/app/lib/session'
+import { redirect } from 'next/navigation';
 const bcrypt = require('bcrypt');
  
 export async function signup(state: FormState, formData: FormData) {
@@ -40,7 +42,8 @@ export async function signup(state: FormState, formData: FormData) {
     }
   }
  
-  // TODO:
   // 4. Create user session
+  await createSession(user.id)
   // 5. Redirect user
+  redirect('/profile')
 }
