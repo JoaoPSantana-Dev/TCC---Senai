@@ -1,5 +1,5 @@
 import { SignupFormSchema, type FormState } from '@/app/lib/definitions'
-import { createSession } from '@/app/lib/session'
+import { createSession, deleteSession } from '@/app/lib/session'
 import { redirect } from 'next/navigation';
 import z from 'zod';
 const bcrypt = require('bcrypt');
@@ -47,4 +47,8 @@ export async function signup(state: FormState, formData: FormData) {
   await createSession(user.id)
   // 5. Redirect user
   redirect('/profile')
+}
+export async function logout() {
+  await deleteSession()
+  redirect('/login')
 }
