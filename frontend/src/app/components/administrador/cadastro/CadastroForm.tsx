@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ImagemBotao } from "../../shared/ImagemBotao";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { createSession } from "@/app/lib/session";
 
 const schemaCadastro = z.object({
   nome: z.string().min(1, "Nome é obrigatório"),
@@ -47,6 +48,7 @@ export function CadastroForm() {
 
       if (resposta.ok) {
         toast.success("Cadastro realizado com sucesso!");
+        await createSession(data.email);
         router.push("/");
       } else {
         toast.error(dados.message || "Erro ao realizar cadastro");
