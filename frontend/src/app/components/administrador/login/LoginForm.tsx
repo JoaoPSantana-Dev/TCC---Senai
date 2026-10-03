@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { ImagemBotao } from "../../shared/ImagemBotao";
 import { toast } from "sonner";
 import Link from "next/link";
-import { createSession } from "@/app/lib/session";
+
 
 const schemaLogin = z.object({
   email: z.email("Endereço de email invalido"),
@@ -34,26 +34,26 @@ export function LoginForm() {
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      const resposta = await fetch("http://localhost:3001/login", {
+      const resposta = await fetch("/components/administrador/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify(data),
       });
 
       const dados = await resposta.json();
-      DadosUsuario.id=dados.id;
+      console.log(dados)
+
       if (resposta.ok) {
-        await createSession(DadosUsuario.email);
+        
         router.push("/homepage");
         return;
-      } else {
-        toast.error(dados.message || "Erro ao realizar login");
-        reset();
       }
+
       toast.error(dados.message || "Credenciais inválidas");
-    } catch {
+      reset();
+
+    } catch (erro){
+      console.error(erro);
       toast.error("Falha ao conectar com o servidor");
     }
   };

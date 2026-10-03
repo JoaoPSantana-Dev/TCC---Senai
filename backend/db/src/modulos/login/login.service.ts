@@ -31,7 +31,7 @@ export class LoginService{
 
         return {
             mensagem:"Login realizado com sucesso",
-            access_token: token,
+            tokenAcesso: token,
             usuario:{
                 id: usuario.idUsuario,
                 nome: usuario.nome,
