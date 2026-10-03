@@ -60,9 +60,18 @@ export class PaginasService {
     });
   }
 
-  updatePagina(id: number, updatePaginaDto: UpdatePaginaDto) {
+  async updatePaginaPorSlug(slug: string, updatePaginaDto: UpdatePaginaDto) {
+    const pagina = await this.prisma.pagina.findUnique({
+      where: { slug },
+      select: { idPaginas: true },
+    });
+
+    if (!pagina) {
+      throw new NotFoundException('Página não encontrada');
+    }
+
     return this.prisma.pagina.update({
-      where: { idPaginas: id },
+      where: { idPaginas: pagina.idPaginas },
       data: updatePaginaDto,
     });
   }

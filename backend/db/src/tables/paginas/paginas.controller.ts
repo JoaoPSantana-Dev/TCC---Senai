@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  ParseIntPipe,
 } from '@nestjs/common';
 import { PaginasService } from './paginas.service';
 // import { CreatePaginaDto } from '../dto/create-pagina.dto';
@@ -54,11 +53,11 @@ export class PaginasController {
     return this.paginasService.apagarPagina(+id);
   }
 
-  @Patch(':id')
+  @Patch(':slug')
   updatePagina(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('slug') slug: string,
     @Body() updatePaginaDto: UpdatePaginaDto,
   ) {
-    return this.paginasService.updatePagina(id, updatePaginaDto);
+    return this.paginasService.updatePaginaPorSlug(slug, updatePaginaDto);
   }
 }
