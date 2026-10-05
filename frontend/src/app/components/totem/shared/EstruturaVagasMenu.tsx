@@ -50,10 +50,10 @@ export function EstruturaVagasMenu({
         )}
 
         {/* Grid do Bloco de Vagas */}
-        <nav className="w-full bg-[#f9f9f9] p-6 md:p-8 rounded-2xl shadow-md">
+        <nav className="w-full p-4 md:p-6">
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {itensExibidos.map((vaga, index) => (
-              <li key={`${vaga.href}-${vaga.titulo}-${inicio + index}`}>
+              <li key={`-${vaga.cargo}-${inicio + index}`}>
                 <button
                   type="button"
                   onClick={() => onSelecionarVaga?.(vaga)}
@@ -64,7 +64,7 @@ export function EstruturaVagasMenu({
                       <HugeiconsIcon icon={vaga.icone} />
                     </span>
                   )}
-                  <h2 className="text-base pl-2 md:text-lg font-medium text-zinc-800">{vaga.titulo}</h2>
+                  <h2 className="text-base pl-2 md:text-lg font-medium text-zinc-800">{vaga.cargo}</h2>
                 </button>
               </li>
             ))}

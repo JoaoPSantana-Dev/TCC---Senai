@@ -2,9 +2,15 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import type { IconSvgElement } from "@hugeicons/react";
 
 export interface Vaga {
-    titulo: string;
-    href: string;
+    nomeEmpresa: string;
+    cargo: string;
+    requisitos: string;
+    salario: string;
+    beneficios: string;
     descricao: string;
+    localizacao: string;
+    contato: string;
+    areaEmprego: string;
     icone?: IconSvgElement;
 }
 

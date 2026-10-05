@@ -9,66 +9,113 @@ import { type Vaga } from "../shared/EstruturaVagasMenu.data";
 
 export const vagasEmpregos: Vaga[] = [
   {
-    titulo: "Assistente de Vendas",
-    href: "/vagas-empregos/assistente-vendas",
-    descricao:
-      "Responsável pelo atendimento aos clientes, apresentação de produtos e serviços, elaboração de propostas e apoio às atividades comerciais da empresa.",
-    icone: Briefcase01Icon,
+    "nomeEmpresa": "Tech Solutions Brasil",
+    "cargo": "Desenvolvedor Backend Júnior",
+    "requisitos": "Ensino superior ou técnico em Desenvolvimento de Sistemas, conhecimento em Python, APIs REST e bancos de dados.",
+    "salario": "R$ 3.200,00",
+    "beneficios": "Vale-refeição, vale-transporte, assistência médica e home office parcial.",
+    "descricao": "Desenvolvimento e manutenção de APIs, integração com bancos de dados e correção de problemas em sistemas.",
+    "localizacao": "São Paulo - SP",
+    "contato": "rh@techsolutions.com.br",
+    "areaEmprego": "Tecnologia da Informação"
   },
-
   {
-    titulo: "Supervisor de Produção",
-    href: "/vagas-empregos/supervisor-producao",
-    descricao:
-      "Responsável por acompanhar e supervisionar os processos de produção, orientar a equipe, controlar a qualidade e garantir o cumprimento dos prazos.",
-    icone: Building03Icon,
+    "nomeEmpresa": "Auto Center Paulista",
+    "cargo": "Mecânico Automotivo",
+    "requisitos": "Experiência com manutenção preventiva e corretiva, conhecimento em sistemas de freios, suspensão e motores.",
+    "salario": "R$ 3.500,00",
+    "beneficios": "Vale-transporte, vale-refeição, seguro de vida e bônus por produtividade.",
+    "descricao": "Realizar diagnósticos, manutenção preventiva e corretiva em veículos leves.",
+    "localizacao": "São Paulo - SP",
+    "contato": "(11) 3456-7890",
+    "areaEmprego": "Mecânica Automotiva"
   },
-
   {
-    titulo: "Recepcionista",
-    href: "/vagas-empregos/recepcionista",
-    descricao:
-      "Responsável pelo atendimento ao público, recepção de visitantes, atendimento telefônico e apoio às atividades administrativas.",
-    icone: ClipboardCheckIcon,
+    "nomeEmpresa": "Indústria Metal Forte",
+    "cargo": "Técnico em Mecatrônica",
+    "requisitos": "Curso técnico em Mecatrônica, conhecimento em automação industrial, sensores e comandos elétricos.",
+    "salario": "R$ 4.100,00",
+    "beneficios": "Vale-alimentação, assistência médica, transporte fretado e participação nos lucros.",
+    "descricao": "Atuar na manutenção e programação de equipamentos automatizados e máquinas industriais.",
+    "localizacao": "Guarulhos - SP",
+    "contato": "recrutamento@metalforte.com.br",
+    "areaEmprego": "Automação Industrial"
   },
-
   {
-    titulo: "Desenvolvedor WEB Junior",
-    href: "/vagas-empregos/desenvolvedor-web-junior",
-    descricao:
-      "Atuação no desenvolvimento e manutenção de aplicações web, auxiliando na criação de interfaces, integração com APIs e correção de problemas.",
-    icone: ComputerIcon,
+    "nomeEmpresa": "Construtora Nova Era",
+    "cargo": "Auxiliar Administrativo",
+    "requisitos": "Ensino médio completo, conhecimento em informática, organização e boa comunicação.",
+    "salario": "R$ 2.300,00",
+    "beneficios": "Vale-transporte, vale-refeição e assistência odontológica.",
+    "descricao": "Auxiliar nas atividades administrativas, organização de documentos, atendimento telefônico e controle de planilhas.",
+    "localizacao": "Santo André - SP",
+    "contato": "vagas@novaera.com.br",
+    "areaEmprego": "Administrativo"
   },
-
   {
-    titulo: "Desenvolvedor WEB Junior",
-    href: "/vagas-empregos/desenvolvedor-web-junior",
-    descricao:
-      "Profissional responsável por auxiliar no desenvolvimento de sistemas web, trabalhando com tecnologias modernas de front-end e back-end.",
-    icone: ComputerIcon,
+    "nomeEmpresa": "DataWeb Tecnologia",
+    "cargo": "Desenvolvedor Front-end Júnior",
+    "requisitos": "Conhecimento em HTML, CSS, JavaScript e Git. Desejável conhecimento em React.",
+    "salario": "R$ 3.000,00",
+    "beneficios": "Vale-refeição, plano de saúde, auxílio home office e horário flexível.",
+    "descricao": "Desenvolver interfaces web responsivas e realizar manutenção em aplicações existentes.",
+    "localizacao": "São Paulo - SP",
+    "contato": "talentos@dataweb.com.br",
+    "areaEmprego": "Desenvolvimento Web"
   },
-
   {
-    titulo: "Desenvolvedor WEB Junior",
-    href: "/vagas-empregos/desenvolvedor-web-junior",
-    descricao:
-      "Vaga destinada a profissionais em início de carreira interessados em desenvolvimento web e construção de soluções digitais.",
-    icone: ComputerIcon,
+    "nomeEmpresa": "EletroMax Serviços",
+    "cargo": "Eletricista Industrial",
+    "requisitos": "Curso de Eletricista ou Técnico em Eletroeletrônica, conhecimento em instalações elétricas e comandos industriais.",
+    "salario": "R$ 3.800,00",
+    "beneficios": "Vale-transporte, vale-alimentação, seguro de vida e adicional de periculosidade.",
+    "descricao": "Realizar instalações, manutenção preventiva e corretiva de equipamentos e sistemas elétricos industriais.",
+    "localizacao": "Osasco - SP",
+    "contato": "(11) 3344-5566",
+    "areaEmprego": "Eletroeletrônica"
   },
-
   {
-    titulo: "Desenvolvedor WEB Junior",
-    href: "/vagas-empregos/desenvolvedor-web-junior",
-    descricao:
-      "Atuação junto à equipe de desenvolvimento na implementação de novas funcionalidades e manutenção das aplicações existentes.",
-    icone: ComputerIcon,
+    "nomeEmpresa": "Logística Express",
+    "cargo": "Assistente de Logística",
+    "requisitos": "Ensino médio completo, conhecimento em controle de estoque e pacote Office.",
+    "salario": "R$ 2.700,00",
+    "beneficios": "Vale-refeição, vale-transporte, cesta básica e assistência médica.",
+    "descricao": "Acompanhar entrada e saída de mercadorias, organizar estoque e auxiliar no planejamento de entregas.",
+    "localizacao": "São Bernardo do Campo - SP",
+    "contato": "rh@logisticaexpress.com.br",
+    "areaEmprego": "Logística"
   },
-
   {
-    titulo: "Desenvolvedor WEB Junior",
-    href: "/vagas-empregos/desenvolvedor-web-junior",
-    descricao:
-      "Auxílio no desenvolvimento de aplicações web, testes, correções de bugs e evolução dos sistemas da empresa.",
-    icone: ComputerIcon,
+    "nomeEmpresa": "Metalúrgica São Paulo",
+    "cargo": "Técnico de Manutenção",
+    "requisitos": "Curso técnico em Mecânica ou Mecatrônica, experiência com manutenção de máquinas industriais.",
+    "salario": "R$ 4.300,00",
+    "beneficios": "Vale-alimentação, transporte, assistência médica e participação nos lucros.",
+    "descricao": "Executar manutenção preventiva e corretiva em máquinas e equipamentos industriais.",
+    "localizacao": "Diadema - SP",
+    "contato": "selecao@metalurgicasp.com.br",
+    "areaEmprego": "Manutenção Industrial"
   },
-];
+  {
+    "nomeEmpresa": "Comercial Center",
+    "cargo": "Analista Administrativo",
+    "requisitos": "Ensino superior em Administração ou áreas relacionadas, conhecimento em Excel e sistemas ERP.",
+    "salario": "R$ 3.600,00",
+    "beneficios": "Vale-refeição, vale-transporte, assistência médica e odontológica.",
+    "descricao": "Realizar controles administrativos, elaboração de relatórios e acompanhamento de indicadores.",
+    "localizacao": "São Paulo - SP",
+    "contato": "rh@comercialcenter.com.br",
+    "areaEmprego": "Administração"
+  },
+  {
+    "nomeEmpresa": "Sistemas Integrados SP",
+    "cargo": "Analista de Suporte Técnico",
+    "requisitos": "Conhecimento em redes, sistemas operacionais, hardware e atendimento ao usuário.",
+    "salario": "R$ 3.100,00",
+    "beneficios": "Vale-refeição, vale-transporte, plano de saúde e auxílio educação.",
+    "descricao": "Prestar suporte técnico aos usuários, configurar equipamentos e solucionar problemas de software e hardware.",
+    "localizacao": "São Paulo - SP",
+    "contato": "recrutamento@sistemasintegrados.com.br",
+    "areaEmprego": "Tecnologia da Informação"
+  }
+]
