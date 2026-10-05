@@ -3,7 +3,8 @@ import { createSession, deleteSession } from '@/app/lib/session'
 import { redirect } from 'next/navigation';
 import z from 'zod';
 const bcrypt = require('bcrypt');
- 
+//rascunho. pode apagar
+
 export async function signup(state: FormState, formData: FormData) {
   // 1. Validate form fields
   // ...
