@@ -1,6 +1,5 @@
-'use client'
+"use client";
 
-import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { type Vaga, vagas } from "./EstruturaVagasMenu.data";
 import { useState } from "react";
@@ -9,6 +8,7 @@ interface EstruturaVagasMenuProps {
   itens?: Vaga[];
   className?: string;
   itemClassName?: string;
+  onSelecionarVaga?: (vaga: Vaga) => void;
 }
 
 const ITENS_POR_PAGINA = 6;
@@ -17,6 +17,7 @@ export function EstruturaVagasMenu({
   itens = vagas,
   className = "w-full flex flex-col items-center max-w-6xl p-8 rounded-xl",
   itemClassName = "h-full items-center flex flex-row p-8 bg-white rounded-2xl shadow-xl hover:shadow-md",
+  onSelecionarVaga,
 }: EstruturaVagasMenuProps) {
   const [paginaAtual, setPaginaAtual] = useState(0);
   const totalPaginas = Math.max(1, Math.ceil(itens.length / ITENS_POR_PAGINA));
@@ -27,14 +28,13 @@ export function EstruturaVagasMenu({
 
   const anterior = () => {
     setPaginaAtual((prev) => (prev - 1 + totalPaginas) % totalPaginas);
-  }
+  };
 
   const inicio = paginaAtual * ITENS_POR_PAGINA;
   const itensExibidos = itens.slice(inicio, inicio + ITENS_POR_PAGINA);
 
   return (
     <section className={className}>
-
       <div className="flex items-center w-full justify-between gap-4">
         {/* Seta so aparece se houver mais de uma página */}
         {totalPaginas > 1 && (
@@ -54,9 +54,10 @@ export function EstruturaVagasMenu({
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {itensExibidos.map((vaga, index) => (
               <li key={`${vaga.href}-${vaga.titulo}-${inicio + index}`}>
-                <Link
-                  href={vaga.href}
-                  className={itemClassName}
+                <button
+                  type="button"
+                  onClick={() => onSelecionarVaga?.(vaga)}
+                  className={`${itemClassName} w-full text-left`}
                 >
                   {vaga.icone && (
                     <span className="text-zinc-800 flex-shrink-0">
@@ -64,7 +65,7 @@ export function EstruturaVagasMenu({
                     </span>
                   )}
                   <h2 className="text-base pl-2 md:text-lg font-medium text-zinc-800">{vaga.titulo}</h2>
-                </Link>
+                </button>
               </li>
             ))}
           </ul>
