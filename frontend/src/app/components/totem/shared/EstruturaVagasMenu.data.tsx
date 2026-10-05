@@ -2,6 +2,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import type { IconSvgElement } from "@hugeicons/react";
 
 export interface Vaga {
+    idEmprego: number;
     nomeEmpresa: string;
     cargo: string;
     requisitos: string;

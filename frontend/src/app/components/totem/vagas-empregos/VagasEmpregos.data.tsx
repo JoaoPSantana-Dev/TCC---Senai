@@ -1,4 +1,4 @@
-import {
+/*import {
   Briefcase01Icon,
   Building03Icon,
   ClipboardCheckIcon,
@@ -118,4 +118,4 @@ export const vagasEmpregos: Vaga[] = [
     "contato": "recrutamento@sistemasintegrados.com.br",
     "areaEmprego": "Tecnologia da Informação"
   }
-]
+]*/

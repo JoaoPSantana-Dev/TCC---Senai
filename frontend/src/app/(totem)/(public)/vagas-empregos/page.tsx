@@ -1,20 +1,52 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EstruturaTotem } from "@/app/components/totem/shared/EstruturaTotem";
 import { EstruturaVagasMenu } from "@/app/components/totem/shared/EstruturaVagasMenu";
 import { Titulo } from "@/app/components/totem/shared/TituloTotem";
-import { vagasEmpregos } from "@/app/components/totem/vagas-empregos/VagasEmpregos.data";
+import { toast } from "sonner";
+//import { vagasEmpregos } from "@/app/components/totem/vagas-empregos/VagasEmpregos.data";
 import type { Vaga } from "@/app/components/totem/shared/EstruturaVagasMenu.data";
 
 export default function VagasEmpregos() {
+  const [vagas, setVagas] = useState<Vaga[]>([]);
   const [vagaSelecionada, setVagaSelecionada] = useState<Vaga | null>(null);
+
+  const [carregando, setCarregando] = useState(true);
+
+  useEffect(() => {
+    const buscarVagas = async () => {
+      try {
+        const resposta = await fetch("http://localhost:3001/vagas-emprego", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const dados = await resposta.json();
+
+        if (resposta.ok) {
+          setVagas(dados);
+          return;
+        };
+
+        toast.error(dados.message || "Erro ao buscar vagas");
+      } catch {
+        toast.error("Falha ao conectar com o servidor");
+      } finally {
+        setCarregando(false);
+      }
+    };
+
+    buscarVagas();
+  }, []);
 
   return (
     <EstruturaTotem mostrarNoticias={false}>
       <Titulo texto="Oportunidades de emprego">
         <EstruturaVagasMenu
-          itens={vagasEmpregos}
+          itens={vagas}
           onSelecionarVaga={setVagaSelecionada}
         />
         <section className="w-full lg:w-3/4 p-8 mb-8 bg-[#f9f9f9] lg:rounded-2xl shadow-md">
