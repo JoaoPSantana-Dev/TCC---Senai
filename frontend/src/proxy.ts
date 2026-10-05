@@ -3,7 +3,14 @@ import { jwtVerify } from "jose";
 
 const chave = new TextEncoder().encode(process.env.JWT_SECRET);
 
-export async function middleware(requisicao:NextRequest) {
+export async function proxy(requisicao:NextRequest) {
+
+    const caminho = requisicao.nextUrl.pathname;
+
+    if (!caminho.startsWith("/homepage")){
+        return NextResponse.next()
+    }
+
     const token = requisicao.cookies.get("session")?.value;
 
     if(!token){
@@ -21,5 +28,5 @@ export async function middleware(requisicao:NextRequest) {
 }
 
 export const config = {
-    metcher :["/homepage:path*"],
+    metcher :["/homepage/:path*"],
 };
