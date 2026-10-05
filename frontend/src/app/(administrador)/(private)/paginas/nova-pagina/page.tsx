@@ -6,22 +6,17 @@ import { useState } from "react";
 import { toast } from "sonner";
 import Link from "next/link";
 
-// type Pagina = {
-//   idPaginas: number;
-//   nomePagina: string;
-//   tipoPagina: string;
-//   componentes?: JSON;
-// };
-
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
 
 export default function NovaPagina() {
   const router = useRouter();
-  const [nomePagina, setNomePagina] = useState("");
-  const [tipoPagina, setTipoPagina] = useState("");
   const [criando, setCriando] = useState(false);
 
-  const novaPagina = async (e: React.SubmitEvent) => {
+  const [nomePagina, setNomePagina] = useState("");
+  const [tipoPagina, setTipoPagina] = useState("");
+  const slug = criarSlug(nomePagina);
+
+  const novaPagina = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!nomePagina.trim() || !tipoPagina.trim()) {
@@ -38,6 +33,8 @@ export default function NovaPagina() {
         body: JSON.stringify({
           nomePagina,
           tipoPagina,
+          slug,
+          conteudo: [],
         }),
       });
 
@@ -53,6 +50,17 @@ export default function NovaPagina() {
       setCriando(false);
     }
   };
+
+  function criarSlug(nomePagina: string) {
+    return nomePagina
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9 -]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-");
+  }
 
   return (
     <div className="w-screen h-screen flex flex-col">
@@ -113,7 +121,9 @@ export default function NovaPagina() {
               {criando ? "Criando..." : "Criar página"}
             </button>
 
-            <Link href={`/paginas`}>Voltar</Link>
+            <div className="text-center">
+              <Link href={`/paginas`}>Voltar</Link>
+            </div>
           </form>
         </section>
       </main>

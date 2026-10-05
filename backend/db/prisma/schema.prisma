@@ -25,20 +25,10 @@ model Pagina {
   nomePagina String
   tipoPagina String
   conteudo   Json
-  // textos     Texto[]
 
   @@map("paginas")
 }
 
-// model Texto {
-//   idTextos  Int     @id @default(autoincrement()) @map("id_texto")
-//   texto     String
-//   tipoTexto String
-//   idPagina  Int     @map("id_paginas")
-//   pagina    Pagina @relation(fields: [idPagina], references: [idPaginas])
-
-//   @@map("textos")
-// }
 
 model VagaEmprego {
   idEmprego   Int     @id @default(autoincrement()) @map("id_emprego")

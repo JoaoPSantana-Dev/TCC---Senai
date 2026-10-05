@@ -14,7 +14,7 @@ interface PaginaData {
   tipoPagina: string;
   conteudo: {
     type: string;
-    props: Record<string, any>;
+    props: Record<string, unknown>;
   }[];
 }
 
@@ -34,7 +34,7 @@ export function EditarPaginaForm({
   const [conteudo, setConteudo] = useState(dadosIniciais.conteudo);
   const [editando, setEditando] = useState(false);
 
-  const editarPagina = async (e: React.FormEvent<HTMLFormElement>) => {
+  const editarPagina = async (e: React.SubmitEvent) => {
     e.preventDefault();
 
     if (!nomePagina.trim() || !tipoPagina.trim()) {
@@ -142,16 +142,15 @@ export function EditarPaginaForm({
               {editando ? "Salvando..." : "Salvar alterações"}
             </button>
 
-            <Link href={`/paginas`}>Voltar</Link>
+            <div className="text-center">
+              <Link href={`/paginas`}>Voltar</Link>
+            </div>
           </form>
         </section>
 
         <section>
           <p>Pré-visualização dos componentes</p>
           <div>
-            {/* {dadosIniciais.conteudo?.map((componente, index) => (
-              <RenderizadorDinamico key={index} component={componente} />
-            ))} */}
             {conteudo.map((componente, index) => (
               <section key={`${componente.type}-${index}`}>
                 {componente.type === "LinhaSobre" && (
@@ -192,7 +191,7 @@ export function EditarPaginaForm({
                           )
                         }
                       />
-                      Primeiro estilo
+                      Inverter os lados
                     </label>
                   </>
                 )}

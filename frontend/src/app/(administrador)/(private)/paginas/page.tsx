@@ -9,6 +9,7 @@ import { HeaderPrivate } from "@/app/components/administrador/shared/HeaderPriva
 
 type Pagina = {
   idPaginas: number;
+  slug: string;
   nomePagina: string;
   tipoPagina: string;
   componentes?: JSON;
@@ -70,7 +71,6 @@ export default function Paginas() {
           <div className="flex items-center justify-between pb-4 mb-8 border-b-2 border-zinc-300">
             <h1 className="text-2xl font-semibold">Gerenciar páginas</h1>
 
-            {/* esse botão de adicionar página tá meio feio */}
             <Link
               href="/paginas/nova-pagina"
               className="flex items-center gap-2 cursor-pointer bg-green-600 hover:bg-green-700 rounded-lg text-white duration-300 px-2 py-1 text-sm"
@@ -100,8 +100,7 @@ export default function Paginas() {
 
                   <div className="flex items-center gap-2">
                     <Link
-                      href={`/paginas/${pagina.idPaginas}/editar-pagina`}
-                      // pretendo editar esse title pra ficar personalizado e bonitinho
+                      href={`/paginas/${pagina.slug}/editar-pagina`}
                       title="Editar"
                       className="p-2 text-zinc-600 cursor-pointer hover:text-blue-600 duration-200"
                     >
@@ -109,10 +108,8 @@ export default function Paginas() {
                     </Link>
 
                     <button
-                      // pretendo editar esse title pra ficar personalizado e bonitinho
                       type="button"
                       title="Excluir"
-                      // pretendo colocar um alerta de confirmar exclusão
                       onClick={() => excluirPagina(pagina.idPaginas)}
                       className="p-2 text-zinc-600 cursor-pointer hover:text-red-600 duration-200"
                     >

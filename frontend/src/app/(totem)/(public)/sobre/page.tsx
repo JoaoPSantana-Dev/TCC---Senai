@@ -1,34 +1,50 @@
+import { notFound } from "next/navigation";
+import { RenderizadorDinamico } from "@/app/components/administrador/paginas/RenderizadorDinamico";
 import { EstruturaTotem } from "@/app/components/totem/shared/EstruturaTotem";
 import { Titulo } from "@/app/components/totem/shared/TituloTotem";
-import { LinhaSobre } from "@/app/components/totem/sobre/LinhaSobre";
 
-export default function Sobre() {
+const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
+
+interface ComponentePagina {
+  type: string;
+  props: Record<string, unknown>;
+}
+
+interface PaginaSobre {
+  nomePagina: string;
+  conteudo: ComponentePagina[];
+}
+
+async function buscarPaginaSobre(): Promise<PaginaSobre | null> {
+  try {
+    const resposta = await fetch(`${apiUrl}/paginas/sobre`, {
+      cache: "no-store",
+    });
+
+    if (!resposta.ok) return null;
+    return (await resposta.json()) as PaginaSobre;
+  } catch {
+    return null;
+  }
+}
+
+export default async function Sobre() {
+  const pagina = await buscarPaginaSobre();
+
+  if (!pagina) notFound();
+
   return (
     <EstruturaTotem mostrarNoticias={false}>
       <main className="w-full flex-1">
-        <Titulo texto="Sobre o SENAI Mariano Ferraz" />
+        <Titulo texto={pagina.nomePagina} />
         <div className="mx-auto max-w-6xl w-full p-6 md:p-12 flex flex-col justify-center">
           <section className="flex flex-col gap-6 w-full">
-            <LinhaSobre
-              texto="Bom dia"
-              nomeImagem="senai-mariano-ferraz.png"
-              alt="Imagem SENAI"
-              primeiroEstilo={true}
-            />
-
-            <LinhaSobre
-              texto="Boa tarde"
-              nomeImagem="senai-mariano-ferraz.png"
-              alt="Imagem SENAI"
-              primeiroEstilo={false}
-            />
-
-            <LinhaSobre
-              texto="Boa noite"
-              nomeImagem="senai-mariano-ferraz.png"
-              alt="Imagem SENAI"
-              primeiroEstilo={true}
-            />
+            {pagina.conteudo.map((componente, index) => (
+              <RenderizadorDinamico
+                key={`${componente.type}-${index}`}
+                component={componente}
+              />
+            ))}
           </section>
         </div>
       </main>

@@ -8,17 +8,11 @@ import {
   Delete,
 } from '@nestjs/common';
 import { PaginasService } from './paginas.service';
-// import { CreatePaginaDto } from '../dto/create-pagina.dto';
 import { UpdatePaginaDto } from '../dto/update-pagina.dto';
 
 @Controller('paginas')
 export class PaginasController {
   constructor(private readonly paginasService: PaginasService) {}
-
-  // @Post()
-  // criarPagina(@Body() createPaginaDto: CreatePaginaDto) {
-  //   return this.paginasService.criarPagina(createPaginaDto);
-  // }
 
   @Post()
   create(
@@ -37,11 +31,6 @@ export class PaginasController {
   listarTodasPaginas() {
     return this.paginasService.listarTodasPaginas();
   }
-
-  // @Get(':id')
-  // listarUmaPaginaPorId(@Param('id', ParseIntPipe) id: number) {
-  //   return this.paginasService.listarUmaPaginaPorId(id);
-  // }
 
   @Get(':slug')
   listarUmaPaginaPorSlug(@Param('slug') slug: string) {
