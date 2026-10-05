@@ -1,7 +1,8 @@
-import { LinhaSobre } from "../totem/sobre/LinhaSobre";
+import { LinhaSobre } from "../../totem/sobre/LinhaSobre";
+import type { ComponentType } from "react";
 
-const RegistrarComponente: Record<string.React.ComponentType<any>> = {
-  LinhaSobre: LinhaSobre,
+const RegistrarComponente: Record<string, ComponentType<any>> = {
+  LinhaSobre,
 };
 
 interface ComponentData {

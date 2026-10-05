@@ -1,18 +1,17 @@
+"use client";
+
 import { HeaderPrivate } from "@/app/components/administrador/shared/HeaderPrivate";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import Link from "next/link";
-import { RenderizadorDinamico } from "../../shared/RenderizadorDinamico";
+import { RenderizadorDinamico } from "./RenderizadorDinamico";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
 
-// interface EditarPaginaProps {
-//   params: Promise<{ slug: string }>;
-// }
-
 interface PaginaData {
   nomePagina: string;
+  tipoPagina: string;
   conteudo: {
     type: string;
     props: Record<string, any>;
@@ -24,39 +23,18 @@ interface EditarPaginaFormProps {
   dadosIniciais: PaginaData;
 }
 
-// async function buscarDadosDaPagina(slug: string): Promise<PaginaData | null> {
-//   try {
-//     const resposta = await fetch(`${apiUrl}/paginas/${slug}`, {
-//       next: { revalidate: 60 },
-//     });
-
-//     if (!resposta.ok) return null;
-//     return await resposta.json();
-//   } catch {
-//     toast.error("Erro ao carregar os dados da página");
-//   } finally {
-//     setCarregando(false);
-//   }
-// }
-
 export function EditarPaginaForm({
   slug,
   dadosIniciais,
 }: EditarPaginaFormProps) {
-  //   const { slug } = await params;
-  //   const paginaData = await buscarDadosDaPagina(slug);
   const router = useRouter();
 
   const [nomePagina, setNomePagina] = useState(dadosIniciais.nomePagina);
-  const [tipoPagina, setTipoPagina] = useState("");
+  const [tipoPagina, setTipoPagina] = useState(dadosIniciais.tipoPagina);
+  const [conteudo, setConteudo] = useState(dadosIniciais.conteudo);
   const [editando, setEditando] = useState(false);
-  //   const [carregando, setCarregando] = useState(true);
 
-  //   if (!paginaData) {
-  //     notFound();
-  //   }
-
-  const editarPagina = async (e: React.SubmitEvent) => {
+  const editarPagina = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!nomePagina.trim() || !tipoPagina.trim()) {
@@ -73,6 +51,7 @@ export function EditarPaginaForm({
         body: JSON.stringify({
           nomePagina,
           tipoPagina,
+          conteudo,
         }),
       });
 
@@ -87,13 +66,22 @@ export function EditarPaginaForm({
     }
   };
 
-  //   if (carregando) {
-  //     return (
-  //       <div className="w-screen h-screen flex items-center justify-center text-zinc-600">
-  //         <p>Carregando dados da página...</p>
-  //       </div>
-  //     );
-  //   }
+  function atualizarPropriedade(
+    index: number,
+    propriedade: string,
+    valor: string | boolean,
+  ) {
+    setConteudo((atual) =>
+      atual.map((componente, i) =>
+        i === index
+          ? {
+              ...componente,
+              props: { ...componente.props, [propriedade]: valor },
+            }
+          : componente,
+      ),
+    );
+  }
 
   return (
     <div className="w-screen h-screen flex flex-col">
@@ -154,17 +142,63 @@ export function EditarPaginaForm({
               {editando ? "Salvando..." : "Salvar alterações"}
             </button>
 
-            <button>
-              <Link href={`/paginas`}>Voltar</Link>
-            </button>
+            <Link href={`/paginas`}>Voltar</Link>
           </form>
         </section>
 
         <section>
           <p>Pré-visualização dos componentes</p>
           <div>
-            {dadosIniciais.conteudo?.map((componente, index) => (
+            {/* {dadosIniciais.conteudo?.map((componente, index) => (
               <RenderizadorDinamico key={index} component={componente} />
+            ))} */}
+            {conteudo.map((componente, index) => (
+              <section key={`${componente.type}-${index}`}>
+                {componente.type === "LinhaSobre" && (
+                  <>
+                    <textarea
+                      value={String(componente.props.texto ?? "")}
+                      onChange={(e) =>
+                        atualizarPropriedade(index, "texto", e.target.value)
+                      }
+                    />
+
+                    <input
+                      value={String(componente.props.nomeImagem ?? "")}
+                      onChange={(e) =>
+                        atualizarPropriedade(
+                          index,
+                          "nomeImagem",
+                          e.target.value,
+                        )
+                      }
+                    />
+                    <input
+                      value={String(componente.props.alt ?? "")}
+                      onChange={(e) =>
+                        atualizarPropriedade(index, "alt", e.target.value)
+                      }
+                    />
+
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={Boolean(componente.props.primeiroEstilo)}
+                        onChange={(e) =>
+                          atualizarPropriedade(
+                            index,
+                            "primeiroEstilo",
+                            e.target.checked,
+                          )
+                        }
+                      />
+                      Primeiro estilo
+                    </label>
+                  </>
+                )}
+
+                <RenderizadorDinamico component={componente} />
+              </section>
             ))}
           </div>
         </section>

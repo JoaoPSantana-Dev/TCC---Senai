@@ -113,9 +113,7 @@ export default function NovaPagina() {
               {criando ? "Criando..." : "Criar página"}
             </button>
 
-            <button>
-              <Link href={`/paginas`}>Voltar</Link>
-            </button>
+            <Link href={`/paginas`}>Voltar</Link>
           </form>
         </section>
       </main>
