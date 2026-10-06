@@ -41,7 +41,6 @@ export function LoginForm() {
       });
 
       const dados = await resposta.json();
-      DadosUsuario.id = dados.id;
       if (resposta.ok) {
         router.push("/homepage");
         return;
@@ -115,11 +114,4 @@ export function LoginForm() {
     </form>
   );
 }
-declare global {
-  const DadosUsuario: {
-    id: number;
-    nome: string;
-    email: string;
-    funcao: string;
-  };
-}
+
