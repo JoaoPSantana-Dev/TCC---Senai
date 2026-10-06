@@ -3,11 +3,17 @@ import { jwtVerify } from "jose";
 
 const chave = new TextEncoder().encode(process.env.JWT_SECRET);
 
+const rotasPublicas=["/", "/login", "/cadastro", "/esqueci-senha", "/login/components"]
+
 export async function proxy(requisicao:NextRequest) {
 
     const caminho = requisicao.nextUrl.pathname;
 
-    if (!caminho.startsWith("/homepage")){
+    if (caminho.startsWith("/_next")|| caminho.includes('.')){
+        return NextResponse.next()
+    }
+    if(rotasPublicas.includes(caminho)){
+        
         return NextResponse.next()
     }
 
@@ -28,5 +34,5 @@ export async function proxy(requisicao:NextRequest) {
 }
 
 export const config = {
-    metcher :["/homepage/:path*"],
+    metcher :["/((?!_next|.*\\..*).*)"],
 };
