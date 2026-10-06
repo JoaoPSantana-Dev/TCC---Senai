@@ -7,6 +7,7 @@ import { ImagemBotao } from "@/components/shared/ImagemBotao";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
+
 const schemaCadastro = z.object({
   nome: z.string().min(1, "Nome é obrigatório"),
   funcao: z.string().min(1, "Função é obrigatória"),

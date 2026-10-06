@@ -9,9 +9,11 @@ import { UsuariosModule } from './tables/usuarios/usuarios.module';
 import { LoginModule } from './modulos/login/login.module';
 import { PegarPaginaModule } from './modulos/pegarPagina/pegarPagina.module';
 import { PrismaService } from './prisma/prisma.service';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     PrismaModule,
     HorariosAulaModule,
     PaginasModule,

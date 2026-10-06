@@ -1,9 +1,14 @@
 import { Injectable,UnauthorizedException } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
+import { JwtService } from '@nestjs/jwt';
+import { access } from "fs";
 
 @Injectable()
 export class LoginService{
-    constructor(private readonly prisma:PrismaService){}
+    constructor(
+        private readonly prisma:PrismaService,
+        private readonly jwtService: JwtService
+    ){}
 
     async login(email: string, senha:string){
         const usuario = await this.prisma.usuario.findFirst({
@@ -22,8 +27,11 @@ export class LoginService{
             )
         }
 
+        const token = await this.jwtService.signAsync({sub: usuario.idUsuario})
+
         return {
             mensagem:"Login realizado com sucesso",
+            tokenAcesso: token,
             usuario:{
                 id: usuario.idUsuario,
                 nome: usuario.nome,

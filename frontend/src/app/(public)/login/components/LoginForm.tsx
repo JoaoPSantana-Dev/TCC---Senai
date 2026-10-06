@@ -8,6 +8,7 @@ import { ImagemBotao } from "@/components/shared/ImagemBotao";
 import { toast } from "sonner";
 import Link from "next/link";
 
+
 const schemaLogin = z.object({
   email: z.email("Endereço de email invalido"),
   senha: z.string().min(8, "Senha precisa ter no mínimo 8 caracteres"),
@@ -33,25 +34,25 @@ export function LoginForm() {
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      const resposta = await fetch("http://localhost:3001/login", {
+      const resposta = await fetch("/components/administrador/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify(data),
       });
 
       const dados = await resposta.json();
       DadosUsuario.id = dados.id;
       if (resposta.ok) {
+        
         router.push("/homepage");
         return;
-      } else {
-        toast.error(dados.message || "Erro ao realizar login");
-        reset();
       }
+
       toast.error(dados.message || "Credenciais inválidas");
-    } catch {
+      reset();
+
+    } catch (erro){
+      console.error(erro);
       toast.error("Falha ao conectar com o servidor");
     }
   };

@@ -21,9 +21,12 @@
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
+    "@nestjs/config": "^12.0.1",
     "@nestjs/core": "^11.0.1",
+    "@nestjs/jwt": "^12.0.2",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/typeorm": "^12.0.2",
     "@prisma/adapter-mariadb": "^7.10.0",
     "@prisma/client": "^7.9.1",
     "class-transformer": "^0.5.1",
@@ -31,15 +34,16 @@
     "dotenv": "^17.4.2",
     "mariadb": "^3.5.3",
     "nest": "^0.1.6",
-    "prisma": "^7.9.1",
+    "prisma": "^7.10.0",
     "process": "^0.11.10",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "typeorm": "^1.1.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.18.0",
-    "@nestjs/cli": "^11.0.0",
+    "@nestjs/cli": "^11.0.24",
     "@nestjs/schematics": "^11.0.0",
     "@nestjs/testing": "^11.0.1",
     "@types/express": "^5.0.0",
