@@ -6,45 +6,47 @@ import {
   Patch,
   Param,
   Delete,
-  ParseIntPipe,
 } from '@nestjs/common';
 import { PaginasService } from './paginas.service';
-import { CreatePaginaDto } from '../dto/create-pagina.dto';
 import { UpdatePaginaDto } from '../dto/update-pagina.dto';
 
 @Controller('paginas')
 export class PaginasController {
-  constructor(private readonly paginaService: PaginasService) {}
+  constructor(private readonly paginasService: PaginasService) {}
 
   @Post()
-  criarPagina(@Body() createPaginaDto: CreatePaginaDto) {
-    return this.paginaService.criarPagina(createPaginaDto);
+  create(
+    @Body()
+    body: {
+      slug: string;
+      nomePagina: string;
+      tipoPagina: string;
+      conteudo: any;
+    },
+  ) {
+    return this.paginasService.criarPagina(body);
   }
 
   @Get()
   listarTodasPaginas() {
-    return this.paginaService.listarTodasPaginas();
+    return this.paginasService.listarTodasPaginas();
   }
 
-  @Get(':id')
-  listarUmaPaginaPorId(@Param('id', ParseIntPipe) id: number) {
-    return this.paginaService.listarUmaPaginaPorId(id);
-  }
-
-  @Get(':nomePagina')
-  listarUmaPaginaPorNome(@Param('nomePagina') nomePagina: string) {
-    return this.paginaService.listarUmaPaginaPorNome(nomePagina);
+  @Get(':slug')
+  listarUmaPaginaPorSlug(@Param('slug') slug: string) {
+    return this.paginasService.listarUmaPaginaPorSlug(slug);
   }
 
   @Delete(':id')
   apagarPagina(@Param('id') id: number) {
-    return this.paginaService.apagarPagina(+id);
+    return this.paginasService.apagarPagina(+id);
   }
-  @Patch(':id')
+
+  @Patch(':slug')
   updatePagina(
-    @Param('id') id: number,
+    @Param('slug') slug: string,
     @Body() updatePaginaDto: UpdatePaginaDto,
   ) {
-    return this.paginaService.updatePagina(+id, updatePaginaDto);
+    return this.paginasService.updatePaginaPorSlug(slug, updatePaginaDto);
   }
 }
