@@ -1,14 +1,17 @@
-import { type HugeiconsIconProps } from "@hugeicons/react";
+import type { IconSvgElement } from "@hugeicons/react";
 
-// estrutura dos dados da vaga
 export interface Vaga {
-  titulo: string;
-  href: string;
-  icone: HugeiconsIconProps["icon"];
+  idEmprego: number;
+  nomeEmpresa: string;
+  cargo: string;
+  requisitos: string;
+  salario: string;
+  beneficios: string;
+  descricao: string;
+  localizacao: string;
+  contato: string;
+  areaEmprego: string;
+  icone?: IconSvgElement;
 }
 
-// estrutura padrão do menu
-export const vagasPadrao: Vaga[] = [];
-
-// compatibilidade com o restante do sistema
-export const vagas = vagasPadrao;
+export const vagas: Vaga[] = [];
