@@ -15,6 +15,7 @@ export async function testCookie(){
   const cookieStore=await cookies();
   const session=cookieStore.get("session");
   console.log(session?.value);
+  console.log(Object(session?.value).funcao);
 }
 
 export async function logOut(){
