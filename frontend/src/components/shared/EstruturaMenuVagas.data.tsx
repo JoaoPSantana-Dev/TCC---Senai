@@ -1,8 +1,8 @@
 import type { IconSvgElement } from "@hugeicons/react";
 
-export interface Vaga {
+export interface VagaEmprego {
   idEmprego: number;
-  href: string;
+//  href: string;
   nomeEmpresa: string;
   cargo: string;
   requisitos: string;
@@ -15,4 +15,21 @@ export interface Vaga {
   icone?: IconSvgElement;
 }
 
-export const vagas: Vaga[] = [];
+export const vagasEmprego: VagaEmprego[] = [];
+
+export interface VagaEstagio {
+  idEstagio: number;
+//  href: string;
+  nomeEmpresa: string;
+  cargo: string;
+  requisitos: string;
+  salario: string;
+  beneficios: string;
+  descricao: string;
+  localizacao: string;
+  contato: string;
+  areaEstagio: string;
+  icone?: IconSvgElement;
+}
+
+export const vagasEstagio: VagaEstagio[] = [];
