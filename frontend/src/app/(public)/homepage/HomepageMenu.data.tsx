@@ -10,6 +10,20 @@ import {
 } from "@hugeicons/core-free-icons";
 import { type HugeiconsIconProps } from "@hugeicons/react";
 
+import { cookies } from "next/headers";
+
+export async function testCookie(){
+  const cookieStore=await cookies();
+  const session=cookieStore.get("session");
+  console.log(session?.value);
+  console.log(Object(session?.value).funcao);
+}
+
+export async function logOut(){
+  const cookieStore=await cookies();
+  cookieStore.delete("session");
+}
+
 // estrutura dos dados da página
 export interface Pagina {
   titulo: string;
