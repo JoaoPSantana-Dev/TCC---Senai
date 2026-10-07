@@ -43,7 +43,7 @@ export default function NovaPagina() {
       }
 
       toast.success("Página criada com sucesso!");
-      router.push("/paginas");
+      router.push("/gerenciador-paginas");
     } catch {
       toast.error("Falha ao criar a página");
     } finally {
@@ -122,7 +122,7 @@ export default function NovaPagina() {
             </button>
 
             <div className="text-center">
-              <Link href={`/paginas`}>Voltar</Link>
+              <Link href={`/gerenciador-paginas`}>Voltar</Link>
             </div>
           </form>
         </section>

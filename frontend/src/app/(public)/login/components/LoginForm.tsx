@@ -41,7 +41,7 @@ export function LoginForm() {
       });
 
       const dados = await resposta.json();
-      
+
       if (resposta.ok) {
         router.push("/homepage");
         return;

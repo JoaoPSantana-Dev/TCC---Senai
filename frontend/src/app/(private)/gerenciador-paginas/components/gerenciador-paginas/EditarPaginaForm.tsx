@@ -58,7 +58,7 @@ export function EditarPaginaForm({
       if (!resposta.ok) throw new Error("Erro ao editar página");
 
       toast.success("Página editada com sucesso!");
-      router.push("/paginas");
+      router.push("/gerenciador-paginas");
     } catch {
       toast.error("Falha ao editar a página");
     } finally {
@@ -143,7 +143,7 @@ export function EditarPaginaForm({
             </button>
 
             <div className="text-center">
-              <Link href={`/paginas`}>Voltar</Link>
+              <Link href={`/gerenciador-paginas`}>Voltar</Link>
             </div>
           </form>
         </section>
