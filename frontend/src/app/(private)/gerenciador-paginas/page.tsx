@@ -72,7 +72,7 @@ export default function Paginas() {
             <h1 className="text-2xl font-semibold">Gerenciar páginas</h1>
 
             <Link
-              href="/paginas/nova-pagina"
+              href="/gerenciador-paginas/nova-pagina"
               className="flex items-center gap-2 cursor-pointer bg-green-600 hover:bg-green-700 rounded-lg text-white duration-300 px-2 py-1 text-sm"
             >
               <HugeiconsIcon icon={Plus} size={30} />
@@ -100,7 +100,7 @@ export default function Paginas() {
 
                   <div className="flex items-center gap-2">
                     <Link
-                      href={`/paginas/${pagina.slug}/editar-pagina`}
+                      href={`/gerenciador-paginas/${pagina.slug}/editar-pagina`}
                       title="Editar"
                       className="p-2 text-zinc-600 cursor-pointer hover:text-blue-600 duration-200"
                     >

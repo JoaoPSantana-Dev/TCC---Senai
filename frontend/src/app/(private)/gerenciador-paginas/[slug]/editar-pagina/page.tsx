@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { toast } from "sonner";
-import { EditarPaginaForm } from "@/app/(private)/paginas/components/paginas/EditarPaginaForm";
+import { EditarPaginaForm } from "../../components/gerenciador-paginas/EditarPaginaForm";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
 
