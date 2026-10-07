@@ -16,7 +16,6 @@ const schemaLogin = z.object({
 type LoginFormData = z.infer<typeof schemaLogin>;
 
 export function LoginForm() {
-
   const router = useRouter();
 
   const {
@@ -114,4 +113,3 @@ export function LoginForm() {
     </form>
   );
 }
-
