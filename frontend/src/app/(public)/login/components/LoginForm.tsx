@@ -8,6 +8,20 @@ import { ImagemBotao } from "@/components/shared/ImagemBotao";
 import { toast } from "sonner";
 import Link from "next/link";
 
+import { cookies } from "next/headers";
+
+export async function testCookie() {
+  const cookieStore = await cookies();
+  const session = cookieStore.get("session");
+  console.log(session?.value);
+  console.log(Object(session?.value).funcao);
+}
+
+export async function logOut() {
+  const cookieStore = await cookies();
+  cookieStore.delete("session");
+}
+
 const schemaLogin = z.object({
   email: z.email("Endereço de email invalido"),
   senha: z.string().min(8, "Senha precisa ter no mínimo 8 caracteres"),
@@ -33,14 +47,14 @@ export function LoginForm() {
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      const resposta = await fetch("/components/administrador/login", {
+      const resposta = await fetch("/login/components", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
       const dados = await resposta.json();
-      DadosUsuario.id = dados.id;
+
       if (resposta.ok) {
         router.push("/homepage");
         return;
@@ -113,12 +127,4 @@ export function LoginForm() {
       </ul>
     </form>
   );
-}
-declare global {
-  const DadosUsuario: {
-    id: number;
-    nome: string;
-    email: string;
-    funcao: string;
-  };
 }
