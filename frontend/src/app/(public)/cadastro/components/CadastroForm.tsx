@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ImagemBotao } from "@/components/shared/ImagemBotao";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import Link from "next/link";
 
 const schemaCadastro = z.object({
   nome: z.string().min(1, "Nome é obrigatório"),
@@ -138,12 +139,14 @@ export function CadastroForm() {
         )}
       </div>
 
-      <div className="flex justify-center">
+      <div className="flex flex-col text-center">
         <ImagemBotao
           nomeImagem="login_icon.svg"
           texto={isSubmitting ? "Cadastrando..." : "Cadastrar"}
           disabled={isSubmitting}
         />
+
+        <Link href="/login">Voltar para o login</Link>
       </div>
     </form>
   );
