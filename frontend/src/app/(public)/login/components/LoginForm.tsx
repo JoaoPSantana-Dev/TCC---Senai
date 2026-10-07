@@ -8,6 +8,7 @@ import { ImagemBotao } from "@/components/shared/ImagemBotao";
 import { toast } from "sonner";
 import Link from "next/link";
 
+
 const schemaLogin = z.object({
   email: z.email("Endereço de email invalido"),
   senha: z.string().min(8, "Senha precisa ter no mínimo 8 caracteres"),
