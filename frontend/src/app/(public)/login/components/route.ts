@@ -1,6 +1,8 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
+
+
 export async function POST(requisicao:Request) {
     const {email,senha} = await requisicao.json()
 
@@ -10,6 +12,7 @@ export async function POST(requisicao:Request) {
         body: JSON.stringify({email, senha}),
     })
 
+    
     const dados = await response.json()
 
     if (!response.ok){

@@ -8,6 +8,20 @@ import { ImagemBotao } from "@/components/shared/ImagemBotao";
 import { toast } from "sonner";
 import Link from "next/link";
 
+import { cookies } from "next/headers";
+
+export async function testCookie(){
+  const cookieStore=await cookies();
+  const session=cookieStore.get("session");
+  console.log(session?.value);
+  console.log(Object(session?.value).funcao);
+}
+
+export async function logOut(){
+  const cookieStore=await cookies();
+  cookieStore.delete("session");
+}
+
 const schemaLogin = z.object({
   email: z.email("Endereço de email invalido"),
   senha: z.string().min(8, "Senha precisa ter no mínimo 8 caracteres"),
