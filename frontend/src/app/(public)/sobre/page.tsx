@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { EstruturaTotem } from "@/components/shared/EstruturaTotem";
 import { Titulo } from "@/components/shared/TituloTotem";
-import { RenderizadorDinamico } from "@/app/(private)/gerenciador-paginas/components/gerenciador-paginas/RenderizadorDinamico";
+import { RenderizadorDinamico } from "@/app/(private)/gerenciador-paginas/components/RenderizadorDinamico";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
 

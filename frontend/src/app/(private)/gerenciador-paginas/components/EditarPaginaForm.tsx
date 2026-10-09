@@ -87,8 +87,8 @@ export function EditarPaginaForm({
     <div className="w-screen h-screen flex flex-col">
       <HeaderPrivate />
 
-      <main className="flex justify-center w-full">
-        <section className="bg-white w-full max-w-3xl p-6 rounded-xl shadow-sm">
+      <main className="flex flex-col justify-center items-center w-full">
+        <section className="bg-white w-full max-w-3xl p-6 rounded-xl shadow-sm mb-40">
           <h2 className="text-xl font-semibold mb-6 text-zinc-800">
             Editando a página "{slug}"
           </h2>
@@ -149,7 +149,9 @@ export function EditarPaginaForm({
         </section>
 
         <section>
-          <p>Pré-visualização dos componentes</p>
+          <p className="text-center text-2xl text-zinc-800 font-bold mb-4">
+            Pré-visualização dos componentes
+          </p>
           <div>
             {conteudo.map((componente, index) => (
               <section key={`${componente.type}-${index}`}>
@@ -172,6 +174,7 @@ export function EditarPaginaForm({
                         )
                       }
                     />
+
                     <input
                       value={String(componente.props.alt ?? "")}
                       onChange={(e) =>
