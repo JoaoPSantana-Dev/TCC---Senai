@@ -7,17 +7,17 @@ import { type Vaga } from "@/components/shared/EstruturaMenuVagas.data";
 
 export const vagasCursos: Vaga[] = [
   {
-    titulo: "Técnico em Desenvolvimento de Sistemas",
+    cargo: "Técnico em Desenvolvimento de Sistemas",
     href: "/vagas-cursos/assistente-vendas",
     icone: Briefcase01Icon,
   },
   {
-    titulo: "Curso de Aprendizagem Industrial",
+    cargo: "Curso de Aprendizagem Industrial",
     href: "/vagas-cursos/supervisor-producao",
     icone: Building03Icon,
   },
   {
-    titulo: "Recepcionista",
+    cargo: "Recepcionista",
     href: "/vagas-cursos/recepcionista",
     icone: ClipboardCheckIcon,
   },

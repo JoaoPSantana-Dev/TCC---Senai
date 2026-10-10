@@ -1,15 +1,15 @@
 "use client";
 
 import { EstruturaVagasMenu } from "@/components/shared/EstruturaMenuVagas";
-import type { Vaga } from "@/components/shared/EstruturaMenuVagas.data";
+import type { VagaEmprego } from "@/components/shared/EstruturaMenuVagas.data";
 import { EstruturaTotem } from "@/components/shared/EstruturaTotem";
 import { Titulo } from "@/components/shared/TituloTotem";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function VagasEmpregos() {
-  const [vagas, setVagas] = useState<Vaga[]>([]);
-  const [vagaSelecionada, setVagaSelecionada] = useState<Vaga | null>(null);
+  const [vagas, setVagas] = useState<VagaEmprego[]>([]);
+  const [vagaSelecionada, setVagaSelecionada] = useState<VagaEmprego | null>(null);
 
   const [carregando, setCarregando] = useState(true);
 
