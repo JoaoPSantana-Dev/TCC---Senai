@@ -1,29 +1,22 @@
-import { LinhaSobre } from "@/app/(public)/sobre/components/LinhaSobre";
-import type { ComponentType } from "react";
-
-const RegistrarComponente: Record<string, ComponentType<any>> = {
-  LinhaSobre,
-};
-
-interface ComponentData {
-  type: string;
-  props: Record<string, any>;
-}
+import type { ComponentePagina } from "@/lib/paginas";
+import { registroComponentes } from "./registroComponentes";
 
 export function RenderizadorDinamico({
-  component,
+  componente,
 }: {
-  component: ComponentData;
+  componente: ComponentePagina;
 }) {
-  const RenderizarComponent = RegistrarComponente[component.type];
+  const definicao = registroComponentes[componente.type];
 
-  if (!RenderizarComponent) {
+  if (!definicao) {
     return (
       <div>
-        <p>Componente {component.type} não registrado</p>
+        <p>Componente {componente.type} não registrado</p>
       </div>
     );
   }
 
-  return <RenderizarComponent {...component.props} />;
+  const RenderizarComponente = definicao.componente;
+
+  return <RenderizarComponente {...componente.props} />;
 }
