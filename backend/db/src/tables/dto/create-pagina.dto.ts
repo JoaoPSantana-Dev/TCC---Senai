@@ -46,7 +46,7 @@ export class CreatePaginaDto {
   })
   slug!: string;
 
-  @Transform
+  @Transform(removerEspacos)
   @IsString({ message: 'O nome da página deve ser um texto' })
   @IsNotEmpty({ message: 'O nome da página é obrigatório' })
   @MaxLength(limiteNomePagina, {
@@ -65,5 +65,5 @@ export class CreatePaginaDto {
   })
   @ValidateNested({ each: true })
   @Type(() => ComponentePaginaDto)
-  conteudo!: ComponentePaginaDto;
+  conteudo!: ComponentePaginaDto[];
 }
