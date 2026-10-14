@@ -14,7 +14,7 @@ export default function Homepage() {
               <li key={pagina.href}>
                 <Link
                   href={pagina.href}
-                  className="h-full items-center flex flex-row p-8 bg-white rounded-2xl shadow-xl hover:shadow-md"
+                  className="h-full items-center flex flex-row p-8 bg-white rounded-2xl shadow-xl transition-all duration-100 active:shadow-md touch-manipulation select-none"
                 >
                   <span className="text-4xl mr-4">
                     <HugeiconsIcon icon={pagina.icone} size={40} />
