@@ -70,7 +70,7 @@ export function LoginForm() {
           placeholder="Digite seu email"
         />
         {errors.email && (
-          <p className="text-red-500 text-sm">{errors.email.message}"</p>
+          <p className="text-red-500 text-sm">{errors.email.message}</p>
         )}
       </div>
 

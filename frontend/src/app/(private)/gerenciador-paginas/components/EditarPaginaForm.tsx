@@ -43,7 +43,7 @@ interface CampoEditorProps {
 }
 
 const classeBase =
-  "p-2 border rounded-md focus:outline-none focus:ring2 focus:ring-blue-500";
+  "p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500";
 
 function CampoEditor({ id, campo, valor, erro, onChange }: CampoEditorProps) {
   const idErro = `${id}-erro`;
@@ -472,7 +472,7 @@ export function EditarPaginaForm({
                               Pré-visualização
                             </p>
                             <div className="rounded-xl bg-zinc-100 p-4 overflow-x-auto">
-                              <RenderizadorDinamico component={componente} />
+                              <RenderizadorDinamico componente={componente} />
                             </div>
                           </div>
                         </>

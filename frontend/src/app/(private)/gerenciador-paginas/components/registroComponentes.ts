@@ -1,5 +1,5 @@
 import type { ComponentType } from "react";
-import { LinhaSobre } from "@/app/(public)/sobre/components/LinhaSobre";
+import { LinhaSobre } from "@/components/shared/LinhaSobre";
 import { TelaDescanso } from "@/app/(public)/descanso/components/TelaDescanso";
 import {
   CartaoMenu,
@@ -50,7 +50,7 @@ const opcoesIcones: OpcaoCampo[] = Object.entries(iconesMenu).map(
 
 export const registroComponentes: Record<string, DefinicaoComponente> = {
   LinhaSobre: {
-    rotulo: "Linha com texto e iamgem",
+    rotulo: "Linha com texto e imagem",
     componente: LinhaSobre,
     campos: [
       {

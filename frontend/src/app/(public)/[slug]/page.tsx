@@ -18,19 +18,17 @@ export default async function PaginaDinamica({ params }: PaginaDinamicaProps) {
 
   return (
     <EstruturaTotem mostrarNoticias={false}>
-      <main className="w-full flex-1">
-        <Titulo texto={pagina.nomePagina} />
-        <div className="flex flex-col justify-center max-w-6xl w-full p-6 md:p-12 mx-auto">
-          <section className="flex flex-col gap-6 w-full">
-            {pagina.conteudo.map((componente, index) => (
-              <RenderizadorDinamico
-                key={`${componente.type}-${index}`}
-                componente={componente}
-              />
-            ))}
-          </section>
-        </div>
-      </main>
+      <Titulo texto={pagina.nomePagina} />
+      <div className="flex flex-col justify-center max-w-6xl w-full p-6 md:p-12 mx-auto">
+        <section className="flex flex-col gap-6 w-full">
+          {pagina.conteudo.map((componente, index) => (
+            <RenderizadorDinamico
+              key={`${componente.type}-${index}`}
+              componente={componente}
+            />
+          ))}
+        </section>
+      </div>
     </EstruturaTotem>
   );
 }
