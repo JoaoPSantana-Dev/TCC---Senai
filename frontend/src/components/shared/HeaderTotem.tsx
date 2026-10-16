@@ -31,12 +31,8 @@ export function HeaderTotem() {
     let interval: ReturnType<typeof setInterval> | undefined;
     let cancelado = false;
 
-    const checkTemperature = async (
-      latitude: number,
-      longitude: number
-    ) => {
+    const checkTemperature = async (latitude: number, longitude: number) => {
       try {
-
         const parametros = new URLSearchParams({
           latitude: String(latitude),
           longitude: String(longitude),
@@ -65,13 +61,12 @@ export function HeaderTotem() {
         if (!cancelado) {
           setTemperature(dados.current.temperature_2m);
         }
-
       } catch (erro) {
         console.log("Erro ao buscar temperature", erro);
 
         if (!cancelado) {
           toast.error("Não foi possivel atualizar a temperatura");
-        };
+        }
       }
     };
 
@@ -83,9 +78,12 @@ export function HeaderTotem() {
 
       checkTemperature(latitudeFallback, longitudeFallback);
 
-      interval = setInterval(() => {
-        checkTemperature(latitudeFallback, longitudeFallback);
-      }, 10 * 60 * 1000);
+      interval = setInterval(
+        () => {
+          checkTemperature(latitudeFallback, longitudeFallback);
+        },
+        10 * 60 * 1000,
+      );
     };
 
     if (!navigator.geolocation) {
@@ -99,9 +97,12 @@ export function HeaderTotem() {
 
           checkTemperature(latitude, longitude);
 
-          interval = setInterval(() => {
-            checkTemperature(latitude, longitude);
-          }, 10 * 60 * 1000);
+          interval = setInterval(
+            () => {
+              checkTemperature(latitude, longitude);
+            },
+            60 * 60 * 1000,
+          );
         },
         () => {
           userLocalizacaoFallback();
@@ -109,17 +110,17 @@ export function HeaderTotem() {
         {
           enableHighAccuracy: true,
           timeout: 10000,
-          maximumAge: 60000
-        }
+          maximumAge: 60000,
+        },
       );
-    };
+    }
 
     return () => {
       cancelado = true;
 
       if (interval) {
         clearInterval(interval);
-      };
+      }
     };
   }, []);
 
@@ -133,9 +134,7 @@ export function HeaderTotem() {
 
         <time className="font-semibold text-sm uppercase truncate shrink-0 flex items-center justify-center gap-2">
           <span>{time || "00:00:00"}</span>
-          <span>
-            {temperature !== null ? `${temperature}°C` : "--°C"}
-          </span>
+          <span>{temperature !== null ? `${temperature}°C` : "--°C"}</span>
         </time>
       </div>
       {/* informações extras */}
@@ -147,13 +146,14 @@ export function HeaderTotem() {
       {/* menu hambúrguer */}
 
       {/* logo */}
-      <figure className="flex justify-center p-4">
+      <figure className="flex justify-center items-center w-full px-12 py-3">
         <Image
           src="/senai-logo.png"
           alt="Imagem do logo SENAI"
           width={200}
           height={200}
-          className="w-auto h-auto max-w-full object-contain"
+          sizes="(max-width: 480px) 75vw, (max-width: 768px) 65vw, 300px"
+          className="w-[65vw] max-w-75 h-auto object-contain sm:w-[60vw] md:w-75"
           loading="eager"
         />
       </figure>
