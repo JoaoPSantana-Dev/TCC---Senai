@@ -12,7 +12,7 @@ import {
   slugsDoSistema,
   slugsReservados,
   validarPropsComponente,
-} from './paginas.constante';
+} from './paginas.constantes';
 
 function temCodigo(erro: unknown, codigo: string) {
   return (

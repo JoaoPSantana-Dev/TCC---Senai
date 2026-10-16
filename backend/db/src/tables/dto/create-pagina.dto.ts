@@ -17,7 +17,7 @@ import {
   regexSlug,
   tiposComponentes,
   tiposPagina,
-} from '../paginas/paginas.constante';
+} from '../paginas/paginas.constantes';
 
 const removerEspacos = ({ value }: { value: unknown }) =>
   typeof value === 'string' ? value.trim() : value;
