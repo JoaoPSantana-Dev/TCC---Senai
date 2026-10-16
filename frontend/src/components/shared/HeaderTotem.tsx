@@ -101,7 +101,7 @@ export function HeaderTotem() {
 
           interval = setInterval(() => {
             checkTemperature(latitude, longitude);
-          }, 10 * 60 * 1000);
+          }, 60 * 60 * 1000);
         },
         () => {
           userLocalizacaoFallback();
@@ -147,13 +147,14 @@ export function HeaderTotem() {
       {/* menu hambúrguer */}
 
       {/* logo */}
-      <figure className="flex justify-center p-4">
+      <figure className="flex justify-center items-center w-full px-12 py-3">
         <Image
           src="/senai-logo.png"
           alt="Imagem do logo SENAI"
           width={200}
           height={200}
-          className="w-auto h-auto max-w-full object-contain"
+          sizes="(max-width: 480px) 75vw, (max-width: 768px) 65vw, 300px"
+          className="w-[65vw] max-w-[300px] h-auto object-contain sm:w-[60vw] md:w-[300px]"
           loading="eager"
         />
       </figure>
