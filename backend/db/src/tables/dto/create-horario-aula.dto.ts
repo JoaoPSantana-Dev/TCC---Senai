@@ -16,6 +16,4 @@ export class CreateHorarioAulaDto {
   @IsInt()
   @IsPositive()
   idSala!: number;
-
-
 }
