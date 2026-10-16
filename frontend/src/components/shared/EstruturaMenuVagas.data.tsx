@@ -15,5 +15,3 @@ export interface Vaga {
 }
 
 export const vagas: Vaga[] = [];
-
-

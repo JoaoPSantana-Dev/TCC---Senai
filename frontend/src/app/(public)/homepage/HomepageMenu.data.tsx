@@ -1,75 +1,60 @@
-import {
-  Building03Icon,
-  Briefcase01Icon,
-  InfoIcon,
-  LibraryBigIcon,
-  MapsSearchIcon,
-  Mortarboard02Icon,
-  PermanentJobIcon,
-  Clock01Icon,
-} from "@hugeicons/core-free-icons";
-import { type HugeiconsIconProps } from "@hugeicons/react";
-import { cookies } from "next/headers";
+import type { ComponentePagina } from "@/lib/paginas";
 
-export async function testCookie(){
-  const cookieStore=await cookies();
-  const session=cookieStore.get("session");
-  console.log(session?.value);
-  console.log(Object(session?.value).funcao);
-}
+// conteúdo reserva da homepage
+// a homepage vem do gerenciador de páginas, esses dados só aparecem se o servidor
+// estiver fora do ar ou se a página "homepage" for apagada do banco de dados.
+// a chave "icone" é uma das chaves de iconesMenu em ./components/CartaoMenu.tsx
 
-export async function logOut(){
-  const cookieStore=await cookies();
-  cookieStore.delete("session");
-}
+export const tituloPadraoHomepage =
+  "Bem-vindo ao totem do SENAI Mariano Ferraz!";
 
-// estrutura dos dados da página
-export interface Pagina {
-  titulo: string;
-  href: string;
-  icone: HugeiconsIconProps["icon"];
-}
-
-// estrutura das páginas que vão pro menu
-export const paginas: Pagina[] = [
+export const conteudoPadraoHomepage: ComponentePagina[] = [
   {
-    titulo: "Sobre o SENAI",
-    href: "/sobre",
-    icone: InfoIcon,
+    type: "CartaoMenu",
+    props: { titulo: "Sobre o SENAI", href: "/sobre", icone: "info" },
   },
   {
-    titulo: "Sobre o SENAI Mariano Ferraz",
-    href: "/sobre-senai-mariano-ferraz",
-    icone: Building03Icon,
+    type: "CartaoMenu",
+    props: {
+      titulo: "Sobre o SENAI Mariano Ferraz",
+      href: "/sobre-senai-mariano-ferraz",
+      icone: "predio",
+    },
   },
   {
-    titulo: "Horário das aulas",
-    href: "/horario-aulas",
-    icone: Clock01Icon,
+    type: "CartaoMenu",
+    props: {
+      titulo: "Horário das aulas",
+      href: "/horario-aulas",
+      icone: "relogio",
+    },
   },
   {
-    titulo: "Mapa da escola",
-    href: "/mapa",
-    icone: MapsSearchIcon,
+    type: "CartaoMenu",
+    props: { titulo: "Mapa da escola", href: "/mapa", icone: "mapa" },
   },
   {
-    titulo: "Vagas de emprego",
-    href: "/vagas-empregos",
-    icone: Briefcase01Icon,
+    type: "CartaoMenu",
+    props: {
+      titulo: "Vagas de emprego",
+      href: "/vagas-empregos",
+      icone: "emprego",
+    },
   },
   {
-    titulo: "Vagas de estágio",
-    href: "/vagas-estagios",
-    icone: PermanentJobIcon,
+    type: "CartaoMenu",
+    props: {
+      titulo: "Vagas de estágio",
+      href: "/vagas-estagios",
+      icone: "estagio",
+    },
   },
   {
-    titulo: "Cursos",
-    href: "/vagas-cursos",
-    icone: Mortarboard02Icon,
+    type: "CartaoMenu",
+    props: { titulo: "Cursos", href: "/vagas-cursos", icone: "curso" },
   },
   {
-    titulo: "Biblioteca",
-    href: "/biblioteca",
-    icone: LibraryBigIcon,
+    type: "CartaoMenu",
+    props: { titulo: "Biblioteca", href: "/biblioteca", icone: "biblioteca" },
   },
 ];

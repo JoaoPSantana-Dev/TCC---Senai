@@ -1,27 +1,28 @@
 "use client";
 
-import { Delete02Icon, Edit03Icon, Plus } from "@hugeicons/core-free-icons";
+import {
+  Delete02Icon,
+  Edit03Icon,
+  ExternalLinkIcon,
+  Plus,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { toast } from "sonner";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { HeaderPrivate } from "@/components/shared/HeaderPrivate";
-
-type Pagina = {
-  idPaginas: number;
-  slug: string;
-  nomePagina: string;
-  tipoPagina: string;
-  componentes?: JSON;
-};
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
+import { apiUrl, mensagemDeErro, type PaginaResumo } from "@/lib/paginas";
 
 export default function Paginas() {
-  const [paginas, setPaginas] = useState<Pagina[]>([]);
+  const [paginas, setPaginas] = useState<PaginaResumo[]>([]);
   const [carregando, setCarregando] = useState(true);
+  const [erroAoCarregar, setErroAoCarregar] = useState(false);
+  const [excluindoId, setExcluindoId] = useState<number | null>(null);
 
-  const buscarPaginas = async () => {
+  const buscarPaginas = useCallback(async () => {
+    setCarregando(true);
+    setErroAoCarregar(false);
+
     try {
       const resposta = await fetch(`${apiUrl}/paginas`, {
         cache: "no-store",
@@ -36,29 +37,52 @@ export default function Paginas() {
     } catch {
       toast.error("Não foi possível carregar as páginas");
       setPaginas([]);
+      setErroAoCarregar(true);
     } finally {
       setCarregando(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     buscarPaginas();
-  }, []);
+  }, [buscarPaginas]);
 
-  const excluirPagina = async (id: number) => {
+  const excluirPagina = async (pagina: PaginaResumo) => {
+    if (excluindoId !== null) return;
+
+    if (pagina.protegida) {
+      toast.error("Essa página é usada pelo totem e não pode ser excluída");
+      return;
+    }
+
+    const confirmou = window.confirm(
+      `Certeza que quer excluir a página "${pagina.nomePagina}"?`,
+    );
+    if (!confirmou) return;
+
+    setExcluindoId(pagina.idPaginas);
+
     try {
-      const resposta = await fetch(`${apiUrl}/paginas/${id}`, {
+      const resposta = await fetch(`${apiUrl}/paginas/${pagina.idPaginas}`, {
         method: "DELETE",
       });
 
       if (!resposta.ok) {
-        throw new Error("Erro ao excluir página");
+        throw new Error(
+          await mensagemDeErro(resposta, "Falha ao excluir a página"),
+        );
       }
 
-      setPaginas((atual) => atual.filter((pagina) => pagina.idPaginas !== id));
+      setPaginas((atual) =>
+        atual.filter((pagina) => pagina.idPaginas !== pagina.idPaginas),
+      );
       toast.success("Página excluída com sucesso!");
-    } catch {
-      toast.error("Falha ao excluir a página");
+    } catch (erro) {
+      toast.error(
+        erro instanceof Error ? erro.message : "Falha ao excluir a página",
+      );
+    } finally {
+      setExcluindoId(null);
     }
   };
 
@@ -82,6 +106,20 @@ export default function Paginas() {
 
           {carregando ? (
             <p className="text-zinc-500">Carregando páginas...</p>
+          ) : erroAoCarregar ? (
+            <div className="flex flex-col items-start gap-2">
+              <p className="text-red-600">
+                Não foi possível carregar as páginas. Verifique se o servidor
+                está no ar
+              </p>
+              <button
+                type="button"
+                onClick={buscarPaginas}
+                className="cursor-pointer text-sm underline text-zinc-700"
+              >
+                Tentar Novamente
+              </button>
+            </div>
           ) : paginas.length === 0 ? (
             <p className="text-zinc-500">Nenhuma página encontrada</p>
           ) : (
@@ -91,14 +129,26 @@ export default function Paginas() {
                   key={pagina.idPaginas}
                   className="flex w-full items-center justify-between bg-zinc-50 hover:bg-zinc-100/70 rounded-xl border border-zinc-200 p-4 gap-2"
                 >
-                  <div>
-                    <h2 className="font-medium text-zinc-700">
+                  <div className="min-w-0">
+                    <h2 className="font-medium text-zinc-700 truncate">
                       {pagina.nomePagina}
                     </h2>
-                    <p className="text-zinc-500">{pagina.tipoPagina}</p>
+                    <p className="text-zinc-500 text-sm">
+                      {pagina.tipoPagina} - /{pagina.slug}
+                    </p>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 shrink-0">
+                    {pagina.tipoPagina === "Totem" && (
+                      <Link
+                        href={`/${pagina.slug}`}
+                        target="_blank"
+                        title="Abrir a página no totem"
+                        className="p-2 text-zinc-600 cursor-pointer hover:text-yellow-600 duration-200"
+                      >
+                        <HugeiconsIcon icon={ExternalLinkIcon} size={20} />
+                      </Link>
+                    )}
                     <Link
                       href={`/gerenciador-paginas/${pagina.slug}/editar-pagina`}
                       title="Editar"
@@ -109,9 +159,14 @@ export default function Paginas() {
 
                     <button
                       type="button"
-                      title="Excluir"
-                      onClick={() => excluirPagina(pagina.idPaginas)}
-                      className="p-2 text-zinc-600 cursor-pointer hover:text-red-600 duration-200"
+                      title={
+                        pagina.protegida
+                          ? "Essa página é usada pelo totem e não pode ser excluída"
+                          : "Excluir"
+                      }
+                      disabled={pagina.protegida || excluindoId !== null}
+                      onClick={() => excluirPagina(pagina)}
+                      className="p-2 text-zinc-600 cursor-pointer hover:text-red-600 duration-200 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:text-zinc-600"
                     >
                       <HugeiconsIcon icon={Delete02Icon} size={20} />
                     </button>

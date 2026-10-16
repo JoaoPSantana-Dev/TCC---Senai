@@ -1,28 +1,27 @@
-import { paginas } from "@/app/(public)/homepage/HomepageMenu.data";
 import { EstruturaTotem } from "@/components/shared/EstruturaTotem";
 import { Titulo } from "@/components/shared/TituloTotem";
-import { HugeiconsIcon } from "@hugeicons/react";
-import Link from "next/link";
+import { RenderizadorDinamico } from "@/app/(private)/gerenciador-paginas/components/RenderizadorDinamico";
+import {
+  conteudoPadraoHomepage,
+  tituloPadraoHomepage,
+} from "@/app/(public)/homepage/HomepageMenu.data";
+import { buscarPaginaPorSlug } from "@/lib/paginas";
 
-export default function Homepage() {
+export default async function Homepage() {
+  // o menu vem do gerenciador de páginas, se não der, usa o conteúdo de reserva
+  const pagina = await buscarPaginaPorSlug("homepage");
+
+  const titulo = pagina?.nomePagina ?? tituloPadraoHomepage;
+  const conteudo = pagina?.conteudo ?? conteudoPadraoHomepage;
+
   return (
     <EstruturaTotem>
-      <Titulo texto="Bem-vindo ao totem do SENAI Mariano Ferraz!">
+      <Titulo texto={titulo}>
         <nav className="w-full max-w-6xl p-4 rounded-xl">
           <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {paginas.map((pagina) => (
-              <li key={pagina.href}>
-                <Link
-                  href={pagina.href}
-                  className="h-full items-center flex flex-row p-8 bg-white rounded-2xl shadow-xl transition-all duration-100 active:shadow-md touch-manipulation select-none"
-                >
-                  <span className="text-4xl mr-4">
-                    <HugeiconsIcon icon={pagina.icone} size={40} />
-                  </span>
-                  <h2 className="text-2xl font-semibold justify-self-end">
-                    {pagina.titulo}
-                  </h2>
-                </Link>
+            {conteudo.map((componente, index) => (
+              <li key={`${componente.type}-${index}`}>
+                <RenderizadorDinamico componente={componente} />
               </li>
             ))}
           </ul>

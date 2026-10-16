@@ -22,7 +22,7 @@ export function Mapa() {
 
   return (
     <div className="mx-auto max-w-6xl w-full p-6 md:p-12 flex flex-col">
-      <div className="flex flex-row gap-6 w-ful self-center">
+      <div className="flex flex-row gap-6 w-full self-center">
         <div className="mb-8 inline-block rounded-3xl bg-white px-8 py-3 text-lg font-semibold text-zinc-800 shadow-sm">
           {itemAtivo.unidade}
         </div>

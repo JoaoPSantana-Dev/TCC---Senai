@@ -13,14 +13,14 @@ export function EstruturaTotem({
   mostrarNoticias = true,
 }: EstruturaTotemProps) {
   return (
-    <main className="w-screen h-screen flex flex-col">
+    <div className="w-full min-h-screen flex flex-col">
       <HeaderTotem />
 
-      {children}
+      <main className="flex w-full flex-1 flex-col">{children}</main>
 
       {mostrarNoticias && <Noticias />}
 
       <Footer />
-    </main>
+    </div>
   );
 }
