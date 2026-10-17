@@ -74,7 +74,7 @@ export default function Paginas() {
       }
 
       setPaginas((atual) =>
-        atual.filter((pagina) => pagina.idPaginas !== pagina.idPaginas),
+        atual.filter((item) => item.idPaginas !== pagina.idPaginas),
       );
       toast.success("Página excluída com sucesso!");
     } catch (erro) {
