@@ -2,12 +2,15 @@ import { EstruturaTotem } from "@/components/shared/EstruturaTotem";
 import { Titulo } from "@/components/shared/TituloTotem";
 import { RenderizadorDinamico } from "@/app/(private)/gerenciador-paginas/components/RenderizadorDinamico";
 import type { ComponentePagina } from "@/lib/paginas";
+import { itensForaDoConteudo, type ItemMenu } from "@/lib/menuTotem";
+import { CartaoMenu } from "@/app/(public)/homepage/components/CartaoMenu";
 
 interface PaginaRenderizadaProps {
   slug: string;
   nomePagina: string;
   conteudo: ComponentePagina[];
   previsualizacao?: boolean;
+  cartoesAutomaticos?: ItemMenu[];
 }
 
 export function PaginaRenderizada({
@@ -15,6 +18,7 @@ export function PaginaRenderizada({
   nomePagina,
   conteudo,
   previsualizacao = false,
+  cartoesAutomaticos,
 }: PaginaRenderizadaProps) {
   const itens = conteudo.map((componente, index) => ({
     chave: `${componente.type}-${index}`,
@@ -34,6 +38,7 @@ export function PaginaRenderizada({
   }
 
   if (slug === "homepage") {
+    const extras = itensForaDoConteudo(conteudo, cartoesAutomaticos ?? []);
     return (
       <EstruturaTotem>
         <Titulo texto={nomePagina}>
@@ -42,6 +47,15 @@ export function PaginaRenderizada({
               {itens.map(({ chave, componente }) => (
                 <li key={chave}>
                   <RenderizadorDinamico componente={componente} />
+                </li>
+              ))}
+              {extras.map((item) => (
+                <li key={item.href}>
+                  <CartaoMenu
+                    titulo={item.titulo}
+                    href={item.href}
+                    icone={item.icone}
+                  />
                 </li>
               ))}
             </ul>

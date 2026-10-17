@@ -1,6 +1,7 @@
 "use client";
 
 import { PaginaRenderizada } from "@/components/shared/PaginaRenderizada";
+import { buscarItensMenu, type ItemMenu } from "@/lib/menuTotem";
 import type { ComponentePagina } from "@/lib/paginas";
 import { useEffect, useState } from "react";
 
@@ -13,6 +14,11 @@ interface Rascunho {
 // só funciona dentro do iframe do editor, recebe o rascunho por postMessage
 export default function PreVisualizacaoPagina() {
   const [rascunho, setRascunho] = useState<Rascunho | null>(null);
+  const [itensMenu, setItensMenu] = useState<ItemMenu[]>([]);
+
+  useEffect(() => {
+    buscarItensMenu().then(setItensMenu);
+  }, []);
 
   useEffect(() => {
     if (window.parent === window) return; // aberta direto no navegador
@@ -61,6 +67,7 @@ export default function PreVisualizacaoPagina() {
         slug={rascunho.slug}
         nomePagina={rascunho.nomePagina}
         conteudo={rascunho.conteudo}
+        cartoesAutomaticos={itensMenu}
       />
     </div>
   );
