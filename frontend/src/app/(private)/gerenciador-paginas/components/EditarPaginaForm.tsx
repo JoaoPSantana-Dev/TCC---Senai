@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect, useMemo, useRef, type SubmitEvent } from "react";
 import { toast } from "sonner";
 import Link from "next/link";
-import { RenderizadorDinamico } from "./RenderizadorDinamico";
 import {
   criarComponentePadrao,
   normalizarConteudo,
@@ -22,6 +21,7 @@ import {
   validarDadosBasicos,
   type ComponentePagina,
 } from "@/lib/paginas";
+import { PreVisualizacaoTotem } from "./PreVisualizacaoTotem";
 
 interface PaginaData {
   nomePagina: string;
@@ -467,13 +467,15 @@ export function EditarPaginaForm({
                             ))}
                           </div>
 
-                          <div className="mt-4">
+                          <div className="mt-6">
                             <p className="text-xs text-zinc-500 mb-2">
-                              Pré-visualização
+                              Pré-visualização da página
                             </p>
-                            <div className="rounded-xl bg-zinc-100 p-4 overflow-x-auto">
-                              <RenderizadorDinamico componente={componente} />
-                            </div>
+                            <PreVisualizacaoTotem
+                              slug={slug}
+                              nomePagina={nomePagina || "Sem nome"}
+                              conteudo={conteudo}
+                            />
                           </div>
                         </>
                       )}
