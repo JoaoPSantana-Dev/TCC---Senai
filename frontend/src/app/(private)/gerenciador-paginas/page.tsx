@@ -137,7 +137,7 @@ export default function Paginas() {
                       {pagina.nomePagina}
                     </h2>
                     <p className="text-zinc-500 text-sm">
-                      {pagina.tipoPagina} - /{pagina.slug}
+                      {pagina.tipoPagina}: "{pagina.slug}"
                     </p>
                   </div>
 
