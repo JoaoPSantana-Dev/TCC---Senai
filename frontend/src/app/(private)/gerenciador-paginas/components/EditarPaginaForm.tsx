@@ -3,7 +3,7 @@
 import { HeaderPrivate } from "@/components/shared/HeaderPrivate";
 import { useRouter } from "next/navigation";
 import { useState, useEffect, useMemo, useRef, type SubmitEvent } from "react";
-import { toast } from "sonner";
+import { alerta } from "@/lib/alerta";
 import Link from "next/link";
 import {
   criarComponentePadrao,
@@ -210,7 +210,7 @@ export function EditarPaginaForm({
     setTentativas((atual) => atual + 1);
 
     if (erroDeValidacao || erros.temErros) {
-      toast.error(
+      alerta.erro(
         erroDeValidacao ?? "Corrija os campos destacados antes de salvar",
       );
       return;
@@ -243,10 +243,10 @@ export function EditarPaginaForm({
       // marca como salvo para o aviso de "alterações não salvas" não aparecer
       setEstadoSalvo(JSON.stringify([nomePagina, tipoPagina, conteudo]));
 
-      toast.success("Página editada com sucesso!");
+      alerta.sucesso("Página editada com sucesso!");
       router.push("/gerenciador-paginas");
     } catch (erro) {
-      toast.error(
+      alerta.erro(
         erro instanceof Error ? erro.message : "Falha ao editar a página",
       );
     } finally {
@@ -273,7 +273,7 @@ export function EditarPaginaForm({
 
   function adicionarComponente() {
     if (conteudo.length >= limiteComponentes) {
-      toast.error(
+      alerta.erro(
         `A página pode ter no máximo ${limiteComponentes} componentes`,
       );
       return;
@@ -282,10 +282,14 @@ export function EditarPaginaForm({
     setConteudo((atual) => [...atual, criarComponentePadrao(novoTipo)]);
   }
 
-  function removerComponente(index: number) {
-    const confirmou = window.confirm(
-      'Remover esse componente da página? (a página só vai mudar quando você clicar em "Salvar alterações")',
-    );
+  async function removerComponente(index: number) {
+    const confirmou = await alerta.confirmar({
+      titulo: "Remover componente?",
+      descricao:
+        'A página só vai mudar quando você clicar em "Salvar alterações"',
+      textoConfirmar: "Remover",
+      alertaPerigo: true,
+    });
     if (!confirmou) return;
 
     setConteudo((atual) => atual.filter((_, i) => i !== index));
@@ -522,15 +526,19 @@ export function EditarPaginaForm({
             <div className="text-center">
               <Link
                 href={`/gerenciador-paginas`}
-                onClick={(e) => {
-                  if (
-                    alterado &&
-                    !window.confirm(
-                      "Você tem alterações não salvas, deseja sair mesmo assim?",
-                    )
-                  ) {
-                    e.preventDefault();
-                  }
+                onClick={async (e) => {
+                  if (!alterado) return;
+                  e.preventDefault();
+
+                  const sair = await alerta.confirmar({
+                    titulo: "Sair sem salvar?",
+                    descricao:
+                      "Você tem alterações não salvas. Se sair agora, elas serão perdidas",
+                    textoConfirmar: "Sair sem salvar",
+                    textoCancelar: "Continuar editando",
+                    alertaPerigo: true,
+                  });
+                  if (sair) router.push("/gerenciador-paginas");
                 }}
               >
                 Voltar
