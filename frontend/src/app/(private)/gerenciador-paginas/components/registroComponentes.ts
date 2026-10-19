@@ -152,7 +152,7 @@ export const registroComponentes: Record<string, DefinicaoComponente> = {
         obrigatorio: true,
         maximo: 200,
         formato: "caminho",
-        ajuda: "Caminho interno da página, ex.: /sobre",
+        ajuda: "Caminho interno da página, Exemplo: /sobre",
         padrao: "/",
       },
       {

@@ -15,8 +15,8 @@ const ITENS_POR_PAGINA = 6;
 
 export function EstruturaVagasMenu({
   itens = vagas,
-  className = "w-full flex flex-col items-center max-w-6xl p-8 rounded-xl",
-  itemClassName = "h-full items-center flex flex-row p-8 bg-white rounded-2xl shadow-xl hover:shadow-md",
+  className = "w-full flex flex-col items-center max-w-6xl p-4 rounded-xl",
+  itemClassName = "h-full items-center flex flex-row p-8 bg-white rounded-2xl shadow-xl transition-all duration-100 ease-in-out active:shadow-md touch-manipulation select-none",
   onSelecionarVaga,
 }: EstruturaVagasMenuProps) {
   const [paginaAtual, setPaginaAtual] = useState(0);

@@ -4,8 +4,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
 import type { Prisma } from '../../../generated/prisma/client';
+import { PrismaService } from '../../prisma/prisma.service';
 import { CreatePaginaDto } from '../dto/create-pagina.dto';
 import { UpdatePaginaDto } from '../dto/update-pagina.dto';
 import {

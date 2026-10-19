@@ -1,37 +1,45 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from "@nestjs/common";
-import { SalasService } from "./salas.service";
-import { CreateSalaDto } from "../dto/create-sala.dto";
-import { UpdateSalaDto } from "../dto/update-sala.dto";
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
+import { SalasService } from './salas.service';
+import { CreateSalaDto } from '../dto/create-sala.dto';
+import { UpdateSalaDto } from '../dto/update-sala.dto';
 
 @Controller('salas')
-export class SalasController{
-    constructor(private readonly salasService:SalasService){}
+export class SalasController {
+  constructor(private readonly salasService: SalasService) {}
 
-    @Post()
-    criarSala(@Body() createSalaDto:CreateSalaDto){
-        return this.salasService.criarSala(createSalaDto);
-    }
+  @Post()
+  criarSala(@Body() createSalaDto: CreateSalaDto) {
+    return this.salasService.criarSala(createSalaDto);
+  }
 
-    @Post('lote')
-    criarVariasSalas(@Body() createSalaDto:CreateSalaDto[]){
-        return this.salasService.criarVariasSalas(createSalaDto);
-    }
+  @Post('lote')
+  criarVariasSalas(@Body() createSalaDto: CreateSalaDto[]) {
+    return this.salasService.criarVariasSalas(createSalaDto);
+  }
 
-    @Get()
-    listarTodasSalas(){
-        return this.salasService.listarTodasSalas();
-    }
+  @Get()
+  listarTodasSalas() {
+    return this.salasService.listarTodasSalas();
+  }
 
-    @Get(":id")
-    listarUmaSala(@Param("id") id:number){
-        return this.salasService.listarUmaSala(id);
-    }
-    @Delete(":id")
-    apagarSala(@Param("id") id:number){
-        return this.salasService.apagarSala(+id);
-    }
-    @Patch(":id")
-    updateSala(@Param("id") id:number, @Body() updateSalaDto:UpdateSalaDto){
-        return this.salasService.updateSala(id,updateSalaDto);
-    }
+  @Get(':id')
+  listarUmaSala(@Param('id') id: number) {
+    return this.salasService.listarUmaSala(id);
+  }
+  @Delete(':id')
+  apagarSala(@Param('id') id: number) {
+    return this.salasService.apagarSala(+id);
+  }
+  @Patch(':id')
+  updateSala(@Param('id') id: number, @Body() updateSalaDto: UpdateSalaDto) {
+    return this.salasService.updateSala(id, updateSalaDto);
+  }
 }

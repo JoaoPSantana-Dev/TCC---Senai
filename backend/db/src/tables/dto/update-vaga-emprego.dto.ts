@@ -1,4 +1,4 @@
-import { PartialType } from "@nestjs/mapped-types";
-import { CreateVagaEmpregoDto } from "./create-vaga-emprego.dto";
+import { PartialType } from '@nestjs/mapped-types';
+import { CreateVagaEmpregoDto } from './create-vaga-emprego.dto';
 
-export class UpdateVagaEmpregoDto extends PartialType(CreateVagaEmpregoDto){}
+export class UpdateVagaEmpregoDto extends PartialType(CreateVagaEmpregoDto) {}
