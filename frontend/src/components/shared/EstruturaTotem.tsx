@@ -6,21 +6,23 @@ import { Footer } from "./Footer";
 interface EstruturaTotemProps {
   children: ReactNode;
   mostrarNoticias?: boolean;
+  ocultarMenu?: boolean;
 }
 
 export function EstruturaTotem({
   children,
   mostrarNoticias = true,
+  ocultarMenu = false,
 }: EstruturaTotemProps) {
   return (
-    <main className="w-screen h-screen flex flex-col">
-      <HeaderTotem />
+    <div className="w-full min-h-screen flex flex-col">
+      <HeaderTotem ocultarMenu={ocultarMenu} />
 
-      {children}
+      <main className="flex w-full flex-1 flex-col">{children}</main>
 
       {mostrarNoticias && <Noticias />}
 
       <Footer />
-    </main>
+    </div>
   );
 }

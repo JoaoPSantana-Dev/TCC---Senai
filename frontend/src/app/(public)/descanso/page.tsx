@@ -1,35 +1,30 @@
-"use client";
+import { PaginaRenderizada } from "@/components/shared/PaginaRenderizada";
+import { buscarPaginaPorSlug, type ComponentePagina } from "@/lib/paginas";
 
-import { ImagemBotao } from "@/components/shared/ImagemBotao";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
+// conteúdo reserva, a tela de descanso é a primeira coisa que o totem mostra,
+// então ela nunca pode ficar em branco se o servidor tiver fora do ar
+const conteudoPadrao: ComponentePagina[] = [
+  {
+    type: "TelaDescanso",
+    props: {
+      titulo: "Bem-vindo ao SENAI Mariano Ferraz!",
+      nomeImagem: "senai-logo.png",
+      alt: "Imagem do logo SENAI",
+      textoBotao: "Clique para começar",
+      destino: "/homepage",
+    },
+  },
+];
 
-export default function TelaDescanso() {
-  const router = useRouter();
+export default async function TelaDescanso() {
+  const pagina = await buscarPaginaPorSlug("descanso");
+  const conteudo = pagina?.conteudo ?? conteudoPadrao;
 
   return (
-    <main className="flex min-h-screen w-full flex-col items-center justify-center">
-      <h1 className="mb-8 text-2xl md:text-3xl font-bold text-zinc-800 text-center">
-        Bem vindo ao SENAI Mariano Ferraz!
-      </h1>
-      <div className="flex min-h-400px w-400px flex-col items-center justify-center rounded-2xl bg-white p-8 shadow-lg">
-        <figure className="mb-12">
-          <Image
-            src="/senai-logo.png"
-            alt="Imagem do logo SENAI"
-            width={1080}
-            height={1920}
-            className="w-auto h-auto max-w-full object-contain"
-            loading="eager"
-          />
-        </figure>
-        <ImagemBotao
-          nomeImagem="login_icon.svg"
-          texto="Clique para começar"
-          onClick={() => router.push("/homepage")}
-          className="md:max-w-1/3 max-w-1/2"
-        />
-      </div>
-    </main>
+    <PaginaRenderizada
+      slug="descanso"
+      nomePagina="Descanso"
+      conteudo={conteudo}
+    />
   );
 }

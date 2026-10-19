@@ -2,11 +2,17 @@
 
 import { HeaderPrivate } from "@/components/shared/HeaderPrivate";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, type SubmitEvent } from "react";
 import { toast } from "sonner";
 import Link from "next/link";
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
+import {
+  apiUrl,
+  criarSlug,
+  limiteNomePagina,
+  mensagemDeErro,
+  tiposPagina,
+  validarDadosBasicos,
+} from "@/lib/paginas";
 
 export default function NovaPagina() {
   const router = useRouter();
@@ -14,16 +20,27 @@ export default function NovaPagina() {
 
   const [nomePagina, setNomePagina] = useState("");
   const [tipoPagina, setTipoPagina] = useState("");
+  const [erro, setErro] = useState<string | null>(null);
+
   const slug = criarSlug(nomePagina);
 
-  const novaPagina = async (e: React.FormEvent<HTMLFormElement>) => {
+  const novaPagina = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (criando) return;
 
-    if (!nomePagina.trim() || !tipoPagina.trim()) {
-      toast.error("Por favor, preencha todos os campos");
+    const erroDeValidacao = validarDadosBasicos({
+      nomePagina,
+      tipoPagina,
+      slug,
+    });
+
+    if (erroDeValidacao) {
+      setErro(erroDeValidacao);
+      toast.error(erroDeValidacao);
       return;
     }
 
+    setErro(null);
     setCriando(true);
 
     try {
@@ -39,28 +56,24 @@ export default function NovaPagina() {
       });
 
       if (!resposta.ok) {
-        throw new Error("Erro ao criar página");
+        throw new Error(
+          await mensagemDeErro(resposta, "Falha ao criar a página"),
+        );
       }
 
       toast.success("Página criada com sucesso!");
-      router.push("/gerenciador-paginas");
-    } catch {
-      toast.error("Falha ao criar a página");
+      router.push(`/gerenciador-paginas/${slug}/editar-pagina`);
+    } catch (erroDaRequisicao) {
+      const mensagem =
+        erroDaRequisicao instanceof Error
+          ? erroDaRequisicao.message
+          : "Falha ao criar a página";
+      setErro(mensagem);
+      toast.error(mensagem);
     } finally {
       setCriando(false);
     }
   };
-
-  function criarSlug(nomePagina: string) {
-    return nomePagina
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9 -]/g, "")
-      .replace(/\s+/g, "-")
-      .replace(/-+/g, "-");
-  }
 
   return (
     <div className="w-screen h-screen flex flex-col">
@@ -72,7 +85,11 @@ export default function NovaPagina() {
             Criando Página
           </h2>
 
-          <form onSubmit={novaPagina} className="flex flex-col gap-4">
+          <form
+            onSubmit={novaPagina}
+            noValidate
+            className="flex flex-col gap-4"
+          >
             <div className="flex flex-col gap-1">
               <label
                 htmlFor="nomePagina"
@@ -82,12 +99,20 @@ export default function NovaPagina() {
               </label>
               <input
                 required
+                id="nomePagina"
+                name="nomePagina"
                 type="text"
+                maxLength={limiteNomePagina}
                 value={nomePagina}
                 onChange={(e) => setNomePagina(e.target.value)}
                 placeholder="Exemplo: Homepage, Vagas de Emprego"
+                aria-describedby="endereco-pagina"
                 className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               />
+              <p id="endereco-pagina" className="text-sm text-zinc-500">
+                Endereço da página:{" "}
+                <span className="font-mono">{slug ? `/${slug}` : "—"}</span>
+              </p>
             </div>
 
             <div className="flex flex-col gap-1">
@@ -108,15 +133,24 @@ export default function NovaPagina() {
                 <option value="" disabled>
                   Selecione o tipo da página
                 </option>
-                <option value="Administrador">Administrador</option>
-                <option value="Totem">Totem</option>
+                {tiposPagina.map((tipo) => (
+                  <option key={tipo} value={tipo}>
+                    {tipo}
+                  </option>
+                ))}
               </select>
             </div>
+
+            {erro && (
+              <p role="alert" className="text-sm text-red-600">
+                {erro}
+              </p>
+            )}
 
             <button
               type="submit"
               disabled={criando}
-              className="cursor-pointer mt-4 bg-green-600 hover:bg-green-700 text-white font-medium py-2 rounded-md"
+              className="cursor-pointer mt-4 bg-green-600 hover:bg-green-700 text-white font-medium py-2 rounded-md disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {criando ? "Criando..." : "Criar página"}
             </button>

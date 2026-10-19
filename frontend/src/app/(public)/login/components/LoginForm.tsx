@@ -8,9 +8,8 @@ import { ImagemBotao } from "@/components/shared/ImagemBotao";
 import { toast } from "sonner";
 import Link from "next/link";
 
-
 const schemaLogin = z.object({
-  email: z.email("Endereço de email invalido"),
+  email: z.email("Endereço de email inválido"),
   senha: z.string().min(8, "Senha precisa ter no mínimo 8 caracteres"),
 });
 
@@ -41,7 +40,6 @@ export function LoginForm() {
       });
 
       const dados = await resposta.json();
-
       if (resposta.ok) {
         router.push("/homepage");
         return;
@@ -72,7 +70,7 @@ export function LoginForm() {
           placeholder="Digite seu email"
         />
         {errors.email && (
-          <p className="text-red-500 text-sm">{errors.email.message}"</p>
+          <p className="text-red-500 text-sm">{errors.email.message}</p>
         )}
       </div>
 

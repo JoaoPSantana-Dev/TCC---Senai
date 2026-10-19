@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 import { ImagemBotao } from "@/components/shared/ImagemBotao";
+import Link from "next/link";
 
 const schemaEsqueciSenha = z.object({
   senha: z.string().min(8, "Sua nova senha precisa ter no mínimo 8 caracteres"),
@@ -84,12 +85,14 @@ export function EsqueciSenhaForm() {
       </div>
       {/* precisa rever a funcionalidade pra organizar os ids dos inputs */}
 
-      <div className="flex justify-center">
+      <div className="flex flex-col text-center">
         <ImagemBotao
           nomeImagem="login_icon.svg"
           texto={isSubmitting ? "Alterando..." : "Alterar senha"}
           disabled={isSubmitting}
         />
+
+        <Link href="/login">Voltar para o login</Link>
       </div>
     </form>
   );

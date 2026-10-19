@@ -6,25 +6,20 @@ import {
   Patch,
   Param,
   Delete,
+  ParseIntPipe,
+  BadRequestException,
 } from '@nestjs/common';
 import { PaginasService } from './paginas.service';
 import { UpdatePaginaDto } from '../dto/update-pagina.dto';
+import { CreatePaginaDto } from '../dto/create-pagina.dto';
 
 @Controller('paginas')
 export class PaginasController {
   constructor(private readonly paginasService: PaginasService) {}
 
   @Post()
-  create(
-    @Body()
-    body: {
-      slug: string;
-      nomePagina: string;
-      tipoPagina: string;
-      conteudo: any;
-    },
-  ) {
-    return this.paginasService.criarPagina(body);
+  create(@Body() createPaginaDto: CreatePaginaDto) {
+    return this.paginasService.criarPagina(createPaginaDto);
   }
 
   @Get()
@@ -38,8 +33,17 @@ export class PaginasController {
   }
 
   @Delete(':id')
-  apagarPagina(@Param('id') id: number) {
-    return this.paginasService.apagarPagina(+id);
+  apagarPagina(
+    @Param(
+      'id',
+      new ParseIntPipe({
+        exceptionFactory: () =>
+          new BadRequestException('Id da página inválido'),
+      }),
+    )
+    id: number,
+  ) {
+    return this.paginasService.apagarPagina(id);
   }
 
   @Patch(':slug')
