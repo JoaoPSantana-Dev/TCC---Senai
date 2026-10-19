@@ -1,13 +1,18 @@
 import { CreateUsuarioDto } from '../dto/create-usuario.dto';
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { UpdateUsuarioDto } from '../dto/update-usuario.dto';
 
 @Injectable()
 export class UsuariosService {
   constructor(private prisma: PrismaService) {}
 
-  criarUsuario(createUsuarioDto: CreateUsuarioDto) {
+  async criarUsuario(createUsuarioDto: CreateUsuarioDto) {
+    const emailexistente = await this.prisma.usuario.findFirst({
+      where:{email: createUsuarioDto.email}
+    })
+    if (emailexistente)
+        throw new ConflictException("Este email ja esta cadastrado")
+    
     return this.prisma.usuario.create({
       data: createUsuarioDto,
     });
@@ -17,22 +22,40 @@ export class UsuariosService {
     return this.prisma.usuario.findMany();
   }
 
-  listarUmUsuario(id: number) {
-    return this.prisma.usuario.findUnique({
-      where: { idUsuario: id },
-    });
+  async listarUmUsuario(id:number){
+    const buscar = await this.prisma.usuario.findUnique({
+      where:{idUsuario:id}
+    })
+    if(!buscar)
+      throw new NotFoundException(`Produto '${id}' não foi encontrado`)
+
+    return buscar
   }
 
-  apagarUsuario(id: number) {
+  async apagarUsuario(id:number){
+
+    await this.listarUmUsuario(id)
+
     return this.prisma.usuario.delete({
-      where: { idUsuario: id },
+      where:{idUsuario:id}
     });
   }
 
-  updateUsuario(id: number, updateUsuarioDTO: UpdateUsuarioDto) {
+  async updateUsuario(id:number, updateUsuarioDTO: CreateUsuarioDto){
+    await this.listarUmUsuario(id)
+    
+    if (updateUsuarioDTO.email){
+      const emailEncontrado = await this.prisma.usuario.findFirst({
+        where: {
+          email: updateUsuarioDTO.email
+        }
+      });
+      if (emailEncontrado!)
+        throw new ConflictException ("O email não pode ser alterado")
+    }
     return this.prisma.usuario.update({
-      where: { idUsuario: id },
-      data: updateUsuarioDTO,
+      where:{idUsuario:id},
+      data: updateUsuarioDTO
     });
   }
 }
