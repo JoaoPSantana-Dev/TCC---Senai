@@ -23,6 +23,7 @@ export const slugsReservados: readonly string[] = [
   'vagas-estagios',
   'vagas-cursos',
   'api',
+  'pre-visualizacao-pagina',
 ];
 
 // páginas que o totem busca pelo slug (se forem apagadas, tudo explode)

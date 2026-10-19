@@ -27,6 +27,7 @@ export const slugsReservados: readonly string[] = [
   "vagas-estagios",
   "vagas-cursos",
   "api",
+  "pre-visualizacao-pagina",
 ];
 
 export interface ComponentePagina {

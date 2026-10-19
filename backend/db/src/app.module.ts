@@ -7,8 +7,6 @@ import { VagasEmpregoModule } from './tables/vagas-emprego/vagas-emprego.module'
 import { VagasEstagioModule } from './tables/vagas-estagio/vagas-estagio.module';
 import { UsuariosModule } from './tables/usuarios/usuarios.module';
 import { LoginModule } from './modulos/login/login.module';
-import { PegarPaginaModule } from './modulos/pegarPagina/pegarPagina.module';
-import { PrismaService } from './prisma/prisma.service';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
@@ -22,7 +20,6 @@ import { ConfigModule } from '@nestjs/config';
     VagasEstagioModule,
     UsuariosModule,
     LoginModule,
-    PegarPaginaModule,
   ],
 })
 export class AppModule {}

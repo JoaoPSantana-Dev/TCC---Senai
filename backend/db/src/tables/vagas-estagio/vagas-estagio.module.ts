@@ -1,9 +1,9 @@
-import { Module } from "@nestjs/common";
-import { VagasEstagioController } from "./vagas-estagio.controller";
-import { VagasEstagioService } from "./vagas-estagio.service";
+import { Module } from '@nestjs/common';
+import { VagasEstagioController } from './vagas-estagio.controller';
+import { VagasEstagioService } from './vagas-estagio.service';
 
 @Module({
-    controllers: [VagasEstagioController],
-    providers: [VagasEstagioService]
+  controllers: [VagasEstagioController],
+  providers: [VagasEstagioService],
 })
-export class VagasEstagioModule{}
+export class VagasEstagioModule {}

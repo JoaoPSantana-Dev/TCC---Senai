@@ -1,4 +1,4 @@
-import { RenderizadorDinamico } from "@/app/(private)/gerenciador-paginas/components/RenderizadorDinamico";
+import { PaginaRenderizada } from "@/components/shared/PaginaRenderizada";
 import { buscarPaginaPorSlug, type ComponentePagina } from "@/lib/paginas";
 
 // conteúdo reserva, a tela de descanso é a primeira coisa que o totem mostra,
@@ -21,13 +21,10 @@ export default async function TelaDescanso() {
   const conteudo = pagina?.conteudo ?? conteudoPadrao;
 
   return (
-    <main className="flex min-h-screen w-full flex-col items-center justify-center">
-      {conteudo.map((componente, index) => (
-        <RenderizadorDinamico
-          key={`${componente.type}-${index}`}
-          componente={componente}
-        />
-      ))}
-    </main>
+    <PaginaRenderizada
+      slug="descanso"
+      nomePagina="Descanso"
+      conteudo={conteudo}
+    />
   );
 }

@@ -7,7 +7,7 @@ import {
   Plus,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { toast } from "sonner";
+import { alerta } from "@/lib/alerta";
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { HeaderPrivate } from "@/components/shared/HeaderPrivate";
@@ -35,7 +35,7 @@ export default function Paginas() {
       const dados = await resposta.json();
       setPaginas(Array.isArray(dados) ? dados : []);
     } catch {
-      toast.error("Não foi possível carregar as páginas");
+      alerta.erro("Não foi possível carregar as páginas");
       setPaginas([]);
       setErroAoCarregar(true);
     } finally {
@@ -51,13 +51,16 @@ export default function Paginas() {
     if (excluindoId !== null) return;
 
     if (pagina.protegida) {
-      toast.error("Essa página é usada pelo totem e não pode ser excluída");
+      alerta.erro("Essa página é usada pelo totem e não pode ser excluída");
       return;
     }
 
-    const confirmou = window.confirm(
-      `Certeza que quer excluir a página "${pagina.nomePagina}"?`,
-    );
+    const confirmou = await alerta.confirmar({
+      titulo: "Excluir página?",
+      descricao: `A página "${pagina.nomePagina}" será excluída e não poderá ser recuperada`,
+      textoConfirmar: "Excluir",
+      alertaPerigo: true,
+    });
     if (!confirmou) return;
 
     setExcluindoId(pagina.idPaginas);
@@ -74,11 +77,11 @@ export default function Paginas() {
       }
 
       setPaginas((atual) =>
-        atual.filter((pagina) => pagina.idPaginas !== pagina.idPaginas),
+        atual.filter((item) => item.idPaginas !== pagina.idPaginas),
       );
-      toast.success("Página excluída com sucesso!");
+      alerta.sucesso("Página excluída com sucesso!");
     } catch (erro) {
-      toast.error(
+      alerta.erro(
         erro instanceof Error ? erro.message : "Falha ao excluir a página",
       );
     } finally {
@@ -115,7 +118,7 @@ export default function Paginas() {
               <button
                 type="button"
                 onClick={buscarPaginas}
-                className="cursor-pointer text-sm underline text-zinc-700"
+                className="cursor-pointer text-sm hover:underline text-zinc-700"
               >
                 Tentar Novamente
               </button>
