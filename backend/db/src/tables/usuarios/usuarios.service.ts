@@ -15,7 +15,7 @@ export class UsuariosService {
       where: { email: createUsuarioDto.email },
     });
     if (emailexistente)
-      throw new ConflictException('Este email ja esta cadastrado');
+      throw new ConflictException('Este email já está cadastrado');
 
     return this.prisma.usuario.create({
       data: createUsuarioDto,
