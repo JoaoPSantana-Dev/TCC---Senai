@@ -455,33 +455,20 @@ export function EditarPaginaForm({
                             `O componente "${componente.type}" não existe mais. Remova para conseguir salvar`}
                         </p>
                       ) : (
-                        <>
-                          <div className="flex flex-col gap-3">
-                            {definicao.campos.map((campo) => (
-                              <CampoEditor
-                                key={campo.nome}
-                                id={`componente-${index}-${campo.nome}`}
-                                campo={campo}
-                                valor={componente.props[campo.nome]}
-                                erro={erros[campo.nome]}
-                                onChange={(valor) =>
-                                  atualizarPropriedade(index, campo.nome, valor)
-                                }
-                              />
-                            ))}
-                          </div>
-
-                          <div className="mt-6">
-                            <p className="text-xs text-zinc-500 mb-2">
-                              Pré-visualização da página
-                            </p>
-                            <PreVisualizacaoTotem
-                              slug={slug}
-                              nomePagina={nomePagina || "Sem nome"}
-                              conteudo={conteudo}
+                        <div className="flex flex-col gap-3">
+                          {definicao.campos.map((campo) => (
+                            <CampoEditor
+                              key={campo.nome}
+                              id={`componente-${index}-${campo.nome}`}
+                              campo={campo}
+                              valor={componente.props[campo.nome]}
+                              erro={erros[campo.nome]}
+                              onChange={(valor) =>
+                                atualizarPropriedade(index, campo.nome, valor)
+                              }
                             />
-                          </div>
-                        </>
+                          ))}
+                        </div>
                       )}
                     </li>
                   );
@@ -513,6 +500,17 @@ export function EditarPaginaForm({
                   Adicionar componente
                 </button>
               </div>
+            </div>
+
+            <div className="mt-6">
+              <p className="text-xs text-zinc-500 mb-2">
+                Pré-visualização da página
+              </p>
+              <PreVisualizacaoTotem
+                slug={slug}
+                nomePagina={nomePagina || "Sem nome"}
+                conteudo={conteudo}
+              />
             </div>
 
             <button
