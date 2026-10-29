@@ -1,10 +1,12 @@
 {
   "name": "backend",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
   "private": true,
+  "description": "<p align=\"center\">\r   <a href=\"http://nestjs.com/\" target=\"blank\"><img src=\"https://nestjs.com/img/logo-small.svg\" width=\"120\" alt=\"Nest Logo\" /></a>\r </p>",
   "license": "UNLICENSED",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -17,7 +19,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "init": "npm i && npx prisma migrate dev && npx prisma generate && npm run start"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
