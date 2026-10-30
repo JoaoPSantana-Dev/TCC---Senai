@@ -1,9 +1,16 @@
-import { apiUrl, type ComponentePagina, type PaginaResumo } from "./paginas";
+import {
+  apiUrl,
+  type ComponentePagina,
+  type IconeMenu,
+  type PaginaResumo,
+} from "./paginas";
 
 export interface ItemMenu {
   titulo: string;
   href: string;
   icone: string; // chave de iconesMenu em CartaoMenu.tsx
+  iconeEscolhido?: IconeMenu | null; // chave de ícones do banco
+  ordem?: number;
 }
 
 // páginas que o totem usa por trás e que não são destino de navegação
@@ -26,20 +33,35 @@ const iconePorSlug: Record<string, string> = {
   biblioteca: "biblioteca",
 };
 
-export function montarItensMenu(paginas: PaginaResumo[]): ItemMenu[] {
+export function montarItensMenu(
+  paginas: PaginaResumo[],
+  administrador = false,
+): ItemMenu[] {
   const dasPaginas: ItemMenu[] = paginas
     .filter(
       (pagina) =>
-        pagina.tipoPagina === "Totem" && !slugsForaDoMenu.includes(pagina.slug),
+        !slugsForaDoMenu.includes(pagina.slug) &&
+        pagina.mostrarNoMenu !== false,
+    )
+    .filter(
+      (pagina) =>
+        pagina.tipoPagina === "Totem" ||
+        (administrador && pagina.tipoPagina === "Administrador"),
     )
     .map((pagina) => ({
       titulo: pagina.nomePagina,
       href: `/${pagina.slug}`,
       icone: iconePorSlug[pagina.slug] ?? "info",
+      iconeEscolhido: pagina.iconeMenu,
+      ordem: pagina.ordemMenu ?? 0,
     }));
 
-  return [...rotasFixasTotem, ...dasPaginas].sort((a, b) =>
-    a.titulo.localeCompare(b.titulo, "pt-BR"),
+  const fixas = [...rotasFixasTotem, ...(administrador ? rotasPrivadas : [])];
+
+  return [...fixas, ...dasPaginas].sort(
+    (a, b) =>
+      (a.ordem ?? 0) - (b.ordem ?? 0) ||
+      a.titulo.localeCompare(b.titulo, "pt-BR"),
   );
 }
 

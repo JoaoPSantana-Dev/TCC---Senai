@@ -44,6 +44,79 @@ const iconesMenu = [
   'biblioteca',
 ] as const;
 
+const tagsIcone = [
+  'path',
+  'circle',
+  'rect',
+  'line',
+  'polyline',
+  'polygon',
+  'ellipse',
+];
+const atributosIcone = [
+  'd',
+  'cx',
+  'cy',
+  'r',
+  'rx',
+  'ry',
+  'x',
+  'y',
+  'x1',
+  'y1',
+  'x2',
+  'y2',
+  'width',
+  'height',
+  'points',
+  'fill',
+  'stroke',
+  'strokeWidth',
+  'strokeLinecap',
+  'strokeLinejoin',
+  'fillRule',
+  'clipRule',
+  'opacity',
+];
+
+export function validarIconeMenu(icone: unknown): string[] {
+  if (icone === undefined || icone === null) return [];
+  const invalido = ['O ícone do menu é inválido'];
+  if (typeof icone !== 'object' || Array.isArray(icone)) return invalido;
+
+  const { nome, dados } = icone as { nome?: unknown; dados?: unknown };
+  if (typeof nome !== 'string' || !/^[A-Za-z0-9]{1,100}$/.test(nome))
+    return invalido;
+  if (!Array.isArray(dados) || dados.length === 0 || dados.length > 30)
+    return invalido;
+
+  for (const item of dados as unknown[]) {
+    if (!Array.isArray(item) || item.length !== 2) return invalido;
+    const [tag, atributos] = item as [unknown, unknown];
+    if (typeof tag !== 'string' || !tagsIcone.includes(tag)) return invalido;
+    if (
+      typeof atributos !== 'object' ||
+      atributos === null ||
+      Array.isArray(atributos)
+    ) {
+      return invalido;
+    }
+
+    for (const [chave, valor] of Object.entries(atributos)) {
+      if (chave === 'key') continue;
+      const tipoOk = typeof valor === 'string' || typeof valor === 'number';
+      if (
+        !atributosIcone.includes(chave) ||
+        !tipoOk ||
+        String(valor).length > 2000
+      ) {
+        return [`O ícone do menu tem um atributo não permitido: "${chave}"`];
+      }
+    }
+  }
+  return [];
+}
+
 export type TipoCampo = 'string' | 'boolean';
 
 export interface CampoSchema {

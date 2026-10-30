@@ -1,3 +1,5 @@
+import type { HugeiconsIconProps } from "@hugeicons/react";
+
 // página setup com tipos, constantes e funções compartilhadas do gerenciador de páginas.
 // as regras de slug e tipo abaixo têm uma cópia no backend em
 // backend/db/src/tables/paginas/paginas.constantes.ts
@@ -42,6 +44,9 @@ export interface PaginaResumo {
   nomePagina: string;
   tipoPagina: string;
   protegida: boolean;
+  iconeMenu: IconeMenu | null;
+  ordemMenu: number;
+  mostrarNoMenu: boolean;
 }
 
 // página completa (GET /paginas/:slug)
@@ -51,6 +56,14 @@ export interface PaginaCompleta {
   nomePagina: string;
   tipoPagina: string;
   conteudo: ComponentePagina[];
+  iconeMenu: IconeMenu | null;
+  ordemMenu: number;
+  mostrarNoMenu: boolean;
+}
+
+export interface IconeMenu {
+  nome: string;
+  dados: HugeiconsIconProps["icon"];
 }
 
 export function criarSlug(nomePagina: string) {

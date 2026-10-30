@@ -20,11 +20,14 @@ model Usuario {
 }
 
 model Pagina {
-  idPaginas  Int     @id @default(autoincrement()) @map("id_paginas")
-  slug       String  @unique
-  nomePagina String
-  tipoPagina String
-  conteudo   Json
+  idPaginas     Int       @id @default(autoincrement()) @map("id_paginas")
+  slug          String    @unique
+  nomePagina    String
+  tipoPagina    String
+  conteudo      Json
+  iconeMenu     Json?
+  ordemMenu     Int       @default(0)
+  mostrarNoMenu Boolean   @default(true)
 
   @@map("paginas")
 }
