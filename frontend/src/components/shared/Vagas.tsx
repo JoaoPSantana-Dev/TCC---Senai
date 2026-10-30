@@ -58,6 +58,15 @@ export default function Vagas() {
   return (
     <EstruturaTotem mostrarNoticias={false}>
       <Titulo texto={titulo}>
+        <section className="w-full flex flex-row items-center justify-center">
+          <div className="gap-2">
+            <select name="Cargo" id="cargo">
+              <option value="" disabled>
+                Cargo
+              </option>
+            </select>
+          </div>
+        </section>
         {carregando ? (
           <p className="p-6 text-center">Carregando oportunidades...</p>
         ) : (
