@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import * as z from "zod";
 import { ImagemBotao } from "@/components/shared/ImagemBotao";
 import Link from "next/link";
+import { InputSenha } from "@/components/shared/InputSenha";
 
 const schemaEsqueciSenha = z.object({
   senha: z.string().min(8, "Sua nova senha precisa ter no mínimo 8 caracteres"),
@@ -57,9 +58,8 @@ export function EsqueciSenhaForm() {
     >
       <div className="flex flex-col gap-1">
         <label htmlFor="senha">Senha:</label>
-        <input
+        <InputSenha
           id="senha"
-          type="password"
           {...register("senha")}
           className="border border-zinc-400 hover:border-zinc-800 px-4 py-3 rounded-2xl"
           placeholder="Digite a sua nova senha"
@@ -72,9 +72,8 @@ export function EsqueciSenhaForm() {
       {/* aqui falta a div da segunda label para repetir a senha */}
       <div className="flex flex-col gap-1">
         <label htmlFor="novaSenha">Confirmar senha:</label>
-        <input
+        <InputSenha
           id="novaSenha"
-          type="password"
           {...register("novaSenha")}
           className="border border-zinc-400 hover:border-zinc-800 px-4 py-3 rounded-2xl"
           placeholder="Repita a sua senha"

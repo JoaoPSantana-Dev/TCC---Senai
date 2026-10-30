@@ -7,6 +7,7 @@ import { ImagemBotao } from "@/components/shared/ImagemBotao";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Link from "next/link";
+import { InputSenha } from "@/components/shared/InputSenha";
 
 const schemaCadastro = z.object({
   nome: z.string().min(1, "Nome é obrigatório"),
@@ -92,9 +93,8 @@ export function CadastroForm() {
 
       <div className="flex flex-col gap-1">
         <label htmlFor="senha">Senha</label>
-        <input
+        <InputSenha
           id="senha"
-          type="password"
           {...register("senha")}
           className="border border-zinc-400 hover:border-zinc-800 px-4 py-3 rounded-2xl"
           placeholder="Digite sua senha"

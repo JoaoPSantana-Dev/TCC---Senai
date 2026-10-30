@@ -9,7 +9,11 @@ import { toast } from "sonner";
 // componente principal do cabeçalho do totem
 // exibe a barra superior com utilitários e, dependendo da rota, ajusta o layout para a homepage ou para as páginas internas
 
-export function HeaderTotem() {
+export function HeaderTotem({
+  ocultarMenu = false,
+}: {
+  ocultarMenu?: boolean;
+}) {
   const pathname = usePathname();
   const [time, setTime] = useState<string>("");
   const [temperature, setTemperature] = useState<number | null>(null);
@@ -141,7 +145,7 @@ export function HeaderTotem() {
 
       {/* menu hambúrguer */}
       <nav className="flex text-black">
-        {pathname !== "/homepage" && <NavbarHamburguer />}
+        {pathname !== "/homepage" && !ocultarMenu && <NavbarHamburguer />}
       </nav>
       {/* menu hambúrguer */}
 
