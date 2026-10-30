@@ -1,10 +1,20 @@
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateUsuarioDto } from '../dto/create-usuario.dto';
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { Role } from '../../../generated/prisma/enums';
+
+//==================================================================================
+//Busca as roles/niveis de acesso
+const acharRole:Record<string,Role>={
+  administrador: Role.administrador,
+  visitante: Role.visitante
+};
+//==================================================================================
+//atribui a role de acordo com a função do usuario
+function atribuindoRole(funcao?: string):Role{
+  return acharRole[funcao?.trim().toLowerCase() ?? ""] ?? Role.temporario
+}
+//==================================================================================
 
 @Injectable()
 export class UsuariosService {
@@ -18,7 +28,10 @@ export class UsuariosService {
       throw new ConflictException('Este email já está cadastrado');
 
     return this.prisma.usuario.create({
-      data: createUsuarioDto,
+      data: {
+        ...createUsuarioDto,
+        role: atribuindoRole(createUsuarioDto.funcao)
+      }  
     });
   }
 

@@ -131,8 +131,8 @@ export function CadastroForm() {
           <option value="" disabled>
             Selecione seu cargo
           </option>
-          <option value="Administrador">Administrador</option>
-          <option value="Visitante">Visitante</option>
+          <option value="administrador">Administrador</option>
+          <option value="visitante">Visitante</option>
         </select>
         {errors.funcao && (
           <p className="text-red-500 text-sm">{errors.funcao.message}</p>

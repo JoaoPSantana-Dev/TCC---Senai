@@ -8,6 +8,12 @@ datasource db {
   provider = "mysql"
 }
 
+enum Role{
+  temporario
+  administrador
+  visitante
+}
+
 model Usuario {
   idUsuario Int     @id @default(autoincrement()) @map("id_usuario")
   nome      String
@@ -15,7 +21,8 @@ model Usuario {
   senha     String
   funcao    String
   unidade   String
-
+  role Role @default(temporario)
+  
   @@map("usuarios")
 }
 
