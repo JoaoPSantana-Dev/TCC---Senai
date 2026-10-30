@@ -1,3 +1,4 @@
+import { rotasFixasTotem } from "@/lib/menuTotem";
 import type { ComponentePagina } from "@/lib/paginas";
 
 // conteúdo reserva da homepage
@@ -8,53 +9,9 @@ import type { ComponentePagina } from "@/lib/paginas";
 export const tituloPadraoHomepage =
   "Bem-vindo ao totem do SENAI Mariano Ferraz!";
 
-export const conteudoPadraoHomepage: ComponentePagina[] = [
-  {
+export const conteudoPadraoHomepage: ComponentePagina[] = rotasFixasTotem.map(
+  ({ titulo, href, icone }) => ({
     type: "CartaoMenu",
-    props: { titulo: "Sobre o SENAI", href: "/sobre", icone: "info" },
-  },
-  {
-    type: "CartaoMenu",
-    props: {
-      titulo: "Sobre o SENAI Mariano Ferraz",
-      href: "/sobre-senai-mariano-ferraz",
-      icone: "predio",
-    },
-  },
-  {
-    type: "CartaoMenu",
-    props: {
-      titulo: "Horário das aulas",
-      href: "/horario-aulas",
-      icone: "relogio",
-    },
-  },
-  {
-    type: "CartaoMenu",
-    props: { titulo: "Mapa da escola", href: "/mapa", icone: "mapa" },
-  },
-  {
-    type: "CartaoMenu",
-    props: {
-      titulo: "Vagas de emprego",
-      href: "/vagas-empregos",
-      icone: "emprego",
-    },
-  },
-  {
-    type: "CartaoMenu",
-    props: {
-      titulo: "Vagas de estágio",
-      href: "/vagas-estagios",
-      icone: "estagio",
-    },
-  },
-  {
-    type: "CartaoMenu",
-    props: { titulo: "Cursos", href: "/vagas-cursos", icone: "curso" },
-  },
-  {
-    type: "CartaoMenu",
-    props: { titulo: "Biblioteca", href: "/biblioteca", icone: "biblioteca" },
-  },
-];
+    props: { titulo, href, icone },
+  }),
+);

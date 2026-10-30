@@ -37,6 +37,7 @@ export function PaginaRenderizada({
                 titulo={item.titulo}
                 href={item.href}
                 icone={item.icone}
+                iconeEscolhido={item.iconeEscolhido}
               />
             </li>
           ))}
