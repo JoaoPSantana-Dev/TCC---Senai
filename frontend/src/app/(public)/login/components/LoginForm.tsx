@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { ImagemBotao } from "@/components/shared/ImagemBotao";
 import { toast } from "sonner";
 import Link from "next/link";
+import { InputSenha } from "@/components/shared/InputSenha";
 
 const schemaLogin = z.object({
   email: z.email("Endereço de email inválido"),
@@ -77,9 +78,8 @@ export function LoginForm() {
       {/* campo para inserir a senha do usuário. */}
       <div className="flex flex-col gap-1">
         <label htmlFor="senha">Senha</label>
-        <input
+        <InputSenha
           id="senha"
-          type="password"
           {...register("senha")}
           required
           className="border border-zinc-400 hover:border-zinc-800 p-4 rounded-2xl"
