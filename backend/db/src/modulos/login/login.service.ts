@@ -22,7 +22,10 @@ export class LoginService {
       throw new UnauthorizedException('Email ou senha incorretos');
     }
 
-    const token = await this.jwtService.signAsync({ sub: usuario.idUsuario });
+    const token = await this.jwtService.signAsync({
+      sub: usuario.idUsuario,
+      funcao: usuario.funcao,
+    });
 
     return {
       mensagem: 'Login realizado com sucesso',

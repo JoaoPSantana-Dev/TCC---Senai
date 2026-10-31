@@ -24,6 +24,21 @@ export const rotasFixasTotem: ItemMenu[] = [
   { titulo: "Cursos", href: "/vagas-cursos", icone: "curso" },
 ];
 
+export const rotasPrivadas: ItemMenu[] = [
+  {
+    titulo: "Gerenciador de páginas",
+    href: "/gerenciador-paginas",
+    icone: "info",
+  },
+  { titulo: "Usuários", href: "/usuarios", icone: "info" },
+];
+
+function itensReserva(administrador: boolean) {
+  return administrador
+    ? [...rotasFixasTotem, ...rotasPrivadas]
+    : rotasFixasTotem;
+}
+
 // ícone das páginas que já existem, as novas usam "info"
 // para escolher o ícone no editor, o banco precisa guardar esse campo
 const iconePorSlug: Record<string, string> = {
@@ -68,13 +83,25 @@ export function montarItensMenu(
 // funciona no servidor e no navegador
 // se a API estiver fora do ar, sobram só as rotas fixas
 // as páginas do banco também não abririam sem a API
-export async function buscarItensMenu(): Promise<ItemMenu[]> {
+export async function buscarItensMenu(
+  administrador = false,
+): Promise<ItemMenu[]> {
   try {
     const resposta = await fetch(`${apiUrl}/paginas`, { cache: "no-store" });
-    if (!resposta.ok) return rotasFixasTotem;
+    if (!resposta.ok) return itensReserva(administrador);
 
     const dados = await resposta.json();
-    return montarItensMenu(Array.isArray(dados) ? dados : []);
+    return montarItensMenu(Array.isArray(dados) ? dados : [], administrador);
+  } catch {
+    return itensReserva(administrador);
+  }
+}
+
+export async function buscarItensMenuNoNavegador(): Promise<ItemMenu[]> {
+  try {
+    const resposta = await fetch("/api/menu", { cache: "no-store" });
+    if (!resposta.ok) return rotasFixasTotem;
+    return await resposta.json();
   } catch {
     return rotasFixasTotem;
   }

@@ -11,6 +11,8 @@ const rotasPublicas = [
   "/login/components",
 ];
 
+const rotasAdministrador = ["/gerenciador-paginas", "/usuarios"];
+
 export async function proxy(requisicao: NextRequest) {
   const caminho = requisicao.nextUrl.pathname;
 
@@ -27,7 +29,15 @@ export async function proxy(requisicao: NextRequest) {
     return NextResponse.redirect(new URL("/", requisicao.url));
   }
   try {
-    await jwtVerify(token, chave);
+    const { payload } = await jwtVerify(token, chave);
+
+    const rotaAdministrador = rotasAdministrador.some(
+      (rota) => caminho === rota || caminho.startsWith(`${rota}/`),
+    );
+    if (rotaAdministrador && payload.funcao !== "Administrador") {
+      return NextResponse.redirect(new URL("/homepage", requisicao.url));
+    }
+
     return NextResponse.next();
   } catch {
     const resposta = NextResponse.redirect(new URL("/", requisicao.url));
