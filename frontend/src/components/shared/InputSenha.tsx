@@ -1,31 +1,58 @@
 "use client";
 
-import { useState, type ComponentProps } from "react";
+import { useState, type ComponentPropsWithRef } from "react";
 import { ViewIcon, ViewOffIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
-type InputSenhaProps = Omit<ComponentProps<"input">, "type">;
+// campo de senha com botão de mostrar ou ocultar
+// aceita tudo que um <input> aceita, então funciona direto com o register() do react-hook-form
 
-export function InputSenha({ className, ...props }: InputSenhaProps) {
+type InputSenhaProps = Omit<ComponentPropsWithRef<"input">, "type" | "id"> & {
+  id: string;
+  rotulo: string;
+  erro?: string;
+};
+
+export function InputSenha({
+  id,
+  rotulo,
+  erro,
+  className = "",
+  ...props
+}: InputSenhaProps) {
   const [visivel, setVisivel] = useState(false);
-  const icon = visivel ? ViewOffIcon : ViewIcon;
+  const icon = visivel ? ViewIcon : ViewOffIcon;
+  const idErro = `${id}-erro`;
 
   return (
-    <div className="relative">
-      <input
-        {...props}
-        type={visivel ? "text" : "password"}
-        className={`${className ?? ""} peer w-full pr-12`}
-      />
-      <button
-        type="button"
-        onClick={() => setVisivel((visivel) => !visivel)}
-        aria-label={visivel ? "Ocultar senha" : "Mostrar senha"}
-        aria-pressed={visivel}
-        className="flex items-center px-4 text-zinc-600 rounded-r-2xl absolute inset-y-0 right-0 peer-placeholder-shown:invisible"
-      >
-        <HugeiconsIcon icon={icon} />
-      </button>
+    <div>
+      <label htmlFor={id}>{rotulo}</label>
+
+      <div className="relative">
+        <input
+          id={id}
+          type={visivel ? "text" : "password"}
+          aria-invalid={erro ? true : undefined}
+          aria-describedby={erro ? idErro : undefined}
+          className={`w-full border border-zinc-400 hover:border-zinc-800 px-4 py-3 pr-24 rounded-2xl peer ${className}`}
+          {...props}
+        />
+        <button
+          type="button"
+          onClick={() => setVisivel((visivel) => !visivel)}
+          aria-label={visivel ? "Ocultar senha" : "Mostrar senha"}
+          aria-pressed={visivel}
+          className="absolute inset-y-0 right-4 text-sm text-zinc-600 cursor-pointer peer-placeholder-shown:invisible"
+        >
+          <HugeiconsIcon icon={icon} />
+        </button>
+      </div>
+
+      {erro && (
+        <p id={idErro} className="text-red-500 text-sm">
+          {erro}
+        </p>
+      )}
     </div>
   );
 }

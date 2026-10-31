@@ -8,16 +8,27 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Link from "next/link";
 import { InputSenha } from "@/components/shared/InputSenha";
+import { mensagemDoBackend, schemaSenhaForte } from "@/lib/autenticacao";
+import { apiUrl } from "@/lib/paginas";
+import { ChecklistSenha } from "@/components/shared/ChecklistSenha";
 
-const schemaCadastro = z.object({
-  nome: z.string().min(1, "Nome é obrigatório"),
-  funcao: z.string().min(1, "Função é obrigatória"),
-  unidade: z.string().min(1, "Unidade é obrigatória"),
-  email: z.email("Endereço de email inválido"),
-  senha: z.string().min(8, "Senha precisa ter no mínimo 8 caracteres"),
-});
-
+// o servidor define o administrador e visitante
+const schemaCadastro = z
+  .object({
+    nome: z.string().min(1, "Nome é obrigatório").max(100),
+    email: z.email("Endereço de email inválido"),
+    unidade: z.string().min(1, "Unidade é obrigatória"),
+    senha: schemaSenhaForte,
+    confirmarSenha: z.string().min(1, "Confirme a senha"),
+  })
+  .refine((dados) => dados.senha === dados.confirmarSenha, {
+    message: "As senhas não são iguais",
+    path: ["confirmarSenha"],
+  });
 type CadastroFormData = z.infer<typeof schemaCadastro>;
+
+const classeCampo =
+  "border border-zinc-400 hover:border-zinc-800 px-4 py-3 rounded-2xl";
 
 export function CadastroForm() {
   const router = useRouter();
@@ -25,34 +36,47 @@ export function CadastroForm() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<CadastroFormData>({
     resolver: zodResolver(schemaCadastro),
     defaultValues: {
       nome: "",
-      funcao: "",
-      unidade: "",
       email: "",
+      unidade: "",
       senha: "",
+      confirmarSenha: "",
     },
   });
 
+  const senhaDigitada = watch("senha");
+
   const onSubmit = async (data: CadastroFormData) => {
     try {
-      const resposta = await fetch("http://localhost:3001/usuarios", {
+      const resposta = await fetch(`${apiUrl}/usuarios`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          nome: data.nome,
+          email: data.email,
+          unidade: data.unidade,
+          senha: data.senha,
+        }),
       });
+      const dados = await resposta.json().catch(() => ({}));
 
-      const dados = await resposta.json();
-
-      if (resposta.ok) {
-        toast.success("Cadastro realizado com sucesso!");
-        router.push("/");
-      } else {
-        toast.error(dados.message || "Erro ao realizar cadastro");
+      if (!resposta.ok) {
+        toast.error(mensagemDoBackend(dados, "Erro ao realizar cadastro"));
+        return;
       }
+
+      toast.success("Cadastro realizado com sucesso!");
+      if (dados.funcao === "Administrador") {
+        toast.info(
+          "Você foi o primeiro a se cadastrar e entrou como administrador",
+        );
+      }
+      router.push("/login");
     } catch {
       toast.error("Falha ao conectar com o servidor");
     }
@@ -61,6 +85,7 @@ export function CadastroForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
+      noValidate
       className="flex flex-col gap-2.5 pt-6"
     >
       <div className="flex flex-col gap-1">
@@ -68,9 +93,11 @@ export function CadastroForm() {
         <input
           id="nome"
           type="text"
+          autoComplete="name"
           placeholder="Digite seu nome"
+          aria-invalid={errors.nome ? true : undefined}
           {...register("nome")}
-          className="border border-zinc-400 hover:border-zinc-800 px-4 py-3 rounded-2xl"
+          className={classeCampo}
         />
         {errors.nome && (
           <p className="text-red-500 text-sm">{errors.nome.message}</p>
@@ -82,9 +109,11 @@ export function CadastroForm() {
         <input
           id="email"
           type="email"
-          {...register("email")}
-          className="border border-zinc-400 hover:border-zinc-800 px-4 py-3 rounded-2xl"
+          autoComplete="email"
           placeholder="Digite seu email"
+          aria-invalid={errors.email ? true : undefined}
+          {...register("email")}
+          className={classeCampo}
         />
         {errors.email && (
           <p className="text-red-500 text-sm">{errors.email.message}</p>
@@ -92,24 +121,12 @@ export function CadastroForm() {
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="senha">Senha</label>
-        <InputSenha
-          id="senha"
-          {...register("senha")}
-          className="border border-zinc-400 hover:border-zinc-800 px-4 py-3 rounded-2xl"
-          placeholder="Digite sua senha"
-        />
-        {errors.senha && (
-          <p className="text-red-500 text-sm">{errors.senha.message}</p>
-        )}
-      </div>
-
-      <div className="flex flex-col gap-1">
         <label htmlFor="unidade">Unidade</label>
         <select
           id="unidade"
+          aria-invalid={errors.unidade ? true : undefined}
           {...register("unidade")}
-          className="border border-zinc-400 hover:border-zinc-800 px-4 py-3 rounded-2xl bg-transparent"
+          className={`${classeCampo} bg-transparent`}
         >
           <option value="" disabled>
             Selecione a unidade SENAI
@@ -121,23 +138,24 @@ export function CadastroForm() {
         )}
       </div>
 
-      <div className="flex flex-col gap-1">
-        <label htmlFor="funcao">Função</label>
-        <select
-          id="funcao"
-          {...register("funcao")}
-          className="border border-zinc-400 hover:border-zinc-800 px-4 py-3 rounded-2xl bg-transparent"
-        >
-          <option value="" disabled>
-            Selecione seu cargo
-          </option>
-          <option value="Administrador">Administrador</option>
-          <option value="Visitante">Visitante</option>
-        </select>
-        {errors.funcao && (
-          <p className="text-red-500 text-sm">{errors.funcao.message}</p>
-        )}
-      </div>
+      <InputSenha
+        id="senha"
+        rotulo="Senha"
+        autoComplete="new-password"
+        placeholder="Crie sua senha"
+        erro={errors.senha?.message}
+        {...register("senha")}
+      />
+      <ChecklistSenha senha={senhaDigitada ?? ""} />
+
+      <InputSenha
+        id="confirmarSenha"
+        rotulo="Confirmar senha"
+        autoComplete="new-password"
+        placeholder="Repita a senha"
+        erro={errors.confirmarSenha?.message}
+        {...register("confirmarSenha")}
+      />
 
       <div className="flex flex-col text-center">
         <ImagemBotao
@@ -146,7 +164,9 @@ export function CadastroForm() {
           disabled={isSubmitting}
         />
 
-        <Link href="/login">Voltar para o login</Link>
+        <Link href="/login" className="mt-2 hover:text-red-600">
+          Voltar para o login
+        </Link>
       </div>
     </form>
   );

@@ -5,60 +5,96 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { UpdateUsuarioDto } from '../dto/update-usuario.dto';
+import { gerarHashSenha } from '../../modulos/login/senha.util';
+
+// campos que podem sair da API
+// os campos da senha, segredo do 2fa e tokens nunca aparecem
+const selecaoPublica = {
+  idUsuario: true,
+  nome: true,
+  email: true,
+  funcao: true,
+  unidade: true,
+  totpAtivo: true,
+} as const;
 
 @Injectable()
 export class UsuariosService {
   constructor(private prisma: PrismaService) {}
 
-  async criarUsuario(createUsuarioDto: CreateUsuarioDto) {
-    const emailexistente = await this.prisma.usuario.findFirst({
-      where: { email: createUsuarioDto.email },
+  async criarUsuario(dto: CreateUsuarioDto) {
+    const existente = await this.prisma.usuario.findFirst({
+      where: { email: dto.email },
     });
-    if (emailexistente)
-      throw new ConflictException('Este email já está cadastrado');
+    if (existente) throw new ConflictException('Esse email já está cadastrado');
+
+    // o primeiro usuário vira administrador, todos os outros entram como Visitante
+    // para promover alguém, um administrador altera a função depois
+    const total = await this.prisma.usuario.count();
+    const funcao = total === 0 ? 'Administrador' : 'Visitante';
 
     return this.prisma.usuario.create({
-      data: createUsuarioDto,
+      data: {
+        nome: dto.nome,
+        email: dto.email,
+        unidade: dto.unidade,
+        funcao,
+        senha: await gerarHashSenha(dto.senha),
+      },
+      select: selecaoPublica,
     });
   }
 
   listarTodosUsuarios() {
-    return this.prisma.usuario.findMany();
+    return this.prisma.usuario.findMany({ select: selecaoPublica });
   }
 
   async listarUmUsuario(id: number) {
-    const buscar = await this.prisma.usuario.findUnique({
+    const usuario = await this.prisma.usuario.findUnique({
       where: { idUsuario: id },
+      select: selecaoPublica,
     });
-    if (!buscar)
-      throw new NotFoundException(`Produto '${id}' não foi encontrado`);
+    if (!usuario)
+      throw new NotFoundException(`Usuario '${id}' não foi encontrado`);
 
-    return buscar;
+    return usuario;
+  }
+
+  private async garantirOutroAdministrador(id: number) {
+    const outros = await this.prisma.usuario.count({
+      where: { funcao: 'Administrador', idUsuario: { not: id } },
+    });
+    if (outros === 0) {
+      throw new ConflictException(
+        'Precisa existir pelo menos um administrador',
+      );
+    }
   }
 
   async apagarUsuario(id: number) {
-    await this.listarUmUsuario(id);
+    const usuario = await this.listarUmUsuario(id);
+    if (usuario.funcao === 'Administrador')
+      await this.garantirOutroAdministrador(id);
 
-    return this.prisma.usuario.delete({
-      where: { idUsuario: id },
-    });
+    await this.prisma.usuario.delete({ where: { idUsuario: id } });
+    return { mensagem: 'Usuário apagado' };
   }
 
-  async updateUsuario(id: number, updateUsuarioDTO: CreateUsuarioDto) {
-    await this.listarUmUsuario(id);
-
-    if (updateUsuarioDTO.email) {
-      const emailEncontrado = await this.prisma.usuario.findFirst({
-        where: {
-          email: updateUsuarioDTO.email,
-        },
-      });
-      if (emailEncontrado!)
-        throw new ConflictException('O email não pode ser alterado');
+  async updateUsuario(id: number, dto: UpdateUsuarioDto) {
+    const usuario = await this.listarUmUsuario(id);
+    if (
+      usuario.funcao === 'Administrador' &&
+      dto.funcao &&
+      dto.funcao !== 'Administrador'
+    ) {
+      await this.garantirOutroAdministrador(id);
     }
+
     return this.prisma.usuario.update({
       where: { idUsuario: id },
-      data: updateUsuarioDTO,
+      data: dto,
+      select: selecaoPublica,
     });
   }
 }

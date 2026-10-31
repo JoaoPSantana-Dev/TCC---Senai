@@ -1,23 +1,30 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { IsEmail, IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import { SenhaForte } from '../../modulos/login/senha-forte.decorator';
 
+const limpar = ({ value }: { value: unknown }) =>
+  typeof value === 'string' ? value.trim() : value;
+
+// para o cadastro público, a função não vem do formulário, o servidor decide
 export class CreateUsuarioDto {
+  @Transform(limpar)
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Nome é obrigatório ' })
+  @MaxLength(100)
   nome!: string;
 
-  @IsEmail()
-  @IsNotEmpty()
+  @Transform(({ value }: { value: unknown }) =>
+    typeof value === 'string' ? value.trim().toLowerCase() : value,
+  )
+  @IsEmail({}, { message: 'Endereço de email inválido' })
   email!: string;
 
-  @IsString()
-  @IsNotEmpty()
+  @SenhaForte()
   senha!: string;
 
+  @Transform(limpar)
   @IsString()
-  @IsNotEmpty()
-  funcao!: string;
-
-  @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Unidade é obrigatória' })
+  @MaxLength(100)
   unidade!: string;
 }
