@@ -16,13 +16,8 @@ export interface ItemMenu {
 // páginas que o totem usa por trás e que não são destino de navegação
 const slugsForaDoMenu = ["homepage", "descanso"];
 
-// rotas fixas do frontend que não existem no banco, então não aparecem sozinhas
-export const rotasFixasTotem: ItemMenu[] = [
-  { titulo: "Mapa da escola", href: "/mapa", icone: "mapa" },
-  { titulo: "Vagas de emprego", href: "/vagas-empregos", icone: "emprego" },
-  { titulo: "Vagas de estágio", href: "/vagas-estagios", icone: "estagio" },
-  { titulo: "Cursos", href: "/vagas-cursos", icone: "curso" },
-];
+// todas as páginas estão no banco
+export const rotasFixasTotem: ItemMenu[] = [];
 
 export const rotasPrivadas: ItemMenu[] = [
   {
@@ -46,6 +41,10 @@ const iconePorSlug: Record<string, string> = {
   "sobre-senai-mariano-ferraz": "predio",
   "horario-aulas": "relogio",
   biblioteca: "biblioteca",
+  mapa: "mapa",
+  "vagas-empregos": "emprego",
+  "vagas-estagios": "estagio",
+  "vagas-cursos": "curso",
 };
 
 export function montarItensMenu(

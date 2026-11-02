@@ -18,12 +18,8 @@ export const slugsReservados: readonly string[] = [
   'esqueci-senha',
   'gerenciador-paginas',
   'usuarios',
-  'mapa',
-  'vagas-empregos',
-  'vagas-estagios',
-  'vagas-cursos',
+  'seguranca',
   'api',
-  'pre-visualizacao-pagina',
 ];
 
 // páginas que o totem busca pelo slug (se forem apagadas, tudo explode)
@@ -31,6 +27,13 @@ export const slugsDoSistema: readonly string[] = [
   'sobre',
   'descanso',
   'homepage',
+  'mapa',
+  'vagas-empregos',
+  'vagas-estagios',
+  'vagas-cursos',
+  'sobre-senai-mariano-ferraz',
+  'horario-aulas',
+  'biblioteca',
 ];
 
 const iconesMenu = [
@@ -161,6 +164,12 @@ export const schemaComponentes: Record<string, Record<string, CampoSchema>> = {
     href: { tipo: 'string', obrigatorio: true, max: 200, formato: 'caminho' },
     icone: { tipo: 'string', obrigatorio: true, opcoes: iconesMenu },
   },
+  Titulo: { texto: { tipo: 'string', obrigatorio: true, max: 100 } },
+  Mapa: {},
+  VagasEmprego: {},
+  VagasEstagio: {},
+  VagasCursos: {},
+  Noticias: {},
 };
 
 export const tiposComponentes = Object.keys(schemaComponentes);

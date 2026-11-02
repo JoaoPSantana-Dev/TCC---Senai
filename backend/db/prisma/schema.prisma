@@ -46,6 +46,18 @@ model Pagina {
   @@map("paginas")
 }
 
+model VagaCurso {
+  idCurso       Int       @id @default(autoincrement()) @map("id_curso")
+  nomeCurso     String
+  areaCurso     String?
+  descricao     String?   @db.Text
+  requisitos    String?   @db.Text
+  cargaHoraria  String?
+  turno         String?
+  contato       String?
+
+  @@map("vagas_curso")
+}
 
 model VagaEmprego {
   idEmprego   Int     @id @default(autoincrement()) @map("id_emprego")

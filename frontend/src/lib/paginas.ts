@@ -24,12 +24,8 @@ export const slugsReservados: readonly string[] = [
   "esqueci-senha",
   "gerenciador-paginas",
   "usuarios",
-  "mapa",
-  "vagas-empregos",
-  "vagas-estagios",
-  "vagas-cursos",
+  "seguranca",
   "api",
-  "pre-visualizacao-pagina",
 ];
 
 export interface ComponentePagina {
