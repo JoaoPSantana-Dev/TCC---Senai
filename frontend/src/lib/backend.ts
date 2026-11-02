@@ -1,9 +1,14 @@
 import { apiUrl } from "./paginas";
 
-// usado só nas rotas /api de servidor: chama o Nest com o token da sessão quando houver
+// usado só nas rotas /api de servidor
+// chama o Nest com o token da sessão quando houver
 export async function chamarBackend(
   caminho: string,
-  opcoes: { metodo?: "GET" | "POST"; corpo?: unknown; token?: string } = {},
+  opcoes: {
+    metodo?: "GET" | "POST" | "PATCH" | "DELETE";
+    corpo?: unknown;
+    token?: string;
+  } = {},
 ) {
   const { metodo = "POST", corpo, token } = opcoes;
 

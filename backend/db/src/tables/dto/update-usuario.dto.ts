@@ -1,5 +1,6 @@
 import { Transform } from 'class-transformer';
 import {
+  IsEmail,
   IsIn,
   IsNotEmpty,
   IsOptional,
@@ -9,23 +10,29 @@ import {
 
 export const funcoesUsuario = ['Administrador', 'Visitante'] as const;
 
-// só administradores chegam aqui, email e senha não mudam por esse caminho
+const limpar = ({ value }: { value: unknown }) =>
+  typeof value === 'string' ? value.trim() : value;
+
+// só administradores chegam aqui, a senha não muda por esse caminho
 export class UpdateUsuarioDto {
   @IsOptional()
-  @Transform(({ value }: { value: unknown }) =>
-    typeof value === 'string' ? value.trim() : value,
-  )
+  @Transform(limpar)
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Nome não pode ficar vazio' })
   @MaxLength(100)
   nome?: string;
 
   @IsOptional()
   @Transform(({ value }: { value: unknown }) =>
-    typeof value === 'string' ? value.trim() : value,
+    typeof value === 'string' ? value.trim().toLowerCase() : value,
   )
+  @IsEmail({}, { message: 'Endereço de email inválido' })
+  email?: string;
+
+  @IsOptional()
+  @Transform(limpar)
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Unidade não pode ficar vazia' })
   @MaxLength(100)
   unidade?: string;
 
