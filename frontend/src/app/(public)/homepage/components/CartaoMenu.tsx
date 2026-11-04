@@ -10,6 +10,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon, type HugeiconsIconProps } from "@hugeicons/react";
 import Link from "next/link";
+import type { IconeMenu } from "@/lib/paginas";
 
 // ícones que podem ser escolhidos no gerenciador de páginas
 // a chave é o que fica salvo no banco, o backend tem uma lista igual em paginas.constantes.ts
@@ -33,8 +34,21 @@ interface CartaoMenuProps {
   icone: string;
 }
 
-export function CartaoMenu({ titulo, href, icone }: CartaoMenuProps) {
-  const iconeSelecionado = iconesMenu[icone]?.icone ?? InfoIcon;
+interface CartaoMenuProps {
+  titulo: string;
+  href: string;
+  icone: string; // 8 ícones já no sistema
+  iconeEscolhido?: IconeMenu | null; // ícones vindo do banco
+}
+
+export function CartaoMenu({
+  titulo,
+  href,
+  icone,
+  iconeEscolhido,
+}: CartaoMenuProps) {
+  const iconeSelecionado =
+    iconeEscolhido?.dados ?? iconesMenu[icone]?.icone ?? InfoIcon;
 
   return (
     <Link
