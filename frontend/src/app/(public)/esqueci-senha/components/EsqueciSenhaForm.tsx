@@ -11,6 +11,7 @@ import { InputSenha } from "@/components/shared/InputSenha";
 import { apiUrl } from "@/lib/paginas";
 import { mensagemDoBackend, schemaSenhaForte } from "@/lib/autenticacao";
 import { ChecklistSenha } from "@/components/shared/ChecklistSenha";
+import { useState } from "react";
 
 export function EsqueciSenhaForm({ token }: { token?: string }) {
   return token ? <NovaSenha token={token} /> : <PedirLink />;

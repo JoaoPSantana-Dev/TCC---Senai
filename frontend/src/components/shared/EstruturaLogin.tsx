@@ -10,7 +10,7 @@ export function EstruturaAdministradorPublic({
   children,
 }: EstruturaAdministradorPublicProps) {
   return (
-    <div className="flex h-screen w-full overflow-hidden min-h-screen flex-col">
+    <div className="flex h-screen w-full min-h-screen flex-col">
       <main className="flex flex-1 flex-col md:flex-row">
         <ImagemAutenticacao
           nomeImagem="tubarao.png"

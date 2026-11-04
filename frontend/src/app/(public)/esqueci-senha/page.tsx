@@ -14,7 +14,7 @@ export default async function EsqueciSenha({
 
   return (
     <EstruturaAdministradorPublic>
-      <section className="w-full h-full lg:w-1/3 bg-white flex flex-col justify-center p-8 md:p-16">
+      <section className="w-full h-full lg:w-1/3 bg-white flex flex-col justify-start p-8 md:p-16">
         <HeaderAutenticacao
           h1={token ? "Criar nova senha" : "Esqueceu a senha?"}
           p={
@@ -22,7 +22,6 @@ export default async function EsqueciSenha({
               ? "Escolha uma nova senha para a sua conta"
               : "Informe seu email e enviaremos um link para redefinir a senha"
           }
-          className="mb-8"
         />
         <EsqueciSenhaForm token={token} />
       </section>
