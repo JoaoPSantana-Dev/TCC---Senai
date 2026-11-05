@@ -57,8 +57,4 @@ export const conteudoPadraoHomepage: ComponentePagina[] = [
     type: "CartaoMenu",
     props: { titulo: "Biblioteca", href: "/biblioteca", icone: "biblioteca" },
   },
-  {
-    type: "CartaoMenu",
-    props: { titulo: "Logout", href: "/logout", icone: "biblioteca" },
-  },
 ];
