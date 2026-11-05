@@ -1,3 +1,4 @@
+"use client"
 import { User02Icon } from "@hugeicons/core-free-icons";
 import Image from "next/image";
 import { NavbarHamburguer } from "./NavbarHamburguer";
