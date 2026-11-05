@@ -19,6 +19,7 @@ const schemaLogin = z.object({
 type LoginFormData = z.infer<typeof schemaLogin>;
 
 export function LoginForm() {
+
   const [etapa, setEtapa] = useState<"senha" | "codigo">("senha");
 
   if (etapa === "codigo") {
@@ -32,6 +33,7 @@ export function EtapaSenha({
 }: {
   onPrecisaCodigo: () => void;
 }) {
+
   const router = useRouter();
 
   const {
@@ -136,6 +138,7 @@ export function EtapaSenha({
   );
 }
 
+
 function EtapaCodigo({ onReiniciar }: { onReiniciar: () => void }) {
   const router = useRouter();
   const [codigo, setCodigo] = useState("");
@@ -239,3 +242,4 @@ function EtapaCodigo({ onReiniciar }: { onReiniciar: () => void }) {
     </form>
   );
 }
+
