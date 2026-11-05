@@ -6,6 +6,12 @@ import {
   iconesMenu,
 } from "@/app/(public)/homepage/components/CartaoMenu";
 import { type ComponentePagina, limiteComponentes } from "@/lib/paginas";
+import { Mapa } from "@/app/(public)/mapa/Mapa";
+import { Noticias } from "@/components/shared/Noticias";
+import { Titulo } from "@/components/shared/TituloTotem";
+import { VagasCursos } from "@/components/shared/VagasCursos";
+import { VagasEmprego } from "@/components/shared/VagasEmprego";
+import { VagasEstagio } from "@/components/shared/VagasEstagio";
 
 // registro dos componentes que podem ser usados nas páginas
 // para colocar um componente novo no gerenciador:
@@ -164,6 +170,53 @@ export const registroComponentes: Record<string, DefinicaoComponente> = {
         padrao: opcoesIcones[0].valor,
       },
     ],
+  },
+
+  Titulo: {
+    rotulo: "Título de seção",
+    componente: Titulo,
+    campos: [
+      {
+        nome: "texto",
+        rotulo: "Texto do título",
+        tipo: "texto",
+        obrigatorio: true,
+        maximo: 100,
+        padrao: "",
+      },
+    ],
+  },
+
+  // componentes sem campos para editar: o conteúdo vem do próprio componente
+
+  Mapa: {
+    rotulo: "Mapa da escola",
+    componente: Mapa,
+    campos: [],
+  },
+
+  VagasEmprego: {
+    rotulo: "Vagas de emprego",
+    componente: VagasEmprego,
+    campos: [],
+  },
+
+  VagasEstagio: {
+    rotulo: "Vagas de estágio",
+    componente: VagasEstagio,
+    campos: [],
+  },
+
+  VagasCursos: {
+    rotulo: "Lista de cursos",
+    componente: VagasCursos,
+    campos: [],
+  },
+
+  Noticias: {
+    rotulo: "Carrossel de notícias",
+    componente: Noticias,
+    campos: [],
   },
 };
 

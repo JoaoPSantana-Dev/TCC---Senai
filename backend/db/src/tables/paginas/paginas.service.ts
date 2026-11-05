@@ -4,15 +4,16 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import type { Prisma } from '../../../generated/prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreatePaginaDto } from '../dto/create-pagina.dto';
 import { UpdatePaginaDto } from '../dto/update-pagina.dto';
 import {
   slugsDoSistema,
   slugsReservados,
+  validarIconeMenu,
   validarPropsComponente,
 } from './paginas.constantes';
+import { Prisma } from '../../../generated/prisma/client';
 
 function temCodigo(erro: unknown, codigo: string) {
   return (
@@ -40,7 +41,15 @@ export class PaginasService {
     return JSON.parse(JSON.stringify(conteudo)) as Prisma.InputJsonValue;
   }
 
+  private iconeParaBanco(icone?: Record<string, unknown> | null) {
+    if (icone === undefined) return undefined;
+    if (icone === null) return Prisma.JsonNull;
+  }
+
   async criarPagina(dto: CreatePaginaDto) {
+    const errosIcone = validarIconeMenu(dto.iconeMenu);
+    if (errosIcone.length > 0) throw new BadRequestException(errosIcone);
+
     if (slugsReservados.includes(dto.slug)) {
       throw new BadRequestException(
         `O slug "${dto.slug}" é reservado pelo sistema, escolha outro nome para a página`,
@@ -65,6 +74,9 @@ export class PaginasService {
           nomePagina: dto.nomePagina,
           tipoPagina: dto.tipoPagina,
           conteudo: this.paraJson(dto.conteudo),
+          iconeMenu: this.iconeParaBanco(dto.iconeMenu),
+          ordemMenu: dto.ordemMenu,
+          mostrarNoMenu: dto.mostrarNoMenu,
         },
       });
     } catch (erro) {
@@ -84,6 +96,9 @@ export class PaginasService {
         slug: true,
         nomePagina: true,
         tipoPagina: true,
+        iconeMenu: true,
+        ordemMenu: true,
+        mostrarNoMenu: true,
       },
       orderBy: { nomePagina: 'asc' },
     });
@@ -122,6 +137,9 @@ export class PaginasService {
   }
 
   async updatePaginaPorSlug(slug: string, updatePaginaDto: UpdatePaginaDto) {
+    const errosIcone = validarIconeMenu(updatePaginaDto.iconeMenu);
+    if (errosIcone.length > 0) throw new BadRequestException(errosIcone);
+
     const pagina = await this.prisma.pagina.findUnique({
       where: { slug },
       select: { idPaginas: true },
@@ -143,6 +161,9 @@ export class PaginasService {
         conteudo: updatePaginaDto.conteudo
           ? this.paraJson(updatePaginaDto.conteudo)
           : undefined,
+        iconeMenu: this.iconeParaBanco(updatePaginaDto.iconeMenu),
+        ordemMenu: updatePaginaDto.ordemMenu,
+        mostrarNoMenu: updatePaginaDto.mostrarNoMenu,
       },
     });
   }

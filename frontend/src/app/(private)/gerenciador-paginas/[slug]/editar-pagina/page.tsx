@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { EditarPaginaForm } from "../../components/EditarPaginaForm";
+import { EditorPuck } from "../../components/EditorPuck";
 import { buscarPaginaPorSlug } from "@/lib/paginas";
 
 interface EditarPaginaProps {
@@ -14,5 +14,5 @@ export default async function EditarPagina({ params }: EditarPaginaProps) {
     notFound();
   }
 
-  return <EditarPaginaForm slug={slug} dadosIniciais={paginaData} />;
+  return <EditorPuck slug={slug} dadosIniciais={paginaData} />;
 }

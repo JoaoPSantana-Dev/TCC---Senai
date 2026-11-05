@@ -1,4 +1,4 @@
-import { CreateVagaEstagioDto } from '../dto/create.vaga-estagio.dto';
+import { CreateVagaEstagioDto } from '../dto/create-vaga-estagio.dto';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { UpdateVagaEstagioDto } from '../dto/update-vaga-estagio.dto';

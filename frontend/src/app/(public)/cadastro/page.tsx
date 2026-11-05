@@ -9,7 +9,7 @@ export default function Cadastro() {
         <HeaderAutenticacao
           h1="Cadastro"
           p="Cadastre seu usuário usando o email e senha do SENAI"
-          className="mb-8"
+          className="w-auto h-auto max-w-full object-contain mb-5"
         />
         <CadastroForm />
       </section>

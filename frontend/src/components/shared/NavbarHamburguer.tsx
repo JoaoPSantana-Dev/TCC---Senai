@@ -7,7 +7,7 @@ import { Menu01Icon, ArrowLeft01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useState } from "react";
 import {
-  buscarItensMenu,
+  buscarItensMenuNoNavegador,
   rotasFixasTotem,
   type ItemMenu,
 } from "@/lib/menuTotem";
@@ -22,7 +22,7 @@ export function NavbarHamburguer({
   const [itens, setItens] = useState<ItemMenu[]>(rotasFixasTotem);
 
   const carregar = useCallback(async () => {
-    setItens(await buscarItensMenu());
+    setItens(await buscarItensMenuNoNavegador());
   }, []);
 
   useEffect(() => {

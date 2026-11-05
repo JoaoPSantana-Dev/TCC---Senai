@@ -2,6 +2,8 @@ import { User02Icon } from "@hugeicons/core-free-icons";
 import Image from "next/image";
 import { NavbarHamburguer } from "./NavbarHamburguer";
 import { HugeiconsIcon } from "@hugeicons/react";
+import Link from "next/link";
+import { BotaoSair } from "./BotaoSair";
 
 export function HeaderPrivate() {
   return (
@@ -19,14 +21,16 @@ export function HeaderPrivate() {
         />
       </figure>
 
-      <button className="flex pr-10 items-center">
-        <HugeiconsIcon
-          icon={User02Icon}
-          width={40}
-          height={40}
-          className="self-center cursor-alias"
-        />
-      </button>
+      <div className="flex pr-10 items-center gap-4">
+        <Link
+          href="/seguranca"
+          aria-label="Segurança da conta"
+          title="Segurança da conta"
+        >
+          <HugeiconsIcon icon={User02Icon} width={40} height={40} />
+        </Link>
+        <BotaoSair />
+      </div>
     </header>
   );
 }

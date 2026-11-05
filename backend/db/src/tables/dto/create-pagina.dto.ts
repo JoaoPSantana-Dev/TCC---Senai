@@ -9,6 +9,11 @@ import {
   Matches,
   MaxLength,
   ValidateNested,
+  IsBoolean,
+  IsInt,
+  IsOptional,
+  Max,
+  Min,
 } from 'class-validator';
 import {
   limiteComponentes,
@@ -66,4 +71,18 @@ export class CreatePaginaDto {
   @ValidateNested({ each: true })
   @Type(() => ComponentePaginaDto)
   conteudo!: ComponentePaginaDto[];
+
+  @IsOptional()
+  @IsObject({ message: 'O ícone do menu deve ser um objeto' })
+  iconeMenu?: Record<string, unknown> | null;
+
+  @IsOptional()
+  @IsInt({ message: 'A posição no menu deve ser um número inteiro' })
+  @Min(0)
+  @Max(9999)
+  ordemMenu?: number;
+
+  @IsOptional()
+  @IsBoolean({ message: 'Mostrar no menu deve ser verdadeiro ou falso' })
+  mostrarNoMenu?: boolean;
 }
