@@ -177,12 +177,6 @@ export function EditorPuck({ slug, dadosIniciais }: EditorPuckProps) {
           icon: "Tablet",
           label: "Tablet (768 px)",
         },
-        {
-          width: 360,
-          height: "auto",
-          icon: "Smartphone",
-          label: "Celular (360 px)",
-        },
       ]}
       onChange={(dados) =>
         setAlterado(

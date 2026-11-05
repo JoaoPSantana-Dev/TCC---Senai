@@ -129,7 +129,7 @@ export function HeaderTotem({
   }, []);
 
   return (
-    <header className="relative w-full text-white border-b-2 border-gray-300 bg-white mb-8">
+    <header className="sticky top-0 z-40 w-full text-white border-b-2 border-gray-300 bg-white mb-8">
       {/* informações extras */}
       <div className="flex w-full bg-red-600 gap-2 items-center justify-between px-2">
         <p className="font-semibold text-sm uppercase truncate">

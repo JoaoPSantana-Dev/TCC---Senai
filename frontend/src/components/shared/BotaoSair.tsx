@@ -15,7 +15,7 @@ export function BotaoSair() {
     <button
       type="button"
       onClick={sair}
-      className="text-sm font-medium text-zinc-700 hover:text-red-600 cursor-pointer"
+      className="text-lg font-medium text-zinc-700 hover:text-red-600 cursor-pointer"
     >
       Sair
     </button>

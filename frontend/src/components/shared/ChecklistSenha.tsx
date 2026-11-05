@@ -6,7 +6,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 export function ChecklistSenha({ senha }: { senha: string }) {
   return (
     <ul
-      className="flex flex-col gap-0.5 text-sm"
+      className="flex flex-row gap-0.5 text-sm justify-between"
       aria-label="Requisitos da senha"
     >
       {regrasSenha.map((regra) => {
