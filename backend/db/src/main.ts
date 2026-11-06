@@ -12,8 +12,14 @@ async function bootstrap() {
     }),
   );
 
-   app.enableCors();
-   await app.listen(process.env.PORT ?? 3001);
+  // FRONTEND_URL aceita mais de um endereço separado por vírgula
+  // exemplo: FRONTEND_URL=http://localhost:3000,http://192.168.0.10:3000
+  const origens = (process.env.FRONTEND_URL ?? 'http://localhost:3000')
+    .split(',')
+    .map((origem) => origem.trim().replace(/\/$/, ''));
+
+  app.enableCors({ origin: origens });
+  await app.listen(process.env.PORT ?? 3001);
 }
 
 bootstrap();

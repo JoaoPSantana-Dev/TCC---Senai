@@ -22,13 +22,15 @@ export function HeaderAutenticacao({
           alt="Imagem do logo SENAI"
           width={1920}
           height={1080}
-          className="w-auto h-auto max-w-full object-contain"
+          className={
+            className || `w-auto h-auto max-w-full object-contain mb-40`
+          }
           loading="eager"
         />
       </figure>
 
-      <h1 className="text-lg font-bold">{h1}</h1>
-      <p className="text-gray-600 text-sm">{p}</p>
+      <h1 className="text-xl text-zinc-800 font-semibold">{h1}</h1>
+      <p className="text-zinc-600 text-sm">{p}</p>
     </header>
   );
 }

@@ -1,0 +1,247 @@
+// regras compartilhadas dos dtos e service
+// o frontend tem uma cópia dessas regras em
+// frontend/src/lib/paginas.ts e frontend/src/app/(private)/gerenciador-paginas/components/registroComponentes.tsx
+// se mudar algo aqui, lembre de mudar lá também
+
+export const tiposPagina = ['Administrador', 'Totem'] as const;
+
+// letras minúsculas, números e hífen. Sem hífen no começo/fim e sem "--"
+export const regexSlug = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+export const limiteSlug = 100;
+export const limiteNomePagina = 100;
+export const limiteComponentes = 50;
+
+// slugs que já são rotas fixas do frontend
+export const slugsReservados: readonly string[] = [
+  'login',
+  'cadastro',
+  'esqueci-senha',
+  'gerenciador-paginas',
+  'usuarios',
+  'seguranca',
+  'api',
+];
+
+// páginas que o totem busca pelo slug (se forem apagadas, tudo explode)
+export const slugsDoSistema: readonly string[] = [
+  'sobre',
+  'descanso',
+  'homepage',
+  'mapa',
+  'vagas-empregos',
+  'vagas-estagios',
+  'vagas-cursos',
+  'sobre-senai-mariano-ferraz',
+  'horario-aulas',
+  'biblioteca',
+];
+
+const iconesMenu = [
+  'info',
+  'predio',
+  'relogio',
+  'mapa',
+  'emprego',
+  'estagio',
+  'curso',
+  'biblioteca',
+] as const;
+
+const tagsIcone = [
+  'path',
+  'circle',
+  'rect',
+  'line',
+  'polyline',
+  'polygon',
+  'ellipse',
+];
+const atributosIcone = [
+  'd',
+  'cx',
+  'cy',
+  'r',
+  'rx',
+  'ry',
+  'x',
+  'y',
+  'x1',
+  'y1',
+  'x2',
+  'y2',
+  'width',
+  'height',
+  'points',
+  'fill',
+  'stroke',
+  'strokeWidth',
+  'strokeLinecap',
+  'strokeLinejoin',
+  'fillRule',
+  'clipRule',
+  'opacity',
+];
+
+export function validarIconeMenu(icone: unknown): string[] {
+  if (icone === undefined || icone === null) return [];
+  const invalido = ['O ícone do menu é inválido'];
+  if (typeof icone !== 'object' || Array.isArray(icone)) return invalido;
+
+  const { nome, dados } = icone as { nome?: unknown; dados?: unknown };
+  if (typeof nome !== 'string' || !/^[A-Za-z0-9]{1,100}$/.test(nome))
+    return invalido;
+  if (!Array.isArray(dados) || dados.length === 0 || dados.length > 30)
+    return invalido;
+
+  for (const item of dados as unknown[]) {
+    if (!Array.isArray(item) || item.length !== 2) return invalido;
+    const [tag, atributos] = item as [unknown, unknown];
+    if (typeof tag !== 'string' || !tagsIcone.includes(tag)) return invalido;
+    if (
+      typeof atributos !== 'object' ||
+      atributos === null ||
+      Array.isArray(atributos)
+    ) {
+      return invalido;
+    }
+
+    for (const [chave, valor] of Object.entries(atributos)) {
+      if (chave === 'key') continue;
+      const tipoOk = typeof valor === 'string' || typeof valor === 'number';
+      if (
+        !atributosIcone.includes(chave) ||
+        !tipoOk ||
+        String(valor).length > 2000
+      ) {
+        return [`O ícone do menu tem um atributo não permitido: "${chave}"`];
+      }
+    }
+  }
+  return [];
+}
+
+export type TipoCampo = 'string' | 'boolean';
+
+export interface CampoSchema {
+  tipo: TipoCampo;
+  obrigatorio?: boolean;
+  max?: number;
+  opcoes?: readonly string[];
+  formato?: 'caminho' | 'arquivo-imagem';
+}
+
+// componentes que existem e quais propriedades cada um aceita
+// quando criar um componente novo no frontend, crie ele aqui também
+export const schemaComponentes: Record<string, Record<string, CampoSchema>> = {
+  LinhaSobre: {
+    texto: { tipo: 'string', obrigatorio: true, max: 1000 },
+    nomeImagem: {
+      tipo: 'string',
+      obrigatorio: true,
+      formato: 'arquivo-imagem',
+    },
+    alt: { tipo: 'string', max: 200 },
+    primeiroEstilo: { tipo: 'boolean', obrigatorio: true },
+  },
+  TelaDescanso: {
+    titulo: { tipo: 'string', obrigatorio: true, max: 150 },
+    nomeImagem: {
+      tipo: 'string',
+      obrigatorio: true,
+      formato: 'arquivo-imagem',
+    },
+    alt: { tipo: 'string', max: 200 },
+    textoBotao: { tipo: 'string', obrigatorio: true, max: 60 },
+    destino: {
+      tipo: 'string',
+      obrigatorio: true,
+      max: 200,
+      formato: 'caminho',
+    },
+  },
+  CartaoMenu: {
+    titulo: { tipo: 'string', obrigatorio: true, max: 80 },
+    href: { tipo: 'string', obrigatorio: true, max: 200, formato: 'caminho' },
+    icone: { tipo: 'string', obrigatorio: true, opcoes: iconesMenu },
+  },
+  Titulo: { texto: { tipo: 'string', obrigatorio: true, max: 100 } },
+  Mapa: {},
+  VagasEmprego: {},
+  VagasEstagio: {},
+  VagasCursos: {},
+  Noticias: {},
+};
+
+export const tiposComponentes = Object.keys(schemaComponentes);
+
+const regexCaminho = /^\/[A-Za-z0-9\-_/]*$/;
+const regexArquivoImagem = /^[A-Za-z0-9._-]+\.(png|jpe?g|webp|svg|gif)$/i;
+
+// devolve a lista de erros das props de apenas um componente
+export function validarPropsComponente(
+  tipo: string,
+  props: Record<string, unknown>,
+  posicao: number,
+): string[] {
+  const schema = schemaComponentes[tipo];
+  const prefixo = `Componente ${posicao + 1} (${tipo})`;
+
+  if (!schema) return [`${prefixo}: tipo de componente desconhecido`];
+
+  const erros: string[] = [];
+
+  for (const nome of Object.keys(props)) {
+    if (!(nome in schema)) {
+      erros.push(`${prefixo}: propriedade "${nome}" não é permitida`);
+    }
+  }
+
+  for (const [nome, campo] of Object.entries(schema)) {
+    const valor = props[nome];
+
+    if (campo.tipo === 'boolean') {
+      if (valor === undefined && campo.obrigatorio) {
+        erros.push(`${prefixo}: "${nome}" é obrigatório`);
+      } else if (valor !== undefined && typeof valor !== 'boolean') {
+        erros.push(`${prefixo}: "${nome}" deve ser verdadeiro ou falso`);
+      }
+      continue;
+    }
+
+    if (valor === undefined || valor === null || valor === '') {
+      if (campo.obrigatorio) erros.push(`${prefixo}: "${nome}" é obrigatório`);
+      continue;
+    }
+
+    if (typeof valor !== 'string') {
+      erros.push(`${prefixo}: "${nome}" deve ser um texto`);
+      continue;
+    }
+
+    if (campo.obrigatorio && valor.trim() === '') {
+      erros.push(`${prefixo}: "${nome}" é obrigatório`);
+    }
+    if (campo.max && valor.length > campo.max) {
+      erros.push(
+        `${prefixo}: "${nome}" deve ter no máximo ${campo.max} caracteres`,
+      );
+    }
+    if (campo.opcoes && !campo.opcoes.includes(valor)) {
+      erros.push(
+        `${prefixo}: "${nome}" deve ter um desses valores: ${campo.opcoes.join(', ')}`,
+      );
+    }
+    if (campo.formato === 'caminho' && !regexCaminho.test(valor)) {
+      erros.push(
+        `${prefixo}: "${nome}" deve ser um caminho interno que comece com "/"`,
+      );
+    }
+    if (campo.formato === 'arquivo-imagem' && !regexArquivoImagem.test(valor)) {
+      erros.push(
+        `${prefixo}: "${nome}" deve ser o nome de um arquivo de imagem (ex.: foto.png)`,
+      );
+    }
+  }
+
+  return erros;
+}

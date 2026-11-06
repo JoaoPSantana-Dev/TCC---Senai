@@ -11,24 +11,53 @@ datasource db {
 model Usuario {
   idUsuario Int     @id @default(autoincrement()) @map("id_usuario")
   nome      String
-  email     String 
+  email     String  @unique
   senha     String
   funcao    String
   unidade   String
+
+  // verificação em duas etapas
+  totpAtivo           Boolean    @default(false) @map("totp_ativo")
+  totpSegredo         String?    @map("totp_segredo") @db.Text
+  totpUltimoPasso     Int?       @map("totp_ultimo_passo")
+  codigosRecuperacao  Json?      @map("codigos_recuperacao")
+
+  // bloqueio por tentativas erradas
+  tentativasFalhas    Int        @default(0) @map("tentativas_falhas")
+  bloqueadoAte    DateTime?      @map("bloqueado_ate")
+
+  // link de esqueci a senha
+  resetTokenHash  String?        @unique @map("reset_token_hash")
+  resetExpiraEm   DateTime?      @map("reset_expira_em") 
 
   @@map("usuarios")
 }
 
 model Pagina {
-  idPaginas  Int     @id @default(autoincrement()) @map("id_paginas")
-  slug       String  @unique
-  nomePagina String
-  tipoPagina String
-  conteudo   Json
+  idPaginas     Int       @id @default(autoincrement()) @map("id_paginas")
+  slug          String    @unique
+  nomePagina    String
+  tipoPagina    String
+  conteudo      Json
+  iconeMenu     Json?
+  ordemMenu     Int       @default(0)
+  mostrarNoMenu Boolean   @default(true)
 
   @@map("paginas")
 }
 
+model VagaCurso {
+  idCurso       Int       @id @default(autoincrement()) @map("id_curso")
+  nomeCurso     String
+  areaCurso     String?
+  descricao     String?   @db.Text
+  requisitos    String?   @db.Text
+  cargaHoraria  String?
+  turno         String?
+  contato       String?
+
+  @@map("vagas_curso")
+}
 
 model VagaEmprego {
   idEmprego   Int     @id @default(autoincrement()) @map("id_emprego")
