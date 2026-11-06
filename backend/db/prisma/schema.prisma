@@ -33,6 +33,7 @@ model Usuario {
   @@map("usuarios")
 }
 
+
 model Pagina {
   idPaginas     Int       @id @default(autoincrement()) @map("id_paginas")
   slug          String    @unique
