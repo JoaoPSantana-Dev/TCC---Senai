@@ -103,8 +103,10 @@ model Sala {
 model HorarioAula {
   idHorariosAula Int     @id @default(autoincrement()) @map("id_horarios_aula")
   nomeCurso      String
+  professor      String
+  nomeAula       String
   turno          String
-  dia            String 
+  dia            String
   idSala         Int     @map("id_sala")
   sala           Sala   @relation(fields: [idSala], references: [idSala])
 
