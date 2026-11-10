@@ -4,6 +4,7 @@ import { buscarItensMenu } from "@/lib/menuTotem";
 import { ehAdministrador } from "@/lib/sessao";
 import { conteudoPadraoHomepage } from "../homepage/HomepageMenu.data";
 import { Titulo } from "@/components/shared/TituloTotem";
+import Image from "next/image";
 
 export default async function SobreSenai() {
     const administrador = await ehAdministrador();
@@ -22,7 +23,7 @@ export default async function SobreSenai() {
         <li>Ser reconhecido como indutor da inovação e da tecnologia para a competitividade da indústria.</li>
         <li>Distinguir-se pela excelência dos seus serviços e dos seus processos.</li>
     </ul>
-    <img src="./conheca-senai.png"/>
+    <Image src="/conheca-senai.png" alt="Imagem de estudantes em uma oficina. Conheça o SENAI está escrito" fill={true}/>
     <p>Foi fundado em 22 de janeiro de 1942 sob decreto de Getúlio Vargas, e o diretor atual é Gustavo Leal Sales Filho. A filial de do estado de São Paulo é administrada por Paulo 
         Skaf desde de 2004. A ONU classificou o SENAI como uma das principais instituições educacionais no hemisfério sul. Atingiu grande crescimento: 1 milhão de matrículas anuais. 90 
         unidades distribuídas no estado de são paulo, 78 escolas móveis.</p>
@@ -30,13 +31,13 @@ export default async function SobreSenai() {
 SENAI aplica conhecimento prático de profissionals em aprendizado formal, com objetivos claros. Seus cursos englobam uma ampla gama de conhecimentos industriais e para 
 empreendedorismo. As escolas móveis permitem atender empresas em seus locais, specialmente aquelas distantes de unidades SENAI. Seus materiais didáticos são preparados e 
 adaptados para as demandas dos cursos.</p>
-    <img src="./escola-movel.png"/>
+    <Image src="/escola-movel.png" alt="Escola móvel" width={100} height={100}/>
     <p>Além de cursos, o SENAI contribui através de diversos projetos de pesquisa, desenvolvimento e inovação (PD&I). Possui programas para melhoria da produtividade e competitividade 
 das empresas. Dentre eles, Programas de aceleração de startups, inovação aberta, intraempreendedorismo e fomento à cultura inovadora, atendendo empresas de todos os tamanhos e 
 setores.</p>
     <p>Um grande projeto é a Jornada de Transformação Digital: um programa de consultoria e treinamento para diversas empresas de micro, pequeno e médio porte realizado pela
 cooperação entre FIESP, CIESP, SENAI-SP e SEBRAE-SP.</p>
-    <img src="./jornada-digital-2.png"/>
+    <Image src="/jornada-digital-2.png" alt="Escola móvel com Jornada de Transformação Digital escrito" width={100} height={100}/>
     <p>Outro programa, o UpLab SENAI São Paulo é um ecossistema do SENAI cujo objetivo é facilitar a cooperação, competitividade e inovação de empresas, especialmente startups. Ele 
 estimula a cultura intraempreendedora.</p>
         </div>
