@@ -15,7 +15,7 @@ const ITENS_POR_PAGINA = 6;
 
 export function EstruturaVagasMenu({
   itens = vagas,
-  className = "w-full flex flex-col items-center max-w-6xl p-4 rounded-xl",
+  className = "w-full lg:w-3/4 flex flex-col items-center py-4",
   itemClassName = "h-full items-center flex flex-row p-8 bg-white rounded-2xl shadow-xl transition-all duration-100 ease-in-out active:shadow-md touch-manipulation select-none",
   onSelecionarVaga,
 }: EstruturaVagasMenuProps) {
@@ -50,14 +50,14 @@ export function EstruturaVagasMenu({
         )}
 
         {/* Grid do Bloco de Vagas */}
-        <nav className="w-full p-4 md:p-6">
+        <nav className="w-full px-4 pb-4 lg:px-0">
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {itensExibidos.map((vaga, index) => (
               <li key={`-${vaga.cargo}-${inicio + index}`}>
                 <button
                   type="button"
                   onClick={() => onSelecionarVaga?.(vaga)}
-                  className={`${itemClassName} w-full text-left`}
+                  className={`${itemClassName} w-full text-left cursor-pointer`}
                 >
                   {vaga.icone && (
                     <span className="text-zinc-800 shrink-0">

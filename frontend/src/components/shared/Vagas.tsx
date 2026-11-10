@@ -5,8 +5,17 @@ import type { Vaga } from "@/components/shared/EstruturaMenuVagas.data";
 import { EstruturaTotem } from "@/components/shared/EstruturaTotem";
 import { Titulo } from "@/components/shared/TituloTotem";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
+import { FiltroVagas } from "./FiltroVagas";
+
+// Remove acentos e ignora letras maiúsculas e minúsculas
+const normalizar = (texto: string) =>
+  texto
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim()
 
 export default function Vagas() {
   const pathname = usePathname();
@@ -14,6 +23,10 @@ export default function Vagas() {
   const [vagas, setVagas] = useState<Vaga[]>([]);
   const [vagaSelecionada, setVagaSelecionada] = useState<Vaga | null>(null);
   const [carregando, setCarregando] = useState(true);
+
+  // Estado dos filtros
+  const [busca, setBusca] = useState("");
+  const [areaSelecionada, setAreaSelecionada] = useState<string | null>(null);
 
   let endpoint = "";
   let titulo = "";
@@ -32,6 +45,7 @@ export default function Vagas() {
       try {
         const resposta = await fetch(endpoint);
         const dados = await resposta.json();
+        console.log("dados da API: ", dados)
 
         if (resposta.ok) {
           setVagas(dados);
@@ -50,19 +64,70 @@ export default function Vagas() {
     };
 
     if (endpoint) {
+      // Limpa os filtros ao trocar de pagina
+      setBusca("");
+      setAreaSelecionada(null);
       buscarVagas();
     };
 
   }, [endpoint]);
 
+  // Áreas disponíveis, geradas a partir das vagas carregadas 
+  const areas = useMemo(() => {
+    const unicas = new Set<string>();
+    for (const vaga of vagas) {
+      if (vaga.areaEmprego) unicas.add(vaga.areaEmprego);
+    }
+    return Array.from(unicas).sort((a, b) => a.localeCompare(b, "pt-BR"));
+  }, [vagas]);
+
+  // Lista filtrada
+  const vagasFiltradas = useMemo(() => {
+    const termo = normalizar(busca);
+
+    return vagas.filter((vaga) => {
+      const bateArea = !areaSelecionada || vaga.areaEmprego === areaSelecionada;
+
+      const bateBusca =
+        termo === "" ||
+        normalizar(vaga.cargo ?? "").includes(termo) ||
+        normalizar(vaga.nomeEmpresa ?? "").includes(termo)
+
+      return bateArea && bateBusca;
+    });
+  }, [vagas, busca, areaSelecionada]);
+
+  // Se a vaga aberta sumir da lista filtrada, fecha o painel de detalhes
+  useEffect(() => {
+    if (vagaSelecionada && !vagasFiltradas.includes(vagaSelecionada)) {
+      setVagaSelecionada(null);
+    };
+  }, [vagasFiltradas, vagaSelecionada]);
+
   return (
     <EstruturaTotem mostrarNoticias={false}>
       <Titulo texto={titulo}>
+        <FiltroVagas
+          busca={busca}
+          onBuscaChange={setBusca}
+          areas={areas}
+          areaSelecionada={areaSelecionada}
+          onAreaChange={setAreaSelecionada}
+          totalResultados={vagasFiltradas.length}
+        />
         {carregando ? (
           <p className="p-6 text-center">Carregando oportunidades...</p>
+        ) : vagasFiltradas.length === 0 ? (
+          <p className="p-6 text-center text-zinc-500">
+            {vagas.length === 0
+              ? "Nenhuma oportunidade disponivel no momento"
+              : "Nenhuma vaga encontrada com esses filtros"
+            }
+          </p>
         ) : (
           <EstruturaVagasMenu
-            itens={vagas}
+            key={`${busca}-${areaSelecionada ?? "todas"}`}
+            itens={vagasFiltradas}
             onSelecionarVaga={setVagaSelecionada}
           />
         )}

@@ -4,8 +4,11 @@ import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { EstruturaVagasMenu } from "@/components/shared/EstruturaMenuVagas";
 import type { Vaga } from "@/components/shared/EstruturaMenuVagas.data";
+import { FiltroVagas } from "@/components/shared/FiltroVagas";
 import { apiUrl } from "@/lib/paginas";
 import {
+  areasDisponiveis,
+  filtrarRegistros,
   linhasPreenchidas,
   paraLista,
   valorDoCampo,
@@ -21,6 +24,10 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
   const [registros, setRegistros] = useState<Registro[]>([]);
   const [carregado, setCarregado] = useState(false);
   const [selecionado, setSelecionado] = useState<Registro | null>(null);
+
+  // estado dos filtros
+  const [busca, setBusca] = useState("");
+  const [areaSelecionada, setAreaSelecionada] = useState<string | null>(null);
 
   useEffect(() => {
     let ativo = true;
@@ -54,15 +61,60 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
     () => paraLista(registros, config.campoTitulo),
     [registros, config.campoTitulo],
   );
+
+  const areas = useMemo(
+    () => areasDisponiveis(itens, config.campoArea),
+    [itens, config.campoArea],
+  );
+
+  const itensFiltrados = useMemo(
+    () =>
+      filtrarRegistros(itens, {
+        busca,
+        area: areaSelecionada,
+        campoArea: config.campoArea,
+        // por padrão busca no título e na empresa (se existir)
+        camposBusca: config.camposBusca ?? [config.campoTitulo, "nomeEmpresa"],
+      }),
+    [itens, busca, areaSelecionada, config.campoArea, config.camposBusca, config.campoTitulo],
+  );
+
+  // se o item aberto sumir da lista filtrada, fecha o painel de detalhes
+  useEffect(() => {
+    if (selecionado && !itensFiltrados.includes(selecionado)) {
+      setSelecionado(null);
+    }
+  }, [itensFiltrados, selecionado]);
+
   const destaques = linhasPreenchidas(selecionado, config.destaques);
   const detalhes = linhasPreenchidas(selecionado, config.detalhes);
 
   return (
-    <div className="flex w-full flex-col items-center">
-      <EstruturaVagasMenu
-        itens={itens as unknown as Vaga[]}
-        onSelecionarVaga={(item) => setSelecionado(item as unknown as Registro)}
-      />
+    <div className="-mx-6 flex w-[calc(100%+3rem)] flex-col items-center md:-mx-12 md:W-[calc(100%+6rem)] lg:mx-0 lg:w-full">
+      {carregado && itens.length > 0 && (
+        <FiltroVagas
+          busca={busca}
+          onBuscaChange={setBusca}
+          areas={areas}
+          areaSelecionada={areaSelecionada}
+          onAreaChange={setAreaSelecionada}
+          totalResultados={itensFiltrados.length}
+          placeholder={config.placeholderBusca}
+        />
+      )}
+
+      {carregado && itens.length > 0 && itensFiltrados.length === 0 ? (
+        <p className="p-6 text-center text-zinc-500">
+          Nenhum resultado encontrado com esses filtros.
+        </p>
+      ) : (
+        <EstruturaVagasMenu
+          // key reinicia a paginação do menu sempre que o filtro muda
+          key={`${busca}-${areaSelecionada ?? "todas"}`}
+          itens={itensFiltrados as unknown as Vaga[]}
+          onSelecionarVaga={(item) => setSelecionado(item as unknown as Registro)}
+        />
+      )}
 
       {carregado && itens.length === 0 && (
         <p className="mb-4 text-center text-zinc-500">{config.textoVazio}</p>
@@ -91,7 +143,7 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
               {destaques.length + detalhes.length === 0 && (
                 <p className="text-zinc-500">
                   {valorDoCampo(selecionado, "cargo")} ainda não tem mais
-                  detalhes cadastros
+                  detalhes cadastrados
                 </p>
               )}
             </>
