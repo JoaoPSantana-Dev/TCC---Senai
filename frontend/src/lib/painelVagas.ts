@@ -2,6 +2,10 @@
 
 export type Registro = Record<string, unknown>;
 
+// item da lista
+// o registro do banco + o "cargo" que o menu de vagas usa como título
+export type ItemLista = Registro & { cargo: string };
+
 export interface CampoPainel {
   rotulo: string;
   campo: string;
@@ -35,7 +39,8 @@ export function linhasPreenchidas(
     .filter((linha) => linha.valor !== "");
 }
 
-// o menu de vagas lista pelo campo "cargo", copiamos o título de cada tipo para esse campo
+// o menu de vagas lista pelo campo "cargo"
+// copia o título de cada tipo para esse campo
 export function paraLista(
   registros: Registro[],
   campoTitulo: string,

@@ -3,13 +3,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { EstruturaVagasMenu } from "@/components/shared/EstruturaMenuVagas";
-import type { Vaga } from "@/components/shared/EstruturaMenuVagas.data";
 import { apiUrl } from "@/lib/paginas";
 import {
   linhasPreenchidas,
   paraLista,
   valorDoCampo,
   type ConfigPainel,
+  type ItemLista,
   type Registro,
 } from "@/lib/painelVagas";
 
@@ -20,7 +20,7 @@ import {
 export function PainelVagas({ config }: { config: ConfigPainel }) {
   const [registros, setRegistros] = useState<Registro[]>([]);
   const [carregado, setCarregado] = useState(false);
-  const [selecionado, setSelecionado] = useState<Registro | null>(null);
+  const [selecionado, setSelecionado] = useState<ItemLista | null>(null);
 
   useEffect(() => {
     let ativo = true;
@@ -34,7 +34,7 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
         if (!ativo) return;
 
         if (!resposta.ok) {
-          toast.error(dados?.message || "Erro ao buscar vagas");
+          toast.error(dados?.message || "Erro ao buscar os dados");
           return;
         }
         setRegistros(Array.isArray(dados) ? dados : []);
@@ -60,8 +60,11 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
   return (
     <div className="flex w-full flex-col items-center">
       <EstruturaVagasMenu
-        itens={itens as unknown as Vaga[]}
-        onSelecionarVaga={(item) => setSelecionado(item as unknown as Registro)}
+        itens={itens}
+        // o menu devolve o mesmo objeto que recebeu; achamos o registro completo por referência
+        onSelecionarVaga={(item) =>
+          setSelecionado(itens.find((i) => i === item) ?? null)
+        }
       />
 
       {carregado && itens.length === 0 && (
@@ -91,7 +94,7 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
               {destaques.length + detalhes.length === 0 && (
                 <p className="text-zinc-500">
                   {valorDoCampo(selecionado, "cargo")} ainda não tem mais
-                  detalhes cadastros
+                  detalhes cadastrados.
                 </p>
               )}
             </>
