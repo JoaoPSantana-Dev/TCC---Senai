@@ -48,7 +48,7 @@ export default function Biblioteca() {
           <br/>
 
           <h2 className="text-red-600 font-bold">Softwares Disponíveis</h2>
-          <p>Os computadores da biblioteca possuem softwares específicos para o aprendizado e treinamento dos alunos. A seguir um lista com os 
+          <p>Os computadores da biblioteca possuem softwares específicos para o aprendizado e treinamento dos alunos. A seguir um lista de alguns dos 
           programas disponiveis:</p>
 
           <ul className="list-disc ml-10 mt-2" >
@@ -105,6 +105,10 @@ export default function Biblioteca() {
           </div>
         
           <BibliotecaStatus />
+
+          <br />
+
+          <p className="text-justify font-bold text-lg">Obs.: Para mais informações vá para a biblioteca e fale com um dos funcionários presentes.</p>
         </section>
       </Titulo>
     </EstruturaTotem>

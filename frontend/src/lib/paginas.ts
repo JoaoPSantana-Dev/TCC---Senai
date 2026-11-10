@@ -26,6 +26,7 @@ export const slugsReservados: readonly string[] = [
   "usuarios",
   "seguranca",
   "api",
+  "biblioteca",
 ];
 
 export interface ComponentePagina {
