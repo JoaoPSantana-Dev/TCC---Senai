@@ -12,13 +12,14 @@ import { Titulo } from "@/components/shared/TituloTotem";
 import { VagasCursos } from "@/components/shared/VagasCursos";
 import { VagasEmprego } from "@/components/shared/VagasEmprego";
 import { VagasEstagio } from "@/components/shared/VagasEstagio";
+import { validarIconeCampo } from "@/lib/iconeSvg";
 
 // registro dos componentes que podem ser usados nas páginas
 // para colocar um componente novo no gerenciador:
 // - adicione ele aqui (rótulo, componente e campos que podem ser editados)
 // - adicione o mesmo componente em backend/db/src/tables/paginas/paginas.constantes.ts (schemaComponentes)
 
-export type TipoCampo = "texto" | "textarea" | "booleano" | "select";
+export type TipoCampo = "texto" | "textarea" | "booleano" | "select" | "icone";
 
 export interface OpcaoCampo {
   valor: string;
@@ -29,7 +30,7 @@ export interface CampoComponente {
   nome: string;
   rotulo: string;
   tipo: TipoCampo;
-  padrao: string | boolean;
+  padrao: string | boolean | null;
   obrigatorio?: boolean;
   maximo?: number;
   opcoes?: OpcaoCampo[];
@@ -169,6 +170,18 @@ export const registroComponentes: Record<string, DefinicaoComponente> = {
         opcoes: opcoesIcones,
         padrao: opcoesIcones[0].valor,
       },
+      {
+        nome: "iconeEscolhido",
+        rotulo: "Outro ícone (substitui o de cima)",
+        tipo: "icone",
+        padrao: null,
+      },
+      {
+        nome: "somenteAdministrador",
+        rotulo: "Visível só para administradores",
+        tipo: "booleano",
+        padrao: false,
+      },
     ],
   },
 
@@ -226,7 +239,7 @@ export function criarComponentePadrao(tipo: string): ComponentePagina {
   const props: Record<string, unknown> = {};
 
   for (const campo of definicao?.campos ?? []) {
-    props[campo.nome] = campo.padrao;
+    if (campo.padrao !== null) props[campo.nome] = campo.padrao;
   }
 
   return { type: tipo, props };
@@ -239,7 +252,16 @@ export function validarCampo(
   valor: unknown,
 ): string | null {
   if (campo.tipo === "booleano") {
-    return typeof valor === "boolean" ? null : "Valor inválido";
+    return valor === undefined || typeof valor === "boolean"
+      ? null
+      : "Valor inválido";
+  }
+
+  if (campo.tipo === "icone") {
+    if (valor === undefined || valor === null) {
+      return campo.obrigatorio ? "Escolha um ícone" : null;
+    }
+    return validarIconeCampo(valor);
   }
 
   const texto = typeof valor === "string" ? valor.trim() : "";
@@ -314,10 +336,12 @@ export function normalizarConteudo(
   return conteudo.map((componente) => ({
     type: componente.type,
     props: Object.fromEntries(
-      Object.entries(componente.props).map(([nome, valor]) => [
-        nome,
-        typeof valor === "string" ? valor.trim() : valor,
-      ]),
+      Object.entries(componente.props)
+        .filter(([, valor]) => valor !== null && valor !== undefined)
+        .map(([nome, valor]) => [
+          nome,
+          typeof valor === "string" ? valor.trim() : valor,
+        ]),
     ),
   }));
 }
