@@ -72,7 +72,7 @@ export default function Biblioteca() {
           
           <br/>    
           <h2 className="text-red-600 font-bold ">Eventos</h2>
-          <p>A biblioteca realiza eventos durante o ano como a semana do livro e palestras</p>
+          <p>A biblioteca realiza eventos durante o ano como SELIBI, atividades culturais e palestras.</p>
 
 
           <br />    

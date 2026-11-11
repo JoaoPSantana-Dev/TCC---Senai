@@ -20,7 +20,6 @@ export const slugsReservados: readonly string[] = [
   'usuarios',
   'seguranca',
   'api',
-  'biblioteca',
 ];
 
 // páginas que o totem busca pelo slug (se forem apagadas, tudo explode)
@@ -33,8 +32,9 @@ export const slugsDoSistema: readonly string[] = [
   'vagas-estagios',
   'vagas-cursos',
   'sobre-senai-mariano-ferraz',
-  'horario-aulas',
+  'horario-aulas',  
   'biblioteca',
+
 ];
 
 const iconesMenu = [
