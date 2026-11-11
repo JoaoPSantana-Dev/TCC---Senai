@@ -3,13 +3,14 @@
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { EstruturaVagasMenu } from "@/components/shared/EstruturaMenuVagas";
-import type { Vaga } from "@/components/shared/EstruturaMenuVagas.data";
 import { apiUrl } from "@/lib/paginas";
+import { eventoVagasAtualizadas } from "@/lib/vagasEditor";
 import {
   linhasPreenchidas,
   paraLista,
   valorDoCampo,
   type ConfigPainel,
+  type ItemLista,
   type Registro,
 } from "@/lib/painelVagas";
 
@@ -20,7 +21,8 @@ import {
 export function PainelVagas({ config }: { config: ConfigPainel }) {
   const [registros, setRegistros] = useState<Registro[]>([]);
   const [carregado, setCarregado] = useState(false);
-  const [selecionado, setSelecionado] = useState<Registro | null>(null);
+  const [selecionado, setSelecionado] = useState<ItemLista | null>(null);
+  const [versao, setVersao] = useState(0);
 
   useEffect(() => {
     let ativo = true;
@@ -34,10 +36,11 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
         if (!ativo) return;
 
         if (!resposta.ok) {
-          toast.error(dados?.message || "Erro ao buscar vagas");
+          toast.error(dados?.message || "Erro ao buscar os dados");
           return;
         }
         setRegistros(Array.isArray(dados) ? dados : []);
+        setSelecionado(null);
         setCarregado(true);
       } catch {
         if (ativo) toast.error("Falha ao conectar com o servidor");
@@ -48,6 +51,18 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
     return () => {
       ativo = false;
     };
+  }, [config.caminho, versao]);
+
+  // no editor de páginas, o painel lateral avisa quando alguma vaga muda e busca a lista de novo
+  useEffect(() => {
+    const ouvir = (evento: Event) => {
+      const { caminho } =
+        (evento as CustomEvent<{ caminho?: string }>).detail ?? {};
+      if (caminho === config.caminho) setVersao((atual) => atual + 1);
+    };
+
+    window.addEventListener(eventoVagasAtualizadas, ouvir);
+    return () => window.removeEventListener(eventoVagasAtualizadas, ouvir);
   }, [config.caminho]);
 
   const itens = useMemo(
@@ -60,8 +75,11 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
   return (
     <div className="flex w-full flex-col items-center">
       <EstruturaVagasMenu
-        itens={itens as unknown as Vaga[]}
-        onSelecionarVaga={(item) => setSelecionado(item as unknown as Registro)}
+        itens={itens}
+        // o menu devolve o mesmo objeto que recebeu; achamos o registro completo por referência
+        onSelecionarVaga={(item) =>
+          setSelecionado(itens.find((i) => i === item) ?? null)
+        }
       />
 
       {carregado && itens.length === 0 && (
@@ -75,7 +93,9 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
               {destaques.map(({ rotulo, campo, valor }, indice) => (
                 <h2
                   key={campo}
-                  className={`mb-4 font-semibold text-zinc-700 ${indice === 0 ? "text-xl lg:text-2xl" : "text-lg lg:text-xl"}`}
+                  className={`mb-4 font-semibold text-zinc-700 ${
+                    indice === 0 ? "text-xl lg:text-2xl" : "text-lg lg:text-xl"
+                  }`}
                 >
                   <b>{rotulo}:</b> {valor}
                 </h2>
@@ -91,7 +111,7 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
               {destaques.length + detalhes.length === 0 && (
                 <p className="text-zinc-500">
                   {valorDoCampo(selecionado, "cargo")} ainda não tem mais
-                  detalhes cadastros
+                  detalhes cadastrados
                 </p>
               )}
             </>
