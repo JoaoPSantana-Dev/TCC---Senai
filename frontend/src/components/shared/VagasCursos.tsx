@@ -15,6 +15,7 @@ const config: ConfigPainel = {
   ],
   textoSelecionar: "Selecione um curso para ver os detalhes.",
   textoVazio: "Nenhum curso cadastrado no momento.",
+  campoArea: "areaEmprego"
 };
 
 // cursos, vindos do banco

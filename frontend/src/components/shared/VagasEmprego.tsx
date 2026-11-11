@@ -19,6 +19,7 @@ const config: ConfigPainel = {
   ],
   textoSelecionar: "Selecione uma vaga para visualizar sua descrição.",
   textoVazio: "Nenhuma vaga de emprego cadastrada no momento.",
+  campoArea: "areaEmprego",
 };
 
 // vagas de emprego, vindas do banco
