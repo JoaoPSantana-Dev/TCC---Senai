@@ -83,7 +83,7 @@ export default function Biblioteca() {
             <li>Pergamum: Pesquisa todos os acervos da rede de bibliotecas do SENAI São Paulo. </li>
             <li>Biblioteca Virtual Pearson: A Biblioteca Virtual Pearson está disponível para alunos da graduação e pós-graduação, para acessar solicite o acesso diretamente na Biblioteca do seu Campus. </li>
             <li>ABNTColeção: Serviço online para disseminação do uso de normas técnicas</li>
-            <ul>Formatação ABNT: A biblioteca auxilia alunos a formatar seus trabalhos de TCC na formatação ABNT.</ul>  
+            <li>Padronização ABNT: A biblioteca auxilia os alunos a padronizarem seus trabalhos de conclusão de curso no padrão ABNT.</li>  
           </ul>   
 
           <br />    
