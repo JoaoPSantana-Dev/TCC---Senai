@@ -134,7 +134,7 @@ export function SeletorIcone({ valor, onChange }: SeletorIconeProps) {
             <p className="text-sm text-zinc-500">Carregando ícones...</p>
           ) : (
             <>
-              <div className="grid max-h-96 grid-cols-3 gap-2 overflow-y-auto pr-1">
+              <div className="flex flex-col gap-3">
                 <div className="grid max-h-96 grid-cols-3 gap-2 overflow-y-auto pr-1">
                   {filtrados.slice(0, limite).map((item) => (
                     <button
