@@ -2,7 +2,8 @@ import type { ReactNode } from "react";
 import { FieldLabel, type Field } from "@puckeditor/core";
 import { LayoutPagina } from "@/components/shared/LayoutPagina";
 import { ehIconeEscolhido } from "@/lib/iconeSvg";
-import { tiposPagina, type IconeMenu } from "@/lib/paginas";
+import { tiposPagina } from "@/lib/paginas";
+import { PainelVagasNoEditor } from "./PainelVagasNoEditor";
 import { SeletorIcone } from "./SeletorIcone";
 import {
   registroComponentes,
@@ -65,6 +66,7 @@ function semPropsInternas(props: Record<string, unknown>) {
   const resto = { ...props };
   delete resto.id;
   delete resto.puck;
+  delete resto.__vagas;
   return resto;
 }
 
@@ -76,9 +78,25 @@ const componentes = Object.fromEntries(
       tipo,
       {
         label: definicao.rotulo,
-        fields: Object.fromEntries(
-          definicao.campos.map((campo) => [campo.nome, campoParaPuck(campo)]),
-        ),
+        fields: {
+          ...Object.fromEntries(
+            definicao.campos.map((campo) => [campo.nome, campoParaPuck(campo)]),
+          ),
+          // painel para adicionar, editar e excluir as vagas do banco
+          // "__vagas" não guarda valor nenhum: é só o lugar onde o painel aparece
+          ...(definicao.painelDeVagas
+            ? {
+                __vagas: {
+                  type: "custom",
+                  render: () => (
+                    <FieldLabel label="Vagas cadastradas">
+                      <PainelVagasNoEditor tipo={definicao.painelDeVagas!} />
+                    </FieldLabel>
+                  ),
+                } as Field,
+              }
+            : {}),
+        },
         defaultProps: Object.fromEntries(
           definicao.campos
             .filter((campo) => campo.padrao !== null)
@@ -105,7 +123,8 @@ function RaizDaPagina({ children, nomePagina, puck }: RaizProps) {
   const titulo = nomePagina?.trim() || "Sem nome";
 
   // "children" é a área onde os componentes são soltos e o Puck renderiza um <div> ali
-  // as classes [&>div] repetem no canvas o grid/coluna que a página pública usa
+  // as classes [&>div] repetem no canvas o grid/coluna que a página pública usa na homepage
+
   if (slug === "homepage") {
     return (
       <LayoutPagina slug={slug} nomePagina={titulo} ocultarMenu>
@@ -166,7 +185,7 @@ export const configPuck = {
         }) => (
           <FieldLabel label="Ícone do menu">
             <SeletorIcone
-              valor={(value as IconeMenu | null) ?? null}
+              valor={ehIconeEscolhido(value) ? value : null}
               onChange={(icone) => onChange(icone)}
             />
           </FieldLabel>

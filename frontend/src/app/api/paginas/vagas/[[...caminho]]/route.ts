@@ -1,11 +1,11 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { chamarBackend } from "@/lib/backend";
-import { resolverRotaVagas } from "@/lib/vagasAdmin";
+import { resolverRotaVagas } from "@/lib/vagasEditor";
 
-// repassa para o backend /vagas-emprego, /vagas-estagio, /vagas-curso com o token do cookie httpOnly.
-// só passam listar e criar em /api/vagas/<tipo>, e editar e apagar em /api/vagas/<tipo>/<id>.
-// o backend ainda confere que quem escreve é administrador.
+// usada pelo editor de páginas para gravar as vagas, repassa ao backend com o token do cookie httpOnly.
+// só passam listar e criar em /api/paginas/vagas/<tipo>, editar e apagar em /api/paginas/vagas/<tipo>/<id>
+// tipo = emprego, estagio ou curso
 type Metodo = "GET" | "POST" | "PATCH" | "DELETE";
 type Contexto = { params: Promise<{ caminho?: string[] }> };
 

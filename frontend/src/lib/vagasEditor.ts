@@ -1,5 +1,6 @@
-// gerenciador de vagas, o que cada tipo de emprego, estágio ou curso tem de campos e as regras de validação
-// as regras são as mesmas dos DTOs do backend
+// editor de vagas de emprego, estágio e cursos
+// aqui são os campos de cada tipo, as regras de validações,
+// as regras que são as mesmas dos dtos do backend e o token do administrador na rota /api/paginas/vagas
 
 export type TipoVaga = "emprego" | "estagio" | "curso";
 export type RegistroVaga = Record<string, unknown>;
@@ -14,15 +15,13 @@ export interface CampoVaga {
 
 export interface ConfigVaga {
   tipo: TipoVaga;
-  rotuloAba: string;
+  caminhoBackend: string; // rota pública do backend, a mesma que o painel do totem lê
   idCampo: string;
   campoTitulo: string;
-  colunas: { rotulo: string; campo: string }[];
+  campoSubtitulo: string;
   campos: CampoVaga[];
-  textoNovo: string; // botão
-  tituloNovo: string; // título do formulário de criação
-  nomeSingular: string; // "vaga de emprego", "curso"
-  artigoExcluida: "excluída" | "excluído";
+  nomeSingular: string; // "vaga", "curso"
+  textoNovo: string;
   textoVazio: string;
 }
 
@@ -61,48 +60,32 @@ function camposDeVaga(campoArea: string): CampoVaga[] {
 export const tiposDeVaga: Record<TipoVaga, ConfigVaga> = {
   emprego: {
     tipo: "emprego",
-    rotuloAba: "Vagas de emprego",
+    caminhoBackend: "/vagas-emprego",
     idCampo: "idEmprego",
     campoTitulo: "cargo",
-    colunas: [
-      { rotulo: "Cargo", campo: "cargo" },
-      { rotulo: "Empresa", campo: "nomeEmpresa" },
-      { rotulo: "Área", campo: "areaEmprego" },
-    ],
+    campoSubtitulo: "nomeEmpresa",
     campos: camposDeVaga("areaEmprego"),
-    textoNovo: "Adicionar vaga",
-    tituloNovo: "Nova vaga de emprego",
     nomeSingular: "vaga",
-    artigoExcluida: "excluída",
+    textoNovo: "Adicionar vaga",
     textoVazio: "Nenhuma vaga de emprego cadastrada.",
   },
   estagio: {
     tipo: "estagio",
-    rotuloAba: "Vagas de estágio",
+    caminhoBackend: "/vagas-estagio",
     idCampo: "idEstagio",
     campoTitulo: "cargo",
-    colunas: [
-      { rotulo: "Cargo", campo: "cargo" },
-      { rotulo: "Empresa", campo: "nomeEmpresa" },
-      { rotulo: "Área", campo: "areaEstagio" },
-    ],
+    campoSubtitulo: "nomeEmpresa",
     campos: camposDeVaga("areaEstagio"),
-    textoNovo: "Adicionar vaga",
-    tituloNovo: "Nova vaga de estágio",
     nomeSingular: "vaga",
-    artigoExcluida: "excluída",
+    textoNovo: "Adicionar vaga",
     textoVazio: "Nenhuma vaga de estágio cadastrada.",
   },
   curso: {
     tipo: "curso",
-    rotuloAba: "Cursos",
+    caminhoBackend: "/vagas-curso",
     idCampo: "idCurso",
     campoTitulo: "nomeCurso",
-    colunas: [
-      { rotulo: "Curso", campo: "nomeCurso" },
-      { rotulo: "Área", campo: "areaCurso" },
-      { rotulo: "Turno", campo: "turno" },
-    ],
+    campoSubtitulo: "areaCurso",
     campos: [
       campoVaga("nomeCurso", "Nome do curso", true),
       campoVaga("areaCurso", "Área", false),
@@ -112,22 +95,49 @@ export const tiposDeVaga: Record<TipoVaga, ConfigVaga> = {
       campoVaga("descricao", "Descrição", false, "textarea"),
       campoVaga("requisitos", "Requisitos", false, "textarea"),
     ],
-    textoNovo: "Adicionar curso",
-    tituloNovo: "Novo curso",
     nomeSingular: "curso",
-    artigoExcluida: "excluído",
+    textoNovo: "Adicionar curso",
     textoVazio: "Nenhum curso cadastrado.",
   },
 };
-
-export const ordemDosTipos: TipoVaga[] = ["emprego", "estagio", "curso"];
 
 export function ehTipoVaga(valor: unknown): valor is TipoVaga {
   return valor === "emprego" || valor === "estagio" || valor === "curso";
 }
 
 function texto(valor: unknown): string {
-  return valor === null || valor === undefined ? "" : String(valor);
+  return valor === null || valor === undefined ? "" : String(valor).trim();
+}
+
+// ---------- itens da lista ----------
+
+export const idDoRegistro = (config: ConfigVaga, registro: RegistroVaga) =>
+  Number(registro[config.idCampo]);
+
+export const tituloDoItem = (config: ConfigVaga, registro: RegistroVaga) =>
+  texto(registro[config.campoTitulo]) || "(sem título)";
+
+export const subtituloDoItem = (config: ConfigVaga, registro: RegistroVaga) =>
+  texto(registro[config.campoSubtitulo]);
+
+// troca o item pelo salvo ou se for novo coloca no fim
+export function atualizarLista(
+  config: ConfigVaga,
+  lista: RegistroVaga[],
+  salvo: RegistroVaga,
+) {
+  const id = idDoRegistro(config, salvo);
+  return lista.some((item) => idDoRegistro(config, item) === id)
+    ? lista.map((item) => (idDoRegistro(config, item) === id ? salvo : item))
+    : [...lista, salvo];
+}
+
+export function removerDaLista(
+  config: ConfigVaga,
+  lista: RegistroVaga[],
+  id: number,
+) {
+  return lista.filter((item) => idDoRegistro(config, item) !== id);
 }
 
 // valores do formulário tudo texto, campo vazio do banco vira ""
@@ -166,13 +176,7 @@ export function corpoParaEnviar(
   );
 }
 
-// ---------- rotas /api/vagas usadas pela rota do Next e pelos testes ----------
-
-const destinosBackend: Record<TipoVaga, string> = {
-  emprego: "/vagas-emprego",
-  estagio: "/vagas-estagio",
-  curso: "/vagas-curso",
-};
+// ---------- rota /api/vagas ----------
 
 // devolve o caminho no backend, ou null se a combinação de método e caminho não é permitida
 export function resolverRotaVagas(
@@ -182,20 +186,19 @@ export function resolverRotaVagas(
   const [tipo, id, ...resto] = subcaminho.split("/");
   if (resto.length > 0 || !ehTipoVaga(tipo)) return null;
 
-  const base = destinosBackend[tipo];
+  const base = tiposDeVaga[tipo].caminhoBackend;
   if (id === undefined)
     return metodo === "GET" || metodo === "POST" ? base : null;
   if (!/^\d+$/.test(id)) return null;
   return metodo === "PATCH" || metodo === "DELETE" ? `${base}/${id}` : null;
 }
 
-// chama as rotas /api/vagas, elas repassam ao backend com o token do cookie
 export async function chamarVagas(
   caminho: string,
   metodo: "GET" | "POST" | "PATCH" | "DELETE" = "GET",
   corpo?: unknown,
 ) {
-  const resposta = await fetch(`/api/vagas/${caminho}`, {
+  const resposta = await fetch(`/api/paginas/vagas/${caminho}`, {
     method: metodo,
     headers: { "Content-Type": "application/json" },
     body: corpo === undefined ? undefined : JSON.stringify(corpo),
@@ -203,4 +206,15 @@ export async function chamarVagas(
   });
   const dados: unknown = await resposta.json().catch(() => ({}));
   return { ok: resposta.ok, dados };
+}
+
+// atualizar a pré-visualização do editor
+export const eventoVagasAtualizadas = "vagas-atualizadas";
+
+export function avisarVagasAtualizadas(caminhoBackend: string) {
+  window.dispatchEvent(
+    new CustomEvent(eventoVagasAtualizadas, {
+      detail: { caminho: caminhoBackend },
+    }),
+  );
 }

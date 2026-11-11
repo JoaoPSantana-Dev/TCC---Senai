@@ -41,14 +41,7 @@ interface EditorPuckProps {
   dadosIniciais: DadosIniciais;
 }
 
-// páginas de vagas
-// o editor mostra um atalho para gerenciar as vagas que elas exibem
-const tipoDeVagaDaPagina: Record<string, string | undefined> = {
-  "vagas-empregos": "emprego",
-  "vagas-estagios": "estagio",
-  "vagas-curso": "curso,",
-};
-
+// "Cartão do menu nº 2 — Título: Campo obrigatório"
 function listarErros(conteudo: ComponentePagina[], erros: ErrosConteudo) {
   const linhas = [...erros.geral];
 
@@ -62,23 +55,24 @@ function listarErros(conteudo: ComponentePagina[], erros: ErrosConteudo) {
         (campo) => campo.nome === nome,
       )?.rotulo;
       linhas.push(
-        `${definicao?.rotulo ?? componente.type} ${posicao + 1}${rotulo ? ` - ${rotulo}` : ""}: ${mensagem}`,
+        `${definicao?.rotulo ?? componente.type} nº ${posicao + 1}${rotulo ? ` — ${rotulo}` : ""}: ${mensagem}`,
       );
     }
   }
+
   return linhas;
 }
 
 export function EditorPuck({ slug, dadosIniciais }: EditorPuckProps) {
   const router = useRouter();
 
-  // o puck só lê os dados na primeira vez, guardamos aqui para não pegar os ids de novo
+  // o puck só lê os dados na primeira vez
   const [salvo] = useState(() => dadosIniciais);
   const salvoRef = useRef(assinaturaDados(paraDadosPuck(salvo)));
   const salvandoRef = useRef(false);
   const [alterado, setAlterado] = useState(false);
 
-  // na homepage, as páginas que ainda não tiverem cartão entrarão como cartões de verdade na lista
+  // na homepage, as páginas que ainda não têm cartão entram como cartões de verdade na lista
   const [dadosPuck, setDadosPuck] = useState<DadosPuck | null>(() =>
     slug === "homepage" ? null : paraDadosPuck(salvo),
   );
@@ -98,7 +92,7 @@ export function EditorPuck({ slug, dadosIniciais }: EditorPuckProps) {
       if (novos.length > 0) {
         setAlterado(true);
         toast.info(
-          `${novos.length} ${novos.length === 1 ? "cartão foi adicionado" : "cartões foram adicionados"} à lista (páginas que ainda não tinham cartões). Clique em "Salvar alterações para manter`,
+          `${novos.length} ${novos.length === 1 ? "cartão foi adicionado" : "cartões foram adicionados"} à lista (páginas que ainda não tinham cartão). Clique em "Salvar alterações" para manter`,
           { duration: 8000 },
         );
       }
@@ -206,8 +200,6 @@ export function EditorPuck({ slug, dadosIniciais }: EditorPuckProps) {
     );
   }
 
-  const tipoDeVaga = tipoDeVagaDaPagina[slug];
-
   return (
     <div className="fixed inset-0">
       <Puck
@@ -246,16 +238,6 @@ export function EditorPuck({ slug, dadosIniciais }: EditorPuckProps) {
                 <span className="text-sm text-amber-700">
                   Alterações não salvas
                 </span>
-              )}
-              {tipoDeVaga && (
-                <button
-                  type="button"
-                  onClick={() =>
-                    irPara(`/gerenciador-vagas?tipo=${tipoDeVaga}`)
-                  }
-                >
-                  Gerenciar vagas
-                </button>
               )}
               <button
                 type="button"

@@ -5,14 +5,15 @@ import {
   CartaoMenu,
   iconesMenu,
 } from "@/app/(public)/homepage/components/CartaoMenu";
-import { type ComponentePagina, limiteComponentes } from "@/lib/paginas";
 import { Mapa } from "@/app/(public)/mapa/Mapa";
 import { Noticias } from "@/components/shared/Noticias";
 import { Titulo } from "@/components/shared/TituloTotem";
 import { VagasCursos } from "@/components/shared/VagasCursos";
 import { VagasEmprego } from "@/components/shared/VagasEmprego";
 import { VagasEstagio } from "@/components/shared/VagasEstagio";
+import { type ComponentePagina, limiteComponentes } from "@/lib/paginas";
 import { validarIconeCampo } from "@/lib/iconeSvg";
+import type { TipoVaga } from "@/lib/vagasEditor";
 
 // registro dos componentes que podem ser usados nas páginas
 // para colocar um componente novo no gerenciador:
@@ -42,6 +43,7 @@ export interface DefinicaoComponente {
   rotulo: string;
   componente: ComponentType<any>;
   campos: CampoComponente[];
+  painelDeVagas?: TipoVaga;
 }
 
 // imagens que existem na pasta /public e podem ser usadas nas páginas
@@ -212,18 +214,21 @@ export const registroComponentes: Record<string, DefinicaoComponente> = {
     rotulo: "Vagas de emprego",
     componente: VagasEmprego,
     campos: [],
+    painelDeVagas: "emprego",
   },
 
   VagasEstagio: {
     rotulo: "Vagas de estágio",
     componente: VagasEstagio,
     campos: [],
+    painelDeVagas: "estagio",
   },
 
   VagasCursos: {
     rotulo: "Lista de cursos",
     componente: VagasCursos,
     campos: [],
+    painelDeVagas: "curso",
   },
 
   Noticias: {
@@ -233,7 +238,7 @@ export const registroComponentes: Record<string, DefinicaoComponente> = {
   },
 };
 
-// Criação e validação de componentes, usadas pelo formulário de edição
+// criação e validação de componentes, usadas pelo formulário de edição
 export function criarComponentePadrao(tipo: string): ComponentePagina {
   const definicao = registroComponentes[tipo];
   const props: Record<string, unknown> = {};
