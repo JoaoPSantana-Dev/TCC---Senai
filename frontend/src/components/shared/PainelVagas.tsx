@@ -6,6 +6,7 @@ import { EstruturaVagasMenu } from "@/components/shared/EstruturaMenuVagas";
 import type { Vaga } from "@/components/shared/EstruturaMenuVagas.data";
 import { FiltroVagas } from "@/components/shared/FiltroVagas";
 import { apiUrl } from "@/lib/paginas";
+import { eventoVagasAtualizadas } from "@/lib/vagasEditor";
 import {
   areasDisponiveis,
   filtrarRegistros,
@@ -13,6 +14,7 @@ import {
   paraLista,
   valorDoCampo,
   type ConfigPainel,
+  type ItemLista,
   type Registro,
 } from "@/lib/painelVagas";
 
@@ -41,10 +43,11 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
         if (!ativo) return;
 
         if (!resposta.ok) {
-          toast.error(dados?.message || "Erro ao buscar vagas");
+          toast.error(dados?.message || "Erro ao buscar os dados");
           return;
         }
         setRegistros(Array.isArray(dados) ? dados : []);
+        setSelecionado(null);
         setCarregado(true);
       } catch {
         if (ativo) toast.error("Falha ao conectar com o servidor");
@@ -55,6 +58,18 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
     return () => {
       ativo = false;
     };
+  }, [config.caminho, versao]);
+
+  // no editor de páginas, o painel lateral avisa quando alguma vaga muda e busca a lista de novo
+  useEffect(() => {
+    const ouvir = (evento: Event) => {
+      const { caminho } =
+        (evento as CustomEvent<{ caminho?: string }>).detail ?? {};
+      if (caminho === config.caminho) setVersao((atual) => atual + 1);
+    };
+
+    window.addEventListener(eventoVagasAtualizadas, ouvir);
+    return () => window.removeEventListener(eventoVagasAtualizadas, ouvir);
   }, [config.caminho]);
 
   const itens = useMemo(
@@ -127,7 +142,9 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
               {destaques.map(({ rotulo, campo, valor }, indice) => (
                 <h2
                   key={campo}
-                  className={`mb-4 font-semibold text-zinc-700 ${indice === 0 ? "text-xl lg:text-2xl" : "text-lg lg:text-xl"}`}
+                  className={`mb-4 font-semibold text-zinc-700 ${
+                    indice === 0 ? "text-xl lg:text-2xl" : "text-lg lg:text-xl"
+                  }`}
                 >
                   <b>{rotulo}:</b> {valor}
                 </h2>
@@ -143,6 +160,7 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
               {destaques.length + detalhes.length === 0 && (
                 <p className="text-zinc-500">
                   {valorDoCampo(selecionado, "cargo")} ainda não tem mais
+                  detalhes cadastrados
                   detalhes cadastrados
                 </p>
               )}

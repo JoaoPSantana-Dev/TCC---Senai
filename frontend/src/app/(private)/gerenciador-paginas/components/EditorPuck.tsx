@@ -17,6 +17,7 @@ import {
   assinaturaDados,
   doDadosPuck,
   paraDadosPuck,
+  type DadosPuck,
   type IconeDoMenu,
 } from "@/lib/puckDados";
 import {
@@ -26,6 +27,8 @@ import {
   type ErrosConteudo,
 } from "./registroComponentes";
 import { configPuck, dicionarioPuck } from "./PuckConfig";
+import { buscarItensMenuNoNavegador } from "@/lib/menuTotem";
+import { cartoesFaltantes } from "@/lib/cartoesHomepage";
 
 type DadosIniciais = PaginaCompleta & {
   iconeMenu?: IconeDoMenu | null;
@@ -38,6 +41,7 @@ interface EditorPuckProps {
   dadosIniciais: DadosIniciais;
 }
 
+// "Cartão do menu nº 2 — Título: Campo obrigatório"
 function listarErros(conteudo: ComponentePagina[], erros: ErrosConteudo) {
   const linhas = [...erros.geral];
 
@@ -51,21 +55,53 @@ function listarErros(conteudo: ComponentePagina[], erros: ErrosConteudo) {
         (campo) => campo.nome === nome,
       )?.rotulo;
       linhas.push(
-        `${definicao?.rotulo ?? componente.type} ${posicao + 1}${rotulo ? ` - ${rotulo}` : ""}: ${mensagem}`,
+        `${definicao?.rotulo ?? componente.type} nº ${posicao + 1}${rotulo ? ` — ${rotulo}` : ""}: ${mensagem}`,
       );
     }
   }
+
   return linhas;
 }
 
 export function EditorPuck({ slug, dadosIniciais }: EditorPuckProps) {
   const router = useRouter();
 
-  // o puck só lê os dados na primeira vez, guardamos aqui para não pegar os ids de novo
-  const [dadosPuck] = useState(() => paraDadosPuck(dadosIniciais));
-  const salvoRef = useRef(assinaturaDados(dadosPuck));
+  // o puck só lê os dados na primeira vez
+  const [salvo] = useState(() => dadosIniciais);
+  const salvoRef = useRef(assinaturaDados(paraDadosPuck(salvo)));
   const salvandoRef = useRef(false);
   const [alterado, setAlterado] = useState(false);
+
+  // na homepage, as páginas que ainda não têm cartão entram como cartões de verdade na lista
+  const [dadosPuck, setDadosPuck] = useState<DadosPuck | null>(() =>
+    slug === "homepage" ? null : paraDadosPuck(salvo),
+  );
+
+  useEffect(() => {
+    if (slug !== "homepage") return;
+
+    let ativo = true;
+    buscarItensMenuNoNavegador().then((itens) => {
+      if (!ativo) return;
+
+      const novos = cartoesFaltantes(salvo.conteudo, itens);
+      setDadosPuck(
+        paraDadosPuck({ ...salvo, conteudo: [...salvo.conteudo, ...novos] }),
+      );
+
+      if (novos.length > 0) {
+        setAlterado(true);
+        toast.info(
+          `${novos.length} ${novos.length === 1 ? "cartão foi adicionado" : "cartões foram adicionados"} à lista (páginas que ainda não tinham cartão). Clique em "Salvar alterações" para manter`,
+          { duration: 8000 },
+        );
+      }
+    });
+
+    return () => {
+      ativo = false;
+    };
+  }, [slug, salvo]);
 
   // avisa ao fechar a aba com alterações não salvas
   useEffect(() => {
@@ -76,7 +112,7 @@ export function EditorPuck({ slug, dadosIniciais }: EditorPuckProps) {
     return () => window.removeEventListener("beforeunload", avisar);
   }, [alterado]);
 
-  async function voltar() {
+  async function irPara(destino: string) {
     if (alterado) {
       const sair = await alerta.confirmar({
         titulo: "Sair sem salvar?",
@@ -88,7 +124,7 @@ export function EditorPuck({ slug, dadosIniciais }: EditorPuckProps) {
       });
       if (!sair) return;
     }
-    router.push("/gerenciador-paginas");
+    router.push(destino);
   }
 
   async function publicar(dados: Data) {
@@ -156,55 +192,65 @@ export function EditorPuck({ slug, dadosIniciais }: EditorPuckProps) {
     }
   }
 
+  if (!dadosPuck) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-white text-zinc-600">
+        Carregando o editor...
+      </div>
+    );
+  }
+
   return (
-    <Puck
-      config={configPuck as unknown as Config}
-      data={dadosPuck as unknown as Data}
-      metadata={{ slug }}
-      headerTitle={`Editando: ${dadosIniciais.nomePagina}`}
-      headerPath={`/${slug}`}
-      dictionary={dicionarioPuck}
-      viewports={[
-        {
-          width: 1080,
-          height: "auto",
-          icon: "Monitor",
-          label: "Totem (1080 px)",
-        },
-        {
-          width: 768,
-          height: "auto",
-          icon: "Tablet",
-          label: "Tablet (768 px)",
-        },
-      ]}
-      onChange={(dados) =>
-        setAlterado(
-          assinaturaDados(
-            dados as unknown as Parameters<typeof assinaturaDados>[0],
-          ) !== salvoRef.current,
-        )
-      }
-      onPublish={publicar}
-      overrides={{
-        headerActions: ({ children }) => (
-          <>
-            {alterado && (
-              <span className="text-sm text-amber-700">
-                Alterações não salvas
-              </span>
-            )}
-            <button
-              type="button"
-              onClick={voltar}
-              className="cursor-pointer rounded-md border border-zinc-300 px-3 py-1.5 text-sm hover:bg-zinc-100"
-            >
-              Voltar
-            </button>
-            {children}
-          </>
-        ),
-      }}
-    />
+    <div className="fixed inset-0">
+      <Puck
+        config={configPuck as unknown as Config}
+        data={dadosPuck as unknown as Data}
+        metadata={{ slug }}
+        headerTitle={`Editando: ${salvo.nomePagina}`}
+        headerPath={`/${slug}`}
+        dictionary={dicionarioPuck}
+        viewports={[
+          {
+            width: 1080,
+            height: "auto",
+            icon: "Monitor",
+            label: "Totem (1080 px)",
+          },
+          {
+            width: 768,
+            height: "auto",
+            icon: "Tablet",
+            label: "Tablet (768 px)",
+          },
+        ]}
+        onChange={(dados) =>
+          setAlterado(
+            assinaturaDados(
+              dados as unknown as Parameters<typeof assinaturaDados>[0],
+            ) !== salvoRef.current,
+          )
+        }
+        onPublish={publicar}
+        overrides={{
+          headerActions: ({ children }) => (
+            <>
+              {alterado && (
+                <span className="text-sm text-amber-700">
+                  Alterações não salvas
+                </span>
+              )}
+              <button
+                type="button"
+                onClick={() => irPara("/gerenciador-paginas")}
+                className="cursor-pointer rounded-md border border-zinc-300 px-3 py-1.5 text-sm hover:bg-zinc-100"
+              >
+                Voltar
+              </button>
+              {children}
+            </>
+          ),
+        }}
+      />
+    </div>
   );
 }

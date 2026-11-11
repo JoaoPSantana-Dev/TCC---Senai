@@ -42,7 +42,7 @@ export function linhasPreenchidas(
 export function paraLista(
   registros: Registro[],
   campoTitulo: string,
-): Registro[] {
+): ItemLista[] {
   return registros.map((registro) => ({
     ...registro,
     cargo: valorDoCampo(registro, campoTitulo),

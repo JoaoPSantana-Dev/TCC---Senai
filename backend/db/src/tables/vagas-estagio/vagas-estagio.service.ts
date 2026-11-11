@@ -1,44 +1,44 @@
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateVagaEstagioDto } from '../dto/create-vaga-estagio.dto';
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../../prisma/prisma.service';
 import { UpdateVagaEstagioDto } from '../dto/update-vaga-estagio.dto';
+import { PrismaService } from '../../prisma/prisma.service';
 
 @Injectable()
 export class VagasEstagioService {
   constructor(private prisma: PrismaService) {}
 
-  criarVagaEstagio(createVagaEstagioDto: CreateVagaEstagioDto) {
-    return this.prisma.vagaEstagio.create({
-      data: createVagaEstagioDto,
-    });
+  criarVagaEstagio(dto: CreateVagaEstagioDto) {
+    return this.prisma.vagaEstagio.create({ data: dto });
   }
 
-  criarVariasVagasEstagios(createVagaEstagioDto: CreateVagaEstagioDto[]) {
-    return this.prisma.vagaEstagio.createMany({
-      data: createVagaEstagioDto,
-    });
+  criarVariasVagasEstagios(dtos: CreateVagaEstagioDto[]) {
+    return this.prisma.vagaEstagio.createMany({ data: dtos });
   }
 
+  // na ordem em que foram cadastradas
   listarTodasVagasEstagio() {
-    return this.prisma.vagaEstagio.findMany();
+    return this.prisma.vagaEstagio.findMany({ orderBy: { idEstagio: 'asc' } });
   }
 
-  listarUmaVagaEstagio(id: number) {
-    return this.prisma.vagaEstagio.findUnique({
+  async listarUmaVagaEstagio(id: number) {
+    const vaga = await this.prisma.vagaEstagio.findUnique({
       where: { idEstagio: id },
     });
+    if (!vaga)
+      throw new NotFoundException(`O estágio '${id}' não foi encontrado`);
+    return vaga;
   }
 
-  apagarVagaEstagio(id: number) {
-    return this.prisma.vagaEstagio.delete({
-      where: { idEstagio: id },
-    });
+  async apagarVagaEstagio(id: number) {
+    await this.listarUmaVagaEstagio(id);
+    return this.prisma.vagaEstagio.delete({ where: { idEstagio: id } });
   }
 
-  updateVagaEstagio(id: number, updateVagaEstagioDTO: UpdateVagaEstagioDto) {
+  async updateVagaEstagio(id: number, dto: UpdateVagaEstagioDto) {
+    await this.listarUmaVagaEstagio(id);
     return this.prisma.vagaEstagio.update({
       where: { idEstagio: id },
-      data: updateVagaEstagioDTO,
+      data: dto,
     });
   }
 }
