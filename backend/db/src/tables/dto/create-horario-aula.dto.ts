@@ -11,7 +11,7 @@ export class CreateHorarioAulaDto {
 
   @IsString()
   @IsNotEmpty()
-  nomeAula!:  string;
+  materia!:  string;
 
   @IsString()
   @IsNotEmpty()

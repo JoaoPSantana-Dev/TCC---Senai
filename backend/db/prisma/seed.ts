@@ -6,7 +6,7 @@ const adapter = new PrismaMariaDb({
   port: 3306,
   user: 'root',
   password: 'root',
-  database: 'totem',
+  database: 'totem_db',
   connectionLimit: 5,
 });
 

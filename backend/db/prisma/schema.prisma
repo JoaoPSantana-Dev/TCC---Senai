@@ -104,7 +104,7 @@ model HorarioAula {
   idHorariosAula Int     @id @default(autoincrement()) @map("id_horarios_aula")
   nomeCurso      String
   professor      String
-  nomeAula       String
+  materia        String
   turno          String
   dia            String
   idSala         Int     @map("id_sala")
