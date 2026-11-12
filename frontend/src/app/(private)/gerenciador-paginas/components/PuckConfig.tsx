@@ -138,7 +138,9 @@ function RaizDaPagina({ children, nomePagina, puck }: RaizProps) {
   if (slug === "descanso") {
     return (
       <LayoutPagina slug={slug} nomePagina={titulo} ocultarMenu>
-        {children}
+        <div className="flex w-full flex-1 flex-col items-center justify-center [&>div]:flex [&>div]:w-full [&>div]:flex-col [&>div]:items-center [&>div]:justify-center">
+          {children}
+        </div>
       </LayoutPagina>
     );
   }
@@ -164,32 +166,6 @@ export const configPuck = {
         type: "select",
         label: "Tipo da página",
         options: tiposPagina.map((tipo) => ({ label: tipo, value: tipo })),
-      },
-      mostrarNoMenu: {
-        type: "radio",
-        label: "Mostrar no menu e na homepage",
-        options: opcoesSimNao,
-      },
-      ordemMenu: {
-        type: "number",
-        label: "Posição no menu (menor aparece primeiro)",
-      },
-      iconeMenu: {
-        type: "custom",
-        render: ({
-          value,
-          onChange,
-        }: {
-          value: unknown;
-          onChange: (valor: unknown) => void;
-        }) => (
-          <FieldLabel label="Ícone do menu">
-            <SeletorIcone
-              valor={ehIconeEscolhido(value) ? value : null}
-              onChange={(icone) => onChange(icone)}
-            />
-          </FieldLabel>
-        ),
       },
     },
     render: RaizDaPagina,

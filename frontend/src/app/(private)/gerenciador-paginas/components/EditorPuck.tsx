@@ -1,7 +1,7 @@
 "use client";
 
 import "@puckeditor/core/puck.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import { Puck, type Config, type Data } from "@puckeditor/core";
 import { toast } from "sonner";
@@ -18,7 +18,6 @@ import {
   doDadosPuck,
   paraDadosPuck,
   type DadosPuck,
-  type IconeDoMenu,
 } from "@/lib/puckDados";
 import {
   normalizarConteudo,
@@ -30,16 +29,16 @@ import { configPuck, dicionarioPuck } from "./PuckConfig";
 import { buscarItensMenuNoNavegador } from "@/lib/menuTotem";
 import { cartoesFaltantes } from "@/lib/cartoesHomepage";
 
-type DadosIniciais = PaginaCompleta & {
-  iconeMenu?: IconeDoMenu | null;
-  ordemMenu?: number;
-  mostrarNoMenu?: boolean;
-};
-
 interface EditorPuckProps {
   slug: string;
-  dadosIniciais: DadosIniciais;
+  dadosIniciais: PaginaCompleta;
 }
+
+// para parar com o erro de hidratação
+// false no servidor e na hidratação, true só no navegador
+const subscreverNada = () => () => {};
+const noNavegador = () => false;
+const noServidor = () => false;
 
 // "Cartão do menu nº 2 — Título: Campo obrigatório"
 function listarErros(conteudo: ComponentePagina[], erros: ErrosConteudo) {
@@ -65,6 +64,7 @@ function listarErros(conteudo: ComponentePagina[], erros: ErrosConteudo) {
 
 export function EditorPuck({ slug, dadosIniciais }: EditorPuckProps) {
   const router = useRouter();
+  const montado = useSyncExternalStore(subscreverNada, noNavegador, noServidor);
 
   // o puck só lê os dados na primeira vez
   const [salvo] = useState(() => dadosIniciais);
@@ -164,9 +164,6 @@ export function EditorPuck({ slug, dadosIniciais }: EditorPuckProps) {
             nomePagina: raiz.nomePagina.trim(),
             tipoPagina: raiz.tipoPagina,
             conteudo: normalizarConteudo(conteudo),
-            iconeMenu: raiz.iconeMenu,
-            ordemMenu: raiz.ordemMenu,
-            mostrarNoMenu: raiz.mostrarNoMenu,
           }),
         },
       );
@@ -192,7 +189,7 @@ export function EditorPuck({ slug, dadosIniciais }: EditorPuckProps) {
     }
   }
 
-  if (!dadosPuck) {
+  if (!montado || !dadosPuck) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-white text-zinc-600">
         Carregando o editor...

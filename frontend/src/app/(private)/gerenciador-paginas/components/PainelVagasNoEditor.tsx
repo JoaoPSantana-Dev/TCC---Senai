@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { alerta } from "@/lib/alerta";
 import { mensagemDoBackend } from "@/lib/autenticacao";
@@ -205,8 +205,8 @@ function FormularioNoPainel({
   const [erros, setErros] = useState<Record<string, string>>({});
   const [salvando, setSalvando] = useState(false);
 
-  async function enviar(evento: FormEvent) {
-    evento.preventDefault();
+  async function enviar() {
+    if (salvando) return;
 
     const encontrados = validarVaga(config, valores);
     setErros(encontrados);
@@ -235,10 +235,18 @@ function FormularioNoPainel({
     }
   }
 
+  // enter dentro de um campo de uma linha salva, no textarea continua pulando linha
+  function aoTeclar(evento: KeyboardEvent<HTMLDivElement>) {
+    if (evento.key === "Enter" && evento.target instanceof HTMLInputElement) {
+      evento.preventDefault();
+      enviar();
+    }
+  }
+
   const prefixo = `vaga-${config.tipo}-${id ?? "nova"}`;
 
   return (
-    <form onSubmit={enviar} noValidate className="flex flex-col gap-3">
+    <div onKeyDown={aoTeclar} className="flex flex-col gap-3">
       {config.campos.map((campo) => (
         <div key={campo.nome} className="flex flex-col gap-1">
           <label
@@ -286,7 +294,8 @@ function FormularioNoPainel({
 
       <div className="flex flex-wrap items-center gap-2">
         <button
-          type="submit"
+          type="button"
+          onClick={enviar}
           disabled={salvando}
           className="cursor-pointer rounded-full bg-red-600 px-4 py-1.5 text-sm text-white hover:bg-red-700 disabled:opacity-60"
         >
@@ -309,6 +318,6 @@ function FormularioNoPainel({
           </button>
         )}
       </div>
-    </form>
+    </div>
   );
 }
