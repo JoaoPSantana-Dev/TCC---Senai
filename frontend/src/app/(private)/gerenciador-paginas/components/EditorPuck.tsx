@@ -1,7 +1,7 @@
 "use client";
 
 import "@puckeditor/core/puck.css";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Puck, type Config, type Data } from "@puckeditor/core";
 import { toast } from "sonner";
@@ -34,12 +34,6 @@ interface EditorPuckProps {
   dadosIniciais: PaginaCompleta;
 }
 
-// para parar com o erro de hidratação
-// false no servidor e na hidratação, true só no navegador
-const subscreverNada = () => () => {};
-const noNavegador = () => false;
-const noServidor = () => false;
-
 // "Cartão do menu nº 2 — Título: Campo obrigatório"
 function listarErros(conteudo: ComponentePagina[], erros: ErrosConteudo) {
   const linhas = [...erros.geral];
@@ -64,7 +58,6 @@ function listarErros(conteudo: ComponentePagina[], erros: ErrosConteudo) {
 
 export function EditorPuck({ slug, dadosIniciais }: EditorPuckProps) {
   const router = useRouter();
-  const montado = useSyncExternalStore(subscreverNada, noNavegador, noServidor);
 
   // o puck só lê os dados na primeira vez
   const [salvo] = useState(() => dadosIniciais);
@@ -81,22 +74,24 @@ export function EditorPuck({ slug, dadosIniciais }: EditorPuckProps) {
     if (slug !== "homepage") return;
 
     let ativo = true;
-    buscarItensMenuNoNavegador().then((itens) => {
-      if (!ativo) return;
+    buscarItensMenuNoNavegador()
+      .catch(() => [])
+      .then((itens) => {
+        if (!ativo) return;
 
-      const novos = cartoesFaltantes(salvo.conteudo, itens);
-      setDadosPuck(
-        paraDadosPuck({ ...salvo, conteudo: [...salvo.conteudo, ...novos] }),
-      );
-
-      if (novos.length > 0) {
-        setAlterado(true);
-        toast.info(
-          `${novos.length} ${novos.length === 1 ? "cartão foi adicionado" : "cartões foram adicionados"} à lista (páginas que ainda não tinham cartão). Clique em "Salvar alterações" para manter`,
-          { duration: 8000 },
+        const novos = cartoesFaltantes(salvo.conteudo, itens);
+        setDadosPuck(
+          paraDadosPuck({ ...salvo, conteudo: [...salvo.conteudo, ...novos] }),
         );
-      }
-    });
+
+        if (novos.length > 0) {
+          setAlterado(true);
+          toast.info(
+            `${novos.length} ${novos.length === 1 ? "cartão foi adicionado" : "cartões foram adicionados"} à lista (páginas que ainda não tinham cartão). Clique em "Salvar alterações" para manter`,
+            { duration: 8000 },
+          );
+        }
+      });
 
     return () => {
       ativo = false;
@@ -189,7 +184,7 @@ export function EditorPuck({ slug, dadosIniciais }: EditorPuckProps) {
     }
   }
 
-  if (!montado || !dadosPuck) {
+  if (!dadosPuck) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-white text-zinc-600">
         Carregando o editor...
