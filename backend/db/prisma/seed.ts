@@ -1,12 +1,20 @@
+import 'dotenv/config';
 import { PrismaMariaDb } from '@prisma/adapter-mariadb';
 import { PrismaClient } from '../generated/prisma/client';
 
+// usa a mesma DATABASE_URL do backend incluindo o ssl exigido pelo tidb cloud
+const url = new URL(process.env.DATABASE_URL!);
+const usarSsl = ['strict', 'true'].includes(
+  url.searchParams.get('sslaccept') ?? url.searchParams.get('ssl') ?? '',
+);
+
 const adapter = new PrismaMariaDb({
-  host: 'localhost',
-  port: 3306,
-  user: 'root',
-  password: 'root',
-  database: 'totem',
+  host: url.hostname,
+  port: Number(url.port) || 3306,
+  user: decodeURIComponent(url.username),
+  password: decodeURIComponent(url.password),
+  database: decodeURIComponent(url.pathname.slice(1)),
+  ssl: usarSsl ? { rejectUnauthorized: true } : undefined,
   connectionLimit: 5,
 });
 
