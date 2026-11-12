@@ -1,6 +1,7 @@
 import { EstruturaTotem } from "@/components/shared/EstruturaTotem";
 import { Titulo } from "@/components/shared/TituloTotem";
 import { BibliotecaStatus } from "./components/BibliotecaStatus";
+import Image from "next/image";
 
 export default function Biblioteca() {
   return (
@@ -36,111 +37,106 @@ export default function Biblioteca() {
             </p>
           </div>
 
-          <h1 className="text-xl font-semibold text-zinc-800 mt-10">
+          <h1 className="text-xl font-semibold text-zinc-800 mt-15">
+            Horário de Funcionamento
+          </h1>
+
+          <div className="text-justify text-base mb-4">
+            <p className="text-zinc-600">
+              Na segunda-feira a biblioteca funciona das 7h às 13h e 14h às 16h
+            </p>
+            <p className="text-zinc-600">
+              De terça feira a sexta feira a biblioteca funciona das 7h às 13h e
+              14h às 21h
+            </p>
+            <p className="text-zinc-600">Aos sábados funciona das 9h às 15h</p>
+          </div>
+
+          <div className="flex justify-center">
+            <Image
+              src={"/horario-biblioteca.jpg"}
+              alt="Horário de funcionamento"
+              width={500}
+              height={100}
+              className="h-auto w-1/2 object-contain border rounded-xl"
+            />
+          </div>
+
+          <BibliotecaStatus />
+
+          <h1 className="text-xl font-semibold text-zinc-800 mt-8 mb-4">
             Serviços Ofertados
           </h1>
-          <br />
 
-          <h2 className="text-red-600 font-bold">Empréstimos</h2>
-          <p>
+          <h2 className="text-red-600 font-semibold">Empréstimos</h2>
+          <p className="text-zinc-600 mb-4">
             Pode-se pegar até 3 livros na biblioteca, sendo no máximo 1 de
             literatura e 3 técnicos. O tempo de devolução depende do tipo de
             livro.
           </p>
 
-          <br />
-
-          <h2 className="text-red-600 font-bold">Softwares Disponíveis</h2>
-          <p>
+          <h2 className="text-red-600 font-semibold">Softwares Disponíveis</h2>
+          <p className="text-zinc-600 mb-2">
             Os computadores da biblioteca possuem softwares específicos para o
             aprendizado e treinamento dos alunos. A seguir um lista de alguns
             dos programas disponiveis:
           </p>
 
-          <ul className="list-disc ml-10 mt-2">
-            <li>Autocad 2D</li>
-            <li>Visual Studio Code</li>
-            <li>Pacote Microsoft Office</li>
-            <li>Power BI</li>
-            <li>Solid Works</li>
+          <ul className="list-disc ml-10 mb-4">
+            <li className="text-zinc-600 mb-1">Autocad 2D</li>
+            <li className="text-zinc-600 mb-1">Visual Studio Code</li>
+            <li className="text-zinc-600 mb-1">Pacote Microsoft Office</li>
+            <li className="text-zinc-600 mb-1">Power BI</li>
+            <li className="text-zinc-600 mb-1">Solid Works</li>
           </ul>
 
-          <br />
-          <h2 className="text-red-600 font-bold ">Jogos e Atividades</h2>
-          <p>
-            {" "}
+          <h2 className="text-red-600 font-semibold">Jogos e Atividades</h2>
+          <p className="text-zinc-600 mb-2">
             A biblioteca disponibiliza alguns jogos de tabuleiro e atividades
             para os alunos, como:
           </p>
 
-          <ul className="list-disc ml-10 mt-2">
-            <li>Xadrez</li>
-            <li>Damas</li>
-            <li>Lig 4</li>
-            <li>Quebra-Cabeças</li>
+          <ul className="list-disc ml-10 mb-4">
+            <li className="text-zinc-600 mb-1">Xadrez</li>
+            <li className="text-zinc-600 mb-1">Damas</li>
+            <li className="text-zinc-600 mb-1">Lig 4</li>
+            <li className="text-zinc-600 mb-1">Quebra-Cabeças</li>
           </ul>
 
-          <br />
-          <h2 className="text-red-600 font-bold ">Eventos</h2>
-          <p>
-            A biblioteca realiza eventos durante o ano como a semana do livro e
-            palestras
+          <h2 className="text-red-600 font-semibold">Eventos</h2>
+          <p className="text-zinc-600">
+            A biblioteca realiza eventos durante o ano como a SELIBI, atividades
+            culturais e palestras.
           </p>
 
-          <br />
-          <h1 className="text-lg font-bold">
+          <h1 className="text-xl font-semibold text-zinc-800 mt-6">
             Serviços para Alunos de Graduação e Pós
           </h1>
 
           <ul className="list-disc ml-10 mt-2">
-            <li>EBSCO: Serviço online de periódicos científicos. </li>
-            <li>
+            <li className="text-zinc-600 mb-1">
+              EBSCO: Serviço online de periódicos científicos.{" "}
+            </li>
+            <li className="text-zinc-600 mb-1">
               Pergamum: Pesquisa todos os acervos da rede de bibliotecas do
               SENAI São Paulo.{" "}
             </li>
-            <li>
+            <li className="text-zinc-600 mb-1">
               Biblioteca Virtual Pearson: A Biblioteca Virtual Pearson está
               disponível para alunos da graduação e pós-graduação, para acessar
               solicite o acesso diretamente na Biblioteca do seu Campus.{" "}
             </li>
-            <li>
+            <li className="text-zinc-600 mb-1">
               ABNTColeção: Serviço online para disseminação do uso de normas
-              técnicas
+              técnicas.
             </li>
-            <ul>
-              Formatação ABNT: A biblioteca auxilia alunos a formatar seus
-              trabalhos de TCC na formatação ABNT.
-            </ul>
+            <li className="text-zinc-600 mb-1">
+              Padronização ABNT: A biblioteca auxilia alunos a padronizar seus
+              trabalhos de conclusão de curso na formatação ABNT.
+            </li>
           </ul>
 
-          <br />
-          <h1 className="text-lg font-bold">Horário de Funcionamento</h1>
-
-          <div className="text-justify text-base mb-4">
-            <p>
-              Na segunda-feira a biblioteca funciona das 7h às 13h e 14h às 16h
-            </p>
-            <p>
-              De terça feira a sexta feira a biblioteca funciona das 7h às 13h e
-              14h às 21h
-            </p>
-            <p>Aos sábados funciona das 9h às 15h</p>
-          </div>
-          <br />
-
-          <div className="flex justify-center">
-            <img
-              src="/HorarioBiblioteca.jpg"
-              alt="Horario de Funcionamento"
-              className="h-auto w-1/2 object-contain"
-            ></img>
-          </div>
-
-          <BibliotecaStatus />
-
-          <br />
-
-          <p className="text-justify font-bold text-lg">
+          <p className="text-justify font-semibold text-lg mt-10">
             Obs.: Para mais informações vá para a biblioteca e fale com um dos
             funcionários presentes.
           </p>
