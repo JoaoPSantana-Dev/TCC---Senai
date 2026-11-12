@@ -5,8 +5,9 @@ import type { HugeiconsIconProps } from "@hugeicons/react";
 // backend/db/src/tables/paginas/paginas.constantes.ts
 // se mudar aqui, vê se muda lá também
 
-export const apiUrl =
-  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
+export const apiUrl = (
+  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001"
+).replace(/\/+$/, "");
 
 export const tiposPagina = ["Administrador", "Totem"] as const;
 export type TipoPagina = (typeof tiposPagina)[number];
