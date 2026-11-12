@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type KeyboardEvent } from "react";
 import { toast } from "sonner";
 import { alerta } from "@/lib/alerta";
 import { mensagemDoBackend } from "@/lib/autenticacao";
