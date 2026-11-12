@@ -4,6 +4,7 @@ import { EstruturaVagasMenu } from "@/components/shared/EstruturaMenuVagas";
 import type { Vaga } from "@/components/shared/EstruturaMenuVagas.data";
 import { EstruturaTotem } from "@/components/shared/EstruturaTotem";
 import { Titulo } from "@/components/shared/TituloTotem";
+import { apiUrl } from "@/lib/paginas";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -19,10 +20,10 @@ export default function Vagas() {
   let titulo = "";
 
   if (pathname === "/vagas-empregos") {
-    endpoint = "http://localhost:3001/vagas-emprego";
+    endpoint = `${apiUrl}/vagas-emprego`;
     titulo = "Oportunidades de emprego";
   } else if (pathname === "/vagas-estagios") {
-    endpoint = "http://localhost:3001/vagas-estagio";
+    endpoint = `${apiUrl}/vagas-estagio`;
     titulo = "Oportunidade de estágio";
   }
 
