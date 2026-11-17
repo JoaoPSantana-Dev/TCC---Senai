@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { NavbarHamburguer } from "./NavbarHamburguer";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 // componente principal do cabeçalho do totem
@@ -11,10 +11,28 @@ import { toast } from "sonner";
 
 export function HeaderTotem({
   ocultarMenu = false,
+  semMargem = false,
 }: {
   ocultarMenu?: boolean;
+  semMargem?: boolean;
 }) {
   const pathname = usePathname();
+  const refHeader = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const header = refHeader.current;
+    const pai = header?.parentElement;
+    if (!header || !pai) return;
+
+    const atualizar = () =>
+      pai.style.setProperty("--altura-header", `${header.offsetHeight}px`);
+
+    atualizar();
+    const observador = new ResizeObserver(atualizar);
+    observador.observe(header);
+
+    return () => observador.disconnect();
+  }, []);
   const [time, setTime] = useState<string>("");
   const [temperature, setTemperature] = useState<number | null>(null);
 
@@ -129,7 +147,10 @@ export function HeaderTotem({
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 w-full text-white border-b-2 border-gray-300 bg-white mb-8">
+    <header
+      ref={refHeader}
+      className={`sticky top-0 z-40 w-full text-white border-b-2 border-gray-300 bg-white ${semMargem ? "" : "mb-8"}`}
+    >
       {/* informações extras */}
       <div className="flex w-full bg-red-600 gap-2 items-center justify-between px-2">
         <p className="font-semibold text-sm uppercase truncate">

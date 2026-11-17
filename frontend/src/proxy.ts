@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify } from "jose";
 
 //=============================================================================
-//tras o "JWT_SECRET" do .env e criptografa e usa a string
+//traz o "JWT_SECRET" do .env, criptografa e usa a string
 
 const chave = new TextEncoder().encode(process.env.JWT_SECRET);
 
@@ -19,7 +19,7 @@ const prefixosPublicos = ["/api/auth/"]; // login, 2fa e logout
 const rotasAdministrador = ["/gerenciador-paginas", "/usuarios"];
 
 //=============================================================================
-//mostra a pagina que sera redirecionado quando possuir o token
+//mostra a pagina que será redirecionado quando possuir o token
 
 const rotaPadraoPrivada = "/homepage";
 
@@ -45,7 +45,7 @@ export async function proxy(requisicao: NextRequest) {
   const ehApi = caminho.startsWith("/api/");
 
   //============================================================================
-  //se tever esses caminhos nao sera necessario ter token
+  //se tiver esses caminhos não será necessario ter token
   if (caminho.startsWith("/_next") || caminho.includes(".")) {
     return NextResponse.next();
   }
@@ -58,24 +58,24 @@ export async function proxy(requisicao: NextRequest) {
   //algumas verificaçãos
   const token = requisicao.cookies.get("session")?.value; //armazena token/cookie
 
-  const sessao = await possuiToken(token); //valida se tem ou nao o token
+  const sessao = await possuiToken(token); //valida se tem ou não o token
 
-  const rotaPublica = rotasPublicas.includes(caminho); //adiciona rotas que nao precisa de token para acessar
+  const rotaPublica = rotasPublicas.includes(caminho); //adiciona rotas que não precisa de token para acessar
 
   //============================================================================
-  //checa se o usuario tem o token e esta acessado uma rota que nao pode com o tokem
+  //checa se o usuário tem o token e está acessando uma rota que não pode com o token
   if (sessao && rotaPublica) {
     return NextResponse.redirect(new URL(rotaPadraoPrivada, requisicao.url));
   }
 
   //============================================================================
-  // dexa passar as rotas publicas
+  // deixa passar as rotas públicas
   if (rotaPublica) {
     return NextResponse.next();
   }
 
   //============================================================================
-  //retorna para rotas publicas caso nao tenha feito o login
+  //retorna para rotas públicas caso não tenha feito o login
   if (!sessao) {
     const resposta = ehApi
       ? NextResponse.json(
@@ -100,7 +100,7 @@ export async function proxy(requisicao: NextRequest) {
   return NextResponse.next();
 
   //=============================================================================
-} //se tever esses caminhos nao sera necessario ter token
+} //se tiver esses caminhos não será necessário ter token
 export const config = {
   matcher: ["/((?!_next|.*\\..*).*)"],
 };

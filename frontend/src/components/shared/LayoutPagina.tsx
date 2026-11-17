@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { EstruturaTotem } from "@/components/shared/EstruturaTotem";
 import { Titulo } from "@/components/shared/TituloTotem";
+import { HeroNoticias } from "@/components/shared/HeroNoticias";
 
 // a "moldura" padrão de cada tipo de página
 // é usada pela página pública PaginaRenderizada e pelo canvas do editor puck
@@ -29,10 +30,11 @@ export function LayoutPagina({
 
   if (slug === "homepage") {
     return (
-      <EstruturaTotem ocultarMenu>
-        <Titulo texto={nomePagina}>
-          <nav className="w-full max-w-6xl p-4 rounded-xl">{children}</nav>
-        </Titulo>
+      <EstruturaTotem mostrarNoticias={false} ocultarMenu headerSemMargem>
+        <HeroNoticias titulo={nomePagina} />
+        <nav className="mx-auto w-full max-w-6xl rounded-xl px-4 py-10">
+          {children}
+        </nav>
       </EstruturaTotem>
     );
   }

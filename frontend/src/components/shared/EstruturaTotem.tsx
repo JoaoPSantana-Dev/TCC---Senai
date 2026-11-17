@@ -7,16 +7,18 @@ interface EstruturaTotemProps {
   children: ReactNode;
   mostrarNoticias?: boolean;
   ocultarMenu?: boolean;
+  headerSemMargem?: boolean;
 }
 
 export function EstruturaTotem({
   children,
   mostrarNoticias = true,
   ocultarMenu = false,
+  headerSemMargem = false,
 }: EstruturaTotemProps) {
   return (
     <div className="w-full min-h-screen flex flex-col">
-      <HeaderTotem ocultarMenu={ocultarMenu} />
+      <HeaderTotem ocultarMenu={ocultarMenu} semMargem={headerSemMargem} />
 
       <main className="flex w-full flex-1 flex-col">{children}</main>
 
