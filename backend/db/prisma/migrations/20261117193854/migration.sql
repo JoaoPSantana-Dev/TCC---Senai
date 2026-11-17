@@ -1,10 +1,10 @@
 /*
   Warnings:
 
-  - Added the required column `materia` to the `horarios_aula` table without a default value. This is not possible if the table is not empty.
+  - You are about to drop the column `Professor` on the `horarios_aula` table. All the data in the column will be lost.
   - Added the required column `professor` to the `horarios_aula` table without a default value. This is not possible if the table is not empty.
 
 */
 -- AlterTable
-ALTER TABLE `horarios_aula` ADD COLUMN `materia` VARCHAR(191) NOT NULL,
+ALTER TABLE `horarios_aula` DROP COLUMN `Professor`,
     ADD COLUMN `professor` VARCHAR(191) NOT NULL;

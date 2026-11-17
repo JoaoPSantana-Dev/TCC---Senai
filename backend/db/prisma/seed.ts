@@ -25,6 +25,17 @@ async function main() {
     },
   });
   console.log(adminSecret);
+  const salas=["B18", "B16", "COORDENAÇÃO", "B12", "B10", "B6", "B4", "B2", "BANHEIRO F",
+    "B15", "B13", "B11", "B09", "B05", "B03", "B01",]
+  for (const nomeSala of salas){
+    await prisma.sala.upsert({
+      where: { 
+        bloco_andar_nomeSala: {bloco:"B",andar:"1",nomeSala}
+       },
+      update: {},
+      create:{nomeSala,bloco:"B", andar:"1", imagem:""}
+    })
+  }  
 }
 
 main()
