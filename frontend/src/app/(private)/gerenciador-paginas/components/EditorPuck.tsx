@@ -18,7 +18,6 @@ import {
   doDadosPuck,
   paraDadosPuck,
   type DadosPuck,
-  type IconeDoMenu,
 } from "@/lib/puckDados";
 import {
   normalizarConteudo,
@@ -30,15 +29,9 @@ import { configPuck, dicionarioPuck } from "./PuckConfig";
 import { buscarItensMenuNoNavegador } from "@/lib/menuTotem";
 import { cartoesFaltantes } from "@/lib/cartoesHomepage";
 
-type DadosIniciais = PaginaCompleta & {
-  iconeMenu?: IconeDoMenu | null;
-  ordemMenu?: number;
-  mostrarNoMenu?: boolean;
-};
-
 interface EditorPuckProps {
   slug: string;
-  dadosIniciais: DadosIniciais;
+  dadosIniciais: PaginaCompleta;
 }
 
 // "Cartão do menu nº 2 — Título: Campo obrigatório"
@@ -81,22 +74,24 @@ export function EditorPuck({ slug, dadosIniciais }: EditorPuckProps) {
     if (slug !== "homepage") return;
 
     let ativo = true;
-    buscarItensMenuNoNavegador().then((itens) => {
-      if (!ativo) return;
+    buscarItensMenuNoNavegador()
+      .catch(() => [])
+      .then((itens) => {
+        if (!ativo) return;
 
-      const novos = cartoesFaltantes(salvo.conteudo, itens);
-      setDadosPuck(
-        paraDadosPuck({ ...salvo, conteudo: [...salvo.conteudo, ...novos] }),
-      );
-
-      if (novos.length > 0) {
-        setAlterado(true);
-        toast.info(
-          `${novos.length} ${novos.length === 1 ? "cartão foi adicionado" : "cartões foram adicionados"} à lista (páginas que ainda não tinham cartão). Clique em "Salvar alterações" para manter`,
-          { duration: 8000 },
+        const novos = cartoesFaltantes(salvo.conteudo, itens);
+        setDadosPuck(
+          paraDadosPuck({ ...salvo, conteudo: [...salvo.conteudo, ...novos] }),
         );
-      }
-    });
+
+        if (novos.length > 0) {
+          setAlterado(true);
+          toast.info(
+            `${novos.length} ${novos.length === 1 ? "cartão foi adicionado" : "cartões foram adicionados"} à lista (páginas que ainda não tinham cartão). Clique em "Salvar alterações" para manter`,
+            { duration: 8000 },
+          );
+        }
+      });
 
     return () => {
       ativo = false;
@@ -164,9 +159,6 @@ export function EditorPuck({ slug, dadosIniciais }: EditorPuckProps) {
             nomePagina: raiz.nomePagina.trim(),
             tipoPagina: raiz.tipoPagina,
             conteudo: normalizarConteudo(conteudo),
-            iconeMenu: raiz.iconeMenu,
-            ordemMenu: raiz.ordemMenu,
-            mostrarNoMenu: raiz.mostrarNoMenu,
           }),
         },
       );

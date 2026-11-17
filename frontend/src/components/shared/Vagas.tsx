@@ -4,6 +4,7 @@ import { EstruturaVagasMenu } from "@/components/shared/EstruturaMenuVagas";
 import type { Vaga } from "@/components/shared/EstruturaMenuVagas.data";
 import { EstruturaTotem } from "@/components/shared/EstruturaTotem";
 import { Titulo } from "@/components/shared/TituloTotem";
+import { apiUrl } from "@/lib/paginas";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
@@ -32,12 +33,12 @@ export default function Vagas() {
   let titulo = "";
 
   if (pathname === "/vagas-empregos") {
-    endpoint = "http://localhost:3001/vagas-emprego";
+    endpoint = `${apiUrl}/vagas-emprego`;
     titulo = "Oportunidades de emprego";
   } else if (pathname === "/vagas-estagios") {
-    endpoint = "http://localhost:3001/vagas-estagio";
+    endpoint = `${apiUrl}/vagas-estagio`;
     titulo = "Oportunidade de estágio";
-  };
+  }
 
   useEffect(() => {
     const buscarVagas = async () => {
@@ -54,7 +55,6 @@ export default function Vagas() {
           toast.error(dados.message || "Erro ao buscar oportunidades");
           setVagas([]);
         }
-
       } catch {
         toast.error("Falha ao conectar com o servidor");
         setVagas([]);
@@ -68,8 +68,7 @@ export default function Vagas() {
       setBusca("");
       setAreaSelecionada(null);
       buscarVagas();
-    };
-
+    }
   }, [endpoint]);
 
   // Áreas disponíveis, geradas a partir das vagas carregadas 
@@ -131,8 +130,8 @@ export default function Vagas() {
             onSelecionarVaga={setVagaSelecionada}
           />
         )}
-        <section className="w-full lg:w-3/4 p-8 my-8 bg-[#f9f9f9] lg:rounded-2xl shadow-md">
-          <div className="w-full p-6 min-h-50 bg-white rounded-2xl shadow-md">
+        {/* <section className="w-full lg:w-3/4 p-8 my-8 bg-[#f9f9f9] lg:rounded-2xl shadow-md">
+           <div className="w-full p-6 min-h-50 bg-white rounded-2xl shadow-md">
             {vagaSelecionada ? (
               <>
                 <h2 className="text-xl lg:text-2xl font-semibold text-zinc-700 mb-4">
@@ -171,7 +170,7 @@ export default function Vagas() {
               </div>
             )}
           </div>
-        </section>
+        </section> */}
       </Titulo>
     </EstruturaTotem>
   );
