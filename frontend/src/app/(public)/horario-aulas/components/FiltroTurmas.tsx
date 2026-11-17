@@ -78,5 +78,116 @@ function agruparPorDia(horarios: HorarioAula[], chaveTurma: string | null) {
     const dia = aula.dia?.trim() || "Sem dia definido";
     porDia.set(dia, [...(porDia.get(dia) ?? []), aula]);
   }
+  return Array.from(porDia, ([dia, aulas]) => ({
+    dia,
+    aulas: [...aulas].sort(
+      (a, b) =>
+        posicao(a.turno ?? "", ordemTurnos) -
+        posicao(b.turno ?? "", ordemTurnos) ||
+        (a.turno ?? "").localeCompare(b.turno ?? "", "pt-BR"),
+    ),
+  })).sort(
+    (a, b) =>
+      posicao(a.dia, ordemDias) - posicao(b.dia, ordemDias) ||
+      a.dia.localeCompare(b.dia, "pt-BR"),
+  );
+}
+
+function descricaoSala(sala?: Sala | null): string {
+  if (!sala) return "Sala não informada";
+  return [sala.nomeSala, sala.bloco, sala.andar].filter(Boolean).join(" · ");
+}
+
+export function FiltroTurmas() {
+  const [horarios, setHorarios] = useState<HorarioAula[]>([]);
+  const [carregado, setCarregado] = useState(false);
+  const [erro, setErro] = useState(false);
+
+  const [aberto, setAberto] = useState(false);
+  const [turmaSelecionada, setTurmaSelecionada] = useState<string | null>(
+    null,
+  );
+
+  useEffect(() => {
+    let ativo = true;
+
+    async function buscar() {
+      try {
+        const resposta = await fetch(`${apiUrl}/horarios-aula`, {
+          cache: "no-store",
+        });
+        const dados = await resposta.json().catch(() => null);
+        if (!ativo) return;
+
+        if (!resposta.ok) {
+          setErro(true);
+          alerta.erro(dados?.message || "Erro ao buscar os horários");
+          return;
+        }
+        setHorarios(Array.isArray(dados) ? dados : []);
+      } catch {
+        if (!ativo) return;
+        setErro(true);
+        alerta.erro("Falha ao conectar com o servidor");
+      } finally {
+        if (ativo) setCarregado(true);
+      }
+    }
+
+    buscar();
+    return () => {
+      ativo = false;
+    };
+  }, []);
+
+  const turmas = useMemo(() => turmasDisponiveis(horarios), [horarios]);
+
+  const dias = useMemo(
+    () => agruparPorDia(horarios, turmaSelecionada),
+    [horarios, turmaSelecionada],
+  );
+
+  const nomeTurma =
+    turmas.find((turma) => turma.chave === turmaSelecionada)?.nome ?? null;
+
+  const escolher = (chave: string) => {
+    // clicar na turma já escolhida desmarca
+    setTurmaSelecionada((atual) => (atual === chave ? null : chave));
+    setAberto(false);
+  };
+
+  const chipBase =
+    "px-5 py-3 rounded-full text-base font-medium transition-all duration-100 touch-manipulation select-none active:scale-95";
+
+  // o que aparece na caixa de exibição quando não há horário para mostrar
+  const mensagem = !carregado
+    ? "Carregando horários..."
+    : erro
+      ? "Não foi possível carregar os horários."
+      : turmas.length === 0
+        ? "Nenhum horário cadastrado ainda."
+        : !nomeTurma
+          ? textoPadrao
+          : dias.length === 0
+            ? `${nomeTurma} ainda não tem aulas cadastradas.`
+            : null;
+
+  return (
+    <section className="flex w-full flex-col items-center">
+      <div className="w-fit p-4 my-2 bg-[#f9f9f9] rounded-full lg:rounded-full shadow-md">
+        <button
+          id="filter"
+          type="button"
+          disabled={turmas.length === 0}
+          aria-expanded={aberto}
+          aria-controls="lista-turmas"
+          onClick={() => setAberto((atual) => !atual)}
+          className="text-center text-xl font-semibold my-2 touch-manipulation select-none disabled:text-zinc-400"
+        >
+          {nomeTurma ? `Turma: ${nomeTurma}` : textoPadraoBotao}
+        </button>
+      </div>
+    </section>
+  );
 }
 
