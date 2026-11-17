@@ -7,6 +7,14 @@ export class CreateHorarioAulaDto {
 
   @IsString()
   @IsNotEmpty()
+  professor!:  string;
+
+  @IsString()
+  @IsNotEmpty()
+  materia!:  string;
+
+  @IsString()
+  @IsNotEmpty()
   turno!: string;
 
   @IsString()

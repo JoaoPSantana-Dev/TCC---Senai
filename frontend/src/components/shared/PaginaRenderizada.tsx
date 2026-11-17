@@ -3,12 +3,14 @@ import type { ComponentePagina } from "@/lib/paginas";
 import { itensForaDoConteudo, type ItemMenu } from "@/lib/menuTotem";
 import { CartaoMenu } from "@/app/(public)/homepage/components/CartaoMenu";
 import { LayoutPagina } from "./LayoutPagina";
+import { filtrarVisiveis } from "@/lib/cartoesHomepage";
 
 interface PaginaRenderizadaProps {
   slug: string;
   nomePagina: string;
   conteudo: ComponentePagina[];
   cartoesAutomaticos?: ItemMenu[]; // só a homepage usa
+  administrador?: boolean; // mostra os cartões marcados como só para administrador
 }
 
 // página pública do totem, a moldura vem do LayoutPagina que é a mesma do editor
@@ -17,11 +19,14 @@ export function PaginaRenderizada({
   nomePagina,
   conteudo,
   cartoesAutomaticos,
+  administrador = false,
 }: PaginaRenderizadaProps) {
-  const itens = conteudo.map((componente, index) => ({
-    chave: `${componente.type}-${index}`,
-    componente,
-  }));
+  const itens = filtrarVisiveis(conteudo, administrador).map(
+    (componente, index) => ({
+      chave: `${componente.type}-${index}`,
+      componente,
+    }),
+  );
 
   if (slug === "homepage") {
     const extras = itensForaDoConteudo(conteudo, cartoesAutomaticos ?? []);
@@ -29,7 +34,11 @@ export function PaginaRenderizada({
     return (
       <LayoutPagina slug={slug} nomePagina={nomePagina}>
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {/* primeiro os cartões gerados a partir das páginas cadastradas */}
+          {itens.map(({ chave, componente }) => (
+            <li key={chave}>
+              <RenderizadorDinamico componente={componente} />
+            </li>
+          ))}
 
           {extras.map((item) => (
             <li key={item.href}>
@@ -39,13 +48,6 @@ export function PaginaRenderizada({
                 icone={item.icone}
                 iconeEscolhido={item.iconeEscolhido}
               />
-            </li>
-          ))}
-
-          {/* depois os componentes do editor, na ordem da lista */}
-          {itens.map(({ chave, componente }) => (
-            <li key={chave}>
-              <RenderizadorDinamico componente={componente} />
             </li>
           ))}
         </ul>

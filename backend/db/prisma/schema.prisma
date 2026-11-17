@@ -63,10 +63,10 @@ model VagaEmprego {
   idEmprego   Int     @id @default(autoincrement()) @map("id_emprego")
   nomeEmpresa String
   cargo       String
-  requisitos  String
+  requisitos  String  @db.Text
   salario     String
-  beneficios  String
-  descricao   String
+  beneficios  String  @db.Text
+  descricao   String  @db.Text
   localizacao String
   contato     String
   areaEmprego String
@@ -78,10 +78,10 @@ model VagaEstagio {
   idEstagio   Int     @id @default(autoincrement()) @map("id_estagio")
   nomeEmpresa String
   cargo       String
-  requisitos  String
+  requisitos  String  @db.Text
   salario     String
-  beneficios  String
-  descricao   String
+  beneficios  String  @db.Text
+  descricao   String  @db.Text
   localizacao String
   contato     String
   areaEstagio String
@@ -104,7 +104,7 @@ model HorarioAula {
   idHorariosAula Int     @id @default(autoincrement()) @map("id_horarios_aula")
   nomeCurso      String
   turno          String
-  dia            String 
+  dia            String
   idSala         Int     @map("id_sala")
   sala           Sala   @relation(fields: [idSala], references: [idSala])
 

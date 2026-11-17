@@ -1,5 +1,5 @@
-import { CreateVagaEmpregoDto } from '../dto/create-vaga-emprego.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { CreateVagaEmpregoDto } from '../dto/create-vaga-emprego.dto';
 import { UpdateVagaEmpregoDto } from '../dto/update-vaga-emprego.dto';
 import { PrismaService } from '../../prisma/prisma.service';
 
@@ -7,44 +7,38 @@ import { PrismaService } from '../../prisma/prisma.service';
 export class VagasEmpregoService {
   constructor(private prisma: PrismaService) {}
 
-  criarVagaEmprego(createVagaEmpregoDto: CreateVagaEmpregoDto) {
-    return this.prisma.vagaEmprego.create({
-      data: createVagaEmpregoDto,
-    });
+  criarVagaEmprego(dto: CreateVagaEmpregoDto) {
+    return this.prisma.vagaEmprego.create({ data: dto });
   }
 
-  criarVariasVagasEmprego(createVagaEmpregoDto: CreateVagaEmpregoDto[]) {
-    return this.prisma.vagaEmprego.createMany({
-      data: createVagaEmpregoDto,
-    });
+  criarVariasVagasEmprego(dtos: CreateVagaEmpregoDto[]) {
+    return this.prisma.vagaEmprego.createMany({ data: dtos });
   }
 
+  // na ordem em que foram cadastradas
   listarTodasVagasEmprego() {
-    return this.prisma.vagaEmprego.findMany();
+    return this.prisma.vagaEmprego.findMany({ orderBy: { idEmprego: 'asc' } });
   }
 
   async listarUmaVagaEmprego(id: number) {
-    const buscar = await this.prisma.vagaEmprego.findUnique({
+    const vaga = await this.prisma.vagaEmprego.findUnique({
       where: { idEmprego: id },
     });
-    if (!buscar)
+    if (!vaga)
       throw new NotFoundException(`O emprego '${id}' não foi encontrado`);
-
-    return buscar;
+    return vaga;
   }
 
   async apagarVagaEmprego(id: number) {
     await this.listarUmaVagaEmprego(id);
-
-    return this.prisma.vagaEmprego.delete({
-      where: { idEmprego: id },
-    });
+    return this.prisma.vagaEmprego.delete({ where: { idEmprego: id } });
   }
 
-  updateVagaEmprego(id: number, updateVagaEmpregoDTO: UpdateVagaEmpregoDto) {
+  async updateVagaEmprego(id: number, dto: UpdateVagaEmpregoDto) {
+    await this.listarUmaVagaEmprego(id);
     return this.prisma.vagaEmprego.update({
       where: { idEmprego: id },
-      data: updateVagaEmpregoDTO,
+      data: dto,
     });
   }
 }

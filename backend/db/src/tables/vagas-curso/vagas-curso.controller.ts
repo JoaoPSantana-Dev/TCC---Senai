@@ -43,7 +43,7 @@ export class VagasCursoController {
   @Post('lote')
   @UseGuards(JwtAuthGuard, AdministradorGuard)
   criarVariasVagasCurso(
-    @Body(new ParseArrayPipe({ items: CreateVagaCursoDto }))
+    @Body(new ParseArrayPipe({ items: CreateVagaCursoDto, whitelist: true }))
     dtos: CreateVagaCursoDto[],
   ) {
     return this.vagasCursoService.criarVariasVagasCurso(dtos);

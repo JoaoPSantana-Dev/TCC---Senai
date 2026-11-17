@@ -10,7 +10,8 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon, type HugeiconsIconProps } from "@hugeicons/react";
 import Link from "next/link";
-import type { IconeMenu } from "@/lib/paginas";
+import type { IconeEscolhido } from "@/lib/iconeSvg";
+import { IconeSvg } from "@/components/shared/IconeSvg";
 
 // ícones que podem ser escolhidos no gerenciador de páginas
 // a chave é o que fica salvo no banco, o backend tem uma lista igual em paginas.constantes.ts
@@ -32,13 +33,8 @@ interface CartaoMenuProps {
   titulo: string;
   href: string;
   icone: string;
-}
-
-interface CartaoMenuProps {
-  titulo: string;
-  href: string;
-  icone: string; // 8 ícones já no sistema
-  iconeEscolhido?: IconeMenu | null; // ícones vindo do banco
+  // ícone escolhido do Hugeicons
+  iconeEscolhido?: IconeEscolhido | null;
 }
 
 export function CartaoMenu({
@@ -47,8 +43,7 @@ export function CartaoMenu({
   icone,
   iconeEscolhido,
 }: CartaoMenuProps) {
-  const iconeSelecionado =
-    iconeEscolhido?.dados ?? iconesMenu[icone]?.icone ?? InfoIcon;
+  const iconeDoSistema = iconesMenu[icone]?.icone ?? InfoIcon;
 
   return (
     <Link
@@ -56,7 +51,11 @@ export function CartaoMenu({
       className="h-full items-center flex flex-row p-8 bg-white rounded-2xl shadow-xl hover:shadow-md"
     >
       <span className="text-4xl mr-4">
-        <HugeiconsIcon icon={iconeSelecionado} size={40} />
+        {iconeEscolhido ? (
+          <IconeSvg dados={iconeEscolhido.dados} tamanho={40} />
+        ) : (
+          <HugeiconsIcon icon={iconeDoSistema} size={40} />
+        )}
       </span>
       <h2 className="text-2xl font-semibold justify-self-end">{titulo}</h2>
     </Link>
