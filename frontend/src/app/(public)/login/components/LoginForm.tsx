@@ -7,8 +7,8 @@ import { useRouter } from "next/navigation";
 import { ImagemBotao } from "@/components/shared/ImagemBotao";
 import { toast } from "sonner";
 import Link from "next/link";
-import { InputSenha } from "@/components/shared/InputSenha";
 import { mensagemDoBackend } from "@/lib/autenticacao";
+import { InputSenha } from "@/components/shared/InputSenha";
 import { useState, type FormEvent } from "react";
 
 const schemaLogin = z.object({
@@ -19,6 +19,7 @@ const schemaLogin = z.object({
 type LoginFormData = z.infer<typeof schemaLogin>;
 
 export function LoginForm() {
+
   const [etapa, setEtapa] = useState<"senha" | "codigo">("senha");
 
   if (etapa === "codigo") {
@@ -32,6 +33,7 @@ export function EtapaSenha({
 }: {
   onPrecisaCodigo: () => void;
 }) {
+
   const router = useRouter();
 
   const {
@@ -136,6 +138,7 @@ export function EtapaSenha({
   );
 }
 
+
 function EtapaCodigo({ onReiniciar }: { onReiniciar: () => void }) {
   const router = useRouter();
   const [codigo, setCodigo] = useState("");
@@ -239,3 +242,4 @@ function EtapaCodigo({ onReiniciar }: { onReiniciar: () => void }) {
     </form>
   );
 }
+

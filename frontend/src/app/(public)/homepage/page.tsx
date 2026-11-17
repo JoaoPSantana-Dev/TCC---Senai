@@ -5,6 +5,7 @@ import {
 import { buscarPaginaPorSlug } from "@/lib/paginas";
 import { PaginaRenderizada } from "@/components/shared/PaginaRenderizada";
 import { buscarItensMenu } from "@/lib/menuTotem";
+import testCookie from "../login/page";
 import { ehAdministrador } from "@/lib/sessao";
 
 export default async function Homepage() {
@@ -14,6 +15,7 @@ export default async function Homepage() {
     buscarItensMenu(false),
     ehAdministrador(),
   ]);
+  testCookie();
 
   return (
     <PaginaRenderizada
