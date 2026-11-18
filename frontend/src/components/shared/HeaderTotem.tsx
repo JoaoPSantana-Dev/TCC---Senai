@@ -16,6 +16,7 @@ export function HeaderTotem({
   ocultarMenu?: boolean;
   semMargem?: boolean;
 }) {
+  // cálculo do tamanho da notícia
   const pathname = usePathname();
   const refHeader = useRef<HTMLElement>(null);
 
@@ -33,10 +34,29 @@ export function HeaderTotem({
 
     return () => observador.disconnect();
   }, []);
+
+  // header transparente
+  const ehHomepage = pathname === "/homepage";
+  const [rolou, setRolou] = useState(false);
+
+  useEffect(() => {
+    if (!ehHomepage) {
+      setRolou(true);
+      return;
+    }
+
+    const aoRolar = () => setRolou(window.scrollY > 40);
+
+    aoRolar();
+    window.addEventListener("scroll", aoRolar, { passive: true });
+    return () => window.removeEventListener("scroll", aoRolar);
+  }, [ehHomepage]);
+  const transparente = ehHomepage && !rolou;
+
+  // API de Horario
   const [time, setTime] = useState<string>("");
   const [temperature, setTemperature] = useState<number | null>(null);
 
-  // API de Horario
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
@@ -149,8 +169,15 @@ export function HeaderTotem({
   return (
     <header
       ref={refHeader}
-      className={`sticky top-0 z-40 w-full text-white border-b-2 border-gray-300 bg-white ${semMargem ? "" : "mb-8"}`}
+      className={`sticky top-0 left-0 z-40 w-full text-white border-b-2 transition-colors duration-300
+        ${transparente ? "bg-transparent border-transparent" : "bg-white border-gray-300"}
+        ${semMargem ? "" : "mb-8"}`}
     >
+      {/* blur preto */}
+      {transparente && (
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-linear-to-b from-black/50 to-transparent" />
+      )}
+
       {/* informações extras */}
       <div className="flex w-full bg-red-600 gap-2 items-center justify-between px-2">
         <p className="font-semibold text-sm uppercase truncate">
