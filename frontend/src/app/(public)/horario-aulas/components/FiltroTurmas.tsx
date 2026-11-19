@@ -187,6 +187,61 @@ export function FiltroTurmas() {
           {nomeTurma ? `Turma: ${nomeTurma}` : textoPadraoBotao}
         </button>
       </div>
+
+      {aberto && (
+        <div
+          id="lista-turmas"
+          role="group"
+          aria-label="Escolher turma"
+          className="w-full lg:w-2/4 p-6 mb-2 flex flex-wrap gap-2 bg-[#f9f9f9] lg:rounded-2xl shadow-md"
+        >
+          {turmas.map(({ chave, nome }) => (
+            <button
+              key={chave}
+              type="button"
+              onClick={() => escolher(chave)}
+              aria-pressed={turmaSelecionada === chave}
+              className={`${chipBase} ${turmaSelecionada === chave
+                ? "bg-zinc-800 text-white"
+                : "bg-white text-zinc-700 shadow-sm"
+              }`}
+            >
+              {nome}
+            </button>
+          ))}
+        </div>
+      )}
+
+      <div className="w-full lg:w-2/4 p-8 my-8 bg-[#f9f9f9] lg:rounded-2xl shadow-md">
+        <div
+          id="exibicao"
+          aria-live="polite"
+          className="w-full flex flex-col p-6 min-h-50 bg-white rounded-2xl shadow-md items-center justify-center"
+        >
+          {mensagem ? (
+            <p className="text-center text-zinc-400">{mensagem}</p>
+          ) : (
+            <div className="w-full self-start">
+              <h2 className="mb-2 text-lg lg:text-xl font-semibold text-zinc-700">{nomeTurma}</h2>
+              {dias.map(({ dia, aulas }) => (
+                <div key={dia} className="mb-4 last:mb-0">
+                  <h3 className="mb-2 text-lg lg:text-xl font-semibold text-zinc-700">{dia}</h3>
+                  <ul className="flex flex-col gap-2">
+                    {aulas.map((aula) => (
+                      <li
+                        key={aula.idHorariosAula}
+                        className="rounded-2xl bg-[#f9f9f9] px-5 py-3 text-base lg:text-lg text-zinc-600 shadow-sm"
+                      >
+                        <b>{aula.turno}:</b> {descricaoSala(aula.sala)}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
     </section>
   );
 }
