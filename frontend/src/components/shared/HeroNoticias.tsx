@@ -8,11 +8,7 @@ import Image from "next/image";
 
 const autoplayDelay = 10000;
 
-interface HeroNoticiasProps {
-  titulo: string;
-}
-
-export function HeroNoticias({ titulo }: HeroNoticiasProps) {
+export function HeroNoticias() {
   const autoplayRef = useRef(
     Autoplay({
       delay: autoplayDelay,
@@ -51,7 +47,7 @@ export function HeroNoticias({ titulo }: HeroNoticiasProps) {
   return (
     <section
       aria-label="Notícias"
-      className="relative h-[calc(100svh-var(--altura-header,9em))] min-h-96 w-full select-none overflow-hidden bg-transparent"
+      className="relative h-[calc(100svh-var(--altura-header,9em))] min-h-96 w-full select-none overflow-hidden"
       onTouchStart={pausar}
       onTouchEnd={retomar}
     >
@@ -64,29 +60,28 @@ export function HeroNoticias({ titulo }: HeroNoticiasProps) {
             >
               <Image
                 src={noticia.imagem}
-                alt=""
+                alt={noticia.titulo}
                 fill
                 sizes="100vw"
                 priority={indice === 0}
                 className="object-cover"
               />
+              {/* escurece a parte de baixo para ler o título */}
+              <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/20 via-black/10 to-transparent" />
+
+              <h1 className="pointer-events-none absolute bottom-0 left-0 z-10 max-w-4xl p-8 pb-10 text-4xl md:text-5xl lg:text-6xl font-light leading-tight tracking-tight text-white drop-shadow-lg md:p-12 md:pb-14">
+                {noticia.titulo}
+              </h1>
             </div>
           ))}
         </div>
       </div>
 
-      {/* escurece a parte de baixo para ler o título */}
-      <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/20 via-black/10 to-transparent" />
-
-      <h1 className="pointer-events-none absolute bottom-0 left-0 z-10 max-w-3xl p-8 pb-10 text-4xl font-light leading-tight text-white drop-shadow-lg md:p-12 md:pb-14 md:text-6xl">
-        {titulo}
-      </h1>
-
       {/* barra de progresso */}
-      <div className="absolute inset-x-0 bottom-0 z-10 h-1.5 bg-white/20">
+      <div className="absolute inset-x-80 bottom-8 z-10 h-1 bg-white/20">
         <div
           key={atual}
-          className="h-full origin-left animate-carousel-progress bg-red-500"
+          className="h-1 origin-left animate-carousel-progress bg-red-500"
           style={{
             animationDuration: `${autoplayDelay}ms`,
             animationPlayState: tocando ? "running" : "paused",

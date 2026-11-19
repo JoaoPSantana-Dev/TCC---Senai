@@ -17,7 +17,7 @@ type NavbarHamburguerProps = {
 };
 
 export function NavbarHamburguer({
-  className = "absolute w-18 h-10 left-0 sm:left-9 top-16 sm:top-17 -translate-y-1/2",
+  className = "absolute w-18 h-12 left-2 sm:left-9 top-13 -translate-y-1/2",
 }: NavbarHamburguerProps) {
   const [itens, setItens] = useState<ItemMenu[]>(rotasFixasTotem);
 

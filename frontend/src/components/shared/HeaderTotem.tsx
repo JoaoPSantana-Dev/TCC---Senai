@@ -4,7 +4,8 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { NavbarHamburguer } from "./NavbarHamburguer";
 import { useEffect, useRef, useState } from "react";
-import { toast } from "sonner";
+import { Anchor } from "lucide-react";
+// import { toast } from "sonner"; para caso seja totem
 
 // componente principal do cabeçalho do totem
 // exibe a barra superior com utilitários e, dependendo da rota, ajusta o layout para a homepage ou para as páginas internas
@@ -53,124 +54,125 @@ export function HeaderTotem({
   }, [ehHomepage]);
   const transparente = ehHomepage && !rolou;
 
-  // API de Horario
-  const [time, setTime] = useState<string>("");
-  const [temperature, setTemperature] = useState<number | null>(null);
+  // para caso seja totem
+  // // API de Horario
+  // const [time, setTime] = useState<string>("");
+  // const [temperature, setTemperature] = useState<number | null>(null);
 
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      setTime(now.toLocaleTimeString("pt-BR"));
-    };
+  // useEffect(() => {
+  //   const updateTime = () => {
+  //     const now = new Date();
+  //     setTime(now.toLocaleTimeString("pt-BR"));
+  //   };
 
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  }, []);
+  //   updateTime();
+  //   const interval = setInterval(updateTime, 1000);
+  //   return () => clearInterval(interval);
+  // }, []);
 
-  // API de Clima
-  useEffect(() => {
-    let interval: ReturnType<typeof setInterval> | undefined;
-    let cancelado = false;
+  // // API de Clima
+  // useEffect(() => {
+  //   let interval: ReturnType<typeof setInterval> | undefined;
+  //   let cancelado = false;
 
-    const checkTemperature = async (latitude: number, longitude: number) => {
-      try {
-        const parametros = new URLSearchParams({
-          latitude: String(latitude),
-          longitude: String(longitude),
-          current: "temperature_2m",
-          temperature_unit: "celsius",
-          timezone: "America/Sao_Paulo",
-        });
+  //   const checkTemperature = async (latitude: number, longitude: number) => {
+  //     try {
+  //       const parametros = new URLSearchParams({
+  //         latitude: String(latitude),
+  //         longitude: String(longitude),
+  //         current: "temperature_2m",
+  //         temperature_unit: "celsius",
+  //         timezone: "America/Sao_Paulo",
+  //       });
 
-        const url = `https://api.open-meteo.com/v1/forecast?${parametros.toString()}`;
+  //       const url = `https://api.open-meteo.com/v1/forecast?${parametros.toString()}`;
 
-        const resposta = await fetch(url);
+  //       const resposta = await fetch(url);
 
-        if (!resposta.ok) {
-          const mensagemErro = await resposta.text();
-          console.error("Resposta da API:", mensagemErro);
+  //       if (!resposta.ok) {
+  //         const mensagemErro = await resposta.text();
+  //         console.error("Resposta da API:", mensagemErro);
 
-          throw new Error(`Erro HTTP ${resposta.status}: ${mensagemErro}`);
-        }
+  //         throw new Error(`Erro HTTP ${resposta.status}: ${mensagemErro}`);
+  //       }
 
-        const dados = await resposta.json();
+  //       const dados = await resposta.json();
 
-        if (typeof dados.current?.temperature_2m !== "number") {
-          throw new Error("Temperatura indisponível na resposta da API");
-        }
+  //       if (typeof dados.current?.temperature_2m !== "number") {
+  //         throw new Error("Temperatura indisponível na resposta da API");
+  //       }
 
-        if (!cancelado) {
-          setTemperature(dados.current.temperature_2m);
-        }
-      } catch (erro) {
-        console.log("Erro ao buscar temperature", erro);
+  //       if (!cancelado) {
+  //         setTemperature(dados.current.temperature_2m);
+  //       }
+  //     } catch (erro) {
+  //       console.log("Erro ao buscar temperature", erro);
 
-        if (!cancelado) {
-          toast.error("Não foi possivel atualizar a temperatura");
-        }
-      }
-    };
+  //       if (!cancelado) {
+  //         toast.error("Não foi possivel atualizar a temperatura");
+  //       }
+  //     }
+  //   };
 
-    const latitudeFallback = -23.5315;
-    const longitudeFallback = -46.7245;
+  //   const latitudeFallback = -23.5315;
+  //   const longitudeFallback = -46.7245;
 
-    const userLocalizacaoFallback = () => {
-      if (cancelado) return;
+  //   const userLocalizacaoFallback = () => {
+  //     if (cancelado) return;
 
-      checkTemperature(latitudeFallback, longitudeFallback);
+  //     checkTemperature(latitudeFallback, longitudeFallback);
 
-      interval = setInterval(
-        () => {
-          checkTemperature(latitudeFallback, longitudeFallback);
-        },
-        10 * 60 * 1000,
-      );
-    };
+  //     interval = setInterval(
+  //       () => {
+  //         checkTemperature(latitudeFallback, longitudeFallback);
+  //       },
+  //       10 * 60 * 1000,
+  //     );
+  //   };
 
-    if (!navigator.geolocation) {
-      userLocalizacaoFallback();
-    } else {
-      navigator.geolocation.getCurrentPosition(
-        (posicao) => {
-          if (cancelado) return;
+  //   if (!navigator.geolocation) {
+  //     userLocalizacaoFallback();
+  //   } else {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (posicao) => {
+  //         if (cancelado) return;
 
-          const { latitude, longitude } = posicao.coords;
+  //         const { latitude, longitude } = posicao.coords;
 
-          checkTemperature(latitude, longitude);
+  //         checkTemperature(latitude, longitude);
 
-          interval = setInterval(
-            () => {
-              checkTemperature(latitude, longitude);
-            },
-            60 * 60 * 1000,
-          );
-        },
-        () => {
-          userLocalizacaoFallback();
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 60000,
-        },
-      );
-    }
+  //         interval = setInterval(
+  //           () => {
+  //             checkTemperature(latitude, longitude);
+  //           },
+  //           60 * 60 * 1000,
+  //         );
+  //       },
+  //       () => {
+  //         userLocalizacaoFallback();
+  //       },
+  //       {
+  //         enableHighAccuracy: true,
+  //         timeout: 10000,
+  //         maximumAge: 60000,
+  //       },
+  //     );
+  //   }
 
-    return () => {
-      cancelado = true;
+  //   return () => {
+  //     cancelado = true;
 
-      if (interval) {
-        clearInterval(interval);
-      }
-    };
-  }, []);
+  //     if (interval) {
+  //       clearInterval(interval);
+  //     }
+  //   };
+  // }, []);
 
   return (
     <header
       ref={refHeader}
-      className={`sticky top-0 left-0 z-40 w-full text-white border-b-2 transition-colors duration-300
-        ${transparente ? "bg-transparent border-transparent" : "bg-white border-gray-300"}
+      className={`sticky top-0 left-0 z-40 w-full text-white transition-colors duration-300
+        ${transparente ? "bg-transparent border-transparent" : "bg-white shadow-lg shadow-black/5"}
         ${semMargem ? "" : "mb-8"}`}
     >
       {/* blur preto */}
@@ -178,9 +180,13 @@ export function HeaderTotem({
         <div className="pointer-events-none absolute inset-0 -z-10 bg-linear-to-b from-black/50 to-transparent" />
       )}
 
-      {/* informações extras */}
-      <div className="flex w-full bg-red-600 gap-2 items-center justify-between px-2">
-        <p className="font-semibold text-sm uppercase truncate">
+      {/* 
+      caso seja totem, para mostrar o clima e horário
+      {/* informações extras 
+      <div
+        className={`${transparente ? "bg-transparent" : "bg-red-600"} flex w-full gap-2 items-center justify-between px-2`}
+      >
+        <p className="font-semibold text-sm uppercase truncate transition delay-300 duration-600">
           FIESP CIESP SESI SENAI IRS | F | TW | YT | iN | iNt | wz
         </p>
 
@@ -189,7 +195,8 @@ export function HeaderTotem({
           <span>{temperature !== null ? `${temperature}°C` : "--°C"}</span>
         </time>
       </div>
-      {/* informações extras */}
+      {/* informações extras 
+*/}
 
       {/* menu hambúrguer */}
       <nav className="flex text-black">
@@ -198,17 +205,35 @@ export function HeaderTotem({
       {/* menu hambúrguer */}
 
       {/* logo */}
-      <figure className="flex justify-center items-center w-full px-12 py-3">
-        <Image
-          src="/senai-logo.png"
-          alt="Imagem do logo SENAI"
-          width={200}
-          height={200}
-          sizes="(max-width: 480px) 75vw, (max-width: 768px) 65vw, 300px"
-          className="w-[65vw] max-w-75 h-auto object-contain sm:w-[60vw] md:w-75"
-          loading="eager"
-        />
-      </figure>
+      {pathname !== "/homepage" ? (
+        <figure
+          className={`flex justify-center items-center w-full px-12 py-3`}
+        >
+          <Image
+            src="/senai-logo.png"
+            alt="Imagem do logo SENAI"
+            width={200}
+            height={200}
+            sizes="(max-width: 480px) 75vw, (max-width: 768px) 65vw, 300px"
+            className="w-[65vw] max-w-75 h-auto object-contain sm:w-[60vw] md:w-75"
+            loading="eager"
+          />
+        </figure>
+      ) : (
+        <div
+          className={`gap-2 flex items-center mx-auto px-6 lg:px-12 py-5 fixed top-0 left-0 right-0 z-100 transition-all duration-300 ${transparente ? "bg-transparent" : "shadow-lg bg-card/95 backdrop-blur-lg shadow-soft"}`}
+        >
+          <Anchor
+            className={`h-4 w-4 ${transparente ? "text-white filter-[drop-shadow(0_1px_4px_rgba(0,0,0,0.5))]" : "text-foreground"}`}
+          />
+          <span
+            className={`text-xl font-normal tracking-wide ${transparente ? "text-white [text-shadow:0_1px_4px_rgba(0,0,0,0.5)]" : "text-foreground"}`}
+          >
+            S-Hub
+          </span>
+        </div>
+      )}
+
       {/* logo */}
     </header>
   );
