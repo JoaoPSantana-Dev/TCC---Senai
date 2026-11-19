@@ -1,8 +1,6 @@
 'use client';
 
-import { EstruturaTotem } from "@/components/shared/EstruturaTotem";
 import { Titulo } from "@/components/shared/TituloTotem";
-import React from "react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 

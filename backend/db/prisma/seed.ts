@@ -2,6 +2,7 @@ import 'dotenv/config';
 import { PrismaMariaDb } from '@prisma/adapter-mariadb';
 import { PrismaClient } from '../generated/prisma/client';
 
+
 // usa a mesma DATABASE_URL do backend incluindo o ssl exigido pelo tidb cloud
 const url = new URL(process.env.DATABASE_URL!);
 const usarSsl = ['strict', 'true'].includes(
@@ -32,8 +33,9 @@ async function main() {
     },
   });
   console.log(adminSecret);
-  const salas=["B18", "B16", "COORDENAÇÃO", "B12", "B10", "B6", "B4", "B2", "BANHEIRO F",
-    "B15", "B13", "B11", "B09", "B05", "B03", "B01",]
+
+  const salas=["B18", "B16", "COORDENAÇÃO", "B12", "B10", "B6", "B4", "B2", "BANHEIRO F","B15", "B13", "B11", "B09", "B05", "B03", "B01",]
+
   for (const nomeSala of salas){
     await prisma.sala.upsert({
       where: { 
@@ -42,7 +44,14 @@ async function main() {
       update: {},
       create:{nomeSala,bloco:"B", andar:"1", imagem:""}
     })
-  }  
+  }
+  await prisma.horarioAula.createMany({
+    data:{
+      nomeCurso:"TDS-03",
+      professor:"Lincon",
+      materia: "TSOF"
+    }
+  })
 }
 
 main()
