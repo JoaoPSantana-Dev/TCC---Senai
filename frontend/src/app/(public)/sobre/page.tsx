@@ -6,11 +6,11 @@ import { EstruturaTotem } from "@/components/shared/EstruturaTotem";
 export default async function SobreSenai() {
     return (
         <EstruturaTotem mostrarNoticias={false}>
-            <Titulo texto='SENAI'>
+            <Titulo texto='Serviço Nacional de Aprendizagem Industrial'>
                 <section className="my-8 w-full p-8 shadow-md bg-[#f9f9f9] lg:w-1/2 lg:rounded-2xl items-center justify-center">
                     <div className="text-justify text-base mb-4">
                         <h1 className="text-xl font-semibold text-zinc-800 mb-4">
-                            SENAI
+                            Indrodução
                         </h1>
 
                         <p className="text-zinc-600 mb-4">
