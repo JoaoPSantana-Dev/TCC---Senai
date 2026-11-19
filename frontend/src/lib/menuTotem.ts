@@ -11,6 +11,7 @@ export interface ItemMenu {
   icone: string; // chave de iconesMenu em CartaoMenu.tsx
   iconeEscolhido?: IconeMenu | null; // chave de ícones do banco
   ordem?: number;
+  somenteAdministrador?: boolean;
 }
 
 // páginas que o totem usa por trás e que não são destino de navegação
