@@ -1,7 +1,7 @@
 "use client";
 
 import "@puckeditor/core/puck.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Puck, type Config, type Data } from "@puckeditor/core";
 import { toast } from "sonner";
@@ -25,7 +25,7 @@ import {
   validarConteudo,
   type ErrosConteudo,
 } from "./registroComponentes";
-import { configPuck, dicionarioPuck } from "./PuckConfig";
+import { criarConfigPuck, dicionarioPuck } from "./PuckConfig";
 import { buscarItensMenuNoNavegador } from "@/lib/menuTotem";
 import { cartoesFaltantes } from "@/lib/cartoesHomepage";
 
@@ -58,6 +58,10 @@ function listarErros(conteudo: ComponentePagina[], erros: ErrosConteudo) {
 
 export function EditorPuck({ slug, dadosIniciais }: EditorPuckProps) {
   const router = useRouter();
+  const config = useMemo(
+    () => criarConfigPuck(slug) as unknown as Config,
+    [slug],
+  );
 
   // o puck só lê os dados na primeira vez
   const [salvo] = useState(() => dadosIniciais);
@@ -195,7 +199,7 @@ export function EditorPuck({ slug, dadosIniciais }: EditorPuckProps) {
   return (
     <div className="fixed inset-0">
       <Puck
-        config={configPuck as unknown as Config}
+        config={config}
         data={dadosPuck as unknown as Data}
         metadata={{ slug }}
         headerTitle={`Editando: ${salvo.nomePagina}`}

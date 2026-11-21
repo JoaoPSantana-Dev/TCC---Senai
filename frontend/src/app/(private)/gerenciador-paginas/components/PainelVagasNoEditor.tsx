@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState, type KeyboardEvent } from "react";
 import { toast } from "sonner";
 import { alerta } from "@/lib/alerta";
 import { mensagemDoBackend } from "@/lib/autenticacao";
+import { useRascunho } from "@/lib/rascunhoEditor";
 import {
   atualizarLista,
   avisarVagasAtualizadas,
@@ -32,7 +33,12 @@ export function PainelVagasNoEditor({ tipo }: { tipo: TipoVaga }) {
   const config = tiposDeVaga[tipo];
   const [registros, setRegistros] = useState<RegistroVaga[] | null>(null);
   const [erro, setErro] = useState<string | null>(null);
-  const [aberto, setAberto] = useState<number | "novo" | null>(null);
+  // guardado fora do componente
+  // o puck fecha o painel ao clicar fora do bloco
+  const [aberto, setAberto] = useRascunho<number | "novo" | null>(
+    `vagas:${tipo}:aberto`,
+    () => null,
+  );
 
   const carregar = useCallback(async () => {
     try {
@@ -199,7 +205,10 @@ function FormularioNoPainel({
   const editando = registro !== undefined;
   const id = editando ? idDoRegistro(config, registro) : null;
 
-  const [valores, setValores] = useState<Record<string, string>>(() =>
+  // o que foi digitado volta se o painel fechar sem salvar
+  const [valores, setValores, descartarRascunho] = useRascunho<
+    Record<string, string>
+  >(`vagas:${config.tipo}:${id ?? "nova"}`, () =>
     valoresIniciais(config, registro),
   );
   const [erros, setErros] = useState<Record<string, string>>({});
@@ -227,6 +236,7 @@ function FormularioNoPainel({
       toast.success(
         editando ? "Alterações salvas!" : "Cadastrado com sucesso!",
       );
+      descartarRascunho();
       aoSalvar(dados as RegistroVaga);
     } catch {
       toast.error("Falha ao conectar com o servidor");
@@ -303,7 +313,10 @@ function FormularioNoPainel({
         </button>
         <button
           type="button"
-          onClick={aoCancelar}
+          onClick={() => {
+            descartarRascunho();
+            aoCancelar();
+          }}
           className="cursor-pointer rounded-full border border-zinc-300 px-4 py-1.5 text-sm hover:bg-zinc-100"
         >
           Cancelar

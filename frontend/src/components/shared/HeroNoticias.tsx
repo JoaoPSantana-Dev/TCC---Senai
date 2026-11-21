@@ -3,12 +3,17 @@
 import { useEffect, useRef, useState } from "react";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
-import { noticias } from "./Noticias.data";
 import Image from "next/image";
+import {
+  imagemEhDeUpload,
+  urlImagemNoticia,
+  useNoticias,
+} from "@/lib/noticias";
 
 const autoplayDelay = 10000;
 
 export function HeroNoticias() {
+  const { noticias, carregando } = useNoticias();
   const autoplayRef = useRef(
     Autoplay({
       delay: autoplayDelay,
@@ -44,6 +49,18 @@ export function HeroNoticias() {
     setTocando(true);
   };
 
+  // sem notícias ou ainda carregando, mantém a mesma altura para a página não pular
+  if (noticias.length === 0) {
+    return (
+      <section
+        aria-label="Notícias"
+        className="flex h-[calc(100svh-var(--altura-header,9em))] min-h-96 w-full items-center justify-center bg-zinc-800 text-xl text-white/70"
+      >
+        {carregando ? null : "Nenhuma notícia cadastrada no momento..."}
+      </section>
+    );
+  }
+
   return (
     <section
       aria-label="Notícias"
@@ -55,11 +72,12 @@ export function HeroNoticias() {
         <div className="flex h-full">
           {noticias.map((noticia, indice) => (
             <div
-              key={noticia.id}
+              key={noticia.idNoticia}
               className="relative h-full min-w-0 shrink-0 grow-0 basis-full"
             >
               <Image
-                src={noticia.imagem}
+                src={urlImagemNoticia(noticia.imagem)}
+                unoptimized={imagemEhDeUpload(noticia.imagem)}
                 alt={noticia.titulo}
                 fill
                 sizes="100vw"

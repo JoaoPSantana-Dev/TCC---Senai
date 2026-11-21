@@ -49,9 +49,11 @@ export interface CampoComponente {
 
 export interface DefinicaoComponente {
   rotulo: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   componente: ComponentType<any>;
   campos: CampoComponente[];
   painelDeVagas?: TipoVaga;
+  painelDeNoticias?: boolean;
 }
 
 // imagens que existem na pasta /public e podem ser usadas nas páginas
@@ -342,6 +344,7 @@ export const registroComponentes: Record<string, DefinicaoComponente> = {
     rotulo: "Carrossel de notícias",
     componente: Noticias,
     campos: [],
+    painelDeNoticias: true,
   },
 };
 
