@@ -65,8 +65,8 @@ export default function Vagas() {
             onSelecionarVaga={setVagaSelecionada}
           />
         )}
-        <section className="w-full lg:w-3/4 p-8 my-8 bg-[#f9f9f9] lg:rounded-2xl shadow-md">
-          {/* <div className="w-full p-6 min-h-50 bg-white rounded-2xl shadow-md">
+        {/* <section className="w-full lg:w-3/4 p-8 my-8 bg-[#f9f9f9] lg:rounded-2xl shadow-md">
+           <div className="w-full p-6 min-h-50 bg-white rounded-2xl shadow-md">
             {vagaSelecionada ? (
               <>
                 <h2 className="text-xl lg:text-2xl font-semibold text-zinc-700 mb-4">
@@ -104,8 +104,8 @@ export default function Vagas() {
                 </p>
               </div>
             )}
-          </div> */}
-        </section>
+          </div>
+        </section> */}
       </Titulo>
     </EstruturaTotem>
   );

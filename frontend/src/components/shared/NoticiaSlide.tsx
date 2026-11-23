@@ -1,6 +1,10 @@
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/Card";
-import type { Noticia } from "./Noticias.data";
+import {
+  imagemEhDeUpload,
+  urlImagemNoticia,
+  type Noticia,
+} from "@/lib/noticias";
 
 interface NoticiaSlideProps {
   noticia: Noticia;
@@ -13,7 +17,8 @@ export function NoticiaSlide({ noticia }: NoticiaSlideProps) {
     <Card className="overflow-hidden">
       <CardContent className="p-0 relative aspect-video flex flex-col justify-end">
         <Image
-          src={noticia.imagem}
+          src={urlImagemNoticia(noticia.imagem)}
+          unoptimized={imagemEhDeUpload(noticia.imagem)}
           alt={""}
           fill
           sizes="(max-width: 768px) 100vw, 800px"

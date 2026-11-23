@@ -9,10 +9,10 @@ import { ehAdministrador } from "@/lib/sessao";
 
 export default async function Homepage() {
   // o menu vem do gerenciador de páginas, se não der, usa o conteúdo de reserva
-  const [pagina, itensMenu, administrador] = await Promise.all([
+  const administrador = await ehAdministrador();
+  const [pagina, itensMenu] = await Promise.all([
     buscarPaginaPorSlug("homepage"),
-    buscarItensMenu(false),
-    ehAdministrador(),
+    buscarItensMenu(administrador),
   ]);
 
   return (

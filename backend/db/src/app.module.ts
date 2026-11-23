@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { PrismaModule } from './prisma/prisma.module';
 import { HorariosAulaModule } from './tables/horarios-aula/horarios-aula.module';
+import { NoticiasModule } from './tables/noticias/noticias.module';
 import { PaginasModule } from './tables/paginas/paginas.module';
 import { SalasModule } from './tables/salas/salas.module';
 import { VagasCursoModule } from './tables/vagas-curso/vagas-curso.module';
@@ -16,6 +17,7 @@ import { ConfigModule } from '@nestjs/config';
     PrismaModule,
     HorariosAulaModule,
     PaginasModule,
+    NoticiasModule,
     SalasModule,
     VagasCursoModule,
     VagasEmpregoModule,
