@@ -31,7 +31,7 @@ export function LayoutPagina({
   if (slug === "homepage") {
     return (
       <EstruturaTotem mostrarNoticias={false} ocultarMenu headerSemMargem>
-        <HeroNoticias titulo={nomePagina} />
+        <HeroNoticias />
         <nav className="mx-auto w-full max-w-6xl rounded-xl px-4 py-10">
           {children}
         </nav>
