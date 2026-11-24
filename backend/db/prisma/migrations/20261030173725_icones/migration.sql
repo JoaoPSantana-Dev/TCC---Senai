@@ -1,4 +1,0 @@
--- AlterTable
-ALTER TABLE `paginas` ADD COLUMN `iconeMenu` JSON NULL,
-    ADD COLUMN `mostrarNoMenu` BOOLEAN NOT NULL DEFAULT true,
-    ADD COLUMN `ordemMenu` INTEGER NOT NULL DEFAULT 0;
