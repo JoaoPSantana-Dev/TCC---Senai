@@ -144,7 +144,7 @@ function RaizDaPagina({ children, nomePagina, puck }: RaizProps) {
   if (slug === "homepage") {
     return (
       <LayoutPagina slug={slug} nomePagina={titulo} ocultarMenu>
-        <div className="[&>div]:grid [&>div]:grid-cols-1 [&>div]:gap-8 sm:[&>div]:grid-cols-2 md:[&>div]:grid-cols-3">
+        <div className="[&>div]:flex [&>div]:flex-wrap [&>div]:justify-center [&>div]:gap-6">
           {children}
         </div>
       </LayoutPagina>

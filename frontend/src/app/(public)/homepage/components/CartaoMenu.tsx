@@ -48,16 +48,18 @@ export function CartaoMenu({
   return (
     <Link
       href={href}
-      className="h-full items-center flex flex-row p-8 bg-white rounded-2xl shadow-xl hover:shadow-md"
+      className="flex h-full min-h-44 w-56 flex-col items-center justify-center gap-4 rounded-3xl
+        bg-white px-5 py-7 text-center shadow-[0_10px_30px_-10px_rgba(0,0,0,0.18)]
+        transition-all duration-150 hover:shadow-md active:scale-95"
     >
-      <span className="text-4xl mr-4">
+      <span className="text-red-600">
         {iconeEscolhido ? (
-          <IconeSvg dados={iconeEscolhido.dados} tamanho={40} />
+          <IconeSvg dados={iconeEscolhido.dados} tamanho={48} />
         ) : (
-          <HugeiconsIcon icon={iconeDoSistema} size={40} />
+          <HugeiconsIcon icon={iconeDoSistema} size={48} />
         )}
       </span>
-      <h2 className="text-2xl font-semibold justify-self-end">{titulo}</h2>
+      <h2 className="text-lg font-semibold leading-snug">{titulo}</h2>
     </Link>
   );
 }
