@@ -4,10 +4,8 @@ import { useEffect } from "react";
 import Image from "next/image";
 import { MenuUsuario } from "./MenuUsuario";
 import { NavbarHamburguer } from "./NavbarHamburguer";
-import {
-  carregarUsuarioLogado,
-  useUsuarioLogado,
-} from "@/lib/usuarioLogado";
+import { carregarUsuarioLogado, useUsuarioLogado } from "@/lib/usuarioLogado";
+import Link from "next/link";
 
 // cabeçalho das páginas de administração
 // - só aparece para administrador (para os outros não renderiza nada)
@@ -40,14 +38,16 @@ export function HeaderPrivate() {
           <div />
 
           <figure className="flex justify-center">
-            <Image
-              src="/senai-logo.png"
-              alt="Logo do SENAI"
-              width={256}
-              height={66}
-              className="h-12 w-auto object-contain"
-              loading="eager"
-            />
+            <Link href="/homepage">
+              <Image
+                src="/senai-logo.png"
+                alt="Logo do SENAI"
+                width={256}
+                height={66}
+                className="h-12 w-auto object-contain"
+                loading="eager"
+              />
+            </Link>
           </figure>
 
           <div className="flex justify-end">

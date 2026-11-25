@@ -1,10 +1,10 @@
 import { CadastroForm } from "@/app/(public)/cadastro/components/CadastroForm";
-import { EstruturaAdministradorPublic } from "@/components/shared/EstruturaLogin";
+import { EstruturaLogin } from "@/components/shared/EstruturaLogin";
 import { HeaderAutenticacao } from "@/components/shared/HeaderLogin";
 
 export default function Cadastro() {
   return (
-    <EstruturaAdministradorPublic>
+    <EstruturaLogin>
       <section className="w-full h-full lg:w-1/3 bg-white flex flex-col justify-center p-8 md:p-16">
         <HeaderAutenticacao
           h1="Cadastro"
@@ -13,6 +13,6 @@ export default function Cadastro() {
         />
         <CadastroForm />
       </section>
-    </EstruturaAdministradorPublic>
+    </EstruturaLogin>
   );
 }
