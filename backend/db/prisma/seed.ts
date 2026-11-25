@@ -45,13 +45,13 @@ async function main() {
       create:{nomeSala,bloco:"B", andar:"1", imagem:""}
     })
   }
-  await prisma.horarioAula.createMany({
-    data:{
-      nomeCurso:"TDS-03",
-      professor:"Lincon",
-      materia: "TSOF"
-    }
-  })
+  // await prisma.horarioAula.createMany({
+  //   data:{
+  //     nomeCurso:"TDS-03",
+  //     professor:"Lincon",
+  //     materia: "TSOF"
+  //   }
+  // })
 }
 
 main()

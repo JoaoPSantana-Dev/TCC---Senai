@@ -31,11 +31,14 @@ export function LayoutPagina({
 
   if (slug === "homepage") {
     return (
+      <>
+      <FundoPersianas />
       <EstruturaTotem ocultarMenu>
         <Titulo texto={nomePagina}>
           <nav className="w-full max-w-6xl p-4 rounded-xl">{children}</nav>
         </Titulo>
       </EstruturaTotem>
+      </>
     );
   }
 

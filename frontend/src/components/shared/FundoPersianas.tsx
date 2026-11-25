@@ -2,17 +2,20 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { Pause } from "lucide-react";
 
 interface FundoPersianasProps {
   quantidade?: number; // quantas persianas cobrem a largura da tela
   duracao?: number; // segundos que cada persiana leva para o meio giro
   repetir?: boolean; // se true, abre e fecha em loop (bom para o totem parado)
+  pausa?: number;
 }
 
 export function FundoPersianas({
   quantidade = 24,
   duracao = 2.8,
   repetir = false,
+  pausa = 2.5
 }: FundoPersianasProps) {
   const raiz = useRef<HTMLDivElement>(null);
 
@@ -32,15 +35,21 @@ export function FundoPersianas({
         return;
       };
 
+      const linha = gsap.timeline({
+        repeat: repetir ? -1 : 0,
+        yoyo: true,
+        repeatDelay: pausa
+      })
+
       // Um tween por persiana: é o que deixa a duração independente
       persianas.forEach((persiana, i) => {
-        gsap.to(persiana, {
+        linha.to(persiana, {
           rotateY: 180,
-          duration: gsap.utils.random(duracao * 0.8, duracao * 1.2),
-          delay: 1 * 0.09 + gsap.utils.random(0, 0.35), // Esquerda => Direita
-          else: "sine.inOut",
-          ...(repetir && { repeat: -1, yoyo: true, repeatDelay: 1.5 })
-        });
+            duration: gsap.utils.random(duracao * 0.8, duracao * 1.2),
+            ease: "sine.inOut",
+          },
+          i * 0.09 + gsap.utils.random(0, 0.35), // Esquerda => Direita;
+        );
       });
     }, raiz);
 

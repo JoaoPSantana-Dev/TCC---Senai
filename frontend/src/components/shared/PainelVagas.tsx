@@ -30,6 +30,7 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
   // estado dos filtros
   const [busca, setBusca] = useState("");
   const [areaSelecionada, setAreaSelecionada] = useState<string | null>(null);
+  const [versao, setVersao] = useState(0);
 
   useEffect(() => {
     let ativo = true;
@@ -105,7 +106,7 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
   const detalhes = linhasPreenchidas(selecionado, config.detalhes);
 
   return (
-    <div className="-mx-6 flex w-[calc(100%+3rem)] flex-col items-center md:-mx-12 md:W-[calc(100%+6rem)] lg:mx-0 lg:w-full">
+    <div className="-mx-6 flex w-[calc(100%+3rem)] flex-col items-center md:-mx-12 md:w-[calc(100%+6rem)] lg:mx-0 lg:w-full">
       {carregado && itens.length > 0 && (
         <FiltroVagas
           busca={busca}
@@ -160,7 +161,6 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
               {destaques.length + detalhes.length === 0 && (
                 <p className="text-zinc-500">
                   {valorDoCampo(selecionado, "cargo")} ainda não tem mais
-                  detalhes cadastrados
                   detalhes cadastrados
                 </p>
               )}

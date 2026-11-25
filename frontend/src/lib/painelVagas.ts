@@ -1,4 +1,8 @@
 export type Registro = Record<string, unknown>;
+
+export type ItemLista = Registro & {
+  cargo: string
+}
  
 export interface CampoPainel {
   rotulo: string;
