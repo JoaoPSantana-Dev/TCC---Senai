@@ -70,8 +70,9 @@ export function HeaderTotem({
     <header
       ref={refHeader}
       className={`sticky top-0 left-0 z-40 w-full text-white transition-colors duration-300
+        ${ehHomepage ? "" : "h-20 border-b border-zinc-200"}
         ${transparente ? "bg-transparent border-transparent" : "bg-white shadow-lg shadow-black/5"}
-        ${semMargem ? "" : "mb-8"}`}
+        ${semMargem ? "" : "mb-10"}`}
     >
       {/* blur preto */}
       {transparente && (
@@ -79,31 +80,26 @@ export function HeaderTotem({
       )}
 
       {/* menu hambúrguer */}
-      <nav className="flex text-black">
-        {pathname !== "/homepage" && !ocultarMenu && <NavbarHamburguer />}
-      </nav>
+      {pathname !== "/homepage" && !ocultarMenu && <NavbarHamburguer />}
       {/* menu hambúrguer */}
 
       {/* logo */}
       {pathname !== "/homepage" ? (
         <>
-          <figure
-            className={`flex justify-center items-center w-full px-12 py-3`}
-          >
+          <figure className="flex h-full items-center justify-center">
             <Image
               src="/senai-logo.png"
               alt="Imagem do logo SENAI"
-              width={200}
-              height={200}
-              sizes="(max-width: 480px) 75vw, (max-width: 768px) 65vw, 300px"
-              className="w-[65vw] max-w-75 h-auto object-contain sm:w-[60vw] md:w-75"
+              width={256}
+              height={66}
+              className="h-12 w-auto object-contain"
               loading="eager"
             />
           </figure>
 
           {/* menu da conta só para administrador */}
           {menuConta && (
-            <div className="absolute top-1/2 right-4 z-10 -translate-y-1/2 sm:right-9">
+            <div className="absolute top-1/2 right-6 z-10 -translate-y-1/2">
               {menuConta}
             </div>
           )}

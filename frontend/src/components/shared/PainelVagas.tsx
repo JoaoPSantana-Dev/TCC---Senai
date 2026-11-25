@@ -111,7 +111,7 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
       <div
         role="status"
         aria-label="Carregando"
-        className="flex w-full max-w-4xl flex-col gap-3 px-4 pb-8"
+        className="flex mx-auto w-full max-w-4xl flex-col gap-3 px-4 pb-8"
       >
         {[0, 1, 2].map((i) => (
           <div
@@ -133,7 +133,7 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
     return (
       <div
         role="alert"
-        className="flex w-full max-w-4xl flex-col items-center gap-3 px-4 pb-8 text-center"
+        className="flex mx-auto w-full max-w-4xl flex-col items-center gap-3 px-4 pb-8 text-center"
       >
         <p className="text-zinc-700">Não foi possível carregar a lista.</p>
         <button
@@ -154,7 +154,7 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
   }
 
   return (
-    <div className="flex w-full max-w-4xl flex-col gap-4 px-4 pb-8">
+    <div className="flex mx-auto w-full max-w-4xl flex-col gap-4 px-4 pb-8">
       <div className="flex flex-col gap-3">
         <div className="relative">
           <label htmlFor={`busca-${config.caminho}`} className="sr-only">

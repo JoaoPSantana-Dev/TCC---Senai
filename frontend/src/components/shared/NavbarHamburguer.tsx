@@ -17,7 +17,7 @@ type NavbarHamburguerProps = {
 };
 
 export function NavbarHamburguer({
-  className = "absolute w-18 h-12 left-2 sm:left-9 top-13 -translate-y-1/2",
+  className = "absolute top-1/2 left-6 h-10 w-18 -translate-y-1/2 text-black",
 }: NavbarHamburguerProps) {
   const [itens, setItens] = useState<ItemMenu[]>(rotasFixasTotem);
 
@@ -40,11 +40,9 @@ export function NavbarHamburguer({
         if (estado.isOpen) carregar();
       }}
     >
-      <Link className="menu-item" href={"/homepage"}>
-        Homepage
-      </Link>
+      <Link href={"/homepage"}>Homepage</Link>
       {itens.map((item) => (
-        <Link key={item.href} className="menu-item" href={item.href}>
+        <Link key={item.href} href={item.href}>
           {item.titulo}
         </Link>
       ))}
