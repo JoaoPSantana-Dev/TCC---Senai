@@ -33,7 +33,7 @@ export function PaginaRenderizada({
 
     return (
       <LayoutPagina slug={slug} nomePagina={nomePagina}>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <ul className="flex flex-wrap justify-center gap-6">
           {itens.map(({ chave, componente }) => (
             <li key={chave}>
               <RenderizadorDinamico componente={componente} />

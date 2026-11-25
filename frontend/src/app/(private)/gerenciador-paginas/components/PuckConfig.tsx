@@ -3,6 +3,7 @@ import { FieldLabel, type Field } from "@puckeditor/core";
 import { LayoutPagina } from "@/components/shared/LayoutPagina";
 import { ehIconeEscolhido } from "@/lib/iconeSvg";
 import { tiposPagina } from "@/lib/paginas";
+import { PainelNoticiasNoEditor } from "./PainelNoticiasNoEditor";
 import { PainelVagasNoEditor } from "./PainelVagasNoEditor";
 import { SeletorIcone } from "./SeletorIcone";
 import {
@@ -67,6 +68,7 @@ function semPropsInternas(props: Record<string, unknown>) {
   delete resto.id;
   delete resto.puck;
   delete resto.__vagas;
+  delete resto.__noticias;
   return resto;
 }
 
@@ -91,6 +93,20 @@ const componentes = Object.fromEntries(
                   render: () => (
                     <FieldLabel label="Vagas cadastradas">
                       <PainelVagasNoEditor tipo={definicao.painelDeVagas!} />
+                    </FieldLabel>
+                  ),
+                } as Field,
+              }
+            : {}),
+          // painel das notícias, também só um lugar na barra da direita
+          // não guarda valor
+          ...(definicao.painelDeNoticias
+            ? {
+                __noticias: {
+                  type: "custom",
+                  render: () => (
+                    <FieldLabel label="Notícias cadastradas">
+                      <PainelNoticiasNoEditor />
                     </FieldLabel>
                   ),
                 } as Field,
@@ -128,7 +144,7 @@ function RaizDaPagina({ children, nomePagina, puck }: RaizProps) {
   if (slug === "homepage") {
     return (
       <LayoutPagina slug={slug} nomePagina={titulo} ocultarMenu>
-        <div className="[&>div]:grid [&>div]:grid-cols-1 [&>div]:gap-8 sm:[&>div]:grid-cols-2 md:[&>div]:grid-cols-3">
+        <div className="[&>div]:flex [&>div]:flex-wrap [&>div]:justify-center [&>div]:gap-6">
           {children}
         </div>
       </LayoutPagina>
@@ -157,20 +173,37 @@ function RaizDaPagina({ children, nomePagina, puck }: RaizProps) {
 // ---------- configuração final ----------
 
 // campos que aparecem no painel da direita quando nenhum componente está selecionado
-export const configPuck = {
-  components: componentes,
-  root: {
-    fields: {
-      nomePagina: { type: "text", label: "Nome da página" },
-      tipoPagina: {
-        type: "select",
-        label: "Tipo da página",
-        options: tiposPagina.map((tipo) => ({ label: tipo, value: tipo })),
+// na homepage as notícias do destaque do topo não são um bloco, então o painel delas
+// fica aqui
+// clique em uma área vazia da página (ou em "Página") para abrir
+export function criarConfigPuck(slug: string) {
+  return {
+    components: componentes,
+    root: {
+      fields: {
+        nomePagina: { type: "text", label: "Nome da página" },
+        tipoPagina: {
+          type: "select",
+          label: "Tipo da página",
+          options: tiposPagina.map((tipo) => ({ label: tipo, value: tipo })),
+        },
+        ...(slug === "homepage"
+          ? {
+              __noticias: {
+                type: "custom",
+                render: () => (
+                  <FieldLabel label="Notícias do destaque">
+                    <PainelNoticiasNoEditor />
+                  </FieldLabel>
+                ),
+              } as Field,
+            }
+          : {}),
       },
+      render: RaizDaPagina,
     },
-    render: RaizDaPagina,
-  },
-};
+  };
+}
 
 // textos da interface do puck em português
 export const dicionarioPuck = {

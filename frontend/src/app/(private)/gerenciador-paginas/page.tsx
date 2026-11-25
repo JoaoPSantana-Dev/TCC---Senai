@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Delete02Icon,
-  Edit03Icon,
-  ExternalLinkIcon,
-  Plus,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { ExternalLink, Pencil, Plus, Trash2 } from "lucide-react";
 import { alerta } from "@/lib/alerta";
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
@@ -102,7 +96,7 @@ export default function Paginas() {
               href="/gerenciador-paginas/nova-pagina"
               className="flex items-center gap-2 cursor-pointer bg-green-600 hover:bg-green-700 rounded-lg text-white duration-300 px-2 py-1 text-sm"
             >
-              <HugeiconsIcon icon={Plus} size={30} />
+              <Plus size={30} />
               <p>Adicionar nova página</p>
             </Link>
           </div>
@@ -149,7 +143,7 @@ export default function Paginas() {
                         title="Abrir a página no totem"
                         className="p-2 text-zinc-600 cursor-pointer hover:text-yellow-600 duration-200"
                       >
-                        <HugeiconsIcon icon={ExternalLinkIcon} size={20} />
+                        <ExternalLink size={20} />
                       </Link>
                     )}
                     <Link
@@ -157,7 +151,7 @@ export default function Paginas() {
                       title="Editar"
                       className="p-2 text-zinc-600 cursor-pointer hover:text-blue-600 duration-200"
                     >
-                      <HugeiconsIcon icon={Edit03Icon} size={20} />
+                      <Pencil size={20} />
                     </Link>
 
                     <button
@@ -171,7 +165,7 @@ export default function Paginas() {
                       onClick={() => excluirPagina(pagina)}
                       className="p-2 text-zinc-600 cursor-pointer hover:text-red-600 duration-200 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:text-zinc-600"
                     >
-                      <HugeiconsIcon icon={Delete02Icon} size={20} />
+                      <Trash2 size={20} />
                     </button>
                   </div>
                 </li>

@@ -1,4 +1,4 @@
-import type { HugeiconsIconProps } from "@hugeicons/react";
+import type { DadosIcone } from "@/lib/iconeSvg";
 
 // página setup com tipos, constantes e funções compartilhadas do gerenciador de páginas.
 // as regras de slug e tipo abaixo têm uma cópia no backend em
@@ -27,7 +27,6 @@ export const slugsReservados: readonly string[] = [
   "usuarios",
   "seguranca",
   "api",
-  "biblioteca",
 ];
 
 export interface ComponentePagina {
@@ -61,7 +60,7 @@ export interface PaginaCompleta {
 
 export interface IconeMenu {
   nome: string;
-  dados: HugeiconsIconProps["icon"];
+  dados: DadosIcone;
 }
 
 export function criarSlug(nomePagina: string) {

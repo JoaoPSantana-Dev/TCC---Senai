@@ -169,7 +169,23 @@ export const schemaComponentes: Record<string, Record<string, CampoSchema>> = {
     somenteAdministrador: { tipo: 'boolean' },
   },
   Titulo: { texto: { tipo: 'string', obrigatorio: true, max: 100 } },
+  BlocoTitulo: { texto: { tipo: 'string', obrigatorio: true, max: 150 } },
+  BlocoSubtitulo: { texto: { tipo: 'string', obrigatorio: true, max: 150 } },
+  BlocoTexto: {
+    texto: { tipo: 'string', obrigatorio: true, max: 2000 },
+    destaque: { tipo: 'boolean' },
+  },
+  BlocoLista: { itens: { tipo: 'string', obrigatorio: true, max: 2000 } },
+  BlocoImagem: {
+    nomeImagem: {
+      tipo: 'string',
+      obrigatorio: true,
+      formato: 'arquivo-imagem',
+    },
+    alt: { tipo: 'string', max: 200 },
+  },
   Mapa: {},
+  BibliotecaStatus: {},
   VagasEmprego: {},
   VagasEstagio: {},
   VagasCursos: {},

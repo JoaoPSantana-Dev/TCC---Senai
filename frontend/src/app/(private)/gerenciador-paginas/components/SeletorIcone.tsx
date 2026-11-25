@@ -1,18 +1,16 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type MouseEvent } from "react";
+import type { LucideIcon } from "lucide-react";
 import type { IconeMenu } from "@/lib/paginas";
-import {
-  elementosDoIcone,
-  limparIcone,
-  rotuloDoIcone,
-  type DadosIcone,
-} from "@/lib/iconeSvg";
+import { limparIcone, rotuloDoIcone } from "@/lib/iconeSvg";
 import { IconeSvg } from "@/components/shared/IconeSvg";
 
-// escolhe um ícone entre todos os do Hugeicons
+// escolhe um ícone entre todos os do Lucide
 // cada ícone aparece desenhado, com o nome embaixo
-// o pacote inteiro só é baixado quando o seletor é aberto pela primeira vez
+// a lista inteira só é baixada quando o seletor é aberto pela primeira vez
+// ao escolher, os traços do svg que o lucide desenhou são copiados e salvos como { nome, dados },
+// então a página pública não precisa carregar o catálogo todo, e o backend continua igual
 
 const porPagina = 48;
 
@@ -20,7 +18,24 @@ interface ItemCatalogo {
   nome: string;
   rotulo: string;
   busca: string;
-  dados: DadosIcone;
+  Componente: LucideIcon;
+}
+
+// "stroke-width" vira "strokeWidth", que é como os dados do ícone são guardados
+function paraCamelCase(nome: string) {
+  return nome.replace(/-([a-z])/g, (_, letra: string) => letra.toUpperCase());
+}
+
+// lê os traços (path, circle, ...) do svg que o lucide acabou de desenhar no botão
+function lerDadosDoSvg(svg: SVGSVGElement | null) {
+  if (!svg) return [];
+  return Array.from(svg.children).map((elemento) => {
+    const atributos: Record<string, string> = {};
+    for (const { name, value } of Array.from(elemento.attributes)) {
+      atributos[paraCamelCase(name)] = value;
+    }
+    return [elemento.tagName.toLowerCase(), atributos] as const;
+  });
 }
 
 interface SeletorIconeProps {
@@ -39,21 +54,18 @@ export function SeletorIcone({ valor, onChange }: SeletorIconeProps) {
     if (!aberto || catalogo) return;
 
     let cancelado = false;
-    import("@hugeicons/core-free-icons")
-      .then((modulo) => {
+    import("lucide-react")
+      .then(({ icons }) => {
         if (cancelado) return;
 
-        const itens: ItemCatalogo[] = [];
-        for (const [nome, dados] of Object.entries(modulo)) {
-          if (!nome.endsWith("Icon") || elementosDoIcone(dados).length === 0)
-            continue;
-          itens.push({
+        const itens: ItemCatalogo[] = Object.entries(icons).map(
+          ([nome, Componente]) => ({
             nome,
             rotulo: rotuloDoIcone(nome),
             busca: nome.toLowerCase(),
-            dados: dados as DadosIcone,
-          });
-        }
+            Componente,
+          }),
+        );
         itens.sort((a, b) => a.nome.localeCompare(b.nome));
         setCatalogo(itens);
       })
@@ -142,8 +154,11 @@ export function SeletorIcone({ valor, onChange }: SeletorIconeProps) {
                       type="button"
                       title={item.nome}
                       aria-label={item.rotulo}
-                      onClick={() => {
-                        onChange(limparIcone(item.nome, item.dados));
+                      onClick={(evento: MouseEvent<HTMLButtonElement>) => {
+                        const svg = evento.currentTarget.querySelector("svg");
+                        const icone = limparIcone(item.nome, lerDadosDoSvg(svg));
+                        if (icone.dados.length === 0) return;
+                        onChange(icone);
                         setAberto(false);
                       }}
                       className={`flex cursor-pointer flex-col items-center gap-1 rounded-lg border bg-white p-2 text-zinc-900 hover:bg-zinc-100 ${
@@ -152,9 +167,9 @@ export function SeletorIcone({ valor, onChange }: SeletorIconeProps) {
                           : "border-zinc-200"
                       }`}
                     >
-                      <IconeSvg
-                        dados={item.dados}
-                        tamanho={28}
+                      <item.Componente
+                        size={28}
+                        aria-hidden="true"
                         className="text-zinc-900"
                       />
                       <span className="w-full truncate text-center text-[10px] leading-tight text-zinc-600">
