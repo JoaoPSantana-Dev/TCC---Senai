@@ -94,15 +94,18 @@ model Sala {
   nomeSala String
   andar    String
   bloco    String
-  imagem   String
+  imagem   String?
   horarios HorarioAula[]
 
+  @@unique([bloco,andar,nomeSala])
   @@map("salas")
 }
 
 model HorarioAula {
   idHorariosAula Int     @id @default(autoincrement()) @map("id_horarios_aula")
   nomeCurso      String
+  professor      String
+  materia        String
   turno          String
   dia            String
   idSala         Int     @map("id_sala")
