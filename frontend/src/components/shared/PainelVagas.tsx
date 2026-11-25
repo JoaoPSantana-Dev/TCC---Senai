@@ -158,9 +158,9 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
                       ? "bg-red-600 text-white"
                       : "bg-white text-zinc-700 shadow-sm hover:bg-zinc-50"
                   }`}
-                
+                >
                   <b>{rotulo}:</b> {valor}
-                
+                </button>
               ))}
               {detalhes.map(({ rotulo, campo, valor }) => (
                 <p
