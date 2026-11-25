@@ -1,3 +1,4 @@
+import { PrismaService } from '../../prisma/prisma.service';
 import {
   BadRequestException,
   ConflictException,
@@ -9,7 +10,6 @@ import { CreateUsuarioDto } from '../dto/create-usuario.dto';
 import { UpdateUsuarioDto } from '../dto/update-usuario.dto';
 import { AtualizarPerfilDto } from '../dto/perfil-usuario.dto';
 import { conferirSenha, gerarHashSenha } from '../../modulos/login/senha.util';
-import { PrismaService } from '../../prisma/prisma.service';
 
 // campos que podem sair da API
 // os campos da senha, segredo do 2fa e tokens nunca aparecem

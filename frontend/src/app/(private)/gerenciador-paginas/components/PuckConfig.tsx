@@ -1,17 +1,10 @@
-import { useEffect, useState, type ReactNode } from "react";
-import { createUsePuck, FieldLabel, type Field } from "@puckeditor/core";
-import { CartaoMenu } from "@/app/(public)/homepage/components/CartaoMenu";
+import type { ReactNode } from "react";
+import { FieldLabel, type Field } from "@puckeditor/core";
 import { LayoutPagina } from "@/components/shared/LayoutPagina";
-import {
-  buscarItensMenuNoNavegador,
-  itensForaDoConteudo,
-  type ItemMenu,
-} from "@/lib/menuTotem";
-import {
-  tiposPagina,
-  type ComponentePagina,
-  type IconeMenu,
-} from "@/lib/paginas";
+import { ehIconeEscolhido } from "@/lib/iconeSvg";
+import { tiposPagina } from "@/lib/paginas";
+import { PainelNoticiasNoEditor } from "./PainelNoticiasNoEditor";
+import { PainelVagasNoEditor } from "./PainelVagasNoEditor";
 import { SeletorIcone } from "./SeletorIcone";
 import {
   registroComponentes,
@@ -21,8 +14,6 @@ import {
 // configuração do puck gerada a partir do registroComponentes
 // para ter um componente novo no editor, registre em registroComponentes.ts
 // ele aparece na lista da esquerda pronto para arrastar
-
-const usePuck = createUsePuck();
 
 const opcoesSimNao = [
   { label: "Sim", value: true },
@@ -48,6 +39,24 @@ function campoParaPuck(campo: CampoComponente): Field {
           value: opcao.valor,
         })),
       };
+    case "icone":
+      return {
+        type: "custom",
+        render: ({
+          value,
+          onChange,
+        }: {
+          value: unknown;
+          onChange: (valor: unknown) => void;
+        }) => (
+          <FieldLabel label={label}>
+            <SeletorIcone
+              valor={ehIconeEscolhido(value) ? value : null}
+              onChange={(icone) => onChange(icone)}
+            />
+          </FieldLabel>
+        ),
+      };
     default:
       return { type: "text", label };
   }
@@ -58,6 +67,8 @@ function semPropsInternas(props: Record<string, unknown>) {
   const resto = { ...props };
   delete resto.id;
   delete resto.puck;
+  delete resto.__vagas;
+  delete resto.__noticias;
   return resto;
 }
 
@@ -69,11 +80,43 @@ const componentes = Object.fromEntries(
       tipo,
       {
         label: definicao.rotulo,
-        fields: Object.fromEntries(
-          definicao.campos.map((campo) => [campo.nome, campoParaPuck(campo)]),
-        ),
+        fields: {
+          ...Object.fromEntries(
+            definicao.campos.map((campo) => [campo.nome, campoParaPuck(campo)]),
+          ),
+          // painel para adicionar, editar e excluir as vagas do banco
+          // "__vagas" não guarda valor nenhum: é só o lugar onde o painel aparece
+          ...(definicao.painelDeVagas
+            ? {
+                __vagas: {
+                  type: "custom",
+                  render: () => (
+                    <FieldLabel label="Vagas cadastradas">
+                      <PainelVagasNoEditor tipo={definicao.painelDeVagas!} />
+                    </FieldLabel>
+                  ),
+                } as Field,
+              }
+            : {}),
+          // painel das notícias, também só um lugar na barra da direita
+          // não guarda valor
+          ...(definicao.painelDeNoticias
+            ? {
+                __noticias: {
+                  type: "custom",
+                  render: () => (
+                    <FieldLabel label="Notícias cadastradas">
+                      <PainelNoticiasNoEditor />
+                    </FieldLabel>
+                  ),
+                } as Field,
+              }
+            : {}),
+        },
         defaultProps: Object.fromEntries(
-          definicao.campos.map((campo) => [campo.nome, campo.padrao]),
+          definicao.campos
+            .filter((campo) => campo.padrao !== null)
+            .map((campo) => [campo.nome, campo.padrao]),
         ),
         render: (props: Record<string, unknown>) => (
           <Componente {...semPropsInternas(props)} />
@@ -84,44 +127,6 @@ const componentes = Object.fromEntries(
 );
 
 // ---------- raiz, a página em volta dos componentes ----------
-
-// na homepage, os cartões das páginas cadastradas aparecerem antes dos componentes
-// igual na página pública, não são arrastáveis, ficam travados com "inert"
-function CartoesAutomaticosDoEditor() {
-  const [itens, setItens] = useState<ItemMenu[]>([]);
-  const conteudo = usePuck((estado) => estado.appState.data.content);
-
-  useEffect(() => {
-    let ativo = true;
-    buscarItensMenuNoNavegador().then((lista) => {
-      if (ativo) setItens(lista);
-    });
-    return () => {
-      ativo = false;
-    };
-  }, []);
-  const extras = itensForaDoConteudo(
-    conteudo as unknown as ComponentePagina[],
-    itens,
-  );
-  if (extras.length === 0) return null;
-
-  return (
-    <div
-      inert
-      className="mb-8 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3"
-    >
-      {extras.map((item) => (
-        <CartaoMenu
-          key={item.href}
-          titulo={item.titulo}
-          href={item.href}
-          icone={item.icone}
-        />
-      ))}
-    </div>
-  );
-}
 
 interface RaizProps {
   children: ReactNode;
@@ -134,12 +139,12 @@ function RaizDaPagina({ children, nomePagina, puck }: RaizProps) {
   const titulo = nomePagina?.trim() || "Sem nome";
 
   // "children" é a área onde os componentes são soltos e o Puck renderiza um <div> ali
-  // As classes [&>div] repetem no canvas o grid/coluna que a página pública usa
+  // as classes [&>div] repetem no canvas o grid/coluna que a página pública usa na homepage
+
   if (slug === "homepage") {
     return (
       <LayoutPagina slug={slug} nomePagina={titulo} ocultarMenu>
-        <CartoesAutomaticosDoEditor />
-        <div className="[&>div]:grid [&>div]:grid-cols-1 [&>div]:gap-8 sm:[&>div]:grid-cols-2 md:[&>div]:grid-cols-3">
+        <div className="[&>div]:flex [&>div]:flex-wrap [&>div]:justify-center [&>div]:gap-6">
           {children}
         </div>
       </LayoutPagina>
@@ -149,7 +154,9 @@ function RaizDaPagina({ children, nomePagina, puck }: RaizProps) {
   if (slug === "descanso") {
     return (
       <LayoutPagina slug={slug} nomePagina={titulo} ocultarMenu>
-        {children}
+        <div className="flex w-full flex-1 flex-col items-center justify-center [&>div]:flex [&>div]:w-full [&>div]:flex-col [&>div]:items-center [&>div]:justify-center">
+          {children}
+        </div>
       </LayoutPagina>
     );
   }
@@ -166,46 +173,37 @@ function RaizDaPagina({ children, nomePagina, puck }: RaizProps) {
 // ---------- configuração final ----------
 
 // campos que aparecem no painel da direita quando nenhum componente está selecionado
-export const configPuck = {
-  components: componentes,
-  root: {
-    fields: {
-      nomePagina: { type: "text", label: "Nome da página" },
-      tipoPagina: {
-        type: "select",
-        label: "Tipo da página",
-        options: tiposPagina.map((tipo) => ({ label: tipo, value: tipo })),
+// na homepage as notícias do destaque do topo não são um bloco, então o painel delas
+// fica aqui
+// clique em uma área vazia da página (ou em "Página") para abrir
+export function criarConfigPuck(slug: string) {
+  return {
+    components: componentes,
+    root: {
+      fields: {
+        nomePagina: { type: "text", label: "Nome da página" },
+        tipoPagina: {
+          type: "select",
+          label: "Tipo da página",
+          options: tiposPagina.map((tipo) => ({ label: tipo, value: tipo })),
+        },
+        ...(slug === "homepage"
+          ? {
+              __noticias: {
+                type: "custom",
+                render: () => (
+                  <FieldLabel label="Notícias do destaque">
+                    <PainelNoticiasNoEditor />
+                  </FieldLabel>
+                ),
+              } as Field,
+            }
+          : {}),
       },
-      mostrarNoMenu: {
-        type: "radio",
-        label: "Mostrar no menu e na homepage",
-        options: opcoesSimNao,
-      },
-      ordemMenu: {
-        type: "number",
-        label: "Posição no menu (menor aparece primeiro)",
-      },
-      iconeMenu: {
-        type: "custom",
-        render: ({
-          value,
-          onChange,
-        }: {
-          value: unknown;
-          onChange: (valor: unknown) => void;
-        }) => (
-          <FieldLabel label="Ícone do menu">
-            <SeletorIcone
-              valor={(value as IconeMenu | null) ?? null}
-              onChange={(icone) => onChange(icone)}
-            />
-          </FieldLabel>
-        ),
-      },
+      render: RaizDaPagina,
     },
-    render: RaizDaPagina,
-  },
-};
+  };
+}
 
 // textos da interface do puck em português
 export const dicionarioPuck = {

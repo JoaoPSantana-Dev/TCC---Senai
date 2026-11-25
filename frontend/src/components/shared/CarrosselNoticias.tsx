@@ -11,13 +11,14 @@ import {
   CarouselPrevious,
 } from "@/components/ui/Carousel";
 import { NoticiaSlide } from "./NoticiaSlide";
-import { noticias } from "./Noticias.data";
+import { useNoticias } from "@/lib/noticias";
 
 const AUTOPLAY_DELAY = 10000;
 
 // exibe as notícias em um carrossel automático, com navegação por botão ou deslizando com uma barra de progresso na parte de baixo
 
 export function CarrosselNoticias() {
+  const { noticias } = useNoticias();
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [isPlaying, setIsPlaying] = React.useState(true);
@@ -55,6 +56,8 @@ export function CarrosselNoticias() {
     setIsPlaying(true);
   };
 
+  if (noticias.length === 0) return null;
+
   return (
     <div
       className="w-full max-w-5xl mx-auto px-12 py-6 space-y-4 select-none"
@@ -69,7 +72,7 @@ export function CarrosselNoticias() {
       >
         <CarouselContent>
           {noticias.map((noticia) => (
-            <CarouselItem key={noticia.id}>
+            <CarouselItem key={noticia.idNoticia}>
               <NoticiaSlide noticia={noticia} />
             </CarouselItem>
           ))}

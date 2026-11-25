@@ -1,3 +1,5 @@
+import { validarIcone } from './icone.validacao';
+
 // regras compartilhadas dos dtos e service
 // o frontend tem uma cópia dessas regras em
 // frontend/src/lib/paginas.ts e frontend/src/app/(private)/gerenciador-paginas/components/registroComponentes.tsx
@@ -120,7 +122,7 @@ export function validarIconeMenu(icone: unknown): string[] {
   return [];
 }
 
-export type TipoCampo = 'string' | 'boolean';
+export type TipoCampo = 'string' | 'boolean' | 'icone';
 
 export interface CampoSchema {
   tipo: TipoCampo;
@@ -163,9 +165,27 @@ export const schemaComponentes: Record<string, Record<string, CampoSchema>> = {
     titulo: { tipo: 'string', obrigatorio: true, max: 80 },
     href: { tipo: 'string', obrigatorio: true, max: 200, formato: 'caminho' },
     icone: { tipo: 'string', obrigatorio: true, opcoes: iconesMenu },
+    iconeEscolhido: { tipo: 'icone' },
+    somenteAdministrador: { tipo: 'boolean' },
   },
   Titulo: { texto: { tipo: 'string', obrigatorio: true, max: 100 } },
+  BlocoTitulo: { texto: { tipo: 'string', obrigatorio: true, max: 150 } },
+  BlocoSubtitulo: { texto: { tipo: 'string', obrigatorio: true, max: 150 } },
+  BlocoTexto: {
+    texto: { tipo: 'string', obrigatorio: true, max: 2000 },
+    destaque: { tipo: 'boolean' },
+  },
+  BlocoLista: { itens: { tipo: 'string', obrigatorio: true, max: 2000 } },
+  BlocoImagem: {
+    nomeImagem: {
+      tipo: 'string',
+      obrigatorio: true,
+      formato: 'arquivo-imagem',
+    },
+    alt: { tipo: 'string', max: 200 },
+  },
   Mapa: {},
+  BibliotecaStatus: {},
   VagasEmprego: {},
   VagasEstagio: {},
   VagasCursos: {},
@@ -198,6 +218,17 @@ export function validarPropsComponente(
 
   for (const [nome, campo] of Object.entries(schema)) {
     const valor = props[nome];
+
+    if (campo.tipo === 'icone') {
+      if (valor === undefined || valor === null) {
+        if (campo.obrigatorio)
+          erros.push(`${prefixo}: "${nome}" é obrigatório`);
+        continue;
+      }
+      const erroIcone = validarIcone(valor);
+      if (erroIcone) erros.push(`${prefixo}: "${nome}" - ${erroIcone}`);
+      continue;
+    }
 
     if (campo.tipo === 'boolean') {
       if (valor === undefined && campo.obrigatorio) {

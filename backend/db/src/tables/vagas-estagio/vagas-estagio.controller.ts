@@ -1,33 +1,28 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  ParseArrayPipe,
+  ParseIntPipe,
+  Patch,
+  Post,
+  UseGuards,
 } from '@nestjs/common';
 import { VagasEstagioService } from './vagas-estagio.service';
 import { CreateVagaEstagioDto } from '../dto/create-vaga-estagio.dto';
 import { UpdateVagaEstagioDto } from '../dto/update-vaga-estagio.dto';
+import {
+  AdministradorGuard,
+  JwtAuthGuard,
+} from '../../modulos/login/jwt-auth.guard';
 
 @Controller('vagas-estagio')
 export class VagasEstagioController {
   constructor(private readonly vagasEstagioService: VagasEstagioService) {}
 
-  @Post()
-  criarVagaEstagio(@Body() createVagaEstagioDto: CreateVagaEstagioDto) {
-    return this.vagasEstagioService.criarVagaEstagio(createVagaEstagioDto);
-  }
-
-  @Post('lote')
-  criarVariasVagasEstagio(
-    @Body() createVagaEstagioDto: CreateVagaEstagioDto[],
-  ) {
-    return this.vagasEstagioService.criarVariasVagasEstagios(
-      createVagaEstagioDto,
-    );
-  }
+  // leitura é pública e o totem busca por aqui, escrever exige administrador
 
   @Get()
   listarTodasVagasEstagio() {
@@ -35,23 +30,37 @@ export class VagasEstagioController {
   }
 
   @Get(':id')
-  listarUmaVagaEstagio(@Param('id') id: number) {
-    return this.vagasEstagioService.listarUmaVagaEstagio(+id);
+  listarUmaVagaEstagio(@Param('id', ParseIntPipe) id: number) {
+    return this.vagasEstagioService.listarUmaVagaEstagio(id);
   }
 
-  @Delete(':id')
-  apagarVagaEstagio(@Param('id') id: number) {
-    return this.vagasEstagioService.apagarVagaEstagio(+id);
+  @Post()
+  @UseGuards(JwtAuthGuard, AdministradorGuard)
+  criarVagaEstagio(@Body() dto: CreateVagaEstagioDto) {
+    return this.vagasEstagioService.criarVagaEstagio(dto);
+  }
+
+  @Post('lote')
+  @UseGuards(JwtAuthGuard, AdministradorGuard)
+  criarVariasVagasEstagio(
+    @Body(new ParseArrayPipe({ items: CreateVagaEstagioDto, whitelist: true }))
+    dtos: CreateVagaEstagioDto[],
+  ) {
+    return this.vagasEstagioService.criarVariasVagasEstagios(dtos);
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard, AdministradorGuard)
   updateVagaEstagio(
-    @Param('id') id: number,
-    @Body() updateVagaEstagioDTO: UpdateVagaEstagioDto,
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: UpdateVagaEstagioDto,
   ) {
-    return this.vagasEstagioService.updateVagaEstagio(
-      +id,
-      updateVagaEstagioDTO,
-    );
+    return this.vagasEstagioService.updateVagaEstagio(id, dto);
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard, AdministradorGuard)
+  apagarVagaEstagio(@Param('id', ParseIntPipe) id: number) {
+    return this.vagasEstagioService.apagarVagaEstagio(id);
   }
 }

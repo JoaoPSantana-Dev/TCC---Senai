@@ -11,6 +11,7 @@ export interface ItemMenu {
   icone: string; // chave de iconesMenu em CartaoMenu.tsx
   iconeEscolhido?: IconeMenu | null; // chave de ícones do banco
   ordem?: number;
+  somenteAdministrador?: boolean;
 }
 
 // páginas que o totem usa por trás e que não são destino de navegação
@@ -24,8 +25,14 @@ export const rotasPrivadas: ItemMenu[] = [
     titulo: "Gerenciador de páginas",
     href: "/gerenciador-paginas",
     icone: "info",
+    somenteAdministrador: true,
   },
-  { titulo: "Usuários", href: "/usuarios", icone: "info" },
+  {
+    titulo: "Usuários",
+    href: "/usuarios",
+    icone: "info",
+    somenteAdministrador: true,
+  },
 ];
 
 function itensReserva(administrador: boolean) {
@@ -68,6 +75,7 @@ export function montarItensMenu(
       icone: iconePorSlug[pagina.slug] ?? "info",
       iconeEscolhido: pagina.iconeMenu,
       ordem: pagina.ordemMenu ?? 0,
+      somenteAdministrador: pagina.tipoPagina === "Administrador",
     }));
 
   const fixas = [...rotasFixasTotem, ...(administrador ? rotasPrivadas : [])];

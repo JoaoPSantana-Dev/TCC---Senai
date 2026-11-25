@@ -46,6 +46,16 @@ model Pagina {
   @@map("paginas")
 }
 
+model Noticia {
+  idNoticia Int      @id @default(autoincrement()) @map("id_noticia")
+  titulo    String
+  // nome do arquivo salvo em uploads/noticias (ou um caminho que começa com "/" da pasta public do front)
+  imagem    String
+  criadaEm  DateTime @default(now()) @map("criada_em")
+
+  @@map("noticias")
+}
+
 model VagaCurso {
   idCurso       Int       @id @default(autoincrement()) @map("id_curso")
   nomeCurso     String
@@ -63,10 +73,10 @@ model VagaEmprego {
   idEmprego   Int     @id @default(autoincrement()) @map("id_emprego")
   nomeEmpresa String
   cargo       String
-  requisitos  String
+  requisitos  String  @db.Text
   salario     String
-  beneficios  String
-  descricao   String
+  beneficios  String  @db.Text
+  descricao   String  @db.Text
   localizacao String
   contato     String
   areaEmprego String
@@ -78,10 +88,10 @@ model VagaEstagio {
   idEstagio   Int     @id @default(autoincrement()) @map("id_estagio")
   nomeEmpresa String
   cargo       String
-  requisitos  String
+  requisitos  String  @db.Text
   salario     String
-  beneficios  String
-  descricao   String
+  beneficios  String  @db.Text
+  descricao   String  @db.Text
   localizacao String
   contato     String
   areaEstagio String

@@ -5,7 +5,6 @@ import {
 import { buscarPaginaPorSlug } from "@/lib/paginas";
 import { PaginaRenderizada } from "@/components/shared/PaginaRenderizada";
 import { buscarItensMenu } from "@/lib/menuTotem";
-import testCookie from "../login/page";
 import { ehAdministrador } from "@/lib/sessao";
 
 export default async function Homepage() {
@@ -15,7 +14,6 @@ export default async function Homepage() {
     buscarPaginaPorSlug("homepage"),
     buscarItensMenu(administrador),
   ]);
-  testCookie();
 
   return (
     <PaginaRenderizada
@@ -23,6 +21,7 @@ export default async function Homepage() {
       nomePagina={pagina?.nomePagina ?? tituloPadraoHomepage}
       conteudo={pagina?.conteudo ?? conteudoPadraoHomepage}
       cartoesAutomaticos={itensMenu}
+      administrador={administrador}
     />
   );
 }

@@ -1,10 +1,15 @@
 import type { ReactNode } from "react";
 import { EstruturaTotem } from "@/components/shared/EstruturaTotem";
 import { Titulo } from "@/components/shared/TituloTotem";
+import { HeroNoticias } from "@/components/shared/HeroNoticias";
 
 // a "moldura" padrão de cada tipo de página
 // é usada pela página pública PaginaRenderizada e pelo canvas do editor puck
 // então o que se vê no editor é o mesmo layout que vai para o totem
+
+// o :has() acha os blocos em qualquer nível, então vale também dentro da área do editor
+const cartaoDosBlocos =
+  "has-[[data-bloco]]:mx-auto has-[[data-bloco]]:max-w-4xl has-[[data-bloco]]:rounded-2xl has-[[data-bloco]]:bg-[#f9f9f9] has-[[data-bloco]]:p-8 has-[[data-bloco]]:shadow-md";
 
 interface LayoutPaginaProps {
   slug: string;
@@ -29,10 +34,11 @@ export function LayoutPagina({
 
   if (slug === "homepage") {
     return (
-      <EstruturaTotem ocultarMenu>
-        <Titulo texto={nomePagina}>
-          <nav className="w-full max-w-6xl p-4 rounded-xl">{children}</nav>
-        </Titulo>
+      <EstruturaTotem mostrarNoticias={false} ocultarMenu headerSemMargem>
+        <HeroNoticias />
+        <nav className="mx-auto w-full max-w-6xl rounded-xl px-4 py-10">
+          {children}
+        </nav>
       </EstruturaTotem>
     );
   }
@@ -41,7 +47,9 @@ export function LayoutPagina({
     <EstruturaTotem mostrarNoticias={false} ocultarMenu={ocultarMenu}>
       <Titulo texto={nomePagina} />
       <div className="flex flex-col justify-center max-w-6xl w-full p-6 md:p-12 mx-auto">
-        <section className="flex flex-col gap-6 w-full">{children}</section>
+        <section className={`flex flex-col gap-6 w-full ${cartaoDosBlocos}`}>
+          {children}
+        </section>
       </div>
     </EstruturaTotem>
   );

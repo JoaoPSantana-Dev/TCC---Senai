@@ -1,44 +1,40 @@
 import {
-  Building03Icon,
-  Briefcase01Icon,
-  InfoIcon,
-  LibraryBigIcon,
-  MapsSearchIcon,
-  Mortarboard02Icon,
-  PermanentJobIcon,
-  Clock01Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type HugeiconsIconProps } from "@hugeicons/react";
+  Briefcase,
+  Building2,
+  Clock,
+  GraduationCap,
+  Info,
+  LibraryBig,
+  MapPinned,
+  UserRoundCheck,
+  type LucideIcon,
+} from "lucide-react";
 import Link from "next/link";
-import type { IconeMenu } from "@/lib/paginas";
+import type { IconeEscolhido } from "@/lib/iconeSvg";
+import { IconeSvg } from "@/components/shared/IconeSvg";
 
 // ícones que podem ser escolhidos no gerenciador de páginas
 // a chave é o que fica salvo no banco, o backend tem uma lista igual em paginas.constantes.ts
 export const iconesMenu: Record<
   string,
-  { rotulo: string; icone: HugeiconsIconProps["icon"] }
+  { rotulo: string; icone: LucideIcon }
 > = {
-  info: { rotulo: "Informação", icone: InfoIcon },
-  predio: { rotulo: "Prédio", icone: Building03Icon },
-  relogio: { rotulo: "Relógio", icone: Clock01Icon },
-  mapa: { rotulo: "Mapa", icone: MapsSearchIcon },
-  emprego: { rotulo: "Maleta (emprego)", icone: Briefcase01Icon },
-  estagio: { rotulo: "Estágio", icone: PermanentJobIcon },
-  curso: { rotulo: "Capelo (cursos)", icone: Mortarboard02Icon },
-  biblioteca: { rotulo: "Livros (biblioteca)", icone: LibraryBigIcon },
+  info: { rotulo: "Informação", icone: Info },
+  predio: { rotulo: "Prédio", icone: Building2 },
+  relogio: { rotulo: "Relógio", icone: Clock },
+  mapa: { rotulo: "Mapa", icone: MapPinned },
+  emprego: { rotulo: "Maleta (emprego)", icone: Briefcase },
+  estagio: { rotulo: "Estágio", icone: UserRoundCheck },
+  curso: { rotulo: "Capelo (cursos)", icone: GraduationCap },
+  biblioteca: { rotulo: "Livros (biblioteca)", icone: LibraryBig },
 };
 
 interface CartaoMenuProps {
   titulo: string;
   href: string;
   icone: string;
-}
-
-interface CartaoMenuProps {
-  titulo: string;
-  href: string;
-  icone: string; // 8 ícones já no sistema
-  iconeEscolhido?: IconeMenu | null; // ícones vindo do banco
+  // ícone escolhido do Lucide
+  iconeEscolhido?: IconeEscolhido | null;
 }
 
 export function CartaoMenu({
@@ -47,18 +43,23 @@ export function CartaoMenu({
   icone,
   iconeEscolhido,
 }: CartaoMenuProps) {
-  const iconeSelecionado =
-    iconeEscolhido?.dados ?? iconesMenu[icone]?.icone ?? InfoIcon;
+  const IconeDoSistema = iconesMenu[icone]?.icone ?? Info;
 
   return (
     <Link
       href={href}
-      className="h-full items-center flex flex-row p-8 bg-white rounded-2xl shadow-xl hover:shadow-md"
+      className="flex h-full min-h-44 w-56 flex-col items-center justify-center gap-4 rounded-3xl
+        bg-white px-5 py-7 text-center shadow-[0_10px_30px_-10px_rgba(0,0,0,0.18)]
+        transition-all duration-150 hover:shadow-md active:scale-95"
     >
-      <span className="text-4xl mr-4">
-        <HugeiconsIcon icon={iconeSelecionado} size={40} />
+      <span className="text-red-600">
+        {iconeEscolhido ? (
+          <IconeSvg dados={iconeEscolhido.dados} tamanho={48} />
+        ) : (
+          <IconeDoSistema size={48} />
+        )}
       </span>
-      <h2 className="text-2xl font-semibold justify-self-end">{titulo}</h2>
+      <h2 className="text-lg font-semibold leading-snug">{titulo}</h2>
     </Link>
   );
 }

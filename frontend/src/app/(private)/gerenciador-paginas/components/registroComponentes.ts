@@ -5,20 +5,30 @@ import {
   CartaoMenu,
   iconesMenu,
 } from "@/app/(public)/homepage/components/CartaoMenu";
-import { type ComponentePagina, limiteComponentes } from "@/lib/paginas";
 import { Mapa } from "@/app/(public)/mapa/Mapa";
 import { Noticias } from "@/components/shared/Noticias";
 import { Titulo } from "@/components/shared/TituloTotem";
 import { VagasCursos } from "@/components/shared/VagasCursos";
 import { VagasEmprego } from "@/components/shared/VagasEmprego";
 import { VagasEstagio } from "@/components/shared/VagasEstagio";
+import {
+  BlocoImagem,
+  BlocoLista,
+  BlocoSubtitulo,
+  BlocoTexto,
+  BlocoTitulo,
+} from "@/components/shared/BlocosConteudo";
+import { BibliotecaStatus } from "@/app/(public)/biblioteca/components/BibliotecaStatus";
+import { type ComponentePagina, limiteComponentes } from "@/lib/paginas";
+import { validarIconeCampo } from "@/lib/iconeSvg";
+import type { TipoVaga } from "@/lib/vagasEditor";
 
 // registro dos componentes que podem ser usados nas páginas
 // para colocar um componente novo no gerenciador:
 // - adicione ele aqui (rótulo, componente e campos que podem ser editados)
 // - adicione o mesmo componente em backend/db/src/tables/paginas/paginas.constantes.ts (schemaComponentes)
 
-export type TipoCampo = "texto" | "textarea" | "booleano" | "select";
+export type TipoCampo = "texto" | "textarea" | "booleano" | "select" | "icone";
 
 export interface OpcaoCampo {
   valor: string;
@@ -29,7 +39,7 @@ export interface CampoComponente {
   nome: string;
   rotulo: string;
   tipo: TipoCampo;
-  padrao: string | boolean;
+  padrao: string | boolean | null;
   obrigatorio?: boolean;
   maximo?: number;
   opcoes?: OpcaoCampo[];
@@ -39,8 +49,11 @@ export interface CampoComponente {
 
 export interface DefinicaoComponente {
   rotulo: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   componente: ComponentType<any>;
   campos: CampoComponente[];
+  painelDeVagas?: TipoVaga;
+  painelDeNoticias?: boolean;
 }
 
 // imagens que existem na pasta /public e podem ser usadas nas páginas
@@ -48,6 +61,8 @@ const imagens: OpcaoCampo[] = [
   { valor: "senai-logo.png", rotulo: "senai-logo.png" },
   { valor: "senai-mariano-ferraz.png", rotulo: "senai-mariano-ferraz.png" },
   { valor: "tubarao.png", rotulo: "tubarao.png" },
+  { valor: "biblioteca.jpg", rotulo: "biblioteca.jpg" },
+  { valor: "horario-biblioteca.jpg", rotulo: "horario-biblioteca.jpg" },
 ];
 
 const opcoesIcones: OpcaoCampo[] = Object.entries(iconesMenu).map(
@@ -169,6 +184,18 @@ export const registroComponentes: Record<string, DefinicaoComponente> = {
         opcoes: opcoesIcones,
         padrao: opcoesIcones[0].valor,
       },
+      {
+        nome: "iconeEscolhido",
+        rotulo: "Outro ícone (substitui o de cima)",
+        tipo: "icone",
+        padrao: null,
+      },
+      {
+        nome: "somenteAdministrador",
+        rotulo: "Visível só para administradores",
+        tipo: "booleano",
+        padrao: false,
+      },
     ],
   },
 
@@ -187,7 +214,98 @@ export const registroComponentes: Record<string, DefinicaoComponente> = {
     ],
   },
 
-  // componentes sem campos para editar: o conteúdo vem do próprio componente
+  // blocos de conteúdo genéricos para montar qualquer página de texto
+
+  BlocoTitulo: {
+    rotulo: "Bloco: título",
+    componente: BlocoTitulo,
+    campos: [
+      {
+        nome: "texto",
+        rotulo: "Título",
+        tipo: "texto",
+        obrigatorio: true,
+        maximo: 150,
+        padrao: "",
+      },
+    ],
+  },
+
+  BlocoSubtitulo: {
+    rotulo: "Bloco: subtítulo",
+    componente: BlocoSubtitulo,
+    campos: [
+      {
+        nome: "texto",
+        rotulo: "Subtítulo",
+        tipo: "texto",
+        obrigatorio: true,
+        maximo: 150,
+        padrao: "",
+      },
+    ],
+  },
+
+  BlocoTexto: {
+    rotulo: "Bloco: texto",
+    componente: BlocoTexto,
+    campos: [
+      {
+        nome: "texto",
+        rotulo: "Texto",
+        tipo: "textarea",
+        obrigatorio: true,
+        maximo: 2000,
+        padrao: "",
+      },
+      {
+        nome: "destaque",
+        rotulo: "Texto em destaque (maior e em negrito)",
+        tipo: "booleano",
+        padrao: false,
+      },
+    ],
+  },
+
+  BlocoLista: {
+    rotulo: "Bloco: lista",
+    componente: BlocoLista,
+    campos: [
+      {
+        nome: "itens",
+        rotulo: "Itens da lista",
+        tipo: "textarea",
+        obrigatorio: true,
+        maximo: 2000,
+        ajuda: "Um item por linha",
+        padrao: "",
+      },
+    ],
+  },
+
+  BlocoImagem: {
+    rotulo: "Bloco: imagem",
+    componente: BlocoImagem,
+    campos: [
+      {
+        nome: "nomeImagem",
+        rotulo: "Imagem",
+        tipo: "select",
+        obrigatorio: true,
+        opcoes: imagens,
+        padrao: imagens[0].valor,
+      },
+      {
+        nome: "alt",
+        rotulo: "Descrição da imagem (acessibilidade)",
+        tipo: "texto",
+        maximo: 200,
+        padrao: "",
+      },
+    ],
+  },
+
+  // componentes sem campos para editar
 
   Mapa: {
     rotulo: "Mapa da escola",
@@ -195,38 +313,48 @@ export const registroComponentes: Record<string, DefinicaoComponente> = {
     campos: [],
   },
 
+  BibliotecaStatus: {
+    rotulo: "Status da biblioteca (aberta/fechada)",
+    componente: BibliotecaStatus,
+    campos: [],
+  },
+
   VagasEmprego: {
     rotulo: "Vagas de emprego",
     componente: VagasEmprego,
     campos: [],
+    painelDeVagas: "emprego",
   },
 
   VagasEstagio: {
     rotulo: "Vagas de estágio",
     componente: VagasEstagio,
     campos: [],
+    painelDeVagas: "estagio",
   },
 
   VagasCursos: {
     rotulo: "Lista de cursos",
     componente: VagasCursos,
     campos: [],
+    painelDeVagas: "curso",
   },
 
   Noticias: {
     rotulo: "Carrossel de notícias",
     componente: Noticias,
     campos: [],
+    painelDeNoticias: true,
   },
 };
 
-// Criação e validação de componentes, usadas pelo formulário de edição
+// criação e validação de componentes, usadas pelo formulário de edição
 export function criarComponentePadrao(tipo: string): ComponentePagina {
   const definicao = registroComponentes[tipo];
   const props: Record<string, unknown> = {};
 
   for (const campo of definicao?.campos ?? []) {
-    props[campo.nome] = campo.padrao;
+    if (campo.padrao !== null) props[campo.nome] = campo.padrao;
   }
 
   return { type: tipo, props };
@@ -239,7 +367,16 @@ export function validarCampo(
   valor: unknown,
 ): string | null {
   if (campo.tipo === "booleano") {
-    return typeof valor === "boolean" ? null : "Valor inválido";
+    return valor === undefined || typeof valor === "boolean"
+      ? null
+      : "Valor inválido";
+  }
+
+  if (campo.tipo === "icone") {
+    if (valor === undefined || valor === null) {
+      return campo.obrigatorio ? "Escolha um ícone" : null;
+    }
+    return validarIconeCampo(valor);
   }
 
   const texto = typeof valor === "string" ? valor.trim() : "";
@@ -314,10 +451,12 @@ export function normalizarConteudo(
   return conteudo.map((componente) => ({
     type: componente.type,
     props: Object.fromEntries(
-      Object.entries(componente.props).map(([nome, valor]) => [
-        nome,
-        typeof valor === "string" ? valor.trim() : valor,
-      ]),
+      Object.entries(componente.props)
+        .filter(([, valor]) => valor !== null && valor !== undefined)
+        .map(([nome, valor]) => [
+          nome,
+          typeof valor === "string" ? valor.trim() : valor,
+        ]),
     ),
   }));
 }

@@ -1,4 +1,3 @@
-
 import type { ComponentePagina } from "@/lib/paginas";
 
 // conteúdo reserva da homepage
@@ -8,19 +7,6 @@ import type { ComponentePagina } from "@/lib/paginas";
 
 export const tituloPadraoHomepage =
   "Bem-vindo ao totem do SENAI Mariano Ferraz!";
-
-import {
-  Building03Icon,
-  Briefcase01Icon,
-  InfoIcon,
-  LibraryBigIcon,
-  MapsSearchIcon,
-  Mortarboard02Icon,
-  PermanentJobIcon,
-  Clock01Icon,
-} from "@hugeicons/core-free-icons";
-import { type HugeiconsIconProps } from "@hugeicons/react";
-
 
 export const conteudoPadraoHomepage: ComponentePagina[] = [
   {
