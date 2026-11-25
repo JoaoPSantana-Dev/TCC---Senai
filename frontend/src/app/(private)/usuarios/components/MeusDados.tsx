@@ -45,7 +45,7 @@ export function MeusDados({ eu, aoAtualizar }: MeusDadosProps) {
         />
 
         <div className="flex flex-1 flex-wrap items-center gap-3">
-          <h2 id="meus-dados" className="text-lg font-semibold">
+          <h2 id="meus-dados" className="scroll-mt-28 text-lg font-semibold">
             Meus dados
           </h2>
           <SeloFuncao funcao={eu.funcao} />
@@ -57,7 +57,7 @@ export function MeusDados({ eu, aoAtualizar }: MeusDadosProps) {
             href="/seguranca"
             className={`rounded font-medium text-red-700 hover:underline ${focoVisivel}`}
           >
-            {eu.totpAtivo ? "ativa, gerencie aqui" : "desativada, ative aqui"}
+            {eu.totpAtivo ? "ativa, gerenciar" : "desativada, ativar"}
           </Link>
         </p>
       </header>

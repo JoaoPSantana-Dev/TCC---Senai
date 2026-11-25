@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { mensagemDoBackend } from "@/lib/autenticacao";
 import { chamarUsuarios, type Usuario } from "@/lib/usuarios";
+import { atualizarUsuarioLogado } from "@/lib/usuarioLogado";
 import { BarraFiltros } from "./BarraFiltros";
 import { ErroLista, EsqueletoLista } from "./EstadosLista";
 import { FormularioUsuario } from "./FormularioUsuario";
@@ -126,6 +127,7 @@ export function GerenciadorUsuarios() {
         eu={eu}
         aoAtualizar={(atualizado) => {
           setEu(atualizado);
+          atualizarUsuarioLogado(atualizado); // o nome do cabeçalho muda na hora
           atualizarNaLista(atualizado);
         }}
       />
