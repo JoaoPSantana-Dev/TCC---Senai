@@ -23,7 +23,6 @@ export function LayoutPagina({
   if (slug === "descanso") {
     return (
       <main className="flex min-h-screen w-full flex-col items-center justify-center">
-        <FundoPersianas />
         {children}
       </main>
     );
