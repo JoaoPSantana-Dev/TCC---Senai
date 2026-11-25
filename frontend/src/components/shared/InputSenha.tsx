@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, type ComponentPropsWithRef } from "react";
-import { ViewIcon, ViewOffIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { Eye, EyeOff } from "lucide-react";
 
 // campo de senha com botão de mostrar ou ocultar
 // aceita tudo que um <input> aceita, então funciona direto com o register() do react-hook-form
@@ -21,7 +20,7 @@ export function InputSenha({
   ...props
 }: InputSenhaProps) {
   const [visivel, setVisivel] = useState(false);
-  const icon = visivel ? ViewIcon : ViewOffIcon;
+  const Icone = visivel ? Eye : EyeOff;
   const idErro = `${id}-erro`;
 
   return (
@@ -44,7 +43,7 @@ export function InputSenha({
           aria-pressed={visivel}
           className="absolute inset-y-0 right-4 text-sm text-zinc-600 cursor-pointer peer-placeholder-shown:invisible"
         >
-          <HugeiconsIcon icon={icon} />
+          <Icone />
         </button>
       </div>
 

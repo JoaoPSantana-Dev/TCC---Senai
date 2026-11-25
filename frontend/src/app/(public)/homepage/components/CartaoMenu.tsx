@@ -1,14 +1,14 @@
 import {
-  Building03Icon,
-  Briefcase01Icon,
-  InfoIcon,
-  LibraryBigIcon,
-  MapsSearchIcon,
-  Mortarboard02Icon,
-  PermanentJobIcon,
-  Clock01Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type HugeiconsIconProps } from "@hugeicons/react";
+  Briefcase,
+  Building2,
+  Clock,
+  GraduationCap,
+  Info,
+  LibraryBig,
+  MapPinned,
+  UserRoundCheck,
+  type LucideIcon,
+} from "lucide-react";
 import Link from "next/link";
 import type { IconeEscolhido } from "@/lib/iconeSvg";
 import { IconeSvg } from "@/components/shared/IconeSvg";
@@ -17,23 +17,23 @@ import { IconeSvg } from "@/components/shared/IconeSvg";
 // a chave é o que fica salvo no banco, o backend tem uma lista igual em paginas.constantes.ts
 export const iconesMenu: Record<
   string,
-  { rotulo: string; icone: HugeiconsIconProps["icon"] }
+  { rotulo: string; icone: LucideIcon }
 > = {
-  info: { rotulo: "Informação", icone: InfoIcon },
-  predio: { rotulo: "Prédio", icone: Building03Icon },
-  relogio: { rotulo: "Relógio", icone: Clock01Icon },
-  mapa: { rotulo: "Mapa", icone: MapsSearchIcon },
-  emprego: { rotulo: "Maleta (emprego)", icone: Briefcase01Icon },
-  estagio: { rotulo: "Estágio", icone: PermanentJobIcon },
-  curso: { rotulo: "Capelo (cursos)", icone: Mortarboard02Icon },
-  biblioteca: { rotulo: "Livros (biblioteca)", icone: LibraryBigIcon },
+  info: { rotulo: "Informação", icone: Info },
+  predio: { rotulo: "Prédio", icone: Building2 },
+  relogio: { rotulo: "Relógio", icone: Clock },
+  mapa: { rotulo: "Mapa", icone: MapPinned },
+  emprego: { rotulo: "Maleta (emprego)", icone: Briefcase },
+  estagio: { rotulo: "Estágio", icone: UserRoundCheck },
+  curso: { rotulo: "Capelo (cursos)", icone: GraduationCap },
+  biblioteca: { rotulo: "Livros (biblioteca)", icone: LibraryBig },
 };
 
 interface CartaoMenuProps {
   titulo: string;
   href: string;
   icone: string;
-  // ícone escolhido do Hugeicons
+  // ícone escolhido do Lucide
   iconeEscolhido?: IconeEscolhido | null;
 }
 
@@ -43,7 +43,7 @@ export function CartaoMenu({
   icone,
   iconeEscolhido,
 }: CartaoMenuProps) {
-  const iconeDoSistema = iconesMenu[icone]?.icone ?? InfoIcon;
+  const IconeDoSistema = iconesMenu[icone]?.icone ?? Info;
 
   return (
     <Link
@@ -56,7 +56,7 @@ export function CartaoMenu({
         {iconeEscolhido ? (
           <IconeSvg dados={iconeEscolhido.dados} tamanho={48} />
         ) : (
-          <HugeiconsIcon icon={iconeDoSistema} size={48} />
+          <IconeDoSistema size={48} />
         )}
       </span>
       <h2 className="text-lg font-semibold leading-snug">{titulo}</h2>

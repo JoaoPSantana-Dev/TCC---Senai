@@ -1,6 +1,5 @@
 import { regrasSenha } from "@/lib/autenticacao";
-import { CheckIcon, DashedLineCircleIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { Check, CircleDashed } from "lucide-react";
 
 // mostra, enquanto a pessoa digita, quais requisitos da senha já foram atendidos
 export function ChecklistSenha({ senha }: { senha: string }) {
@@ -17,11 +16,7 @@ export function ChecklistSenha({ senha }: { senha: string }) {
             className={`${atendida ? "text-green-700" : "text-zinc-500"} flex flex-row items-center gap-0.5`}
           >
             <span>
-              {atendida ? (
-                <HugeiconsIcon icon={CheckIcon} />
-              ) : (
-                <HugeiconsIcon icon={DashedLineCircleIcon} />
-              )}
+              {atendida ? <Check /> : <CircleDashed />}
             </span>{" "}
             {regra.texto}
           </li>
