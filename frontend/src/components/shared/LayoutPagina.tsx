@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { EstruturaTotem } from "@/components/shared/EstruturaTotem";
 import { Titulo } from "@/components/shared/TituloTotem";
+import { FundoPersianas } from "./FundoPersianas";
 
 // a "moldura" padrão de cada tipo de página
 // é usada pela página pública PaginaRenderizada e pelo canvas do editor puck
@@ -22,6 +23,7 @@ export function LayoutPagina({
   if (slug === "descanso") {
     return (
       <main className="flex min-h-screen w-full flex-col items-center justify-center">
+        <FundoPersianas />
         {children}
       </main>
     );
