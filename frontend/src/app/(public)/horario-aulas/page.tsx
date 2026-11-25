@@ -18,10 +18,6 @@ export default function HorariosAula() {
           </Link>
         </div>
       </Titulo>
-      <p className="text-justify font-semibold text-lg mt-10">
-            Obs.: Para mais informações vá para a biblioteca e fale com um dos
-            funcionários presentes.
-          </p>
     </EstruturaTotem>
   );
 }
