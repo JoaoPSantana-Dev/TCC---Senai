@@ -3,17 +3,21 @@ import type { ConfigPainel } from "@/lib/painelVagas";
 
 const config: ConfigPainel = {
   caminho: "/vagas-curso",
+  campoId: "idCurso",
   campoTitulo: "nomeCurso",
-  destaques: [{ rotulo: "Curso", campo: "nomeCurso" }],
+  campoMarca: "nomeCurso",
+  meta: [
+    { campo: "turno", icone: "turno" },
+    { campo: "cargaHoraria", icone: "carga" },
+  ],
+  campoArea: "areaCurso",
   detalhes: [
-    { rotulo: "Área", campo: "areaCurso" },
     { rotulo: "Descrição", campo: "descricao" },
     { rotulo: "Requisitos", campo: "requisitos" },
-    { rotulo: "Carga horária", campo: "cargaHoraria" },
-    { rotulo: "Turno", campo: "turno" },
     { rotulo: "Contato", campo: "contato" },
   ],
-  textoSelecionar: "Selecione um curso para ver os detalhes.",
+  nomeSingular: "curso",
+  nomePlural: "cursos",
   textoVazio: "Nenhum curso cadastrado no momento.",
 };
 

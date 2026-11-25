@@ -1,4 +1,4 @@
-// dados de um ícone do hugeicons, lista de [tag, atributos], o formato do @hugeicons/core-free-icons
+// dados de um ícone do lucide, lista de [tag, atributos], o mesmo formato do iconNode do lucide-react
 // esse arquivo não usa react, então o editor, a página pública e os testes compartilham as mesmas regras
 // o backend tem a versão equivalente em paginas/icone.validacao.ts
 

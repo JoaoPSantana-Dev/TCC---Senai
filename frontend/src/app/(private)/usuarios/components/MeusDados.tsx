@@ -1,10 +1,12 @@
 "use client";
 
 import * as z from "zod";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { ChecklistSenha } from "@/components/shared/ChecklistSenha";
+import { InputSenha } from "@/components/shared/InputSenha";
 import { mensagemDoBackend, schemaSenhaForte } from "@/lib/autenticacao";
 import {
   chamarUsuarios,
@@ -12,14 +14,17 @@ import {
   schemaDadosUsuario,
   type Usuario,
 } from "@/lib/usuarios";
-import { InputSenha } from "@/components/shared/InputSenha";
+import { Avatar, SeloFuncao } from "./Selos";
+import {
+  botaoPrimario,
+  classeCampo,
+  classeCartao,
+  classeErro,
+  classeRotulo,
+  focoVisivel,
+} from "./estilos";
 
 // o administrador logado editando os próprios dados e a própria senha
-
-const classeCampo =
-  "w-full border border-zinc-400 hover:border-zinc-800 px-4 py-2 rounded-2xl bg-white";
-const classeBotao =
-  "cursor-pointer rounded-3xl bg-red-600 px-5 py-2 text-white duration-150 hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50";
 
 interface MeusDadosProps {
   eu: Usuario;
@@ -30,19 +35,37 @@ export function MeusDados({ eu, aoAtualizar }: MeusDadosProps) {
   return (
     <section
       aria-labelledby="meus-dados"
-      className="flex flex-col gap-6 rounded-2xl border-2 border-zinc-200 p-6"
+      className={`${classeCartao} scroll-mt-6`}
     >
-      <div className="flex items-center gap-3">
-        <h2 id="meus-dados" className="text-lg font-semibold">
-          Meus dados
-        </h2>
-        <span className="rounded-full bg-red-100 px-3 py-0.5 text-sm font-medium text-red-800">
-          {eu.funcao}
-        </span>
-      </div>
+      <header className="flex flex-wrap items-center gap-4 border-b border-zinc-200 p-6">
+        <Avatar
+          nome={eu.nome}
+          administrador={eu.funcao === "Administrador"}
+          tamanho="lg"
+        />
 
-      <DadosPessoais eu={eu} aoAtualizar={aoAtualizar} />
-      <TrocarSenha />
+        <div className="flex flex-1 flex-wrap items-center gap-3">
+          <h2 id="meus-dados" className="scroll-mt-28 text-lg font-semibold">
+            Meus dados
+          </h2>
+          <SeloFuncao funcao={eu.funcao} />
+        </div>
+
+        <p className="text-sm text-zinc-600">
+          Verificação em duas etapas:{" "}
+          <Link
+            href="/seguranca"
+            className={`rounded font-medium text-red-700 hover:underline ${focoVisivel}`}
+          >
+            {eu.totpAtivo ? "ativa, gerenciar" : "desativada, ativar"}
+          </Link>
+        </p>
+      </header>
+
+      <div className="grid gap-10 p-6 lg:grid-cols-2">
+        <DadosPessoais eu={eu} aoAtualizar={aoAtualizar} />
+        <TrocarSenha />
+      </div>
     </section>
   );
 }
@@ -109,71 +132,71 @@ function DadosPessoais({ eu, aoAtualizar }: MeusDadosProps) {
     <form
       onSubmit={handleSubmit(onSubmit)}
       noValidate
-      className="flex flex-col gap-4"
+      className="flex flex-col gap-5"
     >
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div className="flex flex-col gap-1">
-          <label htmlFor="eu-nome">Nome</label>
-          <input
-            id="eu-nome"
-            type="text"
-            autoComplete="name"
-            aria-invalid={errors.nome ? true : undefined}
-            {...register("nome")}
-            className={classeCampo}
-          />
-          {errors.nome && (
-            <p className="text-sm text-red-500">{errors.nome.message}</p>
-          )}
-        </div>
+      <h3 className="font-semibold text-zinc-900">Dados pessoais</h3>
 
-        <div className="flex flex-col gap-1">
-          <label htmlFor="eu-email">Email</label>
-          <input
-            id="eu-email"
-            type="email"
-            autoComplete="email"
-            aria-invalid={errors.email ? true : undefined}
-            {...register("email")}
-            className={classeCampo}
-          />
-          {errors.email && (
-            <p className="text-sm text-red-500">{errors.email.message}</p>
-          )}
-        </div>
-
-        <div className="flex flex-col gap-1">
-          <label htmlFor="eu-unidade">Unidade</label>
-          <select
-            id="eu-unidade"
-            {...register("unidade")}
-            className={classeCampo}
-          >
-            {opcoesUnidade(eu.unidade).map((unidade) => (
-              <option key={unidade} value={unidade}>
-                {unidade}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {emailMudou && (
-          <div className="md:col-span-2">
-            <InputSenha
-              id="eu-senha-para-email"
-              rotulo="Senha atual (necessária para trocar o email)"
-              autoComplete="current-password"
-              erro={errors.senhaAtual?.message}
-              {...register("senhaAtual")}
-            />
-          </div>
-        )}
+      <div className="flex flex-col gap-1.5">
+        <label htmlFor="eu-nome" className={classeRotulo}>
+          Nome
+        </label>
+        <input
+          id="eu-nome"
+          type="text"
+          autoComplete="name"
+          aria-invalid={errors.nome ? true : undefined}
+          {...register("nome")}
+          className={classeCampo}
+        />
+        {errors.nome && <p className={classeErro}>{errors.nome.message}</p>}
       </div>
+
+      <div className="flex flex-col gap-1.5">
+        <label htmlFor="eu-email" className={classeRotulo}>
+          Email
+        </label>
+        <input
+          id="eu-email"
+          type="email"
+          autoComplete="email"
+          aria-invalid={errors.email ? true : undefined}
+          {...register("email")}
+          className={classeCampo}
+        />
+        {errors.email && <p className={classeErro}>{errors.email.message}</p>}
+      </div>
+
+      <div className="flex flex-col gap-1.5">
+        <label htmlFor="eu-unidade" className={classeRotulo}>
+          Unidade
+        </label>
+        <select
+          id="eu-unidade"
+          {...register("unidade")}
+          className={classeCampo}
+        >
+          {opcoesUnidade(eu.unidade).map((unidade) => (
+            <option key={unidade} value={unidade}>
+              {unidade}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {emailMudou && (
+        <InputSenha
+          id="eu-senha-para-email"
+          rotulo="Senha atual (necessária para trocar o email)"
+          autoComplete="current-password"
+          erro={errors.senhaAtual?.message}
+          {...register("senhaAtual")}
+        />
+      )}
 
       <button
         type="submit"
         disabled={isSubmitting || !isDirty}
-        className={`${classeBotao} self-start`}
+        className={`${botaoPrimario} self-start`}
       >
         {isSubmitting ? "Salvando..." : "Salvar meus dados"}
       </button>
@@ -234,45 +257,41 @@ function TrocarSenha() {
     <form
       onSubmit={handleSubmit(onSubmit)}
       noValidate
-      className="flex flex-col gap-4 border-t border-zinc-200 pt-6"
+      className="flex flex-col gap-5 lg:border-l lg:border-zinc-200 lg:pl-10"
     >
-      <h3 className="font-medium">Alterar senha</h3>
+      <h3 className="font-semibold text-zinc-900">Alterar senha</h3>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div className="md:col-span-2">
-          <InputSenha
-            id="eu-senha-atual"
-            rotulo="Senha atual"
-            autoComplete="current-password"
-            erro={errors.senhaAtual?.message}
-            {...register("senhaAtual")}
-          />
-        </div>
+      <InputSenha
+        id="eu-senha-atual"
+        rotulo="Senha atual"
+        autoComplete="current-password"
+        erro={errors.senhaAtual?.message}
+        {...register("senhaAtual")}
+      />
 
-        <div className="flex flex-col gap-2">
-          <InputSenha
-            id="eu-nova-senha"
-            rotulo="Nova senha"
-            autoComplete="new-password"
-            erro={errors.novaSenha?.message}
-            {...register("novaSenha")}
-          />
-          <ChecklistSenha senha={novaSenha ?? ""} />
-        </div>
-
+      <div className="flex flex-col gap-2">
         <InputSenha
-          id="eu-confirmar-senha"
-          rotulo="Confirmar nova senha"
+          id="eu-nova-senha"
+          rotulo="Nova senha"
           autoComplete="new-password"
-          erro={errors.confirmarSenha?.message}
-          {...register("confirmarSenha")}
+          erro={errors.novaSenha?.message}
+          {...register("novaSenha")}
         />
+        <ChecklistSenha senha={novaSenha ?? ""} />
       </div>
+
+      <InputSenha
+        id="eu-confirmar-senha"
+        rotulo="Confirmar nova senha"
+        autoComplete="new-password"
+        erro={errors.confirmarSenha?.message}
+        {...register("confirmarSenha")}
+      />
 
       <button
         type="submit"
         disabled={isSubmitting}
-        className={`${classeBotao} self-start`}
+        className={`${botaoPrimario} self-start`}
       >
         {isSubmitting ? "Alterando..." : "Alterar senha"}
       </button>

@@ -53,3 +53,12 @@ export function normalizar(texto: string) {
     .normalize("NFD")
     .replace(/\p{Diacritic}/gu, "");
 }
+
+// iniciais para o avatar com a primeira letra do primeiro e do último nome
+export function iniciais(nome: string) {
+  const partes = nome.trim().split(/\s+/).filter(Boolean);
+  if (partes.length === 0) return "?";
+  const primeira = partes[0][0];
+  const ultima = partes.length > 1 ? partes[partes.length - 1][0] : "";
+  return (primeira + ultima).toUpperCase();
+}

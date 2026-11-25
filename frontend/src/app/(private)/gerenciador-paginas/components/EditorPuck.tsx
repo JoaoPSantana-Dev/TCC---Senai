@@ -28,6 +28,8 @@ import {
 import { criarConfigPuck, dicionarioPuck } from "./PuckConfig";
 import { buscarItensMenuNoNavegador } from "@/lib/menuTotem";
 import { cartoesFaltantes } from "@/lib/cartoesHomepage";
+import { GerenciadorNoticiasModal } from "./GerenciadorNoticiasModal";
+import { GerenciadorVagasModal } from "./GerenciadorVagasModal";
 
 interface EditorPuckProps {
   slug: string;
@@ -247,6 +249,10 @@ export function EditorPuck({ slug, dadosIniciais }: EditorPuckProps) {
           ),
         }}
       />
+
+      {/* fora do puck de propósito, o puck desmonta a barra da direita e o que estava aberto ali se perdia */}
+      <GerenciadorNoticiasModal />
+      <GerenciadorVagasModal />
     </div>
   );
 }

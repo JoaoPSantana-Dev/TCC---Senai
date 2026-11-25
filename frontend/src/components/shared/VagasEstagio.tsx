@@ -3,21 +3,23 @@ import type { ConfigPainel } from "@/lib/painelVagas";
 
 const config: ConfigPainel = {
   caminho: "/vagas-estagio",
+  campoId: "idEstagio",
   campoTitulo: "cargo",
-  destaques: [
-    { rotulo: "Empresa", campo: "nomeEmpresa" },
-    { rotulo: "Cargo", campo: "cargo" },
+  campoMarca: "nomeEmpresa",
+  meta: [
+    { campo: "nomeEmpresa", icone: "empresa" },
+    { campo: "localizacao", icone: "local" },
   ],
+  campoDestaque: "salario",
+  campoArea: "areaEstagio",
   detalhes: [
-    { rotulo: "Requisitos", campo: "requisitos" },
-    { rotulo: "Salário", campo: "salario" },
-    { rotulo: "Benefícios", campo: "beneficios" },
     { rotulo: "Descrição", campo: "descricao" },
-    { rotulo: "Localização", campo: "localizacao" },
+    { rotulo: "Requisitos", campo: "requisitos" },
+    { rotulo: "Benefícios", campo: "beneficios" },
     { rotulo: "Contato", campo: "contato" },
-    { rotulo: "Área da vaga", campo: "areaEstagio" },
   ],
-  textoSelecionar: "Selecione uma vaga para visualizar sua descrição.",
+  nomeSingular: "vaga",
+  nomePlural: "vagas",
   textoVazio: "Nenhuma vaga de estágio cadastrada no momento.",
 };
 
