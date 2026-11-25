@@ -1,61 +1,84 @@
 'use client';
 
-import { EstruturaTotem } from "@/components/shared/EstruturaTotem";
 import { Titulo } from "@/components/shared/TituloTotem";
-import React from "react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+
+interface HorarioAulaAPI {
+  idHorariosAula: number;
+  nomeCurso: string;
+  Professor: String;
+  materia: String;
+  turno: string;
+  dia: string;
+  idSala: number;
+}
 
 interface SalaAPI {
   idSala: number;
   nomeSala: string;
-  bloco: string;
   andar: string;
+  bloco: string;
   imagem: string;
-  destaque: boolean;
+  horarios?: HorarioAulaAPI[]
+}
+const normalizar = (nome: string) => nome.trim().toLowerCase();
+
+function resolverSala(
+  item: {
+    idPosicao: string;
+    nome: string
+  }, salaPorNome: Record<string, SalaAPI>
+) {
+  const sala = salaPorNome[normalizar(item.nome)];
+  const destaque = (sala?.horarios?.length ?? 0) > 0;
+  return { ...item, sala, destaque }
 }
 
-const USAR_DADOS_MOCK = true;
+
+
+const USAR_DADOS_MOCK = false;
 
 // Dados inseridos diretamente no código para testes locais
 const DADOS_TESTE: SalaAPI[] = [
-  { idSala: 1, nomeSala: 'B18', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B18', destaque: true },
-  { idSala: 2, nomeSala: 'B16', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B16', destaque: false },
-  { idSala: 3, nomeSala: 'CORDENAÇÃO', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Cordenacao', destaque: false },
-  { idSala: 4, nomeSala: 'B12', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B12', destaque: false },
-  { idSala: 5, nomeSala: 'B10', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B10', destaque: true },
-  { idSala: 6, nomeSala: 'B6', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B6', destaque: false },
-  { idSala: 7, nomeSala: 'B4', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B4', destaque: true },
-  { idSala: 8, nomeSala: 'B2', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B2', destaque: false },
-  { idSala: 9, nomeSala: 'BANHEIRO F', bloco: 'B', andar: '1', imagem: '', destaque: false },
-  { idSala: 10, nomeSala: 'B15', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B15', destaque: false },
-  { idSala: 11, nomeSala: 'B13', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B13', destaque: false },
-  { idSala: 12, nomeSala: 'B11', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B11', destaque: true },
-  { idSala: 13, nomeSala: 'B09', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B09', destaque: true },
-  { idSala: 14, nomeSala: 'B05', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B05', destaque: false },
-  { idSala: 15, nomeSala: 'B03', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B03', destaque: false },
-  { idSala: 16, nomeSala: 'B01', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B01', destaque: false },
+  { idSala: 1, nomeSala: 'B18', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B18', horarios: [] },
+  { idSala: 2, nomeSala: 'B16', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B16', horarios: [] },
+  { idSala: 3, nomeSala: 'CORDENAÇÃO', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Cordenacao', horarios: [] },
+  { idSala: 4, nomeSala: 'B12', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B12', horarios: [] },
+  { idSala: 5, nomeSala: 'B10', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B10', horarios: [] },
+  { idSala: 6, nomeSala: 'B6', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B6', horarios: [] },
+  { idSala: 7, nomeSala: 'B4', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B4', horarios: [] },
+  { idSala: 8, nomeSala: 'B2', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B2', horarios: [] },
+  { idSala: 9, nomeSala: 'BANHEIRO F', bloco: 'B', andar: '1', imagem: '', horarios: [] },
+  { idSala: 10, nomeSala: 'B15', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B15', horarios: [] },
+  { idSala: 11, nomeSala: 'B13', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B13', horarios: [] },
+  { idSala: 12, nomeSala: 'B11', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B11', horarios: [] },
+  { idSala: 13, nomeSala: 'B09', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B09', horarios: [] },
+  { idSala: 14, nomeSala: 'B05', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B05', horarios: [] },
+  { idSala: 15, nomeSala: 'B03', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B03', horarios: [] },
+  { idSala: 16, nomeSala: 'B01', bloco: 'B', andar: '1', imagem: 'https://placehold.co/600x400?text=Sala+B01', horarios: [] },
 ];
+
 
 const LAYOUT_SALAS = {
   superior: [
+    // Corredor vertical    
     { idPosicao: 'sup_1', nome: 'B18' },
     { idPosicao: 'sup_2', nome: 'B16' },
     { idPosicao: 'sup_3', nome: 'CORDENAÇÃO' },
     { idPosicao: 'sup_4', nome: 'B12' },
     { idPosicao: 'sup_5', nome: 'B10' },
-    // Corredor vertical
     { idPosicao: 'sup_6', nome: 'B6' },
     { idPosicao: 'sup_7', nome: 'B4' },
     { idPosicao: 'sup_8', nome: 'B2' },
   ],
   inferior: [
+    // Corredor vertical    
     { idPosicao: 'inf_1', nome: 'BANHEIRO F' },
     { idPosicao: 'inf_2', nome: 'B15' },
     { idPosicao: 'inf_3', nome: 'B13' },
     { idPosicao: 'inf_4', nome: 'B11' },
     { idPosicao: 'inf_5', nome: 'B09' },
-    // Corredor vertical
     { idPosicao: 'inf_6', nome: 'B05' },
     { idPosicao: 'inf_7', nome: 'B03' },
     { idPosicao: 'inf_8', nome: 'B01' },
@@ -70,7 +93,7 @@ export function Mapa() {
     const processarDados = (data: SalaAPI[]) => {
       const mapa: Record<string, SalaAPI> = {};
       data.forEach((sala) => {
-        mapa[sala.nomeSala.toLowerCase()] = sala
+        mapa[normalizar(sala.nomeSala)] = sala
       });
       setSalaBackend(mapa)
     };
@@ -78,8 +101,13 @@ export function Mapa() {
     if (USAR_DADOS_MOCK) {
       processarDados(DADOS_TESTE);
     } else {
-      fetch('/salas?curso=DS')
-        .then((res) => res.json())
+      fetch('http://localhost:3001/salas')
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error();
+          }
+          return res.json();
+        })
         .then((data: SalaAPI[]) => processarDados(data))
         .catch(() => toast.error('Erro ao carregar mapa'))
     }
@@ -89,14 +117,12 @@ export function Mapa() {
     idPosicao: string;
     nome: string;
   }) => {
-    const dadosSala = salaBackend[item.nome.toLowerCase()];
-    const estaEmDestaque = dadosSala?.destaque ?? false;
-
+    const { sala, destaque } = resolverSala(item, salaBackend)
     return (
       <div
         key={item.idPosicao}
-        onClick={() => dadosSala && setSalaSelecionada(dadosSala)}
-        className={`h-20 w-28 flex items-center justify-center font-bold text-zinc-800 text-center px-1 cursor-pointer border border-zinc-600 transition-all active:scale-105 select-none shadow-sm text-sm ${estaEmDestaque ? 'bg-[#d6d6d6]' : 'bg-[#b6b6b6]'
+        onClick={() => sala && setSalaSelecionada(sala)}
+        className={`h-20 w-28 flex items-center justify-center font-bold text-zinc-800 text-center px-1 cursor-pointer border border-zinc-600 transition-all active:scale-105 select-none shadow-sm text-sm ${destaque ? 'bg-[#d6d6d6]' : 'bg-[#b6b6b6]'
           }`}
       >
         <span>{item.nome}</span>
