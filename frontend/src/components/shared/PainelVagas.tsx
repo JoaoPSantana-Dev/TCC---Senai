@@ -158,9 +158,9 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
                       ? "bg-red-600 text-white"
                       : "bg-white text-zinc-700 shadow-sm hover:bg-zinc-50"
                   }`}
-                >
+                
                   <b>{rotulo}:</b> {valor}
-                </h2>
+                
               ))}
               {detalhes.map(({ rotulo, campo, valor }) => (
                 <p
@@ -177,7 +177,7 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
                   detalhes cadastrados
                 </p>
               )}
-            </>
+            
           ) : (
             <div className="flex h-full min-h-40 items-center justify-center">
               <p className="text-center text-zinc-400">
