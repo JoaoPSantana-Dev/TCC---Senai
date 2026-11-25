@@ -91,7 +91,7 @@ export function EtapaSenha({
           autoComplete="email"
           aria-invalid={errors.email ? true : undefined}
           {...register("email")}
-          className="border border-zinc-400 hover:border-zinc-800 p-4 rounded-2xl"
+          className="border border-zinc-400 hover:border-zinc-800 px-4 py-3 rounded-2xl"
           placeholder="Digite seu email"
         />
         {errors.email && (
