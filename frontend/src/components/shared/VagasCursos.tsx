@@ -19,6 +19,7 @@ const config: ConfigPainel = {
   nomeSingular: "curso",
   nomePlural: "cursos",
   textoVazio: "Nenhum curso cadastrado no momento.",
+  campoArea: "areaEmprego"
 };
 
 // cursos, vindos do banco

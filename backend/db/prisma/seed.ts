@@ -9,12 +9,11 @@ const usarSsl = ['strict', 'true'].includes(
 );
 
 const adapter = new PrismaMariaDb({
-  host: url.hostname,
-  port: Number(url.port) || 3306,
-  user: decodeURIComponent(url.username),
-  password: decodeURIComponent(url.password),
-  database: decodeURIComponent(url.pathname.slice(1)),
-  ssl: usarSsl ? { rejectUnauthorized: true } : undefined,
+  host: 'localhost',
+  port: 3306,
+  user: 'root',
+  password: 'root',
+  database: 'totem_db',
   connectionLimit: 5,
 });
 

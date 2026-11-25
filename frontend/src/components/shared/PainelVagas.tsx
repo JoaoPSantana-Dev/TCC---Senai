@@ -3,13 +3,17 @@
 import { useEffect, useMemo, useState } from "react";
 import { Search } from "lucide-react";
 import { toast } from "sonner";
-import { CartaoVaga } from "@/components/shared/CartaoVaga";
+import { EstruturaVagasMenu } from "@/components/shared/EstruturaMenuVagas";
+import type { Vaga } from "@/components/shared/EstruturaMenuVagas.data";
+import { FiltroVagas } from "@/components/shared/FiltroVagas";
 import { apiUrl } from "@/lib/paginas";
 import { eventoVagasAtualizadas } from "@/lib/vagasEditor";
 import {
   areasDisponiveis,
   filtrarRegistros,
-  idDoItem,
+  linhasPreenchidas,
+  paraLista,
+  valorDoCampo,
   type ConfigPainel,
   type Registro,
 } from "@/lib/painelVagas";
@@ -25,12 +29,12 @@ type Estado = "carregando" | "pronto" | "erro";
 
 export function PainelVagas({ config }: { config: ConfigPainel }) {
   const [registros, setRegistros] = useState<Registro[]>([]);
-  const [estado, setEstado] = useState<Estado>("carregando");
-  const [versao, setVersao] = useState(0);
-  const [abertoId, setAbertoId] = useState<string | null>(null);
+  const [carregado, setCarregado] = useState(false);
+  const [selecionado, setSelecionado] = useState<Registro | null>(null);
+
+  // estado dos filtros
   const [busca, setBusca] = useState("");
-  const [area, setArea] = useState("");
-  const [limite, setLimite] = useState(porVez);
+  const [areaSelecionada, setAreaSelecionada] = useState<string | null>(null);
 
   useEffect(() => {
     let ativo = true;
@@ -80,99 +84,60 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
     () => areasDisponiveis(registros, config.campoArea),
     [registros, config.campoArea],
   );
-  const filtrados = useMemo(
-    () => filtrarRegistros(registros, config, busca, area),
-    [registros, config, busca, area],
+
+  const areas = useMemo(
+    () => areasDisponiveis(itens, config.campoArea),
+    [itens, config.campoArea],
   );
-  const visiveis = filtrados.slice(0, limite);
-  const temFiltros = busca !== "" || area !== "";
 
-  // qualquer mudança de filtro volta a mostrar só os primeiros
-  function alterarBusca(valor: string) {
-    setBusca(valor);
-    setLimite(porVez);
-  }
-  function alterarArea(valor: string) {
-    setArea(valor);
-    setLimite(porVez);
-  }
-  function limparFiltros() {
-    setBusca("");
-    setArea("");
-    setLimite(porVez);
-  }
-  function tentarDeNovo() {
-    setEstado("carregando");
-    setVersao((atual) => atual + 1);
-  }
+  const itensFiltrados = useMemo(
+    () =>
+      filtrarRegistros(itens, {
+        busca,
+        area: areaSelecionada,
+        campoArea: config.campoArea,
+        // por padrão busca no título e na empresa (se existir)
+        camposBusca: config.camposBusca ?? [config.campoTitulo, "nomeEmpresa"],
+      }),
+    [itens, busca, areaSelecionada, config.campoArea, config.camposBusca, config.campoTitulo],
+  );
 
-  if (estado === "carregando") {
-    return (
-      <div
-        role="status"
-        aria-label="Carregando"
-        className="flex mx-auto w-full max-w-4xl flex-col gap-3 px-4 pb-8"
-      >
-        {[0, 1, 2].map((i) => (
-          <div
-            key={i}
-            className="flex h-24 animate-pulse items-center gap-4 rounded-2xl bg-white p-5 shadow-md motion-reduce:animate-none"
-          >
-            <span className="size-14 rounded-xl bg-zinc-200" />
-            <span className="flex flex-1 flex-col gap-2">
-              <span className="h-4 w-1/2 rounded bg-zinc-200" />
-              <span className="h-3 w-1/3 rounded bg-zinc-100" />
-            </span>
-          </div>
-        ))}
-      </div>
-    );
-  }
+  // se o item aberto sumir da lista filtrada, fecha o painel de detalhes
+  useEffect(() => {
+    if (selecionado && !itensFiltrados.includes(selecionado)) {
+      setSelecionado(null);
+    }
+  }, [itensFiltrados, selecionado]);
 
-  if (estado === "erro") {
-    return (
-      <div
-        role="alert"
-        className="flex mx-auto w-full max-w-4xl flex-col items-center gap-3 px-4 pb-8 text-center"
-      >
-        <p className="text-zinc-700">Não foi possível carregar a lista.</p>
-        <button
-          type="button"
-          onClick={tentarDeNovo}
-          className="cursor-pointer rounded-full bg-red-600 px-6 py-2.5 text-base font-semibold text-white hover:bg-red-700 focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 focus-visible:outline-none"
-        >
-          Tentar de novo
-        </button>
-      </div>
-    );
-  }
-
-  if (registros.length === 0) {
-    return (
-      <p className="px-4 pb-8 text-center text-zinc-500">{config.textoVazio}</p>
-    );
-  }
+  const destaques = linhasPreenchidas(selecionado, config.destaques);
+  const detalhes = linhasPreenchidas(selecionado, config.detalhes);
 
   return (
-    <div className="flex mx-auto w-full max-w-4xl flex-col gap-4 px-4 pb-8">
-      <div className="flex flex-col gap-3">
-        <div className="relative">
-          <label htmlFor={`busca-${config.caminho}`} className="sr-only">
-            Buscar {config.nomePlural}
-          </label>
-          <Search
-            aria-hidden="true"
-            className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-zinc-500"
-          />
-          <input
-            id={`busca-${config.caminho}`}
-            type="search"
-            value={busca}
-            onChange={(e) => alterarBusca(e.target.value)}
-            placeholder={`Buscar ${config.nomePlural}`}
-            className="w-full rounded-full border border-zinc-300 bg-white py-3 pr-5 pl-12 text-base focus-visible:border-red-600 focus-visible:ring-2 focus-visible:ring-red-600/25 focus-visible:outline-none"
-          />
-        </div>
+    <div className="-mx-6 flex w-[calc(100%+3rem)] flex-col items-center md:-mx-12 md:W-[calc(100%+6rem)] lg:mx-0 lg:w-full">
+      {carregado && itens.length > 0 && (
+        <FiltroVagas
+          busca={busca}
+          onBuscaChange={setBusca}
+          areas={areas}
+          areaSelecionada={areaSelecionada}
+          onAreaChange={setAreaSelecionada}
+          totalResultados={itensFiltrados.length}
+          placeholder={config.placeholderBusca}
+        />
+      )}
+
+      {carregado && itens.length > 0 && itensFiltrados.length === 0 ? (
+        <p className="p-6 text-center text-zinc-500">
+          Nenhum resultado encontrado com esses filtros.
+        </p>
+      ) : (
+        <EstruturaVagasMenu
+          // key reinicia a paginação do menu sempre que o filtro muda
+          key={`${busca}-${areaSelecionada ?? "todas"}`}
+          itens={itensFiltrados as unknown as Vaga[]}
+          onSelecionarVaga={(item) => setSelecionado(item as unknown as Registro)}
+        />
+      )}
 
         {areas.length > 1 && (
           <div
@@ -194,35 +159,32 @@ export function PainelVagas({ config }: { config: ConfigPainel }) {
                       : "bg-white text-zinc-700 shadow-sm hover:bg-zinc-50"
                   }`}
                 >
-                  {opcao || "Todas as áreas"}
-                </button>
-              );
-            })}
-          </div>
-        )}
-
-        <p aria-live="polite" className="text-sm text-zinc-600">
-          {filtrados.length}{" "}
-          {filtrados.length === 1 ? config.nomeSingular : config.nomePlural}
-          {temFiltros &&
-            " encontrad" +
-              (config.nomeSingular === "curso" ? "o" : "a") +
-              (filtrados.length === 1 ? "" : "s")}
-        </p>
-      </div>
-
-      {filtrados.length === 0 ? (
-        <div className="flex flex-col items-center gap-2 rounded-2xl bg-white p-8 text-center shadow-md">
-          <p className="font-medium text-zinc-800">
-            Nenhum resultado para essa busca
-          </p>
-          <button
-            type="button"
-            onClick={limparFiltros}
-            className="cursor-pointer rounded text-base font-medium text-red-700 hover:underline focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:outline-none"
-          >
-            Limpar filtros
-          </button>
+                  <b>{rotulo}:</b> {valor}
+                </h2>
+              ))}
+              {detalhes.map(({ rotulo, campo, valor }) => (
+                <p
+                  key={campo}
+                  className="mb-2 text-base text-zinc-600 lg:text-lg"
+                >
+                  <b>{rotulo}:</b> {valor}
+                </p>
+              ))}
+              {destaques.length + detalhes.length === 0 && (
+                <p className="text-zinc-500">
+                  {valorDoCampo(selecionado, "cargo")} ainda não tem mais
+                  detalhes cadastrados
+                  detalhes cadastrados
+                </p>
+              )}
+            </>
+          ) : (
+            <div className="flex h-full min-h-40 items-center justify-center">
+              <p className="text-center text-zinc-400">
+                {config.textoSelecionar}
+              </p>
+            </div>
+          )}
         </div>
       ) : (
         <ul className="flex flex-col gap-3">
