@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 // cabeçalho da área de autenticação do sistema
 // apresenta o logo do SENAI, o título da tela e a orientação do usuário
@@ -17,16 +18,18 @@ export function HeaderAutenticacao({
   return (
     <header className="flex flex-col gap-2">
       <figure className={className}>
-        <Image
-          src="/senai-logo.png"
-          alt="Imagem do logo SENAI"
-          width={1920}
-          height={1080}
-          className={
-            className || `w-auto h-auto max-w-full object-contain mb-40`
-          }
-          loading="eager"
-        />
+        <Link href="/homepage">
+          <Image
+            src="/senai-logo.png"
+            alt="Imagem do logo SENAI"
+            width={1920}
+            height={1080}
+            className={
+              className || `w-auto h-auto max-w-full object-contain mb-40`
+            }
+            loading="eager"
+          />
+        </Link>
       </figure>
 
       <h1 className="text-xl text-zinc-800 font-semibold">{h1}</h1>
