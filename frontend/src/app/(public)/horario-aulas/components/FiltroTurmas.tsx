@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { alerta } from "@/lib/alerta";
 import { apiUrl } from "@/lib/paginas";
-import type { off } from "process";
 
 const textoPadraoBotao = "Escolha sua Turma";
 const textoPadrao = "Selecione uma turma";
@@ -18,6 +17,8 @@ interface Sala {
 interface HorarioAula {
   idHorariosAula: number;
   nomeCurso: string;
+  professor?: string | null;
+  materia?: string | null;
   turno: string;
   dia: string;
   idSala: number;
@@ -47,14 +48,14 @@ function normalizar(texto: string): string {
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
     .trim();
-};
+}
 
 // posição do texto numa lista de ordem fixa
 function posicao(texto: string, ordem: string[]): number {
   const t = normalizar(texto);
   const indice = ordem.findIndex((item) => t.startsWith(item));
   return indice === -1 ? ordem.length : indice;
-};
+}
 
 // Turmas distintas encontradas nos horários, em ordem alfabética
 function turmasDisponiveis(horarios: HorarioAula[]): Turma[] {
@@ -64,9 +65,11 @@ function turmasDisponiveis(horarios: HorarioAula[]): Turma[] {
     if (!nome) continue;
     const chave = normalizar(nome);
     if (!unicas.has(chave)) unicas.set(chave, { chave, nome });
-  };
-  return Array.from(unicas.values()).sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
-};
+  }
+  return Array.from(unicas.values()).sort((a, b) =>
+    a.nome.localeCompare(b.nome, "pt-BR"),
+  );
+}
 
 // Aulas da turma escolhida, separadas por dia (segunda a domingo)
 function agruparPorDia(horarios: HorarioAula[], chaveTurma: string | null) {
@@ -83,7 +86,7 @@ function agruparPorDia(horarios: HorarioAula[], chaveTurma: string | null) {
     aulas: [...aulas].sort(
       (a, b) =>
         posicao(a.turno ?? "", ordemTurnos) -
-        posicao(b.turno ?? "", ordemTurnos) ||
+          posicao(b.turno ?? "", ordemTurnos) ||
         (a.turno ?? "").localeCompare(b.turno ?? "", "pt-BR"),
     ),
   })).sort(
@@ -95,7 +98,11 @@ function agruparPorDia(horarios: HorarioAula[], chaveTurma: string | null) {
 
 function descricaoSala(sala?: Sala | null): string {
   if (!sala) return "Sala não informada";
-  return [`Sala: ${sala.nomeSala} | Bloco: ${sala.bloco} | Andar: ${sala.andar}`].filter(Boolean).join(" · ");
+  return [
+    `Sala: ${sala.nomeSala} | Bloco: ${sala.bloco} | Andar: ${sala.andar}`,
+  ]
+    .filter(Boolean)
+    .join(" · ");
 }
 
 export function FiltroTurmas() {
@@ -104,9 +111,7 @@ export function FiltroTurmas() {
   const [erro, setErro] = useState(false);
 
   const [aberto, setAberto] = useState(false);
-  const [turmaSelecionada, setTurmaSelecionada] = useState<string | null>(
-    null,
-  );
+  const [turmaSelecionada, setTurmaSelecionada] = useState<string | null>(null);
 
   useEffect(() => {
     let ativo = true;
@@ -201,9 +206,10 @@ export function FiltroTurmas() {
               type="button"
               onClick={() => escolher(chave)}
               aria-pressed={turmaSelecionada === chave}
-              className={`${chipBase} ${turmaSelecionada === chave
-                ? "bg-zinc-800 text-white"
-                : "bg-white text-zinc-700 shadow-sm"
+              className={`${chipBase} ${
+                turmaSelecionada === chave
+                  ? "bg-zinc-800 text-white"
+                  : "bg-white text-zinc-700 shadow-sm"
               }`}
             >
               {nome}
@@ -222,19 +228,38 @@ export function FiltroTurmas() {
             <p className="text-center text-zinc-400">{mensagem}</p>
           ) : (
             <div className="w-full self-start">
-              <h2 className="mb-2 text-lg lg:text-xl font-semibold text-zinc-700">{nomeTurma}</h2>
+              <h2 className="mb-2 text-lg lg:text-xl font-semibold text-zinc-700">
+                {nomeTurma}
+              </h2>
               {dias.map(({ dia, aulas }) => (
                 <div key={dia} className="mb-4 last:mb-0">
-                  <h3 className="mb-2 text-lg lg:text-xl font-semibold text-zinc-700">{dia}</h3>
+                  <h3 className="mb-2 text-lg lg:text-xl font-semibold text-zinc-700">
+                    {dia}
+                  </h3>
                   <ul className="flex flex-col gap-2">
-                    {aulas.map((aula) => (
-                      <li
-                        key={aula.idHorariosAula}
-                        className="rounded-2xl bg-[#f9f9f9] px-5 py-3 text-base lg:text-lg text-zinc-600 shadow-sm"
-                      >
-                        <b>{aula.turno}:</b> {descricaoSala(aula.sala)}
-                      </li>
-                    ))}
+                    {aulas.map((aula) => {
+                      const materia =
+                        aula.materia?.trim() || "Matéria não informada";
+                      const professor =
+                        aula.professor?.trim() || "Professor não informado";
+
+                      return (
+                        <li
+                          key={aula.idHorariosAula}
+                          className="flex flex-col gap-1 rounded-2xl bg-[#f9f9f9] px-5 py-3 text-base lg:text-lg text-zinc-600 shadow-sm"
+                        >
+                          <div className="font-semibold text-zinc-800">
+                            {materia} ·{" "}
+                            <span className="font-normal text-zinc-600">
+                              Professor: {professor}
+                            </span>
+                          </div>
+                          <div>
+                            <b>{aula.turno}:</b> {descricaoSala(aula.sala)}
+                          </div>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               ))}
@@ -245,4 +270,3 @@ export function FiltroTurmas() {
     </section>
   );
 }
-
