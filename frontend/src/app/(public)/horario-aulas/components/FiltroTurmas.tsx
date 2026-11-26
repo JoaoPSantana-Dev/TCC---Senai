@@ -95,7 +95,7 @@ function agruparPorDia(horarios: HorarioAula[], chaveTurma: string | null) {
 
 function descricaoSala(sala?: Sala | null): string {
   if (!sala) return "Sala não informada";
-  return [sala.nomeSala, sala.bloco, sala.andar].filter(Boolean).join(" · ");
+  return [`Sala: ${sala.nomeSala} | Bloco: ${sala.bloco} | Andar: ${sala.andar}`].filter(Boolean).join(" · ");
 }
 
 export function FiltroTurmas() {
