@@ -131,7 +131,7 @@ export default function Vagas() {
           />
         )}
         <p className="text-justify font-semibold text-lg mt-10">
-            Obs.: Para mais informações vá para a biblioteca e fale com um dos
+            Obs.: Para mais informações vá para a secretaria e fale com um dos
             funcionários presentes.
           </p>
         {/* <section className="w-full lg:w-3/4 p-8 my-8 bg-[#f9f9f9] lg:rounded-2xl shadow-md">
