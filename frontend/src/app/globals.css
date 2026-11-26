@@ -97,6 +97,8 @@ body {
   }
   html {
     @apply font-sans;
+    /* sem barra de rolagem horizontal, e o sticky do header continua funcionando */
+    overflow-x: clip;
   }
   :placeholder-shown {
     @apply italic;
@@ -114,6 +116,18 @@ body {
   }
 
   --animate-carousel-progress: carousel-progress linear forwards;
+
+  /* Cads da homepage "flutuando" */
+  @keyframes flutuar {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-8px);
+    }
+  }
+
+  --animate-flutuar: flutuar 6s ease-in-out infinite alternate
 }
 
 /* css do react burger menu */
@@ -139,13 +153,17 @@ body {
   }
 
   /* wrapper principal do menu */
+  /* sempre colado no topo da tela, com a altura inteira, em qualquer página */
   .bm-menu-wrap {
-    @apply fixed h-full;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    height: 100dvh !important;
   }
 
   /* estilos gerais da barra lateral */
   .bm-menu {
-    @apply bg-red-600 pt-6 px-2 pb-0 text-[1.15em] border-t-2 border-r-2 border-white;
+    @apply bg-red-600 pt-6 px-2 pb-0 text-[1.15em] border-r-2 border-white;
   }
 
   /* forma de morph (usado nos efeitos bubble ou elastic) */

@@ -1,103 +1,62 @@
 "use client";
 
-import { User02Icon } from "@hugeicons/core-free-icons";
+import { useEffect } from "react";
 import Image from "next/image";
+import { MenuUsuario } from "./MenuUsuario";
 import { NavbarHamburguer } from "./NavbarHamburguer";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { carregarUsuarioLogado, useUsuarioLogado } from "@/lib/usuarioLogado";
 import Link from "next/link";
-import { BotaoSair } from "./BotaoSair";
-import { useEffect, useRef, useState } from "react";
+
+// cabeçalho das páginas de administração
+// - só aparece para administrador (para os outros não renderiza nada)
+// - fica fixo no topo, mesmo rolando a página
+// - o logo fica no centro da tela de verdade: três colunas, as laterais com o mesmo tamanho
+// ele é fixo (e não sticky) para não depender da altura da página que o contém
+// por isso o <div> vazio logo depois dele reserva o mesmo espaço no fluxo da página
 
 export function HeaderPrivate() {
-  const [menuAberto, setMenuAberto] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const { carregando, usuario } = useUsuarioLogado();
 
-  // Fecha o menu ao clicar fora dele
+  // confirma quem está logado toda vez que uma página de administração abre
   useEffect(() => {
-    function fecharMenu(event: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setMenuAberto(false);
-      }
-    }
-
-    function fecharComEsc(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        setMenuAberto(false);
-      }
-    }
-
-    document.addEventListener("mousedown", fecharMenu);
-    document.addEventListener("keydown", fecharComEsc);
-
-    return () => {
-      document.removeEventListener("mousedown", fecharMenu);
-      document.removeEventListener("keydown", fecharComEsc);
-    };
+    carregarUsuarioLogado();
   }, []);
 
+  // reserva o espaço do cabeçalho
+  const espaco = <div aria-hidden="true" className="mb-10 h-20 shrink-0" />;
+
+  // enquanto não sabe quem é, não mostra nada para não aparecer para quem não é administrador
+  if (carregando && !usuario) return espaco;
+  if (usuario?.funcao !== "Administrador") return null;
+
   return (
-    <header className="w-full flex flex-row bg-white justify-between py-2 border-b-2 border-gray-300 mb-16">
-      <NavbarHamburguer className="absolute w-18 h-10 left-6 top-10.5 -translate-y-1/2" />
+    <>
+      <header className="fixed inset-x-0 top-0 z-40 h-20 border-b border-zinc-200 bg-white">
+        <NavbarHamburguer className="absolute top-1/2 left-6 h-10 w-18 -translate-y-1/2" />
 
-      <figure className="flex justify-center">
-        <Image
-          src="/senai-logo.png"
-          alt="Logo do SENAI"
-          width={200}
-          height={50}
-          className="w-auto h-auto max-w-full object-contain"
-          loading="eager"
-        />
-      </figure>
+        <div className="grid h-full grid-cols-[1fr_auto_1fr] items-center px-6">
+          <div />
 
-      <div
-        ref={menuRef}
-        className="relative flex flex-row items-center justify-center mr-10 gap-2"
-      >
-        <p className="text-lg text-zinc-600 font-medium">Seu Nome</p>
-        <button
-          onClick={() => setMenuAberto(!menuAberto)}
-          aria-expanded={menuAberto}
-          aria-haspopup="true"
-          className="flex items-center justify-center rounded-full bg-zinc-100 border-solid border-zinc-300 border-2 cursor-pointer active:opacity-70 transition-all duration-75 p-2"
-        >
-          <HugeiconsIcon icon={User02Icon} width={35} height={35} />
-        </button>
+          <figure className="flex justify-center">
+            <Link href="/homepage">
+              <Image
+                src="/senai-logo.png"
+                alt="Logo do SENAI"
+                width={256}
+                height={66}
+                className="h-12 w-auto object-contain"
+                loading="eager"
+              />
+            </Link>
+          </figure>
 
-        {/* Dropdow */}
-        {menuAberto && (
-          <div className="absolute right-0 top-full mt-3 w-72 bg-white rounded-xl shadow-xl border-2 border-zinc-300 z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 zoom-in-95">
-            {/* Informações do usuário */}
-            <div className="flex flex-col items-center py-5 px-4 border-b border-zinc-300">
-              <div className="flex items-center justify-center w-16 h-16 rounded-full bg-zinc-100 mb-3 border-solid border-zinc-300 border-2">
-                <HugeiconsIcon
-                  icon={User02Icon}
-                  width={35}
-                  height={35}
-                  className="text-zinc-700"
-                />
-              </div>
-              <p className="font-semibold text-zinc-800">Seu Nome</p>
-              <p className="text-sm text-zinc-500">Conta do usuário</p>
-            </div>
-
-            {/* Opções */}
-            <div className="py-2 flex flex-row items-center">
-              <Link
-                href="/seguranca"
-                onClick={() => setMenuAberto(false)}
-                className="flex items-center gap-2 px-5 py-3 text-lg text-zinc-800 active:bg-zinc-100 transition-all duration-500 truncate"
-              >
-                <HugeiconsIcon icon={User02Icon} width={25} height={25} />
-                Meu usuário
-              </Link>
-              <div className="text-center ml-8">
-                <BotaoSair />
-              </div>
-            </div>
+          <div className="flex justify-end">
+            <MenuUsuario usuario={usuario} />
           </div>
-        )}
-      </div>
-    </header>
+        </div>
+      </header>
+
+      {espaco}
+    </>
   );
 }

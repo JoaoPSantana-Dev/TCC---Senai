@@ -2,13 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { Toaster } from "sonner";
-import {
-  Alert02Icon,
-  AlertCircleIcon,
-  CheckmarkCircle02Icon,
-  InformationCircleIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { CircleAlert, CircleCheck, Info, TriangleAlert } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { registrarHostConfirmacao, type PedidoConfirmacao } from "@/lib/alerta";
 
@@ -64,10 +58,7 @@ function ModalConfirmacao() {
                   : "bg-blue-100 text-blue-600",
               )}
             >
-              <HugeiconsIcon
-                icon={alertaPerigo ? Alert02Icon : InformationCircleIcon}
-                size={24}
-              />
+              {alertaPerigo ? <TriangleAlert size={24} /> : <Info size={24} />}
             </span>
 
             <div className="flex flex-col gap-1">
@@ -115,10 +106,10 @@ export function Alertas() {
       <Toaster
         position="top-right"
         icons={{
-          success: <HugeiconsIcon icon={CheckmarkCircle02Icon} size={22} />,
-          error: <HugeiconsIcon icon={AlertCircleIcon} size={22} />,
-          warning: <HugeiconsIcon icon={Alert02Icon} size={22} />,
-          info: <HugeiconsIcon icon={InformationCircleIcon} size={22} />,
+          success: <CircleCheck size={22} />,
+          error: <CircleAlert size={22} />,
+          warning: <TriangleAlert size={22} />,
+          info: <Info size={22} />,
         }}
         toastOptions={{
           unstyled: true,

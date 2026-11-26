@@ -8,11 +8,17 @@ export default async function Usuarios() {
   if (!(await ehAdministrador())) redirect("/homepage");
 
   return (
-    <div className="w-screen h-screen flex flex-col">
+    <div className="flex min-h-screen w-full flex-col">
       <HeaderPrivate />
 
-      <main className="w-full max-w-5xl mx-auto px-6 pb-16 flex flex-col gap-8">
-        <h1 className="text-2xl font-bold text-zinc-800">Usuários</h1>
+      <main className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 pb-16">
+        <div>
+          <h1 className="text-2xl font-bold text-zinc-800">Usuários</h1>
+          <p className="mt-1 text-zinc-600">
+            Veja, busque e edite as pessoas que têm conta no sistema
+          </p>
+        </div>
+
         <GerenciadorUsuarios />
       </main>
     </div>

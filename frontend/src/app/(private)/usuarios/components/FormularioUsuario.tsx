@@ -13,14 +13,23 @@ import {
   type FuncaoUsuario,
   type Usuario,
 } from "@/lib/usuarios";
+import {
+  botaoPrimario,
+  botaoSecundario,
+  classeCampo,
+  classeErro,
+  classeRotulo,
+} from "./estilos";
 
-// administrador editando os dados de outro usuário
+// administrador editando os dados de outro usuário que aparece dentro da gaveta
 
 const schema = schemaDadosUsuario.extend({ funcao: z.enum(funcoesUsuario) });
 type FormularioData = z.infer<typeof schema>;
 
-const classeCampo =
-  "w-full border border-zinc-400 hover:border-zinc-800 px-4 py-2 rounded-2xl bg-white";
+const descricaoFuncao: Record<FuncaoUsuario, string> = {
+  Administrador: "Edita usuários e páginas",
+  Visitante: "Sem acesso de edição",
+};
 
 interface FormularioUsuarioProps {
   usuario: Usuario;
@@ -75,28 +84,30 @@ export function FormularioUsuario({
     <form
       onSubmit={handleSubmit(onSubmit)}
       noValidate
-      className="flex flex-col gap-4 rounded-2xl bg-zinc-50 p-4"
+      className="flex h-full min-h-0 flex-col"
     >
-      <h3 className="font-semibold text-zinc-800">Editando {usuario.nome}</h3>
-
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div className="flex flex-col gap-1">
-          <label htmlFor={`${id}-nome`}>Nome</label>
+      {/* só esta área rola, os botões ficam sempre visíveis embaixo */}
+      <div className="flex flex-1 flex-col gap-5 overflow-y-auto p-6">
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor={`${id}-nome`} className={classeRotulo}>
+            Nome
+          </label>
           <input
             id={`${id}-nome`}
             type="text"
             autoComplete="off"
+            autoFocus
             aria-invalid={errors.nome ? true : undefined}
             {...register("nome")}
             className={classeCampo}
           />
-          {errors.nome && (
-            <p className="text-sm text-red-500">{errors.nome.message}</p>
-          )}
+          {errors.nome && <p className={classeErro}>{errors.nome.message}</p>}
         </div>
 
-        <div className="flex flex-col gap-1">
-          <label htmlFor={`${id}-email`}>Email</label>
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor={`${id}-email`} className={classeRotulo}>
+            Email
+          </label>
           <input
             id={`${id}-email`}
             type="email"
@@ -105,13 +116,13 @@ export function FormularioUsuario({
             {...register("email")}
             className={classeCampo}
           />
-          {errors.email && (
-            <p className="text-sm text-red-500">{errors.email.message}</p>
-          )}
+          {errors.email && <p className={classeErro}>{errors.email.message}</p>}
         </div>
 
-        <div className="flex flex-col gap-1">
-          <label htmlFor={`${id}-unidade`}>Unidade</label>
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor={`${id}-unidade`} className={classeRotulo}>
+            Unidade
+          </label>
           <select
             id={`${id}-unidade`}
             aria-invalid={errors.unidade ? true : undefined}
@@ -125,43 +136,46 @@ export function FormularioUsuario({
             ))}
           </select>
           {errors.unidade && (
-            <p className="text-sm text-red-500">{errors.unidade.message}</p>
+            <p className={classeErro}>{errors.unidade.message}</p>
           )}
         </div>
 
-        <div className="flex flex-col gap-1">
-          <label htmlFor={`${id}-funcao`}>Função</label>
-          <select
-            id={`${id}-funcao`}
-            {...register("funcao")}
-            className={classeCampo}
-          >
-            {funcoesUsuario.map((funcao) => (
-              <option key={funcao} value={funcao}>
-                {funcao}
-              </option>
-            ))}
-          </select>
-          <p className="text-xs text-zinc-500">
-            Administradores podem editar usuários e páginas. Precisa existir
-            pelo menos um
+        <fieldset className="flex flex-col gap-2">
+          <legend className={`${classeRotulo} mb-1.5`}>Função</legend>
+
+          {funcoesUsuario.map((funcao) => (
+            <label
+              key={funcao}
+              className="flex cursor-pointer flex-col rounded-2xl border border-zinc-300 px-4 py-3 hover:border-zinc-500 has-checked:border-red-600 has-checked:bg-red-50 has-focus-visible:ring-2 has-focus-visible:ring-red-600/40"
+            >
+              <input
+                type="radio"
+                value={funcao}
+                {...register("funcao")}
+                className="sr-only"
+              />
+              <span className="font-medium text-zinc-900">{funcao}</span>
+              <span className="text-sm text-zinc-600">
+                {descricaoFuncao[funcao]}
+              </span>
+            </label>
+          ))}
+
+          <p className="text-sm text-zinc-600">
+            Precisa existir pelo menos um administrador.
           </p>
-        </div>
+        </fieldset>
       </div>
 
-      <div className="flex gap-3">
+      <div className="flex gap-3 border-t border-zinc-200 p-4">
         <button
           type="submit"
           disabled={isSubmitting || !isDirty}
-          className="cursor-pointer rounded-3xl bg-red-600 px-5 py-2 text-white duration-150 hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className={botaoPrimario}
         >
           {isSubmitting ? "Salvando..." : "Salvar alterações"}
         </button>
-        <button
-          type="button"
-          onClick={aoCancelar}
-          className="cursor-pointer rounded-3xl border border-zinc-400 px-5 py-2 hover:bg-zinc-100"
-        >
+        <button type="button" onClick={aoCancelar} className={botaoSecundario}>
           Cancelar
         </button>
       </div>

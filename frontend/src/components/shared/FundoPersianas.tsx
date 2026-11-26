@@ -69,17 +69,18 @@ export function FundoPersianas({
     <div
       ref={raiz}
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 flex overflow-hidden bg-red-600"
+      className="pointer-events-none fixed inset-0 flex overflow-hidden bg-[#E30613]"
       style={{ zIndex: -1 }}
     >
       {Array.from({ length: quantidade }, (_, i) => (
         <div
           key={i}
           data-persiana
-          className="h-full bg-zinc-400"
+          className="h-full"
           // 1px de sobreposição evita frestas vermelhas entre persianas fechadas
           style={{
             flex: "none",
+            background: "linear-gradient(90deg, #3f3f46 0%, #63636b 50%, #3f3f46 100%)",
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
             width: `calc(100% / ${quantidade} + 1px)`,
@@ -87,6 +88,12 @@ export function FundoPersianas({
           }}
         />
       ))}
+      <div 
+        className="absolute inset-0"
+        style={{
+          background: "radial-gradient(ellipse at 50% 35%, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.7) 100%)"
+        }}
+      />
     </div>
   );
 }

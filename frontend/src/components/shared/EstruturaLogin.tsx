@@ -2,25 +2,21 @@ import type { ReactNode } from "react";
 import { Footer } from "./Footer";
 import { ImagemAutenticacao } from "./ImagemAutenticacao";
 
-interface EstruturaAdministradorPublicProps {
+interface EstruturaLoginProps {
   children: ReactNode;
 }
 
-export function EstruturaAdministradorPublic({
-  children,
-}: EstruturaAdministradorPublicProps) {
+export function EstruturaLogin({ children }: EstruturaLoginProps) {
   return (
     <div className="flex h-screen w-full min-h-screen flex-col">
       <main className="flex flex-1 flex-col md:flex-row">
         <ImagemAutenticacao
-          nomeImagem="tubarao.png"
+          nomeImagem="capa-senai.jpg"
           alt="Foto da entrada da escola SENAI Mariano Ferraz"
         />
 
         {children}
       </main>
-
-      <Footer />
     </div>
   );
 }

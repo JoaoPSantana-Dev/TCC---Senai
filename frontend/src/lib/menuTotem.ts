@@ -25,8 +25,14 @@ export const rotasPrivadas: ItemMenu[] = [
     titulo: "Gerenciador de páginas",
     href: "/gerenciador-paginas",
     icone: "info",
+    somenteAdministrador: true,
   },
-  { titulo: "Usuários", href: "/usuarios", icone: "info" },
+  {
+    titulo: "Usuários",
+    href: "/usuarios",
+    icone: "info",
+    somenteAdministrador: true,
+  },
 ];
 
 function itensReserva(administrador: boolean) {
@@ -69,6 +75,7 @@ export function montarItensMenu(
       icone: iconePorSlug[pagina.slug] ?? "info",
       iconeEscolhido: pagina.iconeMenu,
       ordem: pagina.ordemMenu ?? 0,
+      somenteAdministrador: pagina.tipoPagina === "Administrador",
     }));
 
   const fixas = [...rotasFixasTotem, ...(administrador ? rotasPrivadas : [])];

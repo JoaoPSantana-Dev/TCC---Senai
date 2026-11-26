@@ -2,20 +2,43 @@
 
 import { useEffect, useState } from "react";
 
-const horarios: Record<number, {
-  abre: string;
-  fecha: string;
-  almoco?: {
-    inicio: string;
-    fim: string;
-  }
-} | null> = {
+const horarios: Record<
+  number,
+  {
+    abre: string;
+    fecha: string;
+    almoco?: {
+      inicio: string;
+      fim: string;
+    };
+  } | null
+> = {
   0: null,
-  1: { abre: "07:00", almoco: { inicio: "13:00", fim: "14:00" }, fecha: "16:00" },
-  2: { abre: "07:00", almoco: { inicio: "13:00", fim: "14:00" }, fecha: "21:00" },
-  3: { abre: "07:00", almoco: { inicio: "13:00", fim: "14:00" }, fecha: "21:00" },
-  4: { abre: "07:00", almoco: { inicio: "13:00", fim: "14:00" }, fecha: "21:00" },
-  5: { abre: "07:00", almoco: { inicio: "13:00", fim: "14:00" }, fecha: "21:00" },
+  1: {
+    abre: "07:00",
+    almoco: { inicio: "13:00", fim: "14:00" },
+    fecha: "16:00",
+  },
+  2: {
+    abre: "07:00",
+    almoco: { inicio: "13:00", fim: "14:00" },
+    fecha: "21:00",
+  },
+  3: {
+    abre: "07:00",
+    almoco: { inicio: "13:00", fim: "14:00" },
+    fecha: "21:00",
+  },
+  4: {
+    abre: "07:00",
+    almoco: { inicio: "13:00", fim: "14:00" },
+    fecha: "21:00",
+  },
+  5: {
+    abre: "07:00",
+    almoco: { inicio: "13:00", fim: "14:00" },
+    fecha: "21:00",
+  },
   6: { abre: "09:00", fecha: "15:00" },
 };
 
@@ -41,11 +64,11 @@ export function BibliotecaStatus() {
 
   if (!agora) {
     return (
-      <div className="mt-6 rounded-2xl bg-gray-200 p-5">
+      <div className="mx-auto w-full max-w-3xl rounded-2xl bg-gray-200 p-5">
         Verificando funcionamento...
       </div>
     );
-  };
+  }
 
   const horarioHoje = horarios[agora.getDay()];
 
@@ -86,23 +109,27 @@ export function BibliotecaStatus() {
 
   const cor = aberto
     ? {
-      container: "border-green-400 bg-green-100",
-      indicador: "bg-green-600",
-      titulo: "text-green-800",
-    } : emAlmoco
-    ? {
-      container: "border-amber-400 bg-amber-100",
-      indicador: "bg-amber-500",
-      titulo: "text-amber-800",
-    } 
-    : {
-      container: "border-red-400 bg-red-100",
-      indicador: "bg-red-600",
-      titulo: "text-red-800",
-    };
+        container: "border-green-400 bg-green-100",
+        indicador: "bg-green-600",
+        titulo: "text-green-800",
+      }
+    : emAlmoco
+      ? {
+          container: "border-amber-400 bg-amber-100",
+          indicador: "bg-amber-500",
+          titulo: "text-amber-800",
+        }
+      : {
+          container: "border-red-400 bg-red-100",
+          indicador: "bg-red-600",
+          titulo: "text-red-800",
+        };
 
   return (
-    <section aria-live="polite" className={`mt-6 rounded-2xl border p-5 ${cor.container}`}>
+    <section
+      aria-live="polite"
+      className={`mx-auto w-full max-w-3xl mt-6 rounded-2xl border p-5 ${cor.container}`}
+    >
       <div className="flex items-center gap-3">
         <span className={`h-4 w-4 shrink-0 rounded-full ${cor.indicador}`} />
         <h2 className={`text-xl font-bold ${cor.titulo}`}>{titulo}</h2>
@@ -112,14 +139,20 @@ export function BibliotecaStatus() {
 
       {horarioHoje && (
         <div className="mt-2 text-sm text-zinc-600">
-          <p>Funcionamento: {horarioHoje.abre} às {horarioHoje.fecha}</p>
+          <p>
+            Funcionamento: {horarioHoje.abre} às {horarioHoje.fecha}
+          </p>
           {almoco && (
-            <p>Intervalo de almoço: {almoco.inicio} às {almoco.fim}</p>
+            <p>
+              Intervalo de almoço: {almoco.inicio} às {almoco.fim}
+            </p>
           )}
         </div>
       )}
 
-      <p className="mt-3 text-sm text-zinc-500">Horário atual: {agora.toLocaleTimeString("pt-BR")}</p>
+      <p className="mt-3 text-sm text-zinc-500">
+        Horário atual: {agora.toLocaleTimeString("pt-BR")}
+      </p>
     </section>
   );
 }
