@@ -1,10 +1,10 @@
 import { LoginForm } from "@/app/(public)/login/components/LoginForm";
-import { EstruturaAdministradorPublic } from "@/components/shared/EstruturaLogin";
+import { EstruturaLogin } from "@/components/shared/EstruturaLogin";
 import { HeaderAutenticacao } from "@/components/shared/HeaderLogin";
 
 export default function Login() {
   return (
-    <EstruturaAdministradorPublic>
+    <EstruturaLogin>
       <section className="w-full h-full lg:w-1/3 bg-white flex flex-col justify-start p-8 md:p-16">
         <HeaderAutenticacao
           h1="Login"
@@ -12,6 +12,6 @@ export default function Login() {
         />
         <LoginForm />
       </section>
-    </EstruturaAdministradorPublic>
+    </EstruturaLogin>
   );
 }

@@ -134,6 +134,13 @@ interface RaizProps {
   puck?: { metadata?: Record<string, unknown> };
 }
 
+// o canvas do puck é um iframe com a largura do tamanho escolhido (1080 ou 768)
+// w-screen é 100vw do iframe, então a página sempre acompanha o tamanho escolhido
+// o que passa do espaço da barra de rolagem é cortado pelo overflow-x: clip do html (globals.css)
+function LarguraTotal({ children }: { children: ReactNode }) {
+  return <div className="w-screen max-w-none">{children}</div>;
+}
+
 function RaizDaPagina({ children, nomePagina, puck }: RaizProps) {
   const slug = String(puck?.metadata?.slug ?? "");
   const titulo = nomePagina?.trim() || "Sem nome";
@@ -143,30 +150,36 @@ function RaizDaPagina({ children, nomePagina, puck }: RaizProps) {
 
   if (slug === "homepage") {
     return (
-      <LayoutPagina slug={slug} nomePagina={titulo} ocultarMenu>
-        <div className="[&>div]:flex [&>div]:flex-wrap [&>div]:justify-center [&>div]:gap-6">
-          {children}
-        </div>
-      </LayoutPagina>
+      <LarguraTotal>
+        <LayoutPagina slug={slug} nomePagina={titulo} ocultarMenu>
+          <div className="[&>div]:flex [&>div]:flex-wrap [&>div]:justify-center [&>div]:gap-6">
+            {children}
+          </div>
+        </LayoutPagina>
+      </LarguraTotal>
     );
   }
 
   if (slug === "descanso") {
     return (
-      <LayoutPagina slug={slug} nomePagina={titulo} ocultarMenu>
-        <div className="flex w-full flex-1 flex-col items-center justify-center [&>div]:flex [&>div]:w-full [&>div]:flex-col [&>div]:items-center [&>div]:justify-center">
-          {children}
-        </div>
-      </LayoutPagina>
+      <LarguraTotal>
+        <LayoutPagina slug={slug} nomePagina={titulo} ocultarMenu>
+          <div className="flex w-full flex-1 flex-col items-center justify-center [&>div]:flex [&>div]:w-full [&>div]:flex-col [&>div]:items-center [&>div]:justify-center">
+            {children}
+          </div>
+        </LayoutPagina>
+      </LarguraTotal>
     );
   }
 
   return (
-    <LayoutPagina slug={slug} nomePagina={titulo} ocultarMenu>
-      <div className="w-full [&>div]:flex [&>div]:flex-col [&>div]:gap-6">
-        {children}
-      </div>
-    </LayoutPagina>
+    <LarguraTotal>
+      <LayoutPagina slug={slug} nomePagina={titulo} ocultarMenu>
+        <div className="w-full [&>div]:flex [&>div]:flex-col [&>div]:gap-6">
+          {children}
+        </div>
+      </LayoutPagina>
+    </LarguraTotal>
   );
 }
 

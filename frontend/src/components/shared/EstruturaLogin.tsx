@@ -2,13 +2,11 @@ import type { ReactNode } from "react";
 import { Footer } from "./Footer";
 import { ImagemAutenticacao } from "./ImagemAutenticacao";
 
-interface EstruturaAdministradorPublicProps {
+interface EstruturaLoginProps {
   children: ReactNode;
 }
 
-export function EstruturaAdministradorPublic({
-  children,
-}: EstruturaAdministradorPublicProps) {
+export function EstruturaLogin({ children }: EstruturaLoginProps) {
   return (
     <div className="flex h-screen w-full min-h-screen flex-col">
       <main className="flex flex-1 flex-col md:flex-row">
@@ -19,8 +17,6 @@ export function EstruturaAdministradorPublic({
 
         {children}
       </main>
-
-      <Footer />
     </div>
   );
 }

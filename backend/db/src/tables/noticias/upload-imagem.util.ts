@@ -1,15 +1,8 @@
 import { BadRequestException } from '@nestjs/common';
+import { del, put } from '@vercel/blob';
 import { randomUUID } from 'crypto';
-import { mkdirSync } from 'fs';
-import { rm } from 'fs/promises';
-import { diskStorage } from 'multer';
-import { join } from 'path';
+import { memoryStorage } from 'multer';
 
-// imagens das notícias ficam em backend/db/uploads/noticias
-export const pastaNoticias = join(process.cwd(), 'uploads', 'noticias');
-
-// a extensão do arquivo salvo vem desta lista e nunca do nome que o usuário mandou
-// svg fica de fora de propósito, pode carregar script
 const extensoes: Record<string, string> = {
   'image/jpeg': '.jpg',
   'image/png': '.png',
@@ -17,17 +10,11 @@ const extensoes: Record<string, string> = {
   'image/gif': '.gif',
 };
 
-export const tamanhoMaximoImagem = 5 * 1024 * 1024; // 5 MB
+// limite de 4mb
+export const tamanhoMaximoImagem = 4 * 1024 * 1024;
 
 export const opcoesUploadImagem = {
-  storage: diskStorage({
-    destination: (_req, _arquivo, cb) => {
-      mkdirSync(pastaNoticias, { recursive: true });
-      cb(null, pastaNoticias);
-    },
-    filename: (_req, arquivo, cb) =>
-      cb(null, `${randomUUID()}${extensoes[arquivo.mimetype]}`),
-  }),
+  storage: memoryStorage(),
   limits: { fileSize: tamanhoMaximoImagem, files: 1 },
   fileFilter: (
     _req: unknown,
@@ -42,10 +29,20 @@ export const opcoesUploadImagem = {
         ),
 };
 
-// só apaga arquivos que o próprio upload criou, nunca caminhos da pasta public do front
-const nomeGerado = /^[a-f0-9-]{36}\.(jpg|png|webp|gif)$/;
+// envia para o Vercel Blob e devolve a URL pública
+export async function enviarImagemNoticia(arquivo: Express.Multer.File) {
+  const { url } = await put(
+    `noticias/${randomUUID()}${extensoes[arquivo.mimetype]}`,
+    arquivo.buffer,
+    { access: 'public', contentType: arquivo.mimetype },
+  );
+  return url;
+}
 
-export async function removerArquivoNoticia(nome?: string | null) {
-  if (!nome || !nomeGerado.test(nome)) return;
-  await rm(join(pastaNoticias, nome), { force: true });
+// só apaga o que está no Blob; nomes antigos e caminhos da pasta public são ignorados
+const urlBlob = /^https:\/\/[a-z0-9-]+\.public\.blob\.vercel-storage\.com\//;
+
+export async function removerArquivoNoticia(imagem?: string | null) {
+  if (!imagem || !urlBlob.test(imagem)) return;
+  await del(imagem).catch(() => {});
 }

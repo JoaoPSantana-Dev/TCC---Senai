@@ -2,11 +2,9 @@ import {
   BadRequestException,
   Body,
   Controller,
-  Delete,
   Get,
   Param,
   ParseIntPipe,
-  Patch,
   Post,
   UploadedFile,
   UseGuards,
@@ -19,6 +17,7 @@ import {
 } from '../../modulos/login/jwt-auth.guard';
 import { NoticiasService } from './noticias.service';
 import {
+  enviarImagemNoticia,
   opcoesUploadImagem,
   removerArquivoNoticia,
 } from './upload-imagem.util';
@@ -60,38 +59,31 @@ export class NoticiasController {
     @Body() corpo: { titulo?: string },
     @UploadedFile() arquivo?: Express.Multer.File,
   ) {
+    let url: string | undefined;
     try {
       const titulo = tituloValido(corpo, true)!;
       if (!arquivo) throw new BadRequestException('Envie a imagem da notícia');
-      return await this.noticiasService.criar(titulo, arquivo.filename);
+      url = await enviarImagemNoticia(arquivo);
+      return await this.noticiasService.criar(titulo, url);
     } catch (erro) {
-      await removerArquivoNoticia(arquivo?.filename);
+      await removerArquivoNoticia(url); // não deixa imagem órfã no Blob
       throw erro;
     }
   }
 
-  @Patch(':id')
-  @UseGuards(JwtAuthGuard, AdministradorGuard)
-  @UseInterceptors(FileInterceptor('imagem', opcoesUploadImagem))
   async atualizar(
     @Param('id', ParseIntPipe) id: number,
     @Body() corpo: { titulo?: string },
     @UploadedFile() arquivo?: Express.Multer.File,
   ) {
+    let url: string | undefined;
     try {
-      return await this.noticiasService.atualizar(id, {
-        titulo: tituloValido(corpo, false),
-        imagem: arquivo?.filename,
-      });
+      const titulo = tituloValido(corpo, false);
+      if (arquivo) url = await enviarImagemNoticia(arquivo);
+      return await this.noticiasService.atualizar(id, { titulo, imagem: url });
     } catch (erro) {
-      await removerArquivoNoticia(arquivo?.filename);
+      await removerArquivoNoticia(url);
       throw erro;
     }
-  }
-
-  @Delete(':id')
-  @UseGuards(JwtAuthGuard, AdministradorGuard)
-  apagar(@Param('id', ParseIntPipe) id: number) {
-    return this.noticiasService.apagar(id);
   }
 }

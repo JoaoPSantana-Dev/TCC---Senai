@@ -19,7 +19,7 @@ export function Footer() {
             "linear-gradient(to bottom, black 20%, transparent 100%)",
         }}
       >
-        SEKTOR
+        S-HUB
       </div>
     </footer>
   );

@@ -1,5 +1,5 @@
 import { EsqueciSenhaForm } from "@/app/(public)/esqueci-senha/components/EsqueciSenhaForm";
-import { EstruturaAdministradorPublic } from "@/components/shared/EstruturaLogin";
+import { EstruturaLogin } from "@/components/shared/EstruturaLogin";
 import { HeaderAutenticacao } from "@/components/shared/HeaderLogin";
 
 // sem ?token na URL: pede o email e envia o link
@@ -13,7 +13,7 @@ export default async function EsqueciSenha({
   const { token } = await searchParams;
 
   return (
-    <EstruturaAdministradorPublic>
+    <EstruturaLogin>
       <section className="w-full h-full lg:w-1/3 bg-white flex flex-col justify-start p-8 md:p-16">
         <HeaderAutenticacao
           h1={token ? "Criar nova senha" : "Esqueceu a senha?"}
@@ -25,6 +25,6 @@ export default async function EsqueciSenha({
         />
         <EsqueciSenhaForm token={token} />
       </section>
-    </EstruturaAdministradorPublic>
+    </EstruturaLogin>
   );
 }
