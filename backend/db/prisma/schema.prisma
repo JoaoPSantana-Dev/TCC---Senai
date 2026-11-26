@@ -117,7 +117,7 @@ model HorarioAula {
   professor      String
   materia        String
   turno          String
-  dia            String
+  dia            String 
   idSala         Int     @map("id_sala")
   sala           Sala   @relation(fields: [idSala], references: [idSala])
 

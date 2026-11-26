@@ -21,7 +21,6 @@ const config: ConfigPainel = {
   nomeSingular: "vaga",
   nomePlural: "vagas",
   textoVazio: "Nenhuma vaga de emprego cadastrada no momento.",
-  campoArea: "areaEmprego",
 };
 
 // vagas de emprego, vindas do banco
