@@ -46,6 +46,16 @@ model Pagina {
   @@map("paginas")
 }
 
+model Noticia {
+  idNoticia Int      @id @default(autoincrement()) @map("id_noticia")
+  titulo    String
+  // nome do arquivo salvo em uploads/noticias (ou um caminho que começa com "/" da pasta public do front)
+  imagem    String
+  criadaEm  DateTime @default(now()) @map("criada_em")
+
+  @@map("noticias")
+}
+
 model VagaCurso {
   idCurso       Int       @id @default(autoincrement()) @map("id_curso")
   nomeCurso     String

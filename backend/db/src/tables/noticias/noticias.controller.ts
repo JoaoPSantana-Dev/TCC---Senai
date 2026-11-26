@@ -1,0 +1,89 @@
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import {
+  AdministradorGuard,
+  JwtAuthGuard,
+} from '../../modulos/login/jwt-auth.guard';
+import { NoticiasService } from './noticias.service';
+import {
+  enviarImagemNoticia,
+  opcoesUploadImagem,
+  removerArquivoNoticia,
+} from './upload-imagem.util';
+
+const tituloMaximo = 191;
+
+// o corpo é multipart campo "titulo" + arquivo "imagem", então validamos à mão
+// assim dá para apagar o arquivo que o multer já gravou se o título estiver inválido
+function tituloValido(corpo: { titulo?: string }, obrigatorio: boolean) {
+  const titulo = (corpo.titulo ?? '').trim();
+  if (!titulo) {
+    if (obrigatorio) throw new BadRequestException('Informe o título');
+    return undefined;
+  }
+  if (titulo.length > tituloMaximo) {
+    throw new BadRequestException(
+      `Título com no máximo ${tituloMaximo} letras`,
+    );
+  }
+  return titulo;
+}
+
+@Controller('noticias')
+export class NoticiasController {
+  constructor(private readonly noticiasService: NoticiasService) {}
+
+  // leitura é pública, o totem busca por aqui
+  // escrever exige administrador
+
+  @Get()
+  listar() {
+    return this.noticiasService.listar();
+  }
+
+  @Post()
+  @UseGuards(JwtAuthGuard, AdministradorGuard)
+  @UseInterceptors(FileInterceptor('imagem', opcoesUploadImagem))
+  async criar(
+    @Body() corpo: { titulo?: string },
+    @UploadedFile() arquivo?: Express.Multer.File,
+  ) {
+    let url: string | undefined;
+    try {
+      const titulo = tituloValido(corpo, true)!;
+      if (!arquivo) throw new BadRequestException('Envie a imagem da notícia');
+      url = await enviarImagemNoticia(arquivo);
+      return await this.noticiasService.criar(titulo, url);
+    } catch (erro) {
+      await removerArquivoNoticia(url); // não deixa imagem órfã no Blob
+      throw erro;
+    }
+  }
+
+  async atualizar(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() corpo: { titulo?: string },
+    @UploadedFile() arquivo?: Express.Multer.File,
+  ) {
+    let url: string | undefined;
+    try {
+      const titulo = tituloValido(corpo, false);
+      if (arquivo) url = await enviarImagemNoticia(arquivo);
+      return await this.noticiasService.atualizar(id, { titulo, imagem: url });
+    } catch (erro) {
+      await removerArquivoNoticia(url);
+      throw erro;
+    }
+  }
+}

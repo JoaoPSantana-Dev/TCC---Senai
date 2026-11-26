@@ -15,7 +15,7 @@ export const tiposImagemAceitos = [
   "image/webp",
   "image/gif",
 ];
-export const tamanhoMaximoImagem = 5 * 1024 * 1024; // igual no backend
+export const tamanhoMaximoImagem = 4 * 1024 * 1024; // igual no backend
 export const tituloMaximoNoticia = 191;
 
 export function imagemEhDeUpload(imagem: string) {
