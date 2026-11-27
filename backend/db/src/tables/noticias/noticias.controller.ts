@@ -2,9 +2,11 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   UploadedFile,
   UseGuards,
@@ -71,6 +73,9 @@ export class NoticiasController {
     }
   }
 
+  @Patch(':id')
+  @UseGuards(JwtAuthGuard, AdministradorGuard)
+  @UseInterceptors(FileInterceptor('imagem', opcoesUploadImagem))
   async atualizar(
     @Param('id', ParseIntPipe) id: number,
     @Body() corpo: { titulo?: string },
@@ -85,5 +90,11 @@ export class NoticiasController {
       await removerArquivoNoticia(url);
       throw erro;
     }
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard, AdministradorGuard)
+  apagar(@Param('id', ParseIntPipe) id: number) {
+    return this.noticiasService.apagar(id);
   }
 }

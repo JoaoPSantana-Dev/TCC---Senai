@@ -6,27 +6,23 @@ import Image from "next/image";
 interface ImagemAutenticacaoProps {
   nomeImagem: string;
   alt?: string;
-  width?: number;
-  height?: number;
   className?: string;
 }
 
 export function ImagemAutenticacao({
   nomeImagem,
   alt = "Imagem de login",
-  width = 1920,
-  height = 1080,
   className = "",
 }: ImagemAutenticacaoProps) {
   return (
-    <aside className="hidden lg:flex lg:w-2/3 bg-white items-center justify-center border-r-2 border-gray-300">
+    <aside className="relative hidden lg:block lg:w-2/3 border-r-2 border-gray-300">
       <Image
         src={`/${nomeImagem}`}
         alt={alt}
-        width={width}
-        height={height}
-        className={`w-auto h-auto max-w-full object-contain ${className}`}
-        loading="eager"
+        fill
+        priority
+        sizes="(min-width: 1024px) 67vw, 0px"
+        className={`object-cover ${className}`}
       />
     </aside>
   );
