@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { Footer } from "./Footer";
 import { ImagemAutenticacao } from "./ImagemAutenticacao";
 
 interface EstruturaLoginProps {
@@ -11,7 +10,7 @@ export function EstruturaLogin({ children }: EstruturaLoginProps) {
     <div className="flex h-screen w-full min-h-screen flex-col">
       <main className="flex flex-1 flex-col md:flex-row">
         <ImagemAutenticacao
-          nomeImagem="tubarao.png"
+          nomeImagem="capa-senai.jpg"
           alt="Foto da entrada da escola SENAI Mariano Ferraz"
         />
 
